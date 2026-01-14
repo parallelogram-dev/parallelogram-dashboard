@@ -1,0 +1,280 @@
+// ==========================================================================
+// Data List / Description List Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Data List
+// --------------------------------------------------------------------------
+
+.datalist {
+  display: flex;
+  flex-direction: column;
+
+  // --------------------------------------------------------------------------
+  // Data List Item
+  // --------------------------------------------------------------------------
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid var(--border);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__label {
+    flex-shrink: 0;
+    width: 10rem;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+  }
+
+  &__value {
+    flex: 1;
+    font-size: $font-size-sm;
+    color: var(--fg);
+    word-break: break-word;
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__action {
+    flex-shrink: 0;
+    margin-left: $spacing-xs;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Horizontal layout (inline)
+  &--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+
+    .datalist__item {
+      flex-direction: column;
+      padding: 0;
+      border-bottom: none;
+      gap: $spacing-3xs;
+    }
+
+    .datalist__label {
+      width: auto;
+    }
+  }
+
+  // Grid layout
+  &--grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+
+    .datalist__item {
+      flex-direction: column;
+      padding: 0;
+      border-bottom: none;
+      gap: $spacing-3xs;
+    }
+
+    .datalist__label {
+      width: auto;
+    }
+
+    @include max-sm {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Striped
+  &--striped {
+    .datalist__item {
+      padding: $spacing-xs;
+      margin: 0 (-$spacing-xs);
+      border-bottom: none;
+
+      &:nth-child(odd) {
+        background-color: var(--bg-muted);
+        border-radius: $radius;
+      }
+    }
+  }
+
+  // Bordered
+  &--bordered {
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    padding: $spacing-sm;
+
+    .datalist__item {
+      &:first-child {
+        padding-top: $spacing-xs;
+      }
+
+      &:last-child {
+        padding-bottom: $spacing-xs;
+      }
+    }
+  }
+
+  // Compact
+  &--compact {
+    .datalist__item {
+      padding: $spacing-2xs 0;
+    }
+
+    .datalist__label,
+    .datalist__value {
+      font-size: $font-size-xs;
+    }
+
+    .datalist__label {
+      width: 8rem;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Description List (semantic HTML)
+// --------------------------------------------------------------------------
+
+dl.descriptionlist {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  .descriptionlist__group {
+    display: flex;
+    align-items: flex-start;
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid var(--border);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  dt {
+    flex-shrink: 0;
+    width: 10rem;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+  }
+
+  dd {
+    flex: 1;
+    margin: 0;
+    font-size: $font-size-sm;
+    color: var(--fg);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Key Value Pair (inline)
+// --------------------------------------------------------------------------
+
+.kvpair {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2xs;
+  font-size: $font-size-sm;
+
+  &__key {
+    color: var(--fg-muted);
+
+    &::after {
+      content: ":";
+    }
+  }
+
+  &__value {
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  // Variants
+  &--muted {
+    .kvpair__value {
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  &--sm {
+    font-size: $font-size-xs;
+  }
+
+  &--lg {
+    font-size: $font-size-base;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Property List (for settings/config display)
+// --------------------------------------------------------------------------
+
+.property__list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: $radius;
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  &__description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    margin-top: $spacing-3xs;
+  }
+
+  &__value {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    flex-shrink: 0;
+  }
+}

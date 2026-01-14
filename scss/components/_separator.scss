@@ -46,7 +46,7 @@
   &--label {
     display: flex;
     align-items: center;
-    gap: $spacing-4;
+    gap: $spacing-sm;
     background-color: transparent;
     height: auto;
 
@@ -73,35 +73,48 @@
   // --------------------------------------------------------------------------
 
   &--sm {
-    margin: $spacing-2 0;
+    margin: $spacing-2xs 0;
 
     &.separator--vertical {
-      margin: 0 $spacing-2;
+      margin: 0 $spacing-2xs;
     }
   }
 
   &--md {
-    margin: $spacing-4 0;
+    margin: $spacing-sm 0;
 
     &.separator--vertical {
-      margin: 0 $spacing-4;
+      margin: 0 $spacing-sm;
     }
   }
 
   &--lg {
-    margin: $spacing-6 0;
+    margin: $spacing-lg 0;
 
     &.separator--vertical {
-      margin: 0 $spacing-6;
+      margin: 0 $spacing-lg;
     }
   }
 
   &--xl {
-    margin: $spacing-8 0;
+    margin: $spacing-xl 0;
 
     &.separator--vertical {
-      margin: 0 $spacing-8;
+      margin: 0 $spacing-xl;
     }
+  }
+
+  // Height modifiers for vertical separators
+  &--h-sm {
+    height: $spacing-sm;
+  }
+
+  &--h-md {
+    height: $spacing-lg;
+  }
+
+  &--h-lg {
+    height: $spacing-xl;
   }
 }
 

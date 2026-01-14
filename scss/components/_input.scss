@@ -13,7 +13,7 @@
   display: flex;
   width: 100%;
   height: $input-height-md;
-  padding: 0 $spacing-3;
+  padding: 0 $spacing-xs;
   font-size: $font-size-sm;
   background-color: transparent;
   border: 1px solid var(--input);
@@ -55,14 +55,14 @@
 
   &--sm {
     height: $input-height-sm;
-    padding: 0 $spacing-2;
+    padding: 0 $spacing-2xs;
     font-size: $font-size-xs;
     border-radius: $radius-sm;
   }
 
   &--lg {
     height: $input-height-lg;
-    padding: 0 $spacing-4;
+    padding: 0 $spacing-sm;
     font-size: $font-size-base;
   }
 }
@@ -75,7 +75,7 @@
   @extend .input;
   height: auto;
   min-height: 5rem;
-  padding: $spacing-3;
+  padding: $spacing-xs;
   resize: vertical;
   line-height: $line-height-normal;
 }
@@ -89,12 +89,17 @@
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right $spacing-3 center;
-  padding-right: $spacing-10;
+  background-position: right $spacing-xs center;
+  padding-right: $spacing-2xl;
   cursor: pointer;
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  // Auto-width modifier
+  &--auto {
+    width: auto;
   }
 }
 
@@ -106,7 +111,7 @@
 .radio {
   display: inline-flex;
   align-items: center;
-  gap: $spacing-2;
+  gap: $spacing-2xs;
   cursor: pointer;
   user-select: none;
 
@@ -169,10 +174,10 @@
 // Form Group
 // --------------------------------------------------------------------------
 
-.form-group {
+.form__group {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-2xs;
 
   &__label {
     font-size: $font-size-sm;
@@ -195,14 +200,14 @@
 // Input with Icon
 // --------------------------------------------------------------------------
 
-.input-wrapper {
+.inputwrapper {
   position: relative;
   display: flex;
   align-items: center;
 
   &__icon {
     position: absolute;
-    left: $spacing-3;
+    left: $spacing-xs;
     width: $icon-size-md;
     height: $icon-size-md;
     color: var(--fg-muted);
@@ -210,17 +215,17 @@
 
     &--right {
       left: auto;
-      right: $spacing-3;
+      right: $spacing-xs;
     }
   }
 
   .input {
     &--icon-left {
-      padding-left: $spacing-10;
+      padding-left: $spacing-2xl;
     }
 
     &--icon-right {
-      padding-right: $spacing-10;
+      padding-right: $spacing-2xl;
     }
   }
 }
@@ -232,7 +237,7 @@
 .switch {
   display: inline-flex;
   align-items: center;
-  gap: $spacing-2;
+  gap: $spacing-2xs;
   cursor: pointer;
 
   &__input {

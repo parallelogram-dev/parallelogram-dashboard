@@ -20,18 +20,18 @@
   &__list {
     display: inline-flex;
     align-items: center;
-    padding: $spacing-1;
+    padding: $spacing-3xs;
     background-color: var(--bg-muted);
     border-radius: $radius-md;
-    gap: $spacing-1;
+    gap: $spacing-3xs;
   }
 
   &__trigger {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: $spacing-2;
-    padding: $spacing-2 $spacing-3;
+    gap: $spacing-2xs;
+    padding: $spacing-2xs $spacing-xs;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     color: var(--fg-muted);
@@ -60,7 +60,7 @@
   }
 
   &__content {
-    margin-top: $spacing-4;
+    margin-top: $spacing-sm;
 
     // Hide non-active panels
     &[hidden] {
@@ -83,7 +83,7 @@
     }
 
     .tabs__trigger {
-      padding: $spacing-3 $spacing-4;
+      padding: $spacing-xs $spacing-sm;
       border-radius: 0;
       margin-bottom: -1px;
       border-bottom: 2px solid transparent;
@@ -101,7 +101,7 @@
     .tabs__list {
       background-color: transparent;
       padding: 0;
-      gap: $spacing-2;
+      gap: $spacing-2xs;
     }
 
     .tabs__trigger {
@@ -120,7 +120,7 @@
   // Vertical tabs
   &--vertical {
     flex-direction: row;
-    gap: $spacing-6;
+    gap: $spacing-lg;
 
     .tabs__list {
       flex-direction: column;
@@ -178,10 +178,10 @@
 
 .tabs__trigger-badge {
   font-size: $font-size-xs;
-  padding: 0 $spacing-1;
+  padding: 0 $spacing-3xs;
   background-color: var(--bg-subtle);
   border-radius: $radius-full;
-  margin-left: $spacing-1;
+  margin-left: $spacing-3xs;
 
   .tabs__trigger--active & {
     background-color: var(--accent);

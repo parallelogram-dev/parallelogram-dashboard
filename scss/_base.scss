@@ -20,6 +20,11 @@
   padding: 0;
 }
 
+// Ensure hidden attribute always works
+[hidden] {
+  display: none !important;
+}
+
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -139,7 +144,7 @@ code {
 
 pre {
   background-color: var(--bg-muted);
-  padding: $spacing-4;
+  padding: $spacing-sm;
   border-radius: $radius;
   overflow-x: auto;
   @include scrollbar-thin;
@@ -153,7 +158,7 @@ pre {
 
 blockquote {
   border-left: 4px solid var(--border);
-  padding-left: $spacing-4;
+  padding-left: $spacing-sm;
   color: var(--fg-muted);
   font-style: italic;
 }
@@ -161,7 +166,7 @@ blockquote {
 hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: $spacing-6 0;
+  margin: $spacing-lg 0;
 }
 
 // --------------------------------------------------------------------------
@@ -224,12 +229,12 @@ hr {
   max-width: 65ch;
 
   > * + * {
-    margin-top: $spacing-4;
+    margin-top: $spacing-sm;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    margin-top: $spacing-8;
-    margin-bottom: $spacing-4;
+    margin-top: $spacing-xl;
+    margin-bottom: $spacing-sm;
 
     &:first-child {
       margin-top: 0;
@@ -237,7 +242,7 @@ hr {
   }
 
   ul, ol {
-    padding-left: $spacing-6;
+    padding-left: $spacing-lg;
   }
 
   ul {
@@ -249,7 +254,7 @@ hr {
   }
 
   li + li {
-    margin-top: $spacing-2;
+    margin-top: $spacing-2xs;
   }
 
   a {
@@ -280,17 +285,17 @@ hr {
   max-width: $breakpoint-xl;
   margin-left: auto;
   margin-right: auto;
-  padding-left: $spacing-4;
-  padding-right: $spacing-4;
+  padding-left: $spacing-sm;
+  padding-right: $spacing-sm;
 
   @include md {
-    padding-left: $spacing-6;
-    padding-right: $spacing-6;
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
   }
 
   @include lg {
-    padding-left: $spacing-8;
-    padding-right: $spacing-8;
+    padding-left: $spacing-xl;
+    padding-right: $spacing-xl;
   }
 
   &--sm { max-width: $breakpoint-sm; }

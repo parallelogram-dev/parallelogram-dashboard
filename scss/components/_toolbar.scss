@@ -1,0 +1,232 @@
+// ==========================================================================
+// Search Bar Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Search Bar
+// --------------------------------------------------------------------------
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  width: 100%;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__inputwrapper {
+    position: relative;
+    flex: 1;
+    max-width: 24rem;
+  }
+
+  &__icon {
+    position: absolute;
+    left: $spacing-xs;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    height: $input-height-md;
+    padding: 0 $spacing-xs 0 $spacing-2xl;
+    font-size: $font-size-sm;
+    background-color: var(--bg);
+    border: 1px solid var(--input);
+    border-radius: $radius-md;
+    color: var(--fg);
+    @include transition-colors;
+
+    &::placeholder {
+      color: var(--input-placeholder);
+    }
+
+    &:focus {
+      @include focus-ring;
+      border-color: var(--ring);
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: $spacing-2xs;
+    top: 50%;
+    transform: translateY(-50%);
+    @include flex-center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    color: var(--fg-muted);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    @include transition-opacity;
+
+    &:hover {
+      color: var(--fg);
+      background-color: var(--bg-muted);
+    }
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    margin-left: auto;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--compact {
+    .toolbar__inputwrapper {
+      max-width: 16rem;
+    }
+
+    .toolbar__input {
+      height: $input-height-sm;
+      font-size: $font-size-xs;
+    }
+  }
+
+  &--full {
+    .toolbar__inputwrapper {
+      max-width: none;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Filter Chip
+// --------------------------------------------------------------------------
+
+.filter__label {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-3xs;
+  height: $btn-height-sm;
+  padding: 0 $spacing-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: $radius-full;
+  color: var(--fg);
+  @include interactive;
+
+  &:hover {
+    background-color: var(--bg-subtle);
+  }
+
+  &--active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-fg);
+
+    &:hover {
+      background-color: var(--primary-hover);
+    }
+  }
+
+  &__remove {
+    @include flex-center;
+    width: 1rem;
+    height: 1rem;
+    margin-left: $spacing-3xs;
+    margin-right: -$spacing-3xs;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radius-full;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Active Filters Bar
+// --------------------------------------------------------------------------
+
+.activefilters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-2xs;
+  padding: $spacing-xs 0;
+
+  &__label {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    margin-right: $spacing-3xs;
+  }
+
+  &__clear {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: $spacing-2xs;
+
+    &:hover {
+      color: var(--fg);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Responsive
+// --------------------------------------------------------------------------
+
+@include max-md {
+  .toolbar {
+    flex-wrap: wrap;
+
+    &__inputwrapper {
+      flex-basis: 100%;
+      max-width: none;
+      order: 1;
+    }
+
+    &__filters {
+      order: 2;
+      flex-wrap: wrap;
+    }
+
+    &__actions {
+      order: 3;
+    }
+  }
+}

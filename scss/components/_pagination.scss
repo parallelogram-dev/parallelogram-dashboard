@@ -1,0 +1,161 @@
+// ==========================================================================
+// Pagination Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Pagination
+// --------------------------------------------------------------------------
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3xs;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__item {
+    @include flex-center;
+    @include interactive;
+    min-width: $btn-height-sm;
+    height: $btn-height-sm;
+    padding: 0 $spacing-2xs;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-md;
+
+    &:hover:not(:disabled):not(.pagination__item--active) {
+      background-color: var(--accent);
+    }
+
+    &--active {
+      background-color: var(--primary);
+      color: var(--primary-fg);
+      border-color: var(--primary);
+
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+    }
+
+    &--disabled,
+    &:disabled {
+      @include disabled;
+    }
+  }
+
+  &__ellipsis {
+    @include flex-center;
+    min-width: $btn-height-sm;
+    height: $btn-height-sm;
+    color: var(--fg-muted);
+    font-size: $font-size-sm;
+  }
+
+  &__prev,
+  &__next {
+    @extend .pagination__item;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--outline {
+    .pagination__item {
+      border-color: var(--border);
+
+      &:hover:not(:disabled):not(.pagination__item--active) {
+        border-color: var(--border);
+        background-color: var(--accent);
+      }
+
+      &--active {
+        border-color: var(--primary);
+      }
+    }
+  }
+
+  &--sm {
+    gap: $spacing-3xs;
+
+    .pagination__item,
+    .pagination__ellipsis {
+      min-width: 1.75rem;
+      height: 1.75rem;
+      font-size: $font-size-xs;
+    }
+  }
+
+  &--lg {
+    gap: $spacing-2xs;
+
+    .pagination__item,
+    .pagination__ellipsis {
+      min-width: $btn-height-md;
+      height: $btn-height-md;
+      padding: 0 $spacing-xs;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Pagination Info
+// --------------------------------------------------------------------------
+
+.pagination__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  width: 100%;
+  font-size: $font-size-sm;
+  color: var(--fg-muted);
+}
+
+.pagination__text {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3xs;
+  flex-shrink: 0;
+
+  strong {
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+  }
+}
+
+.pagination__select {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2xs;
+  flex-shrink: 0;
+}
+
+// --------------------------------------------------------------------------
+// Responsive
+// --------------------------------------------------------------------------
+
+@include max-sm {
+  .pagination {
+    &__item:not(.pagination__prev):not(.pagination__next):not(.pagination__item--active) {
+      display: none;
+    }
+
+    &__ellipsis {
+      display: none;
+    }
+  }
+
+  .pagination__info {
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+  }
+}

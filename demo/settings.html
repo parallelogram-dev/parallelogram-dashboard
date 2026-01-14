@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="records.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Users</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item navmenu__item--active">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <button class="navmenu__avatar">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Settings</h2>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__list">
+            <a href="settings.html" class="subnav__item subnav__item--active">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M7 15v-6l4 3z"/></svg>
+              <span class="subnav__item-text">Overview</span>
+            </a>
+            <a href="settings-account.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="subnav__item-text">Account</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
+              <span class="subnav__item-text">Security</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="subnav__item-text">Notifications</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+              <span class="subnav__item-text">Integrations</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+              <span class="subnav__item-text">Team</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 21l18 0"/><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0m0 -1v1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"/><path d="M5 21l0 -10.15"/><path d="M19 21l0 -10.15"/><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"/></svg>
+              <span class="subnav__item-text">Billing</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Settings</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <span class="avatar">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </span>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <!-- Page Header -->
+        <div class="pageheader">
+          <h1 class="pageheader__title">Settings</h1>
+          <p class="pageheader__description">Manage your account settings and preferences.</p>
+        </div>
+
+        <!-- Settings Grid -->
+        <div class="card__grid card__grid--2">
+
+          <!-- Account Settings -->
+          <a href="settings-account.html" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--primary">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Account</h3>
+                  <p class="card__description">Profile, email, and personal info</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Security Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--success">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Security</h3>
+                  <p class="card__description">Password, 2FA, and sessions</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Notifications Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--warning">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Notifications</h3>
+                  <p class="card__description">Email, push, and in-app alerts</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Appearance Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--info">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/><path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Appearance</h3>
+                  <p class="card__description">Theme, colors, and display</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Integrations Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--secondary">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Integrations</h3>
+                  <p class="card__description">Connected apps and services</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Team Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Team</h3>
+                  <p class="card__description">Members, roles, and permissions</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Billing Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--success">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M3 10l18 0"/><path d="M7 15l.01 0"/><path d="M11 15l2 0"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">Billing</h3>
+                  <p class="card__description">Plans, invoices, and payments</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+          <!-- API Settings -->
+          <a href="#" class="card card--interactive">
+            <div class="card__header card__header--row">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--destructive">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 14l0 4"/><path d="M12 14l0 4"/><path d="M15 14l0 4"/></svg>
+                </div>
+                <div>
+                  <h3 class="card__title">API</h3>
+                  <p class="card__description">Keys, webhooks, and documentation</p>
+                </div>
+              </div>
+              <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Quick Settings -->
+        <h2 class="text--lg text--semibold mt--2xl mb--md">Quick Settings</h2>
+
+        <div class="card">
+          <div class="card__content card__content--pt">
+            <div class="stack stack--lg stack--divided">
+
+              <div class="cluster cluster--between">
+                <div>
+                  <h4 class="text--semibold">Dark mode</h4>
+                  <p class="text--sm text--muted">Toggle between light and dark theme</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" class="switch__input" id="darkModeToggle">
+                  <span class="switch__slider"></span>
+                </label>
+              </div>
+
+              <div class="cluster cluster--between">
+                <div>
+                  <h4 class="text--semibold">Email notifications</h4>
+                  <p class="text--sm text--muted">Receive email updates about activity</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" class="switch__input" checked>
+                  <span class="switch__slider"></span>
+                </label>
+              </div>
+
+              <div class="cluster cluster--between">
+                <div>
+                  <h4 class="text--semibold">Two-factor authentication</h4>
+                  <p class="text--sm text--muted">Add an extra layer of security</p>
+                </div>
+                <button class="btn btn--outline btn--sm">Enable</button>
+              </div>
+
+              <div class="cluster cluster--between">
+                <div>
+                  <h4 class="text--semibold">Language</h4>
+                  <p class="text--sm text--muted">Select your preferred language</p>
+                </div>
+                <select class="select select--sm" style="width: auto;">
+                  <option value="en">English</option>
+                  <option value="es">Spanish</option>
+                  <option value="fr">French</option>
+                  <option value="de">German</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? '' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      document.getElementById('darkModeToggle').checked = newTheme === 'dark';
+    }
+
+    // Sync dark mode toggle with actual theme
+    document.getElementById('darkModeToggle').addEventListener('change', function() {
+      document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : '');
+    });
+
+    // Set initial state
+    document.getElementById('darkModeToggle').checked = document.documentElement.getAttribute('data-theme') === 'dark';
+  </script>
+
+</body>
+</html>

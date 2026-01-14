@@ -20,7 +20,7 @@
   &__content {
     position: absolute;
     z-index: $z-tooltip;
-    padding: $spacing-1 $spacing-2;
+    padding: $spacing-3xs $spacing-2xs;
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
     color: var(--primary-fg);
@@ -57,7 +57,7 @@
   // Top (default)
   &__content,
   &__content--top {
-    bottom: calc(100% + $spacing-2);
+    bottom: calc(100% + $spacing-2xs);
     left: 50%;
     transform: translateX(-50%);
 
@@ -70,7 +70,7 @@
 
   // Bottom
   &__content--bottom {
-    top: calc(100% + $spacing-2);
+    top: calc(100% + $spacing-2xs);
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
@@ -85,7 +85,7 @@
 
   // Left
   &__content--left {
-    right: calc(100% + $spacing-2);
+    right: calc(100% + $spacing-2xs);
     left: auto;
     top: 50%;
     bottom: auto;
@@ -103,7 +103,7 @@
 
   // Right
   &__content--right {
-    left: calc(100% + $spacing-2);
+    left: calc(100% + $spacing-2xs);
     right: auto;
     top: 50%;
     bottom: auto;
@@ -146,10 +146,10 @@
   &::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: calc(100% + $spacing-2);
+    bottom: calc(100% + $spacing-2xs);
     left: 50%;
     transform: translateX(-50%);
-    padding: $spacing-1 $spacing-2;
+    padding: $spacing-3xs $spacing-2xs;
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
     color: var(--primary-fg);
@@ -171,20 +171,20 @@
   // Position variants
   &[data-tooltip-position="bottom"]::after {
     bottom: auto;
-    top: calc(100% + $spacing-2);
+    top: calc(100% + $spacing-2xs);
   }
 
   &[data-tooltip-position="left"]::after {
     bottom: auto;
     left: auto;
-    right: calc(100% + $spacing-2);
+    right: calc(100% + $spacing-2xs);
     top: 50%;
     transform: translateY(-50%);
   }
 
   &[data-tooltip-position="right"]::after {
     bottom: auto;
-    left: calc(100% + $spacing-2);
+    left: calc(100% + $spacing-2xs);
     top: 50%;
     transform: translateY(-50%);
   }

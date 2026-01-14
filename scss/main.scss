@@ -7,6 +7,9 @@
 @use "variables";
 @use "mixins";
 @use "base";
+@use "icon";
+@use "utilities";
+@use "demo";
 
 // Core Components
 @use "components/button";
@@ -33,3 +36,17 @@
 @use "components/stat";
 @use "components/separator";
 @use "components/command";
+
+// New Components
+@use "components/pagination";
+@use "components/toolbar";
+@use "components/empty";
+@use "components/form-layout";
+
+// Latest Components
+@use "components/accordion";
+@use "components/banner";
+@use "components/data-list";
+@use "components/sheet";
+@use "components/timeline";
+@use "components/toast";

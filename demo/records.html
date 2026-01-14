@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Records - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="records.html" class="navmenu__item navmenu__item--active">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Users</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <button class="navmenu__avatar">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Records</h2>
+        <div class="subnav__actions">
+          <button class="subnav__action" data-tooltip="Search">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Views</span>
+          </div>
+          <div class="subnav__list">
+            <a href="#" class="subnav__item subnav__item--active">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
+              <span class="subnav__item-text">All Records</span>
+              <span class="subnav__item-badge">1,248</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+              <span class="subnav__item-text">Starred</span>
+              <span class="subnav__item-badge">24</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/><path d="M10 12l4 0"/></svg>
+              <span class="subnav__item-text">Archived</span>
+              <span class="subnav__item-badge">156</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+              <span class="subnav__item-text">Trash</span>
+              <span class="subnav__item-badge">8</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Categories</span>
+            <button class="subnav__section-action">
+              <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+            </button>
+          </div>
+          <div class="subnav__list">
+            <a href="#" class="subnav__item">
+              <span class="dot dot--blue"></span>
+              <span class="subnav__item-text">Products</span>
+              <span class="subnav__item-badge">423</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <span class="dot dot--green"></span>
+              <span class="subnav__item-text">Customers</span>
+              <span class="subnav__item-badge">512</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <span class="dot dot--yellow"></span>
+              <span class="subnav__item-text">Orders</span>
+              <span class="subnav__item-badge">189</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <span class="dot dot--red"></span>
+              <span class="subnav__item-text">Invoices</span>
+              <span class="subnav__item-badge">124</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Records</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <span class="avatar">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </span>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <!-- Page Header -->
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">All Records</h1>
+            <p class="pageheader__description">Manage and browse your database records.</p>
+          </div>
+          <div class="pageheader__actions">
+            <button class="btn btn--outline">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 -5l5 5"/><path d="M12 6l0 12"/></svg>
+              Export
+            </button>
+            <button class="btn btn--outline">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>
+              Import
+            </button>
+            <a href="record-form.html" class="btn btn--primary">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+              Add Record
+            </a>
+          </div>
+        </div>
+
+        <!-- Records Table Card -->
+        <div class="card">
+          <!-- Search & Filter Bar -->
+          <div class="card__content card__content--pt">
+            <div class="toolbar">
+              <div class="toolbar__inputwrapper">
+                <svg class="icon toolbar__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                <input type="text" class="toolbar__input" placeholder="Search records..." id="searchInput">
+                <button class="toolbar__clear" id="clearSearch">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="toolbar__filters">
+                <div class="dropdown">
+                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"/></svg>
+                    Status
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h6v6h-6z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6h-6z"/><path d="M14 14h6v6h-6z"/></svg>
+                    Category
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/><path d="M11 15h1"/><path d="M12 15v3"/></svg>
+                    Date Range
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="toolbar__actions">
+                <button class="btn btn--ghost btn--sm btn--icon" title="List view">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
+                </button>
+                <button class="btn btn--ghost btn--sm btn--icon" title="Grid view">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Active Filters (shown when filters are applied) -->
+            <div class="activefilters mt--md" id="activeFilters" hidden>
+              <span class="activefilters__label">Active filters:</span>
+              <span class="filter__label filter__label--active">
+                Status: Active
+                <button class="filter__label__remove"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+              </span>
+              <span class="filter__label filter__label--active">
+                Category: Products
+                <button class="filter__label__remove"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+              </span>
+              <button class="activefilters__clear">Clear all</button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="card__content card__content--flush">
+            <div class="table__wrapper table__wrapper--borderless">
+              <table class="table table--hoverable table--card">
+              <thead class="table__header">
+                <tr class="table__row">
+                  <th class="table__head table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input" id="selectAll">
+                    </label>
+                  </th>
+                  <th class="table__head table__head--sortable table__head--sorted">
+                    ID
+                    <span class="table__sort-icon table__sort-icon--asc">
+                      <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M18 11l-6 -6"/><path d="M6 11l6 -6"/></svg>
+                    </span>
+                  </th>
+                  <th class="table__head table__head--sortable">Name</th>
+                  <th class="table__head table__head--sortable">Category</th>
+                  <th class="table__head table__head--sortable">Status</th>
+                  <th class="table__head table__head--sortable">Created</th>
+                  <th class="table__head table__head--sortable">Modified</th>
+                  <th class="table__head table__actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table__body" id="recordsTable">
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-001</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Premium Widget</div>
+                        <div class="text--xs text--muted">SKU: WDG-2024-001</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell text--muted">Jan 15, 2024</td>
+                  <td class="table__cell text--muted">2 hours ago</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=1" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=1" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-002</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">Acme Corporation</div>
+                        <div class="text--xs text--muted">contact@acme.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell text--muted">Jan 14, 2024</td>
+                  <td class="table__cell text--muted">Yesterday</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=2" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=2" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-003</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
+                      <div>
+                        <div class="text--medium">Order #45231</div>
+                        <div class="text--xs text--muted">5 items - $1,249.00</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Orders</span></td>
+                  <td class="table__cell"><span class="badge badge--warning-muted">Pending</span></td>
+                  <td class="table__cell text--muted">Jan 13, 2024</td>
+                  <td class="table__cell text--muted">3 days ago</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=3" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=3" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-004</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
+                      <div>
+                        <div class="text--medium">Invoice INV-2024-089</div>
+                        <div class="text--xs text--muted">$3,450.00 - Due Feb 1</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Invoices</span></td>
+                  <td class="table__cell"><span class="badge badge--info-muted">Sent</span></td>
+                  <td class="table__cell text--muted">Jan 12, 2024</td>
+                  <td class="table__cell text--muted">4 days ago</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=4" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=4" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-005</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Basic Component Set</div>
+                        <div class="text--xs text--muted">SKU: CMP-2024-015</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--secondary">Draft</span></td>
+                  <td class="table__cell text--muted">Jan 10, 2024</td>
+                  <td class="table__cell text--muted">6 days ago</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=5" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=5" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-006</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">TechStart Inc.</div>
+                        <div class="text--xs text--muted">hello@techstart.io</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--destructive-muted">Inactive</span></td>
+                  <td class="table__cell text--muted">Jan 8, 2024</td>
+                  <td class="table__cell text--muted">1 week ago</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=6" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=6" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-007</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
+                      <div>
+                        <div class="text--medium">Order #45198</div>
+                        <div class="text--xs text--muted">2 items - $499.00</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Orders</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Completed</span></td>
+                  <td class="table__cell text--muted">Jan 5, 2024</td>
+                  <td class="table__cell text--muted">Jan 7, 2024</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=7" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=7" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-008</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Enterprise Package</div>
+                        <div class="text--xs text--muted">SKU: ENT-2024-003</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell text--muted">Jan 3, 2024</td>
+                  <td class="table__cell text--muted">Jan 10, 2024</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=8" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=8" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-009</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
+                      <div>
+                        <div class="text--medium">Invoice INV-2024-076</div>
+                        <div class="text--xs text--muted">$890.00 - Paid</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Invoices</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Paid</span></td>
+                  <td class="table__cell text--muted">Jan 1, 2024</td>
+                  <td class="table__cell text--muted">Jan 5, 2024</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=9" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=9" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell table__checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" class="checkbox__input">
+                    </label>
+                  </td>
+                  <td class="table__cell"><code class="code--sm">REC-010</code></td>
+                  <td class="table__cell">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">Global Solutions Ltd</div>
+                        <div class="text--xs text--muted">info@globalsolutions.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell text--muted">Dec 28, 2023</td>
+                  <td class="table__cell text--muted">Jan 12, 2024</td>
+                  <td class="table__cell table__actions">
+                    <a href="record-form.html?id=10" class="btn btn--ghost btn--icon btn--sm" title="Edit">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                    </a>
+                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                    </button>
+                    <a href="record-delete.html?id=10" class="btn btn--ghost btn--icon btn--sm" title="Delete">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="card__footer card__footer--border">
+            <div class="pagination__info">
+              <div class="pagination__text">
+                Showing <strong>1</strong> to <strong>10</strong> of <strong>1,248</strong> records
+              </div>
+              <div class="pagination__select">
+                <span>Rows per page:</span>
+                <select class="select select--sm select--auto">
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+              <nav class="pagination">
+                <button class="pagination__prev pagination__item--disabled" disabled>
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+                </button>
+                <button class="pagination__item pagination__item--active">1</button>
+                <button class="pagination__item">2</button>
+                <button class="pagination__item">3</button>
+                <span class="pagination__ellipsis">...</span>
+                <button class="pagination__item">125</button>
+                <button class="pagination__next">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State (hidden by default, shown when no results) -->
+        <div class="card" id="emptyState" hidden>
+          <div class="empty empty--search">
+            <div class="empty__icon">
+              <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/><path d="M10 7v6"/><path d="M7 10h6"/></svg>
+            </div>
+            <h3 class="empty__title">No records found</h3>
+            <p class="empty__description">
+              We couldn't find any records matching your search criteria. Try adjusting your filters or search terms.
+            </p>
+            <div class="empty__actions">
+              <button class="btn btn--outline" onclick="clearFilters()">Clear Filters</button>
+              <a href="record-form.html" class="btn btn--primary">Add New Record</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulk Actions Bar (shown when items selected) -->
+        <div class="card bulkactions" id="bulkActions" hidden>
+          <div class="card__content bulkactions__content">
+            <span class="text--sm"><strong id="selectedCount">0</strong> items selected</span>
+            <div class="separator separator--vertical separator--h-lg"></div>
+            <button class="btn btn--ghost btn--sm">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/><path d="M10 12l4 0"/></svg>
+              Archive
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.116 -6.116a2.025 2.025 0 0 0 -1.432 -.593z"/><path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116"/><path d="M6 9h-.01"/></svg>
+              Tag
+            </button>
+            <button class="btn btn--ghost btn--sm">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+              Export
+            </button>
+            <button class="btn btn--destructive btn--sm">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearSearch');
+
+    searchInput.addEventListener('input', function() {
+      clearBtn.classList.toggle('toolbar__clear--visible', this.value.length > 0);
+    });
+
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      clearBtn.classList.remove('toolbar__clear--visible');
+      searchInput.focus();
+    });
+
+    // Select all functionality
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.table__body .checkbox__input');
+    const bulkActions = document.getElementById('bulkActions');
+    const selectedCount = document.getElementById('selectedCount');
+
+    selectAll.addEventListener('change', function() {
+      checkboxes.forEach(cb => cb.checked = this.checked);
+      updateBulkActions();
+    });
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updateBulkActions);
+    });
+
+    function updateBulkActions() {
+      const checked = document.querySelectorAll('.table__body .checkbox__input:checked');
+      const count = checked.length;
+      selectedCount.textContent = count;
+      bulkActions.hidden = count === 0;
+      selectAll.checked = count === checkboxes.length;
+      selectAll.indeterminate = count > 0 && count < checkboxes.length;
+    }
+
+    function clearFilters() {
+      document.getElementById('activeFilters').hidden = true;
+      searchInput.value = '';
+      clearBtn.classList.remove('toolbar__clear--visible');
+    }
+  </script>
+
+</body>
+</html>

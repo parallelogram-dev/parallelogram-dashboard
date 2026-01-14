@@ -40,11 +40,11 @@
 
     .sidebar__item {
       justify-content: center;
-      padding: $spacing-2;
+      padding: $spacing-2xs;
     }
 
     .sidebar__section {
-      padding: $spacing-2;
+      padding: $spacing-2xs;
     }
   }
 
@@ -63,8 +63,8 @@
   &__header {
     display: flex;
     align-items: center;
-    gap: $spacing-3;
-    padding: $spacing-4;
+    gap: $spacing-xs;
+    padding: $spacing-sm;
     height: $navbar-height;
     border-bottom: 1px solid var(--sidebar-border);
     flex-shrink: 0;
@@ -73,7 +73,7 @@
   &__logo {
     display: flex;
     align-items: center;
-    gap: $spacing-3;
+    gap: $spacing-xs;
     font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
     color: var(--sidebar-fg);
@@ -92,14 +92,14 @@
   &__content {
     flex: 1;
     overflow-y: auto;
-    padding: $spacing-2;
+    padding: $spacing-2xs;
   }
 
   &__section {
-    padding: $spacing-2 $spacing-3;
+    padding: $spacing-2xs $spacing-xs;
 
     & + & {
-      margin-top: $spacing-2;
+      margin-top: $spacing-2xs;
     }
   }
 
@@ -109,21 +109,21 @@
     color: var(--sidebar-muted);
     text-transform: uppercase;
     letter-spacing: $letter-spacing-wide;
-    padding: $spacing-2 $spacing-3;
-    margin-bottom: $spacing-1;
+    padding: $spacing-2xs $spacing-xs;
+    margin-bottom: $spacing-3xs;
   }
 
   &__nav {
     display: flex;
     flex-direction: column;
-    gap: $spacing-1;
+    gap: $spacing-3xs;
   }
 
   &__item {
     display: flex;
     align-items: center;
-    gap: $spacing-3;
-    padding: $spacing-2 $spacing-3;
+    gap: $spacing-xs;
+    padding: $spacing-2xs $spacing-xs;
     font-size: $font-size-sm;
     color: var(--sidebar-fg);
     border-radius: $radius-md;
@@ -158,7 +158,7 @@
 
   &__item-badge {
     font-size: $font-size-xs;
-    padding: 0.125rem $spacing-2;
+    padding: 0.125rem $spacing-2xs;
     background-color: var(--primary);
     color: var(--primary-fg);
     border-radius: $radius-full;
@@ -167,11 +167,11 @@
   &__divider {
     height: 1px;
     background-color: var(--sidebar-border);
-    margin: $spacing-2 $spacing-3;
+    margin: $spacing-2xs $spacing-xs;
   }
 
   &__footer {
-    padding: $spacing-4;
+    padding: $spacing-sm;
     border-top: 1px solid var(--sidebar-border);
     flex-shrink: 0;
   }
@@ -213,7 +213,7 @@
 // Main Content Offset
 // --------------------------------------------------------------------------
 
-.sidebar-layout {
+.sidebarlayout {
   display: flex;
   min-height: 100vh;
 
@@ -250,7 +250,7 @@
     }
   }
 
-  .sidebar-overlay {
+  .sidebaroverlay {
     position: fixed;
     inset: 0;
     background-color: rgb(0 0 0 / 0.5);
@@ -265,7 +265,7 @@
     }
   }
 
-  .sidebar-layout__main {
+  .sidebarlayout__main {
     margin-left: 0;
   }
 }
@@ -277,9 +277,9 @@
 .sidebar__submenu {
   display: none;
   flex-direction: column;
-  gap: $spacing-1;
-  padding-left: $spacing-8;
-  margin-top: $spacing-1;
+  gap: $spacing-3xs;
+  padding-left: $spacing-xl;
+  margin-top: $spacing-3xs;
 
   &--open {
     display: flex;

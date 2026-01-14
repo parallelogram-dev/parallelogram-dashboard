@@ -82,6 +82,16 @@
   &--lg { height: 1.5rem; }
   &--xl { height: 2rem; }
 
+  // Height modifiers for specific uses
+  &--h-lg { height: 8rem; }
+  &--h-xl { height: 10rem; }
+
+  // Width modifiers
+  &--w-50 { width: 50%; }
+  &--w-60 { width: 60%; }
+  &--w-70 { width: 70%; }
+  &--w-80 { width: 80%; }
+
   // --------------------------------------------------------------------------
   // No Animation
   // --------------------------------------------------------------------------
@@ -104,10 +114,10 @@
 // Skeleton Containers
 // --------------------------------------------------------------------------
 
-.skeleton-text {
+.skeleton__text {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-2xs;
 
   .skeleton {
     &:last-child {
@@ -116,107 +126,107 @@
   }
 }
 
-.skeleton-card {
+.skeleton__card {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
-  padding: $spacing-4;
+  gap: $spacing-xs;
+  padding: $spacing-sm;
   border: 1px solid var(--border);
   border-radius: $radius;
+}
 
-  &__image {
-    height: 10rem;
-    background-color: var(--bg-muted);
-    border-radius: $radius-md;
-  }
+.skeleton__card-image {
+  height: 10rem;
+  background-color: var(--bg-muted);
+  border-radius: $radius-md;
+}
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-2;
+.skeleton__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xs;
+}
+
+.skeleton__table {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xs;
+}
+
+.skeleton__table-row {
+  display: flex;
+  gap: $spacing-sm;
+  padding: $spacing-xs 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
   }
 }
 
-.skeleton-table {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
-
-  &__row {
-    display: flex;
-    gap: $spacing-4;
-    padding: $spacing-3 0;
-    border-bottom: 1px solid var(--border);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  &__cell {
-    flex: 1;
-    height: 1rem;
-    background-color: var(--bg-muted);
-    border-radius: $radius-sm;
-  }
+.skeleton__table-cell {
+  flex: 1;
+  height: 1rem;
+  background-color: var(--bg-muted);
+  border-radius: $radius-sm;
 }
 
-.skeleton-list {
+.skeleton__list {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: $spacing-xs;
+}
 
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: $spacing-3;
-  }
+.skeleton__list-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
 }
 
 // --------------------------------------------------------------------------
 // Dashboard Skeleton
 // --------------------------------------------------------------------------
 
-.skeleton-dashboard {
+.skeleton__dashboard {
   display: flex;
-  gap: $spacing-6;
+  gap: $spacing-lg;
+}
 
-  &__sidebar {
-    width: 16rem;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-3;
-  }
+.skeleton__dashboard-sidebar {
+  width: 16rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
 
-  &__main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-6;
-  }
+.skeleton__dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
 
-  &__header {
-    height: 4rem;
-    background-color: var(--bg-muted);
-    border-radius: $radius;
-  }
+.skeleton__dashboard-header {
+  height: 4rem;
+  background-color: var(--bg-muted);
+  border-radius: $radius;
+}
 
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-4;
-  }
+.skeleton__dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+}
 
-  &__stat {
-    height: 6rem;
-    background-color: var(--bg-muted);
-    border-radius: $radius;
-  }
+.skeleton__dashboard-stat {
+  height: 6rem;
+  background-color: var(--bg-muted);
+  border-radius: $radius;
+}
 
-  &__content {
-    height: 20rem;
-    background-color: var(--bg-muted);
-    border-radius: $radius;
-  }
+.skeleton__dashboard-content {
+  height: 20rem;
+  background-color: var(--bg-muted);
+  border-radius: $radius;
 }

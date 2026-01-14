@@ -1,0 +1,208 @@
+// ==========================================================================
+// Empty State Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Empty State
+// --------------------------------------------------------------------------
+
+.empty {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-3xl $spacing-lg;
+  text-align: center;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__icon {
+    @include flex-center;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: $spacing-sm;
+    background-color: var(--bg-muted);
+    border-radius: $radius-full;
+    color: var(--fg-muted);
+    font-size: 1.5rem;
+
+    // Standalone color modifiers
+    &--destructive {
+      background-color: var(--destructive-muted);
+      color: var(--destructive);
+    }
+
+    &--success {
+      background-color: var(--success-muted);
+      color: var(--success);
+    }
+
+    &--warning {
+      background-color: var(--warning-muted);
+      color: var(--warning);
+    }
+
+    &--info {
+      background-color: var(--info-muted);
+      color: var(--info);
+    }
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+    margin-bottom: $spacing-2xs;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    max-width: 24rem;
+    margin-bottom: $spacing-lg;
+    line-height: $line-height-relaxed;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__illustration {
+    width: 100%;
+    max-width: 16rem;
+    margin-bottom: $spacing-lg;
+    opacity: 0.8;
+
+    img,
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--sm {
+    padding: $spacing-lg $spacing-sm;
+
+    .empty__icon {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.25rem;
+      margin-bottom: $spacing-xs;
+    }
+
+    .empty__title {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-3xs;
+    }
+
+    .empty__description {
+      font-size: $font-size-xs;
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  &--lg {
+    padding: $spacing-4xl $spacing-xl;
+
+    .empty__icon {
+      width: 5rem;
+      height: 5rem;
+      font-size: 2rem;
+      margin-bottom: $spacing-lg;
+    }
+
+    .empty__title {
+      font-size: $font-size-xl;
+    }
+
+    .empty__illustration {
+      max-width: 20rem;
+    }
+  }
+
+  &--inline {
+    flex-direction: row;
+    padding: $spacing-lg $spacing-sm;
+    text-align: left;
+    gap: $spacing-sm;
+
+    .empty__icon {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .empty__content {
+      flex: 1;
+    }
+
+    .empty__title {
+      margin-bottom: $spacing-3xs;
+    }
+
+    .empty__description {
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  // Contextual variants
+  &--search {
+    .empty__icon {
+      background-color: var(--info-muted);
+      color: var(--info);
+    }
+  }
+
+  &--error {
+    .empty__icon {
+      background-color: var(--destructive-muted);
+      color: var(--destructive);
+    }
+  }
+
+  &--success {
+    .empty__icon {
+      background-color: var(--success-muted);
+      color: var(--success);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// No Results (specific empty state for search)
+// --------------------------------------------------------------------------
+
+.noresults {
+  @extend .empty;
+  @extend .empty--search;
+
+  &__query {
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+  }
+
+  &__suggestions {
+    margin-top: $spacing-sm;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    text-align: left;
+
+    ul {
+      list-style: disc;
+      padding-left: $spacing-sm;
+      margin-top: $spacing-2xs;
+    }
+
+    li {
+      margin-bottom: $spacing-3xs;
+    }
+  }
+}

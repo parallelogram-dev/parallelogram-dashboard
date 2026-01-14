@@ -1,0 +1,253 @@
+// ==========================================================================
+// Accordion Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Accordion Container
+// --------------------------------------------------------------------------
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+
+  // --------------------------------------------------------------------------
+  // Accordion Item
+  // --------------------------------------------------------------------------
+
+  &__item {
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $spacing-sm 0;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    text-align: left;
+    color: var(--fg);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      color: var(--fg-muted);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+      border-radius: $radius-sm;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    @include transition-default;
+
+    .accordion__item--open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__content {
+    overflow: hidden;
+    max-height: 0;
+    @include transition-default;
+
+    .accordion__item--open & {
+      max-height: 500px; // Adjust as needed, or use JS for dynamic height
+    }
+  }
+
+  &__body {
+    padding-bottom: $spacing-sm;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    line-height: $line-height-relaxed;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Bordered variant
+  &--bordered {
+    border: 1px solid var(--border);
+    border-radius: $radius;
+
+    .accordion__item {
+      border-bottom: 1px solid var(--border);
+      padding: 0 $spacing-sm;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // Separated variant (cards)
+  &--separated {
+    gap: $spacing-xs;
+
+    .accordion__item {
+      border: 1px solid var(--border);
+      border-radius: $radius;
+      padding: 0 $spacing-sm;
+      background-color: var(--card);
+    }
+  }
+
+  // Flush variant (no padding)
+  &--flush {
+    .accordion__trigger {
+      padding: $spacing-xs 0;
+    }
+
+    .accordion__body {
+      padding-bottom: $spacing-xs;
+    }
+  }
+
+  // With icons
+  &--icons {
+    .accordion__trigger {
+      gap: $spacing-xs;
+    }
+
+    .accordion__trigger-icon {
+      flex-shrink: 0;
+      width: $icon-size-md;
+      height: $icon-size-md;
+      color: var(--fg-muted);
+    }
+
+    .accordion__trigger-text {
+      flex: 1;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Collapsible (single item variant)
+// --------------------------------------------------------------------------
+
+.collapsible {
+  border: 1px solid var(--border);
+  border-radius: $radius;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $spacing-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-align: left;
+    color: var(--fg);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      background-color: var(--bg-muted);
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    @include transition-default;
+
+    .collapsible--open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__content {
+    overflow: hidden;
+    max-height: 0;
+    @include transition-default;
+
+    .collapsible--open & {
+      max-height: 1000px;
+    }
+  }
+
+  &__body {
+    padding: 0 $spacing-sm $spacing-sm;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    border-top: 1px solid var(--border);
+    padding-top: $spacing-sm;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Details/Summary (native HTML)
+// --------------------------------------------------------------------------
+
+details.accordion-native {
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid var(--fg-muted);
+      border-bottom: 2px solid var(--fg-muted);
+      transform: rotate(45deg);
+      @include transition-default;
+    }
+
+    &:hover {
+      color: var(--fg-muted);
+    }
+  }
+
+  &[open] summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .accordion-native__content {
+    padding-bottom: $spacing-sm;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    line-height: $line-height-relaxed;
+  }
+}

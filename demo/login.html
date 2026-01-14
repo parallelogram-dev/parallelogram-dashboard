@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body class="bg--muted">
+
+  <div class="auth">
+    <div class="auth__container">
+
+      <!-- Logo -->
+      <div class="auth__header">
+        <a href="dashboard.html" class="auth__logo">
+          <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+        <h1 class="auth__title">Welcome back</h1>
+        <p class="auth__description">Enter your credentials to access your account</p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="card">
+        <div class="card__content card__content--pt">
+          <form class="form" id="loginForm">
+
+            <div class="formfield">
+              <label class="formfield__label" for="email">Email</label>
+              <input type="email" class="input" id="email" placeholder="name@company.com" required>
+            </div>
+
+            <div class="formfield">
+              <div class="cluster cluster--between">
+                <label class="formfield__label" for="password">Password</label>
+                <a href="forgot-password.html" class="link text--sm">Forgot password?</a>
+              </div>
+              <input type="password" class="input" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="formfield">
+              <label class="checkbox">
+                <input type="checkbox" class="checkbox__input" id="remember">
+                <span class="checkbox__label">Remember me for 30 days</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">
+              Sign in
+            </button>
+
+          </form>
+
+          <div class="separator separator--text my--lg">
+            <span>or continue with</span>
+          </div>
+
+          <div class="cluster cluster--center">
+            <button class="btn btn--outline">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M20.945 11a9 9 0 1 1 -3.284 -5.997l-2.655 2.392a5.5 5.5 0 1 0 2.119 6.605h-4.125v-3h7.945z"/></svg>
+              Google
+            </button>
+            <button class="btn btn--outline">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
+              GitHub
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <p class="auth__footer">
+        Don't have an account? <a href="#" class="link">Sign up</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+
+</body>
+</html>

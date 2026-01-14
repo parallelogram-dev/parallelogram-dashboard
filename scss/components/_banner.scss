@@ -1,0 +1,337 @@
+// ==========================================================================
+// Banner Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Banner Base
+// --------------------------------------------------------------------------
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-xs $spacing-sm;
+  background-color: var(--bg-muted);
+  border-bottom: 1px solid var(--border);
+
+  &__icon {
+    flex-shrink: 0;
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    flex-wrap: wrap;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    color: var(--fg);
+
+    strong {
+      font-weight: $font-weight-semibold;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover {
+        text-decoration-thickness: 2px;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    flex-shrink: 0;
+  }
+
+  &__dismiss {
+    flex-shrink: 0;
+    @include flex-center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    color: var(--fg-muted);
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      color: var(--fg);
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Color Variants
+  // --------------------------------------------------------------------------
+
+  &--info {
+    background-color: var(--info-muted);
+    border-color: var(--info);
+
+    .banner__icon {
+      color: var(--info);
+    }
+  }
+
+  &--success {
+    background-color: var(--success-muted);
+    border-color: var(--success);
+
+    .banner__icon {
+      color: var(--success);
+    }
+  }
+
+  &--warning {
+    background-color: var(--warning-muted);
+    border-color: var(--warning);
+
+    .banner__icon {
+      color: var(--warning);
+    }
+  }
+
+  &--error {
+    background-color: var(--destructive-muted);
+    border-color: var(--destructive);
+
+    .banner__icon {
+      color: var(--destructive);
+    }
+  }
+
+  &--primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+
+    .banner__icon,
+    .banner__text {
+      color: var(--primary-fg);
+    }
+
+    .banner__dismiss {
+      color: var(--primary-fg);
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  &--dark {
+    background-color: var(--fg);
+    border-color: var(--fg);
+
+    .banner__icon,
+    .banner__text {
+      color: var(--bg);
+    }
+
+    .banner__dismiss {
+      color: var(--bg);
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Layout Variants
+  // --------------------------------------------------------------------------
+
+  // Centered content
+  &--centered {
+    justify-content: center;
+
+    .banner__content {
+      flex: none;
+      justify-content: center;
+    }
+  }
+
+  // Sticky to top
+  &--sticky {
+    position: sticky;
+    top: 0;
+    z-index: $z-sticky;
+  }
+
+  // Fixed to top
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-fixed;
+  }
+
+  // Compact
+  &--compact {
+    padding: $spacing-2xs $spacing-sm;
+
+    .banner__text {
+      font-size: $font-size-xs;
+    }
+  }
+
+  // No border
+  &--borderless {
+    border: none;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Announcement Banner (more prominent)
+// --------------------------------------------------------------------------
+
+.announcement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: var(--primary-fg);
+  text-align: center;
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-3xs $spacing-2xs;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: $radius-full;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration-thickness: 2px;
+      }
+    }
+  }
+
+  &__arrow {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    flex-shrink: 0;
+  }
+
+  &__dismiss {
+    position: absolute;
+    right: $spacing-sm;
+    @include flex-center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    color: inherit;
+    opacity: 0.8;
+    cursor: pointer;
+    @include transition-opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Cookie/Consent Banner
+// --------------------------------------------------------------------------
+
+.consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-fixed;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  background-color: var(--card);
+  border-top: 1px solid var(--border);
+  box-shadow: $shadow-lg;
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+    margin-bottom: $spacing-3xs;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+
+    a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    flex-shrink: 0;
+  }
+
+  @include max-md {
+    flex-direction: column;
+    align-items: stretch;
+
+    &__actions {
+      justify-content: flex-end;
+    }
+  }
+}

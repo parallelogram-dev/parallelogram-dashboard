@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Record - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="records.html" class="navmenu__item navmenu__item--active">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Users</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <button class="navmenu__avatar">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Records</h2>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Views</span>
+          </div>
+          <div class="subnav__list">
+            <a href="records.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
+              <span class="subnav__item-text">All Records</span>
+            </a>
+            <a href="#" class="subnav__item subnav__item--active">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+              <span class="subnav__item-text">Add New</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Quick Templates</span>
+          </div>
+          <div class="subnav__list">
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+              <span class="subnav__item-text">Product</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="subnav__item-text">Customer</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17h-11v-14h-2"/><path d="M6 5l14 1l-1 7h-13"/></svg>
+              <span class="subnav__item-text">Order</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 7l1 0"/><path d="M9 13l6 0"/><path d="M13 17l2 0"/></svg>
+              <span class="subnav__item-text">Invoice</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <a href="records.html" class="breadcrumb__link">Records</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page" id="breadcrumbTitle">Add New</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <span class="avatar">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </span>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <!-- Page Header -->
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title" id="pageTitle">Add New Record</h1>
+            <p class="pageheader__description">Fill in the details below to create a new record.</p>
+          </div>
+          <div class="pageheader__actions">
+            <a href="records.html" class="btn btn--ghost">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+              Cancel
+            </a>
+            <button class="btn btn--outline" type="button" onclick="saveDraft()">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M14 4l0 4l-6 0l0 -4"/></svg>
+              Save Draft
+            </button>
+            <button class="btn btn--primary" type="submit" form="recordForm">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+              Save Record
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Content -->
+        <div class="grid grid--2-1 grid--start">
+
+          <!-- Main Form -->
+          <div class="card">
+            <div class="card__header">
+              <h3 class="card__title">Record Details</h3>
+              <p class="card__description">Enter the basic information for this record.</p>
+            </div>
+            <div class="card__content">
+              <form class="form" id="recordForm">
+
+                <!-- Basic Information Section -->
+                <div class="form__section">
+                  <div class="form__section-header">
+                    <h4 class="form__section-title">Basic Information</h4>
+                    <p class="form__section-description">Primary details that identify this record.</p>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label" for="name">
+                      Name
+                      <span class="formfield__required">*</span>
+                    </label>
+                    <input type="text" class="input" id="name" placeholder="Enter record name" required>
+                    <span class="formfield__hint">This will be the primary identifier for the record.</span>
+                  </div>
+
+                  <div class="form__row form__row--2">
+                    <div class="formfield">
+                      <label class="formfield__label" for="category">
+                        Category
+                        <span class="formfield__required">*</span>
+                      </label>
+                      <select class="select" id="category" required>
+                        <option value="">Select a category</option>
+                        <option value="products">Products</option>
+                        <option value="customers">Customers</option>
+                        <option value="orders">Orders</option>
+                        <option value="invoices">Invoices</option>
+                      </select>
+                    </div>
+
+                    <div class="formfield">
+                      <label class="formfield__label" for="sku">
+                        SKU / Reference
+                        <span class="formfield__optional">(optional)</span>
+                      </label>
+                      <input type="text" class="input" id="sku" placeholder="e.g., SKU-2024-001">
+                    </div>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label" for="description">
+                      Description
+                      <span class="formfield__optional">(optional)</span>
+                    </label>
+                    <textarea class="textarea" id="description" rows="4" placeholder="Add a detailed description..." maxlength="500"></textarea>
+                    <div class="formfield__counter" id="descCounter">0 / 500</div>
+                  </div>
+                </div>
+
+                <!-- Additional Details Section -->
+                <div class="form__section form__section--bordered">
+                  <div class="form__section-header">
+                    <h4 class="form__section-title">Additional Details</h4>
+                    <p class="form__section-description">Extra information and metadata.</p>
+                  </div>
+
+                  <div class="form__row form__row--3">
+                    <div class="formfield">
+                      <label class="formfield__label" for="quantity">Quantity</label>
+                      <div class="inputgroup">
+                        <input type="number" class="input" id="quantity" placeholder="0" min="0">
+                        <span class="inputgroup__addon">units</span>
+                      </div>
+                    </div>
+
+                    <div class="formfield">
+                      <label class="formfield__label" for="price">Price</label>
+                      <div class="inputgroup">
+                        <span class="inputgroup__addon">$</span>
+                        <input type="number" class="input" id="price" placeholder="0.00" step="0.01" min="0">
+                      </div>
+                    </div>
+
+                    <div class="formfield">
+                      <label class="formfield__label" for="tax">Tax Rate</label>
+                      <div class="inputgroup">
+                        <input type="number" class="input" id="tax" placeholder="0" min="0" max="100">
+                        <span class="inputgroup__addon">%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label">Date Range</label>
+                    <p-datetime
+                      name="startDate"
+                      mode="date"
+                      range
+                      range-to="endDate"
+                      from-label="Start Date"
+                      to-label="End Date"
+                      show-quick-dates
+                      class="input"
+                    ></p-datetime>
+                  </div>
+                </div>
+
+                <!-- Contact Information Section -->
+                <div class="form__section form__section--bordered">
+                  <div class="form__section-header">
+                    <h4 class="form__section-title">Contact Information</h4>
+                    <p class="form__section-description">Related contact details if applicable.</p>
+                  </div>
+
+                  <div class="form__row form__row--2">
+                    <div class="formfield">
+                      <label class="formfield__label" for="email">Email Address</label>
+                      <div class="inputwrapper">
+                        <svg class="icon inputwrapper__icon" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+                        <input type="email" class="input input--icon-left" id="email" placeholder="email@example.com">
+                      </div>
+                    </div>
+
+                    <div class="formfield">
+                      <label class="formfield__label" for="phone">Phone Number</label>
+                      <div class="inputwrapper">
+                        <svg class="icon inputwrapper__icon" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg>
+                        <input type="tel" class="input input--icon-left" id="phone" placeholder="+1 (555) 000-0000">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label" for="website">Website</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">https://</span>
+                      <input type="text" class="input" id="website" placeholder="www.example.com">
+                    </div>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label" for="address">Address</label>
+                    <textarea class="textarea" id="address" rows="2" placeholder="Street address, city, state, zip code"></textarea>
+                  </div>
+                </div>
+
+                <!-- Tags Section -->
+                <div class="form__section">
+                  <div class="form__section-header">
+                    <h4 class="form__section-title">Tags</h4>
+                    <p class="form__section-description">Add tags to help organize and find this record.</p>
+                  </div>
+
+                  <div class="formfield">
+                    <label class="formfield__label" for="tags">Tags</label>
+                    <input type="text" class="input" id="tags" placeholder="Enter tags separated by commas">
+                    <span class="formfield__hint">Example: important, follow-up, priority</span>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="stack stack--lg">
+
+            <!-- Status Card -->
+            <div class="card">
+              <div class="card__header">
+                <h3 class="card__title">Status</h3>
+              </div>
+              <div class="card__content">
+                <div class="formfield">
+                  <label class="formfield__label">Visibility</label>
+                  <div class="stack stack--sm">
+                    <label class="radio">
+                      <input type="radio" name="status" class="radio__input" value="draft" checked>
+                      <span class="radio__label">Draft</span>
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="radio__input" value="active">
+                      <span class="radio__label">Active</span>
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="radio__input" value="archived">
+                      <span class="radio__label">Archived</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="separator my--md"></div>
+
+                <div class="formfield">
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input" id="featured">
+                    <span class="switch__label">Featured</span>
+                  </label>
+                </div>
+
+                <div class="formfield">
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input" id="notifyChanges" checked>
+                    <span class="switch__label">Notify on changes</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Attachments Card -->
+            <div class="card">
+              <div class="card__header card__header--row">
+                <h3 class="card__title">Attachments</h3>
+                <button class="btn btn--ghost btn--sm btn--icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                </button>
+              </div>
+              <div class="card__content">
+                <div class="empty empty--sm">
+                  <div class="empty__icon">
+                    <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>
+                  </div>
+                  <p class="empty__description">
+                    Drag and drop files here or click to browse
+                  </p>
+                  <div class="empty__actions">
+                    <button class="btn btn--outline btn--sm">Browse Files</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notes Card -->
+            <div class="card">
+              <div class="card__header">
+                <h3 class="card__title">Internal Notes</h3>
+              </div>
+              <div class="card__content">
+                <textarea class="textarea" rows="3" placeholder="Add private notes about this record..."></textarea>
+              </div>
+            </div>
+
+            <!-- Metadata Card (shown in edit mode) -->
+            <div class="card" id="metadataCard" hidden>
+              <div class="card__header">
+                <h3 class="card__title">Metadata</h3>
+              </div>
+              <div class="card__content">
+                <dl class="stack stack--sm text--sm">
+                  <div class="cluster cluster--between">
+                    <dt class="text--muted">Created</dt>
+                    <dd>Jan 15, 2024</dd>
+                  </div>
+                  <div class="cluster cluster--between">
+                    <dt class="text--muted">Modified</dt>
+                    <dd>2 hours ago</dd>
+                  </div>
+                  <div class="cluster cluster--between">
+                    <dt class="text--muted">Created by</dt>
+                    <dd>John Doe</dd>
+                  </div>
+                  <div class="cluster cluster--between">
+                    <dt class="text--muted">Record ID</dt>
+                    <dd><code class="code--sm">REC-001</code></dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Mobile Sticky Actions -->
+        <div class="form__actions form__actions--sticky" id="mobileActions" hidden>
+          <a href="records.html" class="btn btn--ghost">Cancel</a>
+          <button class="btn btn--primary" type="submit" form="recordForm">Save Record</button>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    }
+
+    // Character counter for description
+    const description = document.getElementById('description');
+    const counter = document.getElementById('descCounter');
+
+    description.addEventListener('input', function() {
+      const count = this.value.length;
+      counter.textContent = `${count} / 500`;
+
+      if (count > 450) {
+        counter.classList.add('formfield__counter--warning');
+      } else {
+        counter.classList.remove('formfield__counter--warning');
+      }
+
+      if (count >= 500) {
+        counter.classList.add('formfield__counter--error');
+      } else {
+        counter.classList.remove('formfield__counter--error');
+      }
+    });
+
+    // Check if editing existing record
+    const urlParams = new URLSearchParams(window.location.search);
+    const recordId = urlParams.get('id');
+
+    if (recordId) {
+      // Edit mode
+      document.getElementById('pageTitle').textContent = 'Edit Record';
+      document.getElementById('breadcrumbTitle').textContent = 'Edit';
+      document.title = 'Edit Record - Parallelogram Dashboard';
+      document.getElementById('metadataCard').hidden = false;
+
+      // Pre-fill form with sample data (in real app, this would come from API)
+      document.getElementById('name').value = 'Premium Widget';
+      document.getElementById('category').value = 'products';
+      document.getElementById('sku').value = 'WDG-2024-001';
+      document.getElementById('description').value = 'A high-quality premium widget with advanced features.';
+      document.getElementById('price').value = '299.99';
+      document.getElementById('quantity').value = '150';
+
+      // Update counter
+      counter.textContent = `${document.getElementById('description').value.length} / 500`;
+    }
+
+    // Form submission
+    document.getElementById('recordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Show success alert
+      alert('Record saved successfully!');
+      window.location.href = 'records.html';
+    });
+
+    function saveDraft() {
+      alert('Draft saved!');
+    }
+
+    // Show mobile actions on smaller screens
+    function checkMobileActions() {
+      const mobileActions = document.getElementById('mobileActions');
+      if (window.innerWidth < 768) {
+        mobileActions.hidden = false;
+      } else {
+        mobileActions.hidden = true;
+      }
+    }
+
+    window.addEventListener('resize', checkMobileActions);
+    checkMobileActions();
+  </script>
+
+</body>
+</html>

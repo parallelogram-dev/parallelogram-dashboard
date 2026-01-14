@@ -1,0 +1,356 @@
+// ==========================================================================
+// Utilities - BEM-style utility blocks
+// ==========================================================================
+
+// -------------------------------------------------------------------------
+// Layout Block - Flex and grid layouts
+// -------------------------------------------------------------------------
+.layout {
+  display: flex;
+
+  // Direction modifiers
+  &--col { flex-direction: column; }
+  &--row { flex-direction: row; }
+  &--wrap { flex-wrap: wrap; }
+
+  // Alignment modifiers
+  &--center {
+    align-items: center;
+    justify-content: center;
+  }
+  &--between { justify-content: space-between; }
+  &--start { align-items: flex-start; }
+  &--end { align-items: flex-end; }
+
+  // Gap modifiers
+  &--gap-xs { gap: 0.25rem; }
+  &--gap-sm { gap: 0.5rem; }
+  &--gap-md { gap: 1rem; }
+  &--gap-lg { gap: 1.5rem; }
+  &--gap-xl { gap: 2rem; }
+}
+
+// -------------------------------------------------------------------------
+// Stack Block - Vertical stacking with consistent spacing
+// -------------------------------------------------------------------------
+.stack {
+  display: flex;
+  flex-direction: column;
+
+  &--xs { gap: 0.25rem; }
+  &--sm { gap: 0.5rem; }
+  &--md { gap: 1rem; }
+  &--lg { gap: 1.5rem; }
+  &--xl { gap: 2rem; }
+  &--2xl { gap: 3rem; }
+
+  &--divided > * + * {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Cluster Block - Horizontal grouping with wrapping
+// -------------------------------------------------------------------------
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &--xs { gap: 0.25rem; }
+  &--sm { gap: 0.5rem; }
+  &--md { gap: 1rem; }
+  &--lg { gap: 1.5rem; }
+  &--xl { gap: 2rem; }
+
+  &--start { align-items: flex-start; }
+  &--between { justify-content: space-between; }
+}
+
+// -------------------------------------------------------------------------
+// Constrain Block - Max-width containers
+// -------------------------------------------------------------------------
+.constrain {
+  width: 100%;
+
+  &--xs { max-width: 12.5rem; }  // 200px
+  &--sm { max-width: 25rem; }    // 400px
+  &--md { max-width: 37.5rem; }  // 600px
+  &--lg { max-width: 50rem; }    // 800px
+}
+
+// -------------------------------------------------------------------------
+// Spacer Block - Spacing utility
+// -------------------------------------------------------------------------
+.spacer {
+  &--xs { margin-top: 0.25rem; }
+  &--sm { margin-top: 0.5rem; }
+  &--md { margin-top: 1rem; }
+  &--lg { margin-top: 1.5rem; }
+  &--xl { margin-top: 2rem; }
+  &--2xl { margin-top: 3rem; }
+}
+
+// -------------------------------------------------------------------------
+// Layout Helpers
+// -------------------------------------------------------------------------
+.layout--relative {
+  position: relative;
+}
+
+// -------------------------------------------------------------------------
+// Grid Block - CSS Grid layouts
+// -------------------------------------------------------------------------
+.grid {
+  display: grid;
+  gap: 1.5rem;
+
+  &--2-1 {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  &--1-2 {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  &--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--gap-sm { gap: 0.5rem; }
+  &--gap-md { gap: 1rem; }
+  &--gap-lg { gap: 1.5rem; }
+  &--gap-xl { gap: 2rem; }
+
+  &--start { align-items: start; }
+}
+
+// -------------------------------------------------------------------------
+// Text Block - Typography utilities
+// -------------------------------------------------------------------------
+.text {
+  &--center { text-align: center; }
+  &--left { text-align: left; }
+  &--right { text-align: right; }
+
+  &--medium { font-weight: 500; }
+  &--semibold { font-weight: 600; }
+  &--bold { font-weight: 700; }
+
+  &--xs { font-size: 0.75rem; }
+  &--sm { font-size: 0.875rem; }
+  &--lg { font-size: 1.125rem; }
+  &--xl { font-size: 1.25rem; }
+
+  &--muted { color: var(--fg-muted); }
+  &--subtle { color: var(--fg-subtle); }
+}
+
+// -------------------------------------------------------------------------
+// Center Block - Centered containers
+// -------------------------------------------------------------------------
+.center {
+  margin-left: auto;
+  margin-right: auto;
+
+  &--sm { max-width: 32rem; }  // 512px
+  &--md { max-width: 40rem; }  // 640px
+  &--lg { max-width: 48rem; }  // 768px
+}
+
+// -------------------------------------------------------------------------
+// Flex Item Utilities
+// -------------------------------------------------------------------------
+.flex--1 { flex: 1; }
+.flex--none { flex: none; }
+.flex--shrink0 { flex-shrink: 0; }
+
+// -------------------------------------------------------------------------
+// Margin Block - Margin utilities
+// -------------------------------------------------------------------------
+.mb {
+  &--xs { margin-bottom: 0.25rem; }
+  &--sm { margin-bottom: 0.5rem; }
+  &--md { margin-bottom: 1rem; }
+  &--lg { margin-bottom: 1.5rem; }
+  &--xl { margin-bottom: 2rem; }
+  &--2xl { margin-bottom: 3rem; }
+}
+
+.mt {
+  &--xs { margin-top: 0.25rem; }
+  &--sm { margin-top: 0.5rem; }
+  &--md { margin-top: 1rem; }
+  &--lg { margin-top: 1.5rem; }
+  &--xl { margin-top: 2rem; }
+  &--2xl { margin-top: 3rem; }
+}
+
+.my {
+  &--md {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  &--lg {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Dot Block - Category/status indicator dots
+// -------------------------------------------------------------------------
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--blue { background-color: #3b82f6; }
+  &--green { background-color: #22c55e; }
+  &--yellow { background-color: #f59e0b; }
+  &--red { background-color: #ef4444; }
+  &--purple { background-color: #8b5cf6; }
+  &--pink { background-color: #ec4899; }
+}
+
+// -------------------------------------------------------------------------
+// Avatar Color Modifiers
+// -------------------------------------------------------------------------
+.avatar__fallback--blue { background-color: #3b82f6; }
+.avatar__fallback--green { background-color: #22c55e; }
+.avatar__fallback--yellow { background-color: #f59e0b; }
+.avatar__fallback--orange { background-color: #f97316; }
+.avatar__fallback--red { background-color: #ef4444; }
+.avatar__fallback--purple { background-color: #8b5cf6; }
+.avatar__fallback--pink { background-color: #ec4899; }
+
+// -------------------------------------------------------------------------
+// Icon Color Modifiers
+// -------------------------------------------------------------------------
+.icon--primary { color: var(--primary); }
+.icon--warning { color: var(--warning); }
+.icon--destructive { color: var(--destructive); }
+.icon--success { color: var(--success); }
+.icon--muted { color: var(--fg-muted); }
+
+// -------------------------------------------------------------------------
+// Width Utilities
+// -------------------------------------------------------------------------
+.w--full { width: 100%; }
+
+// -------------------------------------------------------------------------
+// List Block - Styled lists
+// -------------------------------------------------------------------------
+.list {
+  &--disc {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  &--spaced {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Box Block - Generic container with padding/background
+// -------------------------------------------------------------------------
+.box {
+  &--muted {
+    background-color: var(--bg-muted);
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  &--icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--bg-muted);
+    color: var(--fg-muted);
+    flex-shrink: 0;
+
+    &.box--sm {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &--primary {
+    background-color: var(--primary-muted);
+    color: var(--primary);
+  }
+
+  &--success {
+    background-color: var(--success-muted);
+    color: var(--success);
+  }
+
+  &--warning {
+    background-color: var(--warning-muted);
+    color: var(--warning);
+  }
+
+  &--destructive {
+    background-color: var(--destructive-muted);
+    color: var(--destructive);
+  }
+
+  &--info {
+    background-color: var(--info-muted);
+    color: var(--info);
+  }
+
+  &--secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-fg);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Code Block - Inline code styling
+// -------------------------------------------------------------------------
+code.code--sm {
+  font-size: 0.75rem;
+}
+
+// -------------------------------------------------------------------------
+// Background Utilities
+// -------------------------------------------------------------------------
+.bg--muted {
+  background-color: var(--bg-muted);
+}
+
+// -------------------------------------------------------------------------
+// Text Color Utilities
+// -------------------------------------------------------------------------
+.text--destructive {
+  color: var(--destructive);
+}
+
+.text--success {
+  color: var(--success);
+}
+
+.text--warning {
+  color: var(--warning);
+}
+
+.text--primary {
+  color: var(--primary);
+}

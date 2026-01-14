@@ -29,7 +29,7 @@
     left: 0;
     z-index: $z-dropdown;
     min-width: 12rem;
-    padding: $spacing-1;
+    padding: $spacing-3xs;
     background-color: var(--popover);
     color: var(--popover-fg);
     border: 1px solid var(--border);
@@ -45,7 +45,7 @@
     .dropdown--open & {
       opacity: 1;
       visibility: visible;
-      transform: translateY($spacing-1);
+      transform: translateY($spacing-3xs);
     }
   }
 
@@ -67,7 +67,7 @@
 
     &--open,
     .dropdown--open & {
-      transform: translateY(-$spacing-1);
+      transform: translateY(-$spacing-3xs);
     }
   }
 
@@ -78,7 +78,7 @@
 
     &--open,
     .dropdown--open & {
-      transform: translateX(-50%) translateY($spacing-1);
+      transform: translateX(-50%) translateY($spacing-3xs);
     }
   }
 
@@ -89,9 +89,9 @@
   &__item {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
+    gap: $spacing-2xs;
     width: 100%;
-    padding: $spacing-2 $spacing-3;
+    padding: $spacing-2xs $spacing-xs;
     font-size: $font-size-sm;
     color: var(--popover-fg);
     border-radius: $radius-sm;
@@ -152,11 +152,11 @@
   &__divider {
     height: 1px;
     background-color: var(--border);
-    margin: $spacing-1 0;
+    margin: $spacing-3xs 0;
   }
 
   &__label {
-    padding: $spacing-2 $spacing-3;
+    padding: $spacing-2xs $spacing-xs;
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
     color: var(--fg-muted);
@@ -177,27 +177,27 @@
     &-arrow {
       width: $icon-size-sm;
       height: $icon-size-sm;
-      margin-left: $spacing-2;
+      margin-left: $spacing-2xs;
     }
 
     &-content {
       position: absolute;
       top: 0;
       left: 100%;
-      margin-left: $spacing-1;
+      margin-left: $spacing-3xs;
     }
   }
 }
 
 // --------------------------------------------------------------------------
-// Dropdown Menu (standalone, for context menus)
+// Context Menu (standalone, for right-click menus)
 // --------------------------------------------------------------------------
 
-.dropdown-menu {
+.contextmenu {
   position: fixed;
   z-index: $z-popover;
   min-width: 12rem;
-  padding: $spacing-1;
+  padding: $spacing-3xs;
   background-color: var(--popover);
   color: var(--popover-fg);
   border: 1px solid var(--border);

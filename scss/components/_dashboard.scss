@@ -33,7 +33,7 @@
 // Main Navigation (Icon Rail)
 // --------------------------------------------------------------------------
 
-.main-nav {
+.navmenu {
   display: flex;
   flex-direction: column;
   width: 4rem;
@@ -68,8 +68,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: $spacing-2;
-    gap: $spacing-1;
+    padding: $spacing-2xs;
+    gap: $spacing-3xs;
     overflow-y: auto;
     @include scrollbar-hidden;
   }
@@ -77,11 +77,11 @@
   &__section {
     display: flex;
     flex-direction: column;
-    gap: $spacing-1;
+    gap: $spacing-3xs;
 
     & + & {
-      margin-top: $spacing-2;
-      padding-top: $spacing-2;
+      margin-top: $spacing-2xs;
+      padding-top: $spacing-2xs;
       border-top: 1px solid var(--border);
     }
   }
@@ -111,7 +111,7 @@
       &::before {
         content: "";
         position: absolute;
-        left: -$spacing-2;
+        left: -$spacing-2xs;
         top: 50%;
         transform: translateY(-50%);
         width: 3px;
@@ -129,10 +129,10 @@
 
   &__tooltip {
     position: absolute;
-    left: calc(100% + $spacing-2);
+    left: calc(100% + $spacing-2xs);
     top: 50%;
     transform: translateY(-50%);
-    padding: $spacing-1 $spacing-2;
+    padding: $spacing-3xs $spacing-2xs;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     color: var(--popover-fg);
@@ -147,14 +147,14 @@
     z-index: $z-tooltip;
     @include transition-opacity;
 
-    .main-nav__item:hover & {
+    .navmenu__item:hover & {
       opacity: 1;
       visibility: visible;
     }
   }
 
   &__footer {
-    padding: $spacing-2;
+    padding: $spacing-2xs;
     border-top: 1px solid var(--border);
   }
 
@@ -197,7 +197,7 @@
 // Sub Navigation (Expanded Sidebar)
 // --------------------------------------------------------------------------
 
-.sub-nav {
+.subnav {
   display: flex;
   flex-direction: column;
   width: 16rem;
@@ -218,7 +218,7 @@
     align-items: center;
     justify-content: space-between;
     height: $navbar-height;
-    padding: 0 $spacing-4;
+    padding: 0 $spacing-sm;
     border-bottom: 1px solid var(--border);
   }
 
@@ -232,7 +232,7 @@
   &__actions {
     display: flex;
     align-items: center;
-    gap: $spacing-1;
+    gap: $spacing-3xs;
   }
 
   &__action {
@@ -257,14 +257,14 @@
   }
 
   &__search {
-    padding: $spacing-3 $spacing-4;
+    padding: $spacing-xs $spacing-sm;
     border-bottom: 1px solid var(--border);
   }
 
   &__search-input {
     width: 100%;
     height: 2rem;
-    padding: 0 $spacing-3;
+    padding: 0 $spacing-xs;
     font-size: $font-size-sm;
     background-color: var(--bg-muted);
     border: 1px solid transparent;
@@ -285,13 +285,13 @@
   &__content {
     flex: 1;
     overflow-y: auto;
-    padding: $spacing-2;
+    padding: $spacing-2xs;
     @include scrollbar-thin;
   }
 
   &__section {
     & + & {
-      margin-top: $spacing-4;
+      margin-top: $spacing-sm;
     }
   }
 
@@ -299,8 +299,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $spacing-1 $spacing-2;
-    margin-bottom: $spacing-1;
+    padding: $spacing-3xs $spacing-2xs;
+    margin-bottom: $spacing-3xs;
   }
 
   &__section-title {
@@ -322,7 +322,7 @@
     opacity: 0;
     @include interactive;
 
-    .sub-nav__section:hover & {
+    .subnav__section:hover & {
       opacity: 1;
     }
 
@@ -346,8 +346,8 @@
   &__item {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
-    padding: $spacing-2;
+    gap: $spacing-2xs;
+    padding: $spacing-2xs;
     font-size: $font-size-sm;
     color: var(--fg-muted);
     border-radius: $radius-md;
@@ -375,8 +375,8 @@
     flex-shrink: 0;
     color: var(--fg-subtle);
 
-    .sub-nav__item:hover &,
-    .sub-nav__item--active & {
+    .subnav__item:hover &,
+    .subnav__item--active & {
       color: var(--fg);
     }
   }
@@ -388,7 +388,7 @@
 
   &__item-badge {
     font-size: $font-size-xs;
-    padding: 0.0625rem $spacing-1;
+    padding: 0.0625rem $spacing-3xs;
     background-color: var(--bg-subtle);
     color: var(--fg-muted);
     border-radius: $radius-full;
@@ -402,7 +402,7 @@
     color: var(--fg-subtle);
     @include transition-transform;
 
-    .sub-nav__item[aria-expanded="true"] & {
+    .subnav__item[aria-expanded="true"] & {
       transform: rotate(90deg);
     }
   }
@@ -411,8 +411,8 @@
   &__submenu {
     display: none;
     flex-direction: column;
-    padding-left: $spacing-6;
-    margin-top: $spacing-1;
+    padding-left: $spacing-lg;
+    margin-top: $spacing-3xs;
 
     &--open {
       display: flex;
@@ -422,8 +422,8 @@
   &__subitem {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
-    padding: $spacing-1 $spacing-2;
+    gap: $spacing-2xs;
+    padding: $spacing-3xs $spacing-2xs;
     font-size: $font-size-sm;
     color: var(--fg-muted);
     border-radius: $radius-md;
@@ -434,7 +434,7 @@
     &::before {
       content: "";
       position: absolute;
-      left: calc($spacing-2 * -1);
+      left: calc($spacing-2xs * -1);
       top: 0;
       bottom: 0;
       width: 1px;
@@ -445,9 +445,9 @@
     &::after {
       content: "";
       position: absolute;
-      left: calc($spacing-2 * -1);
+      left: calc($spacing-2xs * -1);
       top: 50%;
-      width: $spacing-2;
+      width: $spacing-2xs;
       height: 1px;
       background-color: var(--border);
     }
@@ -474,13 +474,13 @@
     border-radius: $radius-full;
     flex-shrink: 0;
 
-    .sub-nav__subitem--active & {
+    .subnav__subitem--active & {
       background-color: var(--primary);
     }
   }
 
   &__footer {
-    padding: $spacing-3 $spacing-4;
+    padding: $spacing-xs $spacing-sm;
     border-top: 1px solid var(--border);
   }
 }
@@ -502,7 +502,7 @@
   align-items: center;
   justify-content: space-between;
   height: $navbar-height;
-  padding: 0 $spacing-6;
+  padding: 0 $spacing-lg;
   background-color: var(--bg);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
@@ -510,20 +510,20 @@
   &-left {
     display: flex;
     align-items: center;
-    gap: $spacing-4;
+    gap: $spacing-sm;
   }
 
   &-right {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
+    gap: $spacing-2xs;
   }
 }
 
 .dashboard__content {
   flex: 1;
   overflow-y: auto;
-  padding: $spacing-6;
+  padding: $spacing-lg;
   @include scrollbar-thin;
 }
 
@@ -532,7 +532,7 @@
 // --------------------------------------------------------------------------
 
 @include max-lg {
-  .main-nav {
+  .navmenu {
     position: fixed;
     left: 0;
     top: 0;
@@ -540,7 +540,7 @@
     z-index: $z-fixed + 2;
   }
 
-  .sub-nav {
+  .subnav {
     position: fixed;
     left: 4rem;
     top: 0;
@@ -559,7 +559,7 @@
 }
 
 @include max-md {
-  .main-nav {
+  .navmenu {
     width: 100%;
     height: auto;
     flex-direction: row;
@@ -577,27 +577,27 @@
     &__content {
       flex-direction: row;
       justify-content: space-around;
-      padding: $spacing-2 $spacing-4;
+      padding: $spacing-2xs $spacing-sm;
       overflow-x: auto;
     }
 
     &__section {
       flex-direction: row;
-      gap: $spacing-2;
+      gap: $spacing-2xs;
 
       & + & {
         margin-top: 0;
         padding-top: 0;
         border-top: none;
-        margin-left: $spacing-4;
-        padding-left: $spacing-4;
+        margin-left: $spacing-sm;
+        padding-left: $spacing-sm;
         border-left: 1px solid var(--border);
       }
     }
 
     &__item--active::before {
       left: 50%;
-      top: -$spacing-2;
+      top: -$spacing-2xs;
       bottom: auto;
       transform: translateX(-50%);
       width: 1.25rem;
@@ -609,7 +609,7 @@
     }
   }
 
-  .sub-nav {
+  .subnav {
     left: 0;
     width: 100%;
   }
@@ -621,7 +621,7 @@
 }
 
 // --------------------------------------------------------------------------
-// Dashboard Overlay (for mobile sub-nav)
+// Dashboard Overlay (for mobile subnav)
 // --------------------------------------------------------------------------
 
 .dashboard__overlay {

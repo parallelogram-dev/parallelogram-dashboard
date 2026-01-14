@@ -1,0 +1,317 @@
+// ==========================================================================
+// Form Layout Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Form Container
+// --------------------------------------------------------------------------
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  // --------------------------------------------------------------------------
+  // Form Section
+  // --------------------------------------------------------------------------
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    &--bordered {
+      padding-bottom: $spacing-lg;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+
+  &__section-header {
+    margin-bottom: $spacing-2xs;
+  }
+
+  &__section-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+    margin-bottom: $spacing-3xs;
+  }
+
+  &__section-description {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    line-height: $line-height-relaxed;
+  }
+
+  // --------------------------------------------------------------------------
+  // Form Row (for side-by-side fields)
+  // --------------------------------------------------------------------------
+
+  &__row {
+    display: grid;
+    gap: $spacing-sm;
+
+    &--2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    // Unequal columns
+    &--1-2 {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    &--2-1 {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    @include max-md {
+      &--2,
+      &--3,
+      &--4,
+      &--1-2,
+      &--2-1 {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Form Actions
+  // --------------------------------------------------------------------------
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding-top: $spacing-sm;
+
+    &--border {
+      border-top: 1px solid var(--border);
+      padding-top: $spacing-lg;
+    }
+
+    &--end {
+      justify-content: flex-end;
+    }
+
+    &--between {
+      justify-content: space-between;
+    }
+
+    &--sticky {
+      position: sticky;
+      bottom: 0;
+      background-color: var(--bg);
+      padding: $spacing-sm;
+      margin: 0 (-$spacing-sm) (-$spacing-sm);
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--horizontal {
+    .form__group {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing-sm;
+
+      .form__group-label {
+        width: 10rem;
+        flex-shrink: 0;
+        padding-top: $spacing-2xs;
+      }
+
+      .form__group-field {
+        flex: 1;
+      }
+    }
+
+    @include max-md {
+      .form__group {
+        flex-direction: column;
+
+        .form__group-label {
+          width: auto;
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  &--compact {
+    gap: $spacing-sm;
+
+    .form__section {
+      gap: $spacing-xs;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Enhanced Form Group
+// --------------------------------------------------------------------------
+
+.formfield {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xs;
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3xs;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  &__required {
+    color: var(--destructive);
+  }
+
+  &__optional {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: var(--fg-muted);
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__error {
+    font-size: $font-size-xs;
+    color: var(--destructive);
+  }
+
+  &__counter {
+    display: flex;
+    justify-content: flex-end;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+
+    &--warning {
+      color: var(--warning);
+    }
+
+    &--error {
+      color: var(--destructive);
+    }
+  }
+
+  // Error state
+  &--error {
+    .input,
+    .textarea,
+    .select {
+      border-color: var(--destructive);
+
+      &:focus {
+        outline-color: var(--destructive);
+      }
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Fieldset
+// --------------------------------------------------------------------------
+
+.fieldset {
+  padding: $spacing-sm;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+
+  &__legend {
+    padding: 0 $spacing-2xs;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Input Addons
+// --------------------------------------------------------------------------
+
+.inputgroup {
+  display: flex;
+
+  .input {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: $radius-md;
+      border-bottom-left-radius: $radius-md;
+    }
+
+    &:last-child {
+      border-top-right-radius: $radius-md;
+      border-bottom-right-radius: $radius-md;
+    }
+
+    &:not(:last-child) {
+      border-right: none;
+    }
+
+    &:focus {
+      z-index: 1;
+    }
+  }
+
+  &__addon {
+    @include flex-center;
+    padding: 0 $spacing-xs;
+    font-size: $font-size-sm;
+    background-color: var(--bg-muted);
+    border: 1px solid var(--input);
+    color: var(--fg-muted);
+
+    &:first-child {
+      border-top-left-radius: $radius-md;
+      border-bottom-left-radius: $radius-md;
+      border-right: none;
+    }
+
+    &:last-child {
+      border-top-right-radius: $radius-md;
+      border-bottom-right-radius: $radius-md;
+      border-left: none;
+    }
+  }
+
+  .btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: $radius-md;
+      border-bottom-left-radius: $radius-md;
+    }
+
+    &:last-child {
+      border-top-right-radius: $radius-md;
+      border-bottom-right-radius: $radius-md;
+    }
+  }
+}

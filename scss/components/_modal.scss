@@ -1,15 +1,159 @@
 // ==========================================================================
 // Modal / Dialog Component
+// Compatible with @peptolab/parallelogram <p-modal> web component
 // ==========================================================================
 
 @use "../variables" as *;
 @use "../mixins" as *;
 
 // --------------------------------------------------------------------------
-// Modal Overlay (backdrop)
+// PDatetime Web Component Custom Properties
+// These CSS custom properties theme the shadow DOM of <p-datetime>
 // --------------------------------------------------------------------------
 
-.modal-overlay {
+p-datetime {
+  // Colors - inherit from theme
+  --datetime-text: var(--fg);
+  --datetime-muted: var(--fg-muted);
+  --datetime-accent: var(--primary);
+  --datetime-hover: var(--accent);
+  --datetime-bg: var(--popover);
+  --datetime-border: var(--border);
+  --datetime-shadow-color: rgba(0, 0, 0, 0.12);
+  --datetime-focus-shadow: rgba(59, 130, 246, 0.1);
+  --datetime-btn-hover-bg: var(--accent);
+
+  // Opacity
+  --datetime-placeholder-opacity: 0.6;
+  --datetime-icon-opacity: 0.7;
+  --datetime-disabled-opacity: 0.4;
+
+  // Spacing
+  --datetime-padding-x: #{$spacing-xs};
+  --datetime-padding-y: #{$spacing-2xs};
+  --datetime-space-xs: 0.125rem;
+  --datetime-space-sm: #{$spacing-3xs};
+  --datetime-space-md: #{$spacing-2xs};
+  --datetime-space-lg: #{$spacing-xs};
+  --datetime-gap: #{$spacing-2xs};
+
+  // Border radius
+  --datetime-radius: #{$radius};
+  --datetime-radius-lg: #{$radius-md};
+  --datetime-radius-xl: #{$radius-lg};
+
+  // Borders
+  --datetime-border-width: 1px;
+  --datetime-focus-ring-width: 2px;
+  --datetime-today-border-width: 2px;
+
+  // Shadows
+  --datetime-shadow: #{$shadow-lg};
+
+  // Timing
+  --datetime-transition: #{$transition-base};
+  --datetime-animation-duration: 0.5s;
+
+  // Sizes
+  --datetime-cell-size: 2.5rem;
+  --datetime-font-sm: #{$font-size-xs};
+  --datetime-font-md: #{$font-size-sm};
+
+  // Display
+  display: block;
+  width: 100%;
+}
+
+// Styling p-datetime to match our input styles
+p-datetime.input {
+  position: relative;
+  min-height: #{$btn-height-md};
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: #{$radius-md};
+  font-size: #{$font-size-sm};
+
+  &:focus-within {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px var(--ring-alpha);
+  }
+}
+
+// --------------------------------------------------------------------------
+// PModal Web Component Custom Properties
+// These CSS custom properties theme the shadow DOM of <p-modal>
+// --------------------------------------------------------------------------
+
+p-modal {
+  // Colors - inherit from theme
+  --modal-text: var(--fg);
+  --modal-muted: var(--fg-muted);
+  --modal-accent: var(--primary);
+  --modal-hover: var(--accent);
+  --modal-backdrop-bg: rgb(0 0 0 / 0.5);
+  --modal-panel-bg: var(--bg);
+  --modal-panel-color: var(--fg);
+  --modal-panel-border: var(--border);
+  --modal-header-bg: var(--bg);
+  --modal-header-border: var(--border);
+  --modal-footer-bg: var(--bg);
+  --modal-footer-border: var(--border);
+  --modal-close-hover-bg: var(--accent);
+
+  // Button theming
+  --modal-btn-primary-bg: var(--primary);
+  --modal-btn-primary-color: var(--primary-fg);
+  --modal-btn-primary-hover-bg: var(--primary-hover);
+  --modal-btn-danger-bg: var(--destructive);
+  --modal-btn-danger-color: var(--destructive-fg);
+  --modal-btn-danger-hover-bg: var(--destructive-hover);
+  --modal-btn-bg: var(--secondary);
+  --modal-btn-color: var(--secondary-fg);
+  --modal-btn-hover-bg: var(--secondary-hover);
+
+  // Spacing
+  --modal-space-xs: 0.125rem;
+  --modal-space-sm: #{$spacing-3xs};
+  --modal-space-md: #{$spacing-2xs};
+  --modal-space-lg: #{$spacing-xs};
+  --modal-space-xl: #{$spacing-sm};
+  --modal-padding-x: #{$spacing-lg};
+  --modal-padding-y: #{$spacing-sm};
+  --modal-gap: #{$spacing-2xs};
+
+  // Border radius
+  --modal-radius: #{$radius};
+  --modal-radius-lg: #{$radius-md};
+  --modal-radius-xl: #{$radius-lg};
+
+  // Shadows
+  --modal-shadow: #{$shadow-xl};
+
+  // Timing
+  --modal-transition: #{$transition-base};
+  --modal-animation-duration: #{$transition-fast};
+  --modal-animation-easing: #{$transition-easing};
+
+  // Sizes
+  --modal-size-xs: 18.75rem;
+  --modal-size-sm: 24rem;
+  --modal-size-md: 32rem;
+  --modal-size-lg: 48rem;
+  --modal-size-xl: 64rem;
+  --modal-max-width: calc(100vw - #{$spacing-xl});
+  --modal-max-height: calc(100vh - #{$spacing-xl});
+  --modal-fullscreen-inset: #{$spacing-lg};
+
+  // Typography
+  --modal-font-sm: #{$font-size-sm};
+  --modal-font-md: #{$font-size-lg};
+}
+
+// --------------------------------------------------------------------------
+// Fallback Modal Overlay (for non-JS or custom implementations)
+// --------------------------------------------------------------------------
+
+.modaloverlay {
   position: fixed;
   inset: 0;
   z-index: $z-modal-backdrop;
@@ -26,7 +170,7 @@
 }
 
 // --------------------------------------------------------------------------
-// Modal Container
+// Fallback Modal Container (for non-JS or custom implementations)
 // --------------------------------------------------------------------------
 
 .modal {
@@ -36,7 +180,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-4;
+  padding: $spacing-sm;
   pointer-events: none;
 
   &--open {
@@ -51,7 +195,7 @@
     position: relative;
     width: 100%;
     max-width: 32rem;
-    max-height: calc(100vh - #{$spacing-8});
+    max-height: calc(100vh - #{$spacing-xl});
     display: flex;
     flex-direction: column;
     background-color: var(--bg);
@@ -72,6 +216,10 @@
   // Size Variants
   // --------------------------------------------------------------------------
 
+  &__dialog--xs {
+    max-width: 18.75rem;
+  }
+
   &__dialog--sm {
     max-width: 24rem;
   }
@@ -84,9 +232,9 @@
     max-width: 64rem;
   }
 
-  &__dialog--full {
-    max-width: calc(100vw - #{$spacing-8});
-    max-height: calc(100vh - #{$spacing-8});
+  &__dialog--fullscreen {
+    max-width: calc(100vw - #{$spacing-xl});
+    max-height: calc(100vh - #{$spacing-xl});
   }
 
   // --------------------------------------------------------------------------
@@ -97,8 +245,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: $spacing-4;
-    padding: $spacing-6;
+    gap: $spacing-sm;
+    padding: $spacing-lg;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
@@ -111,7 +259,7 @@
   }
 
   &__description {
-    margin-top: $spacing-1;
+    margin-top: $spacing-3xs;
     font-size: $font-size-sm;
     color: var(--fg-muted);
   }
@@ -122,7 +270,7 @@
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    margin: calc($spacing-1 * -1);
+    margin: calc($spacing-3xs * -1);
     border-radius: $radius-sm;
     color: var(--fg-muted);
     flex-shrink: 0;
@@ -141,7 +289,7 @@
 
   &__content {
     flex: 1;
-    padding: $spacing-6;
+    padding: $spacing-lg;
     overflow-y: auto;
     @include scrollbar-thin;
   }
@@ -150,8 +298,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: $spacing-2;
-    padding: $spacing-6;
+    gap: $spacing-2xs;
+    padding: $spacing-lg;
     border-top: 1px solid var(--border);
     flex-shrink: 0;
 
@@ -174,123 +322,10 @@
 }
 
 // --------------------------------------------------------------------------
-// Sheet Variant (slides from edge)
-// --------------------------------------------------------------------------
-
-.sheet {
-  position: fixed;
-  z-index: $z-modal;
-  background-color: var(--bg);
-  border: 1px solid var(--border);
-  box-shadow: $shadow-xl;
-  display: flex;
-  flex-direction: column;
-  @include transition-default;
-
-  // Shared hidden state
-  opacity: 0;
-  visibility: hidden;
-
-  &--open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  // Right (default)
-  &--right {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 24rem;
-    max-width: 100vw;
-    transform: translateX(100%);
-    border-left: 1px solid var(--border);
-    border-right: none;
-
-    &.sheet--open {
-      transform: translateX(0);
-    }
-  }
-
-  // Left
-  &--left {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 24rem;
-    max-width: 100vw;
-    transform: translateX(-100%);
-    border-right: 1px solid var(--border);
-    border-left: none;
-
-    &.sheet--open {
-      transform: translateX(0);
-    }
-  }
-
-  // Top
-  &--top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: auto;
-    max-height: 90vh;
-    transform: translateY(-100%);
-    border-bottom: 1px solid var(--border);
-    border-top: none;
-
-    &.sheet--open {
-      transform: translateY(0);
-    }
-  }
-
-  // Bottom
-  &--bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: auto;
-    max-height: 90vh;
-    transform: translateY(100%);
-    border-top: 1px solid var(--border);
-    border-bottom: none;
-
-    &.sheet--open {
-      transform: translateY(0);
-    }
-  }
-
-  // Elements (same as modal)
-  &__header {
-    @extend .modal__header;
-  }
-
-  &__title {
-    @extend .modal__title;
-  }
-
-  &__description {
-    @extend .modal__description;
-  }
-
-  &__close {
-    @extend .modal__close;
-  }
-
-  &__content {
-    @extend .modal__content;
-  }
-
-  &__footer {
-    @extend .modal__footer;
-  }
-}
-
-// --------------------------------------------------------------------------
 // Alert Dialog Variant
 // --------------------------------------------------------------------------
 
-.alert-dialog {
+.alertdialog {
   @extend .modal;
 
   &__dialog {
@@ -310,7 +345,7 @@
   &__icon {
     width: 3rem;
     height: 3rem;
-    margin-bottom: $spacing-4;
+    margin-bottom: $spacing-sm;
     color: var(--fg-muted);
 
     &--destructive {
@@ -332,7 +367,7 @@
 
   &__description {
     @extend .modal__description;
-    margin-top: $spacing-2;
+    margin-top: $spacing-2xs;
   }
 
   &__footer {

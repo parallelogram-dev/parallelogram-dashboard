@@ -45,6 +45,11 @@
     }
   }
 
+  &--destructive {
+    border-color: var(--destructive-muted);
+    background-color: var(--destructive-muted);
+  }
+
   // --------------------------------------------------------------------------
   // Elements
   // --------------------------------------------------------------------------
@@ -52,13 +57,18 @@
   &__header {
     display: flex;
     flex-direction: column;
-    gap: $spacing-1;
-    padding: $spacing-6;
+    gap: $spacing-3xs;
+    padding: $spacing-sm;
 
     &--row {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+    }
+
+    &--center {
+      text-align: center;
+      align-items: center;
     }
   }
 
@@ -75,24 +85,34 @@
   }
 
   &__content {
-    padding: $spacing-6;
+    padding: $spacing-sm;
     padding-top: 0;
     flex: 1;
 
+    // Add top padding when needed
+    &--pt {
+      padding-top: $spacing-sm;
+    }
+
+    // No padding (flush content)
+    &--flush {
+      padding: 0;
+    }
+
     &:first-child {
-      padding-top: $spacing-6;
+      padding-top: $spacing-sm;
     }
   }
 
   &__footer {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
-    padding: $spacing-6;
+    gap: $spacing-2xs;
+    padding: $spacing-sm;
     padding-top: 0;
 
     &--border {
-      padding-top: $spacing-6;
+      padding-top: $spacing-sm;
       border-top: 1px solid var(--border);
     }
 
@@ -123,11 +143,11 @@
     .card__header,
     .card__content,
     .card__footer {
-      padding: $spacing-4;
+      padding: $spacing-xs;
     }
 
     .card__content:first-child {
-      padding-top: $spacing-4;
+      padding-top: $spacing-xs;
     }
 
     .card__content,
@@ -136,7 +156,7 @@
     }
 
     .card__footer--border {
-      padding-top: $spacing-4;
+      padding-top: $spacing-xs;
     }
   }
 
@@ -144,11 +164,11 @@
     .card__header,
     .card__content,
     .card__footer {
-      padding: $spacing-8;
+      padding: $spacing-lg;
     }
 
     .card__content:first-child {
-      padding-top: $spacing-8;
+      padding-top: $spacing-lg;
     }
 
     .card__content,
@@ -157,7 +177,7 @@
     }
 
     .card__footer--border {
-      padding-top: $spacing-8;
+      padding-top: $spacing-lg;
     }
   }
 }
@@ -166,9 +186,9 @@
 // Card Grid
 // --------------------------------------------------------------------------
 
-.card-grid {
+.card__grid {
   display: grid;
-  gap: $spacing-6;
+  gap: $spacing-lg;
   grid-template-columns: repeat(1, 1fr);
 
   @include sm {

@@ -4,69 +4,335 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parallelogram Dashboard - Components</title>
-  <link rel="stylesheet" href="../dist/parallelogram-dashboard.css">
-  <link rel="stylesheet" href="../node_modules/@tabler/icons-webfont/tabler-icons.min.css">
-  <style>
-    .demo-section {
-      padding: 3rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .demo-section:last-child {
-      border-bottom: none;
-    }
-    .demo-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    .demo-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .demo-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--fg-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-    .demo-box {
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      background: var(--bg-muted);
-    }
-  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
 </head>
 <body>
-  <div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+  <div class="container demo-container">
 
     <!-- Header -->
-    <header style="margin-bottom: 3rem;">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+    <header class="demo-header">
+      <div class="demo-header__title-row">
         <h1>Parallelogram Dashboard</h1>
         <button class="btn btn--outline btn--sm" onclick="toggleTheme()">
-          <i class="ti ti-sun btn__icon"></i>
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
           Toggle Theme
         </button>
       </div>
       <p class="text--muted">A BEM-style CSS dashboard library inspired by <a href="https://ui.shadcn.com/" class="link">shadcn/ui</a></p>
-      <p class="text--sm text--muted" style="margin-top: 0.5rem;">
-        <a href="dashboard.html" class="link">View Dashboard Demo &rarr;</a>
+      <p class="text--sm text--muted demo-header__links">
+        <a href="dashboard.html" class="link">View Dashboard Demo</a> &bull;
+        <a href="records.html" class="link">Records Index</a> &bull;
+        <a href="record-form.html" class="link">Record Form</a> &bull;
+        <a href="record-delete.html" class="link">Delete Confirmation</a>
       </p>
     </header>
 
-    <!-- Buttons -->
-    <section class="demo-section">
-      <h2>Buttons</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Various button styles and sizes.</p>
+    <!-- Alert -->
+    <section class="demo-section" id="alert">
+      <h2>Alert</h2>
+      <p class="text--muted demo-label--spaced">Notification messages for users.</p>
+
+      <div class="demo-stack demo-stack--md">
+        <div class="alert">
+          <svg class="icon alert__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          <div class="alert__content">
+            <h4 class="alert__title">Default Alert</h4>
+            <p class="alert__description">This is a default alert message.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--info">
+          <svg class="icon alert__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          <div class="alert__content">
+            <h4 class="alert__title">Information</h4>
+            <p class="alert__description">Here's some helpful information for you.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--success">
+          <svg class="icon alert__icon" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+          <div class="alert__content">
+            <h4 class="alert__title">Success!</h4>
+            <p class="alert__description">Your changes have been saved successfully.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--warning">
+          <svg class="icon alert__icon" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>
+          <div class="alert__content">
+            <h4 class="alert__title">Warning</h4>
+            <p class="alert__description">Please review your input before continuing.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--error">
+          <svg class="icon alert__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
+          <div class="alert__content">
+            <h4 class="alert__title">Error</h4>
+            <p class="alert__description">Something went wrong. Please try again.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accordion -->
+    <section class="demo-section" id="accordion">
+      <h2>Accordion</h2>
+      <p class="text--muted demo-label--spaced">Expandable content sections.</p>
+
+      <div class="constrain constrain--md">
+        <div class="demo-label">Default (click to toggle)</div>
+        <div class="accordion spacer--xl" data-accordion>
+          <div class="accordion__item accordion__item--open">
+            <button class="accordion__trigger" aria-expanded="true">
+              Is it accessible?
+              <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+            </button>
+            <div class="accordion__content">
+              <div class="accordion__body">
+                Yes. It adheres to the WAI-ARIA design pattern and can be navigated using keyboard controls.
+              </div>
+            </div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Is it styled?
+              <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+            </button>
+            <div class="accordion__content">
+              <div class="accordion__body">
+                Yes. It comes with default styles that match the other components' aesthetic.
+              </div>
+            </div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Is it animated?
+              <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+            </button>
+            <div class="accordion__content">
+              <div class="accordion__body">
+                Yes. It's animated by default with smooth transitions for opening and closing.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-label">Multiple Open (data-accordion-multiple="true")</div>
+        <div class="accordion accordion--separated" data-accordion data-accordion-multiple="true">
+          <div class="accordion__item accordion__item--open">
+            <button class="accordion__trigger" aria-expanded="true">
+              What payment methods do you accept?
+              <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+            </button>
+            <div class="accordion__content">
+              <div class="accordion__body">
+                We accept all major credit cards, PayPal, and bank transfers.
+              </div>
+            </div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How long does shipping take?
+              <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+            </button>
+            <div class="accordion__content">
+              <div class="accordion__body">
+                Standard shipping takes 3-5 business days. Express shipping is available for 1-2 day delivery.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Avatar -->
+    <section class="demo-section" id="avatar">
+      <h2>Avatar</h2>
+      <p class="text--muted demo-label--spaced">User profile images with fallbacks.</p>
+
+      <div class="demo-label">Sizes</div>
+      <div class="demo-row spacer--lg">
+        <span class="avatar avatar--xs"><span class="avatar__fallback">XS</span></span>
+        <span class="avatar avatar--sm"><span class="avatar__fallback">SM</span></span>
+        <span class="avatar"><span class="avatar__fallback">MD</span></span>
+        <span class="avatar avatar--lg"><span class="avatar__fallback">LG</span></span>
+        <span class="avatar avatar--xl"><span class="avatar__fallback">XL</span></span>
+      </div>
+
+      <div class="demo-label">With Status</div>
+      <div class="demo-row spacer--lg">
+        <span class="avatar">
+          <span class="avatar__fallback">ON</span>
+          <span class="avatar__status avatar__status--online"></span>
+        </span>
+        <span class="avatar">
+          <span class="avatar__fallback">AW</span>
+          <span class="avatar__status avatar__status--away"></span>
+        </span>
+        <span class="avatar">
+          <span class="avatar__fallback">BS</span>
+          <span class="avatar__status avatar__status--busy"></span>
+        </span>
+        <span class="avatar">
+          <span class="avatar__fallback">OF</span>
+          <span class="avatar__status avatar__status--offline"></span>
+        </span>
+      </div>
+
+      <div class="demo-label">Avatar Group</div>
+      <div class="demo-row">
+        <div class="avatar__group">
+          <span class="avatar"><span class="avatar__fallback">A</span></span>
+          <span class="avatar"><span class="avatar__fallback">B</span></span>
+          <span class="avatar"><span class="avatar__fallback">C</span></span>
+          <span class="avatar__group-overflow">+5</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badge -->
+    <section class="demo-section" id="badge">
+      <h2>Badge</h2>
+      <p class="text--muted demo-label--spaced">Small status indicators.</p>
 
       <div class="demo-label">Variants</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
+      <div class="demo-row spacer--lg">
+        <span class="badge badge--primary">Primary</span>
+        <span class="badge badge--secondary">Secondary</span>
+        <span class="badge badge--outline">Outline</span>
+        <span class="badge badge--destructive">Destructive</span>
+        <span class="badge badge--success">Success</span>
+        <span class="badge badge--warning">Warning</span>
+        <span class="badge badge--info">Info</span>
+      </div>
+
+      <div class="demo-label">Muted Variants</div>
+      <div class="demo-row spacer--lg">
+        <span class="badge badge--destructive-muted">Error</span>
+        <span class="badge badge--success-muted">Success</span>
+        <span class="badge badge--warning-muted">Warning</span>
+        <span class="badge badge--info-muted">Info</span>
+      </div>
+
+      <div class="demo-label">Sizes & Shapes</div>
+      <div class="demo-row">
+        <span class="badge badge--primary badge--sm">Small</span>
+        <span class="badge badge--primary">Default</span>
+        <span class="badge badge--primary badge--lg">Large</span>
+        <span class="badge badge--primary badge--pill">Pill Shape</span>
+        <span class="badge badge--success badge--dot"></span>
+      </div>
+    </section>
+
+    <!-- Banner -->
+    <section class="demo-section" id="banner">
+      <h2>Banner</h2>
+      <p class="text--muted demo-label--spaced">Full-width notification banners.</p>
+
+      <div class="demo-stack">
+        <div class="banner">
+          <svg class="icon banner__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          <div class="banner__content">
+            <span class="banner__text">This is a default informational banner with important updates.</span>
+          </div>
+          <button class="banner__dismiss">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="banner banner--info">
+          <svg class="icon banner__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          <div class="banner__content">
+            <span class="banner__text"><strong>New feature!</strong> Check out our latest updates in the dashboard.</span>
+          </div>
+          <div class="banner__actions">
+            <button class="btn btn--sm btn--outline">Learn More</button>
+          </div>
+          <button class="banner__dismiss">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="banner banner--warning">
+          <svg class="icon banner__icon" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>
+          <div class="banner__content">
+            <span class="banner__text">Your subscription is expiring soon. <a href="#">Renew now</a></span>
+          </div>
+        </div>
+
+        <div class="banner banner--primary">
+          <svg class="icon banner__icon" viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"/><path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"/></svg>
+          <div class="banner__content">
+            <span class="banner__text">Get 20% off your next purchase with code SAVE20</span>
+          </div>
+          <div class="banner__actions">
+            <button class="btn btn--sm btn--ghost">Copy Code</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="demo-section" id="breadcrumb">
+      <h2>Breadcrumb</h2>
+      <p class="text--muted demo-label--spaced">Navigation path indicator.</p>
+
+      <div class="demo-label">With Chevron</div>
+      <nav class="breadcrumb spacer--lg">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item">
+            <a href="#" class="breadcrumb__link">Home</a>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </span>
+          </li>
+          <li class="breadcrumb__item">
+            <a href="#" class="breadcrumb__link">Components</a>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </span>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__page">Breadcrumb</span>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="demo-label">With Slash</div>
+      <nav class="breadcrumb breadcrumb--slash">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item">
+            <a href="#" class="breadcrumb__link">Home</a>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator"></span>
+          </li>
+          <li class="breadcrumb__item">
+            <a href="#" class="breadcrumb__link">Settings</a>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator"></span>
+          </li>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__page">Profile</span>
+          </li>
+        </ol>
+      </nav>
+    </section>
+
+    <!-- Button -->
+    <section class="demo-section" id="button">
+      <h2>Button</h2>
+      <p class="text--muted demo-label--spaced">Various button styles and sizes.</p>
+
+      <div class="demo-label">Variants</div>
+      <div class="demo-row spacer--lg">
         <button class="btn btn--primary">Primary</button>
         <button class="btn btn--secondary">Secondary</button>
         <button class="btn btn--outline">Outline</button>
@@ -76,106 +342,39 @@
       </div>
 
       <div class="demo-label">Sizes</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
+      <div class="demo-row spacer--lg">
         <button class="btn btn--primary btn--sm">Small</button>
         <button class="btn btn--primary">Medium</button>
         <button class="btn btn--primary btn--lg">Large</button>
       </div>
 
       <div class="demo-label">With Icons</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
+      <div class="demo-row spacer--lg">
         <button class="btn btn--primary">
-          <i class="ti ti-plus btn__icon"></i>
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
           Add Item
         </button>
         <button class="btn btn--outline btn--icon">
-          <i class="ti ti-pencil"></i>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
         </button>
         <button class="btn btn--ghost btn--icon">
-          <i class="ti ti-trash"></i>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
         </button>
       </div>
 
       <div class="demo-label">States</div>
       <div class="demo-row">
         <button class="btn btn--primary" disabled>Disabled</button>
-        <button class="btn btn--primary btn--full" style="max-width: 200px;">Full Width</button>
+        <button class="btn btn--primary btn--full constrain--xs">Full Width</button>
       </div>
     </section>
 
-    <!-- Inputs -->
-    <section class="demo-section">
-      <h2>Inputs</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Form controls and input fields.</p>
+    <!-- Card -->
+    <section class="demo-section" id="card">
+      <h2>Card</h2>
+      <p class="text--muted demo-label--spaced">Container components for content.</p>
 
-      <div style="display: grid; gap: 1.5rem; max-width: 400px;">
-        <div class="form-group">
-          <label class="form-group__label">Email</label>
-          <input type="email" class="input" placeholder="Enter your email">
-        </div>
-
-        <div class="form-group">
-          <label class="form-group__label">Password</label>
-          <input type="password" class="input" placeholder="Enter password">
-          <p class="form-group__description">Must be at least 8 characters.</p>
-        </div>
-
-        <div class="form-group">
-          <label class="form-group__label">With Error</label>
-          <input type="text" class="input input--error" value="Invalid input">
-          <p class="form-group__error">This field is required.</p>
-        </div>
-
-        <div class="form-group">
-          <label class="form-group__label">Disabled</label>
-          <input type="text" class="input" disabled value="Cannot edit">
-        </div>
-
-        <div class="form-group">
-          <label class="form-group__label">Textarea</label>
-          <textarea class="textarea" placeholder="Enter your message..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label class="form-group__label">Select</label>
-          <select class="select">
-            <option value="">Select an option</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-          </select>
-        </div>
-
-        <div class="demo-row">
-          <label class="checkbox">
-            <input type="checkbox" class="checkbox__input" checked>
-            <span class="checkbox__label">Checkbox</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="demo-radio" class="radio__input" checked>
-            <span class="radio__label">Radio 1</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="demo-radio" class="radio__input">
-            <span class="radio__label">Radio 2</span>
-          </label>
-        </div>
-
-        <div>
-          <label class="switch">
-            <input type="checkbox" class="switch__input" checked>
-            <span class="switch__label">Toggle switch</span>
-          </label>
-        </div>
-      </div>
-    </section>
-
-    <!-- Cards -->
-    <section class="demo-section">
-      <h2>Cards</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Container components for content.</p>
-
-      <div class="card-grid" style="max-width: 800px;">
+      <div class="card__grid constrain--lg">
         <div class="card">
           <div class="card__header">
             <h3 class="card__title">Card Title</h3>
@@ -212,94 +411,756 @@
       </div>
     </section>
 
-    <!-- Badges -->
-    <section class="demo-section">
-      <h2>Badges</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Small status indicators.</p>
+    <!-- Command -->
+    <section class="demo-section" id="command">
+      <h2>Command</h2>
+      <p class="text--muted demo-label--spaced">Command palette (⌘K style) for quick actions.</p>
 
-      <div class="demo-label">Variants</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
-        <span class="badge badge--primary">Primary</span>
-        <span class="badge badge--secondary">Secondary</span>
-        <span class="badge badge--outline">Outline</span>
-        <span class="badge badge--destructive">Destructive</span>
-        <span class="badge badge--success">Success</span>
-        <span class="badge badge--warning">Warning</span>
-        <span class="badge badge--info">Info</span>
+      <div class="demo-box constrain--lg">
+        <div class="command__dialog demo-preview--command">
+          <div class="command__inputwrapper">
+            <svg class="icon command__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+            <input type="text" class="command__input" placeholder="Type a command or search...">
+            <span class="command__shortcut">
+              <kbd class="command__kbd">Esc</kbd>
+            </span>
+          </div>
+          <div class="command__list demo-preview--overflow-visible">
+            <div class="command__group">
+              <div class="command__group-heading">Suggestions</div>
+              <button class="command__item command__item--selected">
+                <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>
+                <span class="command__item-content">
+                  <span class="command__item-title">Recent Items</span>
+                </span>
+              </button>
+              <button class="command__item">
+                <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                <span class="command__item-content">
+                  <span class="command__item-title">Create New</span>
+                </span>
+                <span class="command__item-shortcut">
+                  <kbd class="command__kbd">⌘</kbd>
+                  <kbd class="command__kbd">N</kbd>
+                </span>
+              </button>
+              <button class="command__item">
+                <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+                <span class="command__item-content">
+                  <span class="command__item-title">Settings</span>
+                </span>
+                <span class="command__item-shortcut">
+                  <kbd class="command__kbd">⌘</kbd>
+                  <kbd class="command__kbd">,</kbd>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="command__footer">
+            <div class="command__hint">
+              <span class="command__hint-item">
+                <kbd class="kbd kbd--sm">↑↓</kbd> Navigate
+              </span>
+              <span class="command__hint-item">
+                <kbd class="kbd kbd--sm">↵</kbd> Select
+              </span>
+              <span class="command__hint-item">
+                <kbd class="kbd kbd--sm">Esc</kbd> Close
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="demo-label">Muted Variants</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
-        <span class="badge badge--destructive-muted">Error</span>
-        <span class="badge badge--success-muted">Success</span>
-        <span class="badge badge--warning-muted">Warning</span>
-        <span class="badge badge--info-muted">Info</span>
-      </div>
-
-      <div class="demo-label">Sizes & Shapes</div>
+      <div class="demo-label demo-label--spaced">Keyboard Shortcuts</div>
       <div class="demo-row">
-        <span class="badge badge--primary badge--sm">Small</span>
-        <span class="badge badge--primary">Default</span>
-        <span class="badge badge--primary badge--lg">Large</span>
-        <span class="badge badge--primary badge--pill">Pill Shape</span>
-        <span class="badge badge--success badge--dot"></span>
+        <kbd class="kbd kbd--sm">⌘</kbd>
+        <kbd class="kbd">K</kbd>
+        <kbd class="kbd kbd--lg">Enter</kbd>
       </div>
     </section>
 
-    <!-- Alerts -->
-    <section class="demo-section">
-      <h2>Alerts</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Notification messages for users.</p>
+    <!-- Data List -->
+    <section class="demo-section" id="datalist">
+      <h2>Data List</h2>
+      <p class="text--muted demo-label--spaced">Key-value pair displays for record details.</p>
 
-      <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
-        <div class="alert">
-          <i class="ti ti-info-circle alert__icon"></i>
-          <div class="alert__content">
-            <h4 class="alert__title">Default Alert</h4>
-            <p class="alert__description">This is a default alert message.</p>
+      <div class="constrain constrain--md">
+        <div class="demo-label">Default</div>
+        <div class="datalist spacer--xl">
+          <div class="datalist__item">
+            <span class="datalist__label">Full Name</span>
+            <span class="datalist__value">John Doe</span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Email</span>
+            <span class="datalist__value"><a href="#">john@example.com</a></span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Phone</span>
+            <span class="datalist__value">+1 (555) 123-4567</span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Status</span>
+            <span class="datalist__value"><span class="badge badge--success-muted">Active</span></span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Created</span>
+            <span class="datalist__value">January 15, 2024</span>
           </div>
         </div>
 
-        <div class="alert alert--info">
-          <i class="ti ti-info-circle alert__icon"></i>
-          <div class="alert__content">
-            <h4 class="alert__title">Information</h4>
-            <p class="alert__description">Here's some helpful information for you.</p>
+        <div class="demo-label">Grid Layout</div>
+        <div class="datalist datalist--grid spacer--xl">
+          <div class="datalist__item">
+            <span class="datalist__label">Order ID</span>
+            <span class="datalist__value">#ORD-12345</span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Date</span>
+            <span class="datalist__value">Jan 15, 2024</span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Total</span>
+            <span class="datalist__value">$299.00</span>
+          </div>
+          <div class="datalist__item">
+            <span class="datalist__label">Payment</span>
+            <span class="datalist__value">Credit Card</span>
           </div>
         </div>
 
-        <div class="alert alert--success">
-          <i class="ti ti-circle-check alert__icon"></i>
-          <div class="alert__content">
-            <h4 class="alert__title">Success!</h4>
-            <p class="alert__description">Your changes have been saved successfully.</p>
+        <div class="demo-label">Inline Key-Value</div>
+        <div class="demo-row demo-row--xl">
+          <span class="kvpair">
+            <span class="kvpair__key">Version</span>
+            <span class="kvpair__value">2.1.0</span>
+          </span>
+          <span class="kvpair">
+            <span class="kvpair__key">License</span>
+            <span class="kvpair__value">MIT</span>
+          </span>
+          <span class="kvpair">
+            <span class="kvpair__key">Size</span>
+            <span class="kvpair__value">45kb</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dropdown -->
+    <section class="demo-section" id="dropdown">
+      <h2>Dropdown</h2>
+      <p class="text--muted demo-label--spaced">Contextual menus and actions.</p>
+
+      <div class="demo-row demo-row--lg">
+        <!-- Interactive dropdown with data-toggle -->
+        <div class="dropdown layout--relative">
+          <button class="btn btn--outline dropdown__trigger" data-toggle data-toggle-target="#demo-dropdown" data-toggle-capture="true">
+            Click to Toggle
+            <svg class="icon dropdown__chevron" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+          </button>
+          <div id="demo-dropdown" class="dropdown__menu demo-preview--dropdown-abs">
+            <button class="dropdown__item">
+              <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="dropdown__item-text">Profile</span>
+              <span class="dropdown__item-shortcut">⇧⌘P</span>
+            </button>
+            <button class="dropdown__item">
+              <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+              <span class="dropdown__item-text">Settings</span>
+              <span class="dropdown__item-shortcut">⌘S</span>
+            </button>
+            <div class="dropdown__divider"></div>
+            <button class="dropdown__item dropdown__item--destructive">
+              <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"/><path d="M9 12h12l-3 -3"/><path d="M18 15l3 -3"/></svg>
+              <span class="dropdown__item-text">Logout</span>
+            </button>
           </div>
         </div>
 
-        <div class="alert alert--warning">
-          <i class="ti ti-alert-triangle alert__icon"></i>
-          <div class="alert__content">
-            <h4 class="alert__title">Warning</h4>
-            <p class="alert__description">Please review your input before continuing.</p>
+        <!-- Static preview (always visible) -->
+        <div class="dropdown dropdown--open layout--relative">
+          <button class="btn btn--secondary dropdown__trigger">
+            Static Preview
+            <svg class="icon dropdown__chevron" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+          </button>
+          <div class="dropdown__menu dropdown__menu--open demo-preview--dropdown">
+            <button class="dropdown__item">
+              <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="dropdown__item-text">Profile</span>
+            </button>
+            <button class="dropdown__item">
+              <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+              <span class="dropdown__item-text">Settings</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty State -->
+    <section class="demo-section" id="empty">
+      <h2>Empty State</h2>
+      <p class="text--muted demo-label--spaced">Placeholder content for empty views.</p>
+
+      <div class="demo-stack demo-stack--lg-gap constrain--lg">
+        <div class="demo-box">
+          <div class="empty">
+            <div class="empty__icon">
+              <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+            </div>
+            <h3 class="empty__title">No files found</h3>
+            <p class="empty__description">Get started by uploading your first file or creating a new folder.</p>
+            <div class="empty__actions">
+              <button class="btn btn--primary">
+                <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                Upload File
+              </button>
+              <button class="btn btn--outline">Create Folder</button>
+            </div>
           </div>
         </div>
 
-        <div class="alert alert--error">
-          <i class="ti ti-circle-x alert__icon"></i>
-          <div class="alert__content">
-            <h4 class="alert__title">Error</h4>
-            <p class="alert__description">Something went wrong. Please try again.</p>
+        <div class="demo-box">
+          <div class="empty empty--search empty--sm">
+            <div class="empty__icon">
+              <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+            </div>
+            <h3 class="empty__title">No results found</h3>
+            <p class="empty__description">Try adjusting your search or filter to find what you're looking for.</p>
+            <div class="empty__actions">
+              <button class="btn btn--outline btn--sm">Clear Filters</button>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Form Layout -->
+    <section class="demo-section" id="form-layout">
+      <h2>Form Layout</h2>
+      <p class="text--muted demo-label--spaced">Form sections, rows, and enhanced fields.</p>
+
+      <div class="constrain constrain--md">
+        <div class="demo-label">Form Field with Counter</div>
+        <div class="formfield spacer--lg">
+          <label class="formfield__label">
+            Description
+            <span class="formfield__required">*</span>
+          </label>
+          <textarea class="textarea" placeholder="Enter description..." maxlength="200">This is an example description text.</textarea>
+          <div class="formfield__counter">35 / 200</div>
+        </div>
+
+        <div class="demo-label">Form Field with Error</div>
+        <div class="formfield formfield--error spacer--lg">
+          <label class="formfield__label">Email Address</label>
+          <input type="email" class="input" value="invalid-email">
+          <p class="formfield__error">Please enter a valid email address.</p>
+        </div>
+
+        <div class="demo-label">Input Group with Addon</div>
+        <div class="inputgroup spacer--lg">
+          <span class="inputgroup__addon">https://</span>
+          <input type="text" class="input" placeholder="example.com">
+        </div>
+
+        <div class="demo-label">Input Group with Button</div>
+        <div class="inputgroup spacer--lg">
+          <input type="email" class="input" placeholder="Enter email">
+          <button class="btn btn--primary">Subscribe</button>
+        </div>
+
+        <div class="demo-label">Fieldset</div>
+        <fieldset class="fieldset">
+          <legend class="fieldset__legend">Contact Information</legend>
+          <div class="fieldset__content">
+            <div class="form__row form__row--2">
+              <div class="form__group">
+                <label class="form__group-label">First Name</label>
+                <input type="text" class="input" placeholder="John">
+              </div>
+              <div class="form__group">
+                <label class="form__group-label">Last Name</label>
+                <input type="text" class="input" placeholder="Doe">
+              </div>
+            </div>
+            <div class="form__group">
+              <label class="form__group-label">Email</label>
+              <input type="email" class="input" placeholder="john@example.com">
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- Input -->
+    <section class="demo-section" id="input">
+      <h2>Input</h2>
+      <p class="text--muted demo-label--spaced">Form controls and input fields.</p>
+
+      <div class="demo-stack demo-stack--lg-gap constrain--sm">
+        <div class="form__group">
+          <label class="form__group-label">Email</label>
+          <input type="email" class="input" placeholder="Enter your email">
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Password</label>
+          <input type="password" class="input" placeholder="Enter password">
+          <p class="form__group-description">Must be at least 8 characters.</p>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">With Error</label>
+          <input type="text" class="input input--error" value="Invalid input">
+          <p class="form__group-error">This field is required.</p>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Disabled</label>
+          <input type="text" class="input" disabled value="Cannot edit">
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Textarea</label>
+          <textarea class="textarea" placeholder="Enter your message..."></textarea>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Select</label>
+          <select class="select">
+            <option value="">Select an option</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+        </div>
+
+        <div class="demo-row">
+          <label class="checkbox">
+            <input type="checkbox" class="checkbox__input" checked>
+            <span class="checkbox__label">Checkbox</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="demo-radio" class="radio__input" checked>
+            <span class="radio__label">Radio 1</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="demo-radio" class="radio__input">
+            <span class="radio__label">Radio 2</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="switch">
+            <input type="checkbox" class="switch__input" checked>
+            <span class="switch__label">Toggle switch</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Datetime Picker -->
+    <section class="demo-section" id="datetime">
+      <h2>Datetime Picker</h2>
+      <p class="text--muted demo-label--spaced">Date and time selection using the <code>&lt;p-datetime&gt;</code> web component from parallelogram-js.</p>
+
+      <div class="demo-stack demo-stack--lg-gap constrain--sm">
+        <div class="form__group">
+          <label class="form__group-label">Date Picker</label>
+          <p-datetime name="date" mode="date" class="input"></p-datetime>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Datetime Picker</label>
+          <p-datetime name="datetime" mode="datetime" class="input"></p-datetime>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Time Picker (12-hour)</label>
+          <p-datetime name="time" mode="time" time-format="12" class="input"></p-datetime>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">With Quick Dates</label>
+          <p-datetime name="quick" mode="date" show-quick-dates class="input"></p-datetime>
+        </div>
+
+        <div class="form__group">
+          <label class="form__group-label">Date Range</label>
+          <p-datetime name="rangeStart" mode="date" range range-to="rangeEnd" class="input"></p-datetime>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <section class="demo-section" id="modal">
+      <h2>Modal</h2>
+      <p class="text--muted demo-label--spaced">Dialog overlays for focused interactions. Uses the <code>&lt;p-modal&gt;</code> web component from parallelogram-js.</p>
+
+      <div class="demo-label">Interactive Modal (p-modal)</div>
+      <div class="demo-box">
+        <button class="btn btn--primary" data-modal data-modal-target="#demo-modal">Open Modal</button>
+      </div>
+
+      <p-modal id="demo-modal" data-modal-size="md">
+        <h2 slot="title">Edit Profile</h2>
+        <div class="form__group">
+          <label class="form__group-label">Name</label>
+          <input type="text" class="input" value="John Doe">
+        </div>
+        <div class="form__group spacer--md">
+          <label class="form__group-label">Email</label>
+          <input type="email" class="input" value="john@example.com">
+        </div>
+        <div slot="actions">
+          <button class="btn btn--secondary" data-modal-close>Cancel</button>
+          <button class="btn btn--primary">Save Changes</button>
+        </div>
+      </p-modal>
+
+      <div class="demo-label">Static Preview (CSS fallback)</div>
+      <div class="demo-box constrain--md">
+        <div class="modal__dialog demo-preview--modal">
+          <div class="modal__header">
+            <div>
+              <h3 class="modal__title">Edit Profile</h3>
+              <p class="modal__description">Make changes to your profile here.</p>
+            </div>
+            <button class="modal__close">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="modal__content">
+            <div class="form__group">
+              <label class="form__group-label">Name</label>
+              <input type="text" class="input" value="John Doe">
+            </div>
+            <div class="form__group spacer--md">
+              <label class="form__group-label">Email</label>
+              <input type="email" class="input" value="john@example.com">
+            </div>
+          </div>
+          <div class="modal__footer">
+            <button class="btn btn--outline">Cancel</button>
+            <button class="btn btn--primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <section class="demo-section" id="pagination">
+      <h2>Pagination</h2>
+      <p class="text--muted demo-label--spaced">Page navigation controls.</p>
+
+      <div class="demo-label">Default</div>
+      <nav class="pagination spacer--lg">
+        <button class="pagination__prev" disabled>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+        </button>
+        <button class="pagination__item pagination__item--active">1</button>
+        <button class="pagination__item">2</button>
+        <button class="pagination__item">3</button>
+        <span class="pagination__ellipsis">...</span>
+        <button class="pagination__item">10</button>
+        <button class="pagination__next">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+        </button>
+      </nav>
+
+      <div class="demo-label">Outline Variant</div>
+      <nav class="pagination pagination--outline spacer--lg">
+        <button class="pagination__prev">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+        </button>
+        <button class="pagination__item">1</button>
+        <button class="pagination__item pagination__item--active">2</button>
+        <button class="pagination__item">3</button>
+        <button class="pagination__next">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+        </button>
+      </nav>
+
+      <div class="demo-label">With Info</div>
+      <div class="pagination__info">
+        <span class="pagination__text">Showing <strong>1</strong> to <strong>10</strong> of <strong>97</strong> results</span>
+        <nav class="pagination pagination--sm">
+          <button class="pagination__prev" disabled>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+          <button class="pagination__item pagination__item--active">1</button>
+          <button class="pagination__item">2</button>
+          <button class="pagination__item">3</button>
+          <button class="pagination__next">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+          </button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section class="demo-section" id="progress">
+      <h2>Progress</h2>
+      <p class="text--muted demo-label--spaced">Progress indicators and loading states.</p>
+
+      <div class="demo-stack demo-stack--lg-gap constrain--sm">
+        <div class="progress__labeled">
+          <div class="progress__labeled-header">
+            <span class="progress__labeled-label">Default</span>
+            <span class="progress__labeled-value">60%</span>
+          </div>
+          <div class="progress">
+            <div class="progress__bar progress__bar--60"></div>
+          </div>
+        </div>
+
+        <div class="progress__labeled">
+          <div class="progress__labeled-header">
+            <span class="progress__labeled-label">Success</span>
+            <span class="progress__labeled-value">100%</span>
+          </div>
+          <div class="progress progress--success">
+            <div class="progress__bar progress__bar--100"></div>
+          </div>
+        </div>
+
+        <div class="progress__labeled">
+          <div class="progress__labeled-header">
+            <span class="progress__labeled-label">Warning</span>
+            <span class="progress__labeled-value">45%</span>
+          </div>
+          <div class="progress progress--warning">
+            <div class="progress__bar progress__bar--45"></div>
+          </div>
+        </div>
+
+        <div class="progress__labeled">
+          <div class="progress__labeled-header">
+            <span class="progress__labeled-label">Indeterminate</span>
+          </div>
+          <div class="progress progress--indeterminate">
+            <div class="progress__bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="demo-section" id="toolbar">
+      <h2>Search Bar</h2>
+      <p class="text--muted demo-label--spaced">Search input with filters and actions.</p>
+
+      <div class="demo-label">Default</div>
+      <div class="toolbar spacer--lg">
+        <div class="toolbar__inputwrapper">
+          <svg class="icon toolbar__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+          <input type="text" class="toolbar__input" placeholder="Search...">
+        </div>
+        <div class="toolbar__filters">
+          <select class="select select--auto">
+            <option>All Categories</option>
+            <option>Products</option>
+            <option>Orders</option>
+          </select>
+        </div>
+        <div class="toolbar__actions">
+          <button class="btn btn--primary">Search</button>
+        </div>
+      </div>
+
+      <div class="demo-label">Filter Chips</div>
+      <div class="activefilters">
+        <span class="activefilters__label">Filters:</span>
+        <button class="filter__label filter__label--active">
+          Status: Active
+          <span class="filter__label__remove">
+            <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </span>
+        </button>
+        <button class="filter__label filter__label--active">
+          Category: Electronics
+          <span class="filter__label__remove">
+            <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </span>
+        </button>
+        <button class="activefilters__clear">Clear all</button>
+      </div>
+    </section>
+
+    <!-- Separator -->
+    <section class="demo-section" id="separator">
+      <h2>Separator</h2>
+      <p class="text--muted demo-label--spaced">Visual dividers for content sections.</p>
+
+      <div class="constrain constrain--sm">
+        <div class="demo-label">Horizontal</div>
+        <div class="demo-box spacer--lg">
+          <p>Content above</p>
+          <div class="separator separator--md"></div>
+          <p>Content below</p>
+        </div>
+
+        <div class="demo-label">With Label</div>
+        <div class="demo-box spacer--lg">
+          <div class="separator separator--label">
+            <span class="separator__text">Or continue with</span>
+          </div>
+        </div>
+
+        <div class="demo-label">Vertical</div>
+        <div class="demo-row demo-row--h-xl">
+          <span>Left</span>
+          <div class="separator separator--vertical"></div>
+          <span>Right</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet -->
+    <section class="demo-section" id="sheet">
+      <h2>Sheet</h2>
+      <p class="text--muted demo-label--spaced">Slide-out panels from screen edges.</p>
+
+      <div class="demo-box constrain--sm">
+        <div class="sheet__panel demo-preview--sheet">
+          <div class="sheet__header">
+            <div>
+              <h3 class="sheet__title">Edit Profile</h3>
+              <p class="sheet__description">Make changes to your profile settings here.</p>
+            </div>
+            <button class="sheet__close">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="sheet__content demo-preview--overflow-visible">
+            <div class="form__group spacer--md">
+              <label class="form__group-label">Name</label>
+              <input type="text" class="input" value="John Doe">
+            </div>
+            <div class="form__group">
+              <label class="form__group-label">Email</label>
+              <input type="email" class="input" value="john@example.com">
+            </div>
+          </div>
+          <div class="sheet__footer">
+            <button class="btn btn--outline">Cancel</button>
+            <button class="btn btn--primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="text--sm text--muted spacer--md">Sheets can slide in from right, left, top, or bottom. Use <code>.sheet--left</code>, <code>.sheet--top</code>, or <code>.sheet--bottom</code> variants.</p>
+    </section>
+
+    <!-- Skeleton -->
+    <section class="demo-section" id="skeleton">
+      <h2>Skeleton</h2>
+      <p class="text--muted demo-label--spaced">Loading placeholder states.</p>
+
+      <div class="constrain constrain--sm">
+        <div class="skeleton__card">
+          <div class="skeleton skeleton--card skeleton--h-lg"></div>
+          <div class="skeleton__card-content">
+            <div class="skeleton skeleton--heading"></div>
+            <div class="skeleton skeleton--text"></div>
+            <div class="skeleton skeleton--text skeleton--w-70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat -->
+    <section class="demo-section" id="stat">
+      <h2>Stat</h2>
+      <p class="text--muted demo-label--spaced">Statistics and metric cards.</p>
+
+      <div class="stat__grid constrain--lg">
+        <div class="stat">
+          <div class="stat__header">
+            <span class="stat__label">Total Revenue</span>
+            <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2"/><path d="M12 3v3m0 12v3"/></svg>
+          </div>
+          <div class="stat__value">$45,231</div>
+          <p class="stat__description">
+            <span class="stat__trend stat__trend--up">
+              <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8"/><path d="M14 7l7 0l0 7"/></svg>
+              12%
+            </span>
+            from last month
+          </p>
+        </div>
+
+        <div class="stat">
+          <div class="stat__header">
+            <span class="stat__label">Active Users</span>
+            <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+          </div>
+          <div class="stat__value">2,350</div>
+          <p class="stat__description">
+            <span class="stat__trend stat__trend--up">
+              <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8"/><path d="M14 7l7 0l0 7"/></svg>
+              8%
+            </span>
+            from last month
+          </p>
+        </div>
+
+        <div class="stat">
+          <div class="stat__header">
+            <span class="stat__label">Bounce Rate</span>
+            <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+          </div>
+          <div class="stat__value">24.5%</div>
+          <p class="stat__description">
+            <span class="stat__trend stat__trend--down">
+              <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 7l6 6l4 -4l8 8"/><path d="M21 10l0 7l-7 0"/></svg>
+              3%
+            </span>
+            from last month
+          </p>
+        </div>
+
+        <div class="stat stat--primary">
+          <div class="stat__header">
+            <span class="stat__label">Conversion</span>
+            <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"/><path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"/><path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+          </div>
+          <div class="stat__value">4.2%</div>
+          <p class="stat__description">
+            <span class="stat__trend stat__trend--up">+0.5%</span>
+            from last month
+          </p>
+        </div>
+      </div>
+
+      <div class="demo-label demo-label--spaced-lg">Mini Stats</div>
+      <div class="demo-row">
+        <span class="ministat">
+          <span class="ministat__label">Views:</span>
+          <span class="ministat__value">12,543</span>
+        </span>
+        <span class="ministat__divider"></span>
+        <span class="ministat">
+          <span class="ministat__label">Clicks:</span>
+          <span class="ministat__value">1,234</span>
+        </span>
+        <span class="ministat__divider"></span>
+        <span class="ministat">
+          <span class="ministat__label">CTR:</span>
+          <span class="ministat__value">9.8%</span>
+        </span>
       </div>
     </section>
 
     <!-- Table -->
-    <section class="demo-section">
+    <section class="demo-section" id="table">
       <h2>Table</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Data display in rows and columns.</p>
+      <p class="text--muted demo-label--spaced">Data display in rows and columns.</p>
 
-      <div class="table-wrapper" style="max-width: 800px;">
+      <div class="table__wrapper constrain--lg">
         <table class="table table--hoverable">
           <thead class="table__header">
             <tr class="table__row">
@@ -343,281 +1204,285 @@
     </section>
 
     <!-- Tabs -->
-    <section class="demo-section">
+    <section class="demo-section" id="tabs">
       <h2>Tabs</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Tabbed navigation for content sections.</p>
+      <p class="text--muted demo-label--spaced">Tabbed navigation for content sections.</p>
 
-      <div style="max-width: 600px;">
-        <div class="demo-label">Default Tabs</div>
-        <div class="tabs" style="margin-bottom: 2rem;">
-          <div class="tabs__list">
-            <button class="tabs__trigger tabs__trigger--active">Account</button>
-            <button class="tabs__trigger">Password</button>
-            <button class="tabs__trigger">Notifications</button>
+      <div class="constrain constrain--md">
+        <div class="demo-label">Interactive Tabs (click to switch)</div>
+        <div class="tabs spacer--xl" data-tabs>
+          <div class="tabs__list" data-tabs-list>
+            <button class="tabs__trigger" data-tab="tab-account" aria-selected="true">Account</button>
+            <button class="tabs__trigger" data-tab="tab-password">Password</button>
+            <button class="tabs__trigger" data-tab="tab-notifications">Notifications</button>
           </div>
-          <div class="tabs__content">
-            <div class="card">
-              <div class="card__content" style="padding-top: 1.5rem;">
-                Make changes to your account here.
+          <div class="tabs__content" data-tabs-panels>
+            <div id="tab-account" data-tab-panel class="card">
+              <div class="card__content card__content--pt">
+                <strong>Account Settings</strong><br>
+                Make changes to your account here. Update your profile information and preferences.
+              </div>
+            </div>
+            <div id="tab-password" data-tab-panel hidden class="card">
+              <div class="card__content card__content--pt">
+                <strong>Password Settings</strong><br>
+                Change your password and configure two-factor authentication.
+              </div>
+            </div>
+            <div id="tab-notifications" data-tab-panel hidden class="card">
+              <div class="card__content card__content--pt">
+                <strong>Notification Preferences</strong><br>
+                Configure how and when you receive notifications.
               </div>
             </div>
           </div>
         </div>
 
         <div class="demo-label">Underline Tabs</div>
-        <div class="tabs tabs--underline" style="margin-bottom: 2rem;">
-          <div class="tabs__list">
-            <button class="tabs__trigger tabs__trigger--active">Overview</button>
-            <button class="tabs__trigger">Analytics</button>
-            <button class="tabs__trigger">Reports</button>
+        <div class="tabs tabs--underline spacer--xl" data-tabs>
+          <div class="tabs__list" data-tabs-list>
+            <button class="tabs__trigger" data-tab="underline-overview" aria-selected="true">Overview</button>
+            <button class="tabs__trigger" data-tab="underline-analytics">Analytics</button>
+            <button class="tabs__trigger" data-tab="underline-reports">Reports</button>
           </div>
-          <div class="tabs__content">
-            <p>Overview content goes here.</p>
+          <div class="tabs__content" data-tabs-panels>
+            <div id="underline-overview" data-tab-panel><p>Overview content goes here.</p></div>
+            <div id="underline-analytics" data-tab-panel hidden><p>Analytics dashboard with charts and metrics.</p></div>
+            <div id="underline-reports" data-tab-panel hidden><p>Generated reports and exports.</p></div>
           </div>
         </div>
 
         <div class="demo-label">Pills Tabs</div>
-        <div class="tabs tabs--pills">
-          <div class="tabs__list">
-            <button class="tabs__trigger tabs__trigger--active">All</button>
-            <button class="tabs__trigger">Active</button>
-            <button class="tabs__trigger">Completed</button>
+        <div class="tabs tabs--pills" data-tabs>
+          <div class="tabs__list" data-tabs-list>
+            <button class="tabs__trigger" data-tab="pills-all" aria-selected="true">All</button>
+            <button class="tabs__trigger" data-tab="pills-active">Active</button>
+            <button class="tabs__trigger" data-tab="pills-completed">Completed</button>
+          </div>
+          <div class="tabs__content" data-tabs-panels>
+            <div id="pills-all" data-tab-panel><p class="text--sm text--muted">Showing all items</p></div>
+            <div id="pills-active" data-tab-panel hidden><p class="text--sm text--muted">Showing active items only</p></div>
+            <div id="pills-completed" data-tab-panel hidden><p class="text--sm text--muted">Showing completed items only</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Dropdown -->
-    <section class="demo-section">
-      <h2>Dropdown</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Contextual menus and actions.</p>
+    <!-- Tooltip -->
+    <section class="demo-section" id="tooltip">
+      <h2>Tooltip</h2>
+      <p class="text--muted demo-label--spaced">Hover hints and contextual information.</p>
 
-      <div class="demo-row">
-        <div class="dropdown dropdown--open" style="position: relative;">
-          <button class="btn btn--outline dropdown__trigger">
-            Open Menu
-            <i class="ti ti-chevron-down" style="margin-left: 4px;"></i>
+      <div class="demo-label">Positions</div>
+      <div class="demo-row demo-row--2xl demo-row--p-xl spacer--xl">
+        <span class="tooltip">
+          <button class="btn btn--outline">Top</button>
+          <span class="tooltip__content">Tooltip on top</span>
+        </span>
+
+        <span class="tooltip">
+          <button class="btn btn--outline">Bottom</button>
+          <span class="tooltip__content tooltip__content--bottom">Tooltip on bottom</span>
+        </span>
+
+        <span class="tooltip">
+          <button class="btn btn--outline">Left</button>
+          <span class="tooltip__content tooltip__content--left">Tooltip on left</span>
+        </span>
+
+        <span class="tooltip">
+          <button class="btn btn--outline">Right</button>
+          <span class="tooltip__content tooltip__content--right">Tooltip on right</span>
+        </span>
+      </div>
+
+      <div class="demo-label">Data Attribute Tooltip</div>
+      <div class="demo-row demo-row--lg demo-row--p-xl">
+        <button class="btn btn--ghost btn--icon" data-tooltip="Edit item">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+        </button>
+        <button class="btn btn--ghost btn--icon" data-tooltip="Delete item">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+        </button>
+        <button class="btn btn--ghost btn--icon" data-tooltip="Share item" data-tooltip-position="bottom">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M18 6m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.7 10.7l6.6 -3.4"/><path d="M8.7 13.3l6.6 3.4"/></svg>
+        </button>
+      </div>
+
+      <div class="demo-label demo-label--spaced-lg">Light Variant</div>
+      <div class="demo-row demo-row--p-xl">
+        <span class="tooltip">
+          <button class="btn btn--outline">Hover me</button>
+          <span class="tooltip__content tooltip__content--light">This is a light tooltip with border</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="demo-section" id="timeline">
+      <h2>Timeline</h2>
+      <p class="text--muted demo-label--spaced">Activity feeds and event history.</p>
+
+      <div class="constrain constrain--md">
+        <div class="demo-label">Default</div>
+        <div class="timeline spacer--xl">
+          <div class="timeline__item">
+            <div class="timeline__marker timeline__marker--success">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__header">
+                <span class="timeline__title">Order completed</span>
+                <span class="timeline__time">2 hours ago</span>
+              </div>
+              <p class="timeline__description">Your order #12345 has been delivered successfully.</p>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__marker timeline__marker--info">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/></svg>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__header">
+                <span class="timeline__title">Out for delivery</span>
+                <span class="timeline__time">5 hours ago</span>
+              </div>
+              <p class="timeline__description">Package is on the way to your address.</p>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__marker">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__header">
+                <span class="timeline__title">Package shipped</span>
+                <span class="timeline__time">Yesterday</span>
+              </div>
+              <p class="timeline__description">Your order has been shipped via Express Delivery.</p>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__marker timeline__marker--primary">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__header">
+                <span class="timeline__title">Order placed</span>
+                <span class="timeline__time">2 days ago</span>
+              </div>
+              <p class="timeline__description">Order #12345 was placed successfully.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-label">Activity Feed</div>
+        <div class="activityfeed">
+          <div class="activityfeed__item">
+            <span class="avatar avatar--sm"><span class="avatar__fallback">JD</span></span>
+            <div class="activityfeed__content">
+              <p class="activityfeed__text"><strong>John Doe</strong> commented on <a href="#">Project Alpha</a></p>
+              <span class="activityfeed__time">5 minutes ago</span>
+            </div>
+          </div>
+          <div class="activityfeed__item">
+            <span class="avatar avatar--sm"><span class="avatar__fallback">JS</span></span>
+            <div class="activityfeed__content">
+              <p class="activityfeed__text"><strong>Jane Smith</strong> uploaded 3 files</p>
+              <span class="activityfeed__time">1 hour ago</span>
+            </div>
+          </div>
+          <div class="activityfeed__item">
+            <span class="avatar avatar--sm"><span class="avatar__fallback">BW</span></span>
+            <div class="activityfeed__content">
+              <p class="activityfeed__text"><strong>Bob Wilson</strong> completed task <a href="#">Update documentation</a></p>
+              <span class="activityfeed__time">3 hours ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast -->
+    <section class="demo-section" id="toast">
+      <h2>Toast</h2>
+      <p class="text--muted demo-label--spaced">Temporary notification messages.</p>
+
+      <div class="demo-label">Try It (click buttons to show toasts)</div>
+      <div class="demo-row spacer--xl">
+        <button class="btn btn--outline" onclick="window.toast?.info('This is an informational message', { title: 'Info' })">
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          Show Info
+        </button>
+        <button class="btn btn--outline" onclick="window.toast?.success('Your changes have been saved successfully!')">
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+          Show Success
+        </button>
+        <button class="btn btn--outline" onclick="window.toast?.warning('Please review before continuing', { title: 'Warning' })">
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>
+          Show Warning
+        </button>
+        <button class="btn btn--outline" onclick="window.toast?.error('Something went wrong. Please try again.', { title: 'Error' })">
+          <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
+          Show Error
+        </button>
+      </div>
+
+      <div class="demo-label">Static Examples</div>
+      <div class="demo-stack constrain--sm">
+        <div class="toast">
+          <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+          <div class="toast__content">
+            <h4 class="toast__title">Notification</h4>
+            <p class="toast__description">This is a default toast message.</p>
+          </div>
+          <button class="toast__close">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
           </button>
-          <div class="dropdown__menu dropdown__menu--open" style="position: relative; margin-top: 0.5rem;">
-            <button class="dropdown__item">
-              <i class="ti ti-user dropdown__item-icon"></i>
-              <span class="dropdown__item-text">Profile</span>
-              <span class="dropdown__item-shortcut">⇧⌘P</span>
-            </button>
-            <button class="dropdown__item">
-              <i class="ti ti-settings dropdown__item-icon"></i>
-              <span class="dropdown__item-text">Settings</span>
-              <span class="dropdown__item-shortcut">⌘S</span>
-            </button>
-            <div class="dropdown__divider"></div>
-            <button class="dropdown__item dropdown__item--destructive">
-              <i class="ti ti-logout dropdown__item-icon"></i>
-              <span class="dropdown__item-text">Logout</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Breadcrumb -->
-    <section class="demo-section">
-      <h2>Breadcrumb</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Navigation path indicator.</p>
-
-      <nav class="breadcrumb" style="margin-bottom: 1.5rem;">
-        <ol class="breadcrumb__list">
-          <li class="breadcrumb__item">
-            <a href="#" class="breadcrumb__link">Home</a>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__separator">
-              <i class="ti ti-chevron-right"></i>
-            </span>
-          </li>
-          <li class="breadcrumb__item">
-            <a href="#" class="breadcrumb__link">Components</a>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__separator">
-              <i class="ti ti-chevron-right"></i>
-            </span>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__page">Breadcrumb</span>
-          </li>
-        </ol>
-      </nav>
-
-      <nav class="breadcrumb breadcrumb--slash">
-        <ol class="breadcrumb__list">
-          <li class="breadcrumb__item">
-            <a href="#" class="breadcrumb__link">Home</a>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__separator"></span>
-          </li>
-          <li class="breadcrumb__item">
-            <a href="#" class="breadcrumb__link">Settings</a>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__separator"></span>
-          </li>
-          <li class="breadcrumb__item">
-            <span class="breadcrumb__page">Profile</span>
-          </li>
-        </ol>
-      </nav>
-    </section>
-
-    <!-- Avatar -->
-    <section class="demo-section">
-      <h2>Avatar</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">User profile images with fallbacks.</p>
-
-      <div class="demo-label">Sizes</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
-        <span class="avatar avatar--xs"><span class="avatar__fallback">XS</span></span>
-        <span class="avatar avatar--sm"><span class="avatar__fallback">SM</span></span>
-        <span class="avatar"><span class="avatar__fallback">MD</span></span>
-        <span class="avatar avatar--lg"><span class="avatar__fallback">LG</span></span>
-        <span class="avatar avatar--xl"><span class="avatar__fallback">XL</span></span>
-      </div>
-
-      <div class="demo-label">With Status</div>
-      <div class="demo-row" style="margin-bottom: 1.5rem;">
-        <span class="avatar">
-          <span class="avatar__fallback">ON</span>
-          <span class="avatar__status avatar__status--online"></span>
-        </span>
-        <span class="avatar">
-          <span class="avatar__fallback">AW</span>
-          <span class="avatar__status avatar__status--away"></span>
-        </span>
-        <span class="avatar">
-          <span class="avatar__fallback">BS</span>
-          <span class="avatar__status avatar__status--busy"></span>
-        </span>
-        <span class="avatar">
-          <span class="avatar__fallback">OF</span>
-          <span class="avatar__status avatar__status--offline"></span>
-        </span>
-      </div>
-
-      <div class="demo-label">Avatar Group</div>
-      <div class="demo-row">
-        <div class="avatar-group">
-          <span class="avatar"><span class="avatar__fallback">A</span></span>
-          <span class="avatar"><span class="avatar__fallback">B</span></span>
-          <span class="avatar"><span class="avatar__fallback">C</span></span>
-          <span class="avatar-group__overflow">+5</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Progress -->
-    <section class="demo-section">
-      <h2>Progress</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Progress indicators and loading states.</p>
-
-      <div style="max-width: 400px; display: flex; flex-direction: column; gap: 1.5rem;">
-        <div class="progress-labeled">
-          <div class="progress-labeled__header">
-            <span class="progress-labeled__label">Default</span>
-            <span class="progress-labeled__value">60%</span>
-          </div>
-          <div class="progress">
-            <div class="progress__bar" style="width: 60%;"></div>
-          </div>
         </div>
 
-        <div class="progress-labeled">
-          <div class="progress-labeled__header">
-            <span class="progress-labeled__label">Success</span>
-            <span class="progress-labeled__value">100%</span>
+        <div class="toast toast--success">
+          <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+          <div class="toast__content">
+            <h4 class="toast__title">Success!</h4>
+            <p class="toast__description">Your changes have been saved.</p>
           </div>
-          <div class="progress progress--success">
-            <div class="progress__bar" style="width: 100%;"></div>
-          </div>
+          <button class="toast__close">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </button>
         </div>
 
-        <div class="progress-labeled">
-          <div class="progress-labeled__header">
-            <span class="progress-labeled__label">Warning</span>
-            <span class="progress-labeled__value">45%</span>
+        <div class="toast toast--error">
+          <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
+          <div class="toast__content">
+            <h4 class="toast__title">Error</h4>
+            <p class="toast__description">Something went wrong. Please try again.</p>
           </div>
-          <div class="progress progress--warning">
-            <div class="progress__bar" style="width: 45%;"></div>
-          </div>
+          <button class="toast__close">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </button>
         </div>
 
-        <div class="progress-labeled">
-          <div class="progress-labeled__header">
-            <span class="progress-labeled__label">Indeterminate</span>
-          </div>
-          <div class="progress progress--indeterminate">
-            <div class="progress__bar"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skeleton -->
-    <section class="demo-section">
-      <h2>Skeleton</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Loading placeholder states.</p>
-
-      <div style="max-width: 400px;">
-        <div class="skeleton-card">
-          <div class="skeleton skeleton--card" style="height: 8rem;"></div>
-          <div class="skeleton-card__content">
-            <div class="skeleton skeleton--heading"></div>
-            <div class="skeleton skeleton--text"></div>
-            <div class="skeleton skeleton--text" style="width: 70%;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Modal (static preview) -->
-    <section class="demo-section">
-      <h2>Modal</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Dialog overlays for focused interactions.</p>
-
-      <div class="demo-box" style="max-width: 500px;">
-        <div class="modal__dialog" style="position: relative; transform: none; opacity: 1; max-width: 100%;">
-          <div class="modal__header">
-            <div>
-              <h3 class="modal__title">Edit Profile</h3>
-              <p class="modal__description">Make changes to your profile here.</p>
-            </div>
-            <button class="modal__close">
-              <i class="ti ti-x"></i>
-            </button>
-          </div>
-          <div class="modal__content">
-            <div class="form-group">
-              <label class="form-group__label">Name</label>
-              <input type="text" class="input" value="John Doe">
-            </div>
-            <div class="form-group" style="margin-top: 1rem;">
-              <label class="form-group__label">Email</label>
-              <input type="email" class="input" value="john@example.com">
+        <div class="toast toast--action toast--compact">
+          <div class="toast__content">
+            <span class="toast__title">File uploaded successfully</span>
+            <div class="toast__actions">
+              <button class="btn btn--sm btn--ghost">Undo</button>
+              <button class="btn btn--sm btn--primary">View</button>
             </div>
           </div>
-          <div class="modal__footer">
-            <button class="btn btn--outline">Cancel</button>
-            <button class="btn btn--primary">Save Changes</button>
-          </div>
         </div>
       </div>
+
+      <p class="text--sm text--muted spacer--md">Toasts appear in corners using <code>.toast__container--top-right</code>, <code>.toast__container--bottom-left</code>, etc.</p>
     </section>
 
     <!-- Typography -->
-    <section class="demo-section">
+    <section class="demo-section" id="typography">
       <h2>Typography</h2>
-      <p class="text--muted" style="margin-bottom: 1.5rem;">Text styles and hierarchy.</p>
+      <p class="text--muted demo-label--spaced">Text styles and hierarchy.</p>
 
-      <div style="max-width: 600px;">
+      <div class="constrain constrain--md">
         <h1>Heading 1</h1>
         <h2>Heading 2</h2>
         <h3>Heading 3</h3>
@@ -625,7 +1490,7 @@
         <h5>Heading 5</h5>
         <h6>Heading 6</h6>
 
-        <hr style="margin: 1.5rem 0;">
+        <hr class="separator separator--lg">
 
         <p>This is a paragraph of text. It demonstrates the default body text styling with proper line height and spacing for readability.</p>
 
@@ -643,12 +1508,6 @@ function hello() {
 
   </div>
 
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
-    }
-  </script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

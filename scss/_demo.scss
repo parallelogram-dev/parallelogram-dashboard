@@ -1,0 +1,398 @@
+// ==========================================================================
+// Demo - Demo page specific styles
+// ==========================================================================
+
+@use "variables" as *;
+
+// -------------------------------------------------------------------------
+// Demo Section Block
+// -------------------------------------------------------------------------
+.demo-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Demo Grid Block - Flex grid for demo items
+// -------------------------------------------------------------------------
+.demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+// -------------------------------------------------------------------------
+// Demo Row Block - Horizontal flex row for demo items
+// -------------------------------------------------------------------------
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+
+  &--lg { gap: 1rem; }
+  &--xl { gap: 1.5rem; }
+  &--2xl { gap: 2rem; }
+  &--h-xl { height: 2rem; }
+  &--p-xl { padding: 2rem; }
+}
+
+// -------------------------------------------------------------------------
+// Demo Label Block
+// -------------------------------------------------------------------------
+.demo-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+
+  &--spaced { margin-top: 1.5rem; }
+  &--spaced-lg { margin-top: 2rem; }
+}
+
+// -------------------------------------------------------------------------
+// Demo Box Block
+// -------------------------------------------------------------------------
+.demo-box {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg-muted);
+}
+
+// -------------------------------------------------------------------------
+// Demo Container Block - Page container for demo
+// -------------------------------------------------------------------------
+.demo-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+// -------------------------------------------------------------------------
+// Demo Header Block
+// -------------------------------------------------------------------------
+.demo-header {
+  margin-bottom: 3rem;
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__links {
+    margin-top: 0.5rem;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Demo Stack Block - Vertical stacking for demo components
+// -------------------------------------------------------------------------
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &--md { max-width: 37.5rem; } // 600px
+  &--lg { max-width: 50rem; }   // 800px
+
+  &--lg-gap { gap: 1.5rem; }
+}
+
+// -------------------------------------------------------------------------
+// Demo Preview Block - Static preview containers
+// -------------------------------------------------------------------------
+.demo-preview {
+  &--command {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    max-height: none;
+    margin: 0;
+  }
+
+  &--modal {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    max-width: 100%;
+  }
+
+  &--sheet {
+    position: relative;
+    transform: none;
+    max-width: 100%;
+    box-shadow: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  &--dropdown {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+
+  &--dropdown-abs {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.5rem;
+  }
+
+  &--overflow-visible {
+    overflow: visible;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Bulk Actions Block - Fixed action bar
+// -------------------------------------------------------------------------
+.bulkactions {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  box-shadow: $shadow-xl;
+  animation: bulkactions-in $transition-base $transition-easing;
+
+  &__content {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+@keyframes bulkactions-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Auth Block - Authentication page layout
+// -------------------------------------------------------------------------
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: $spacing-sm;
+
+  &__container {
+    width: 100%;
+    max-width: 24rem;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: $spacing-sm;
+    color: var(--primary);
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    letter-spacing: $letter-spacing-tight;
+    color: var(--fg);
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    margin-top: $spacing-3xs;
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: $spacing-lg;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2xs;
+    margin-top: $spacing-lg;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--fg);
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: $radius-full;
+    background-color: var(--bg-muted);
+    color: var(--fg-muted);
+
+    &--success {
+      background-color: var(--success-muted);
+      color: var(--success);
+    }
+
+    &--error {
+      background-color: var(--destructive-muted);
+      color: var(--destructive);
+    }
+  }
+}
+
+// -------------------------------------------------------------------------
+// Demo Nav Block - Floating navigation for demo pages
+// -------------------------------------------------------------------------
+.demonav {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: $radius-full;
+    background-color: var(--primary);
+    color: var(--primary-fg);
+    border: none;
+    cursor: pointer;
+    box-shadow: $shadow-lg;
+    transition: transform $transition-base $transition-easing,
+                background-color $transition-base $transition-easing;
+
+    &:hover {
+      background-color: var(--primary-hover);
+      transform: scale(1.05);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 2px;
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  // Icon toggle - show menu by default, close when open
+  &__icon--close {
+    display: none;
+  }
+
+  &--open &__icon--menu {
+    display: none;
+  }
+
+  &--open &__icon--close {
+    display: block;
+  }
+
+  &__header {
+    padding: $spacing-2xs $spacing-xs;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: $spacing-2xs;
+  }
+
+  &__title {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__menu {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 14rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    box-shadow: $shadow-lg;
+    padding: $spacing-2xs;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition: opacity $transition-base $transition-easing,
+                visibility $transition-base $transition-easing,
+                transform $transition-base $transition-easing;
+  }
+
+  &--open &__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-2xs $spacing-xs;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    color: var(--fg);
+    text-decoration: none;
+    transition: background-color $transition-base $transition-easing;
+
+    &:hover {
+      background-color: var(--bg-muted);
+    }
+
+    &--active {
+      background-color: var(--bg-muted);
+      font-weight: $font-weight-medium;
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--fg-muted);
+      flex-shrink: 0;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+// ==========================================================================
+// Icon - SVG icon styling
+// ==========================================================================
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  flex-shrink: 0;
+}
+
+// Size variants
+.icon--xs {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.icon--sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon--lg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon--xl {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon--2xl {
+  width: 2.5rem;
+  height: 2.5rem;
+}

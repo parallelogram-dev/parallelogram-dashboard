@@ -22,6 +22,22 @@
     background-color: var(--primary);
     border-radius: $radius-full;
     @include transition-default;
+
+    // Width modifiers (to avoid inline styles)
+    &--0 { width: 0%; }
+    &--10 { width: 10%; }
+    &--20 { width: 20%; }
+    &--25 { width: 25%; }
+    &--30 { width: 30%; }
+    &--40 { width: 40%; }
+    &--45 { width: 45%; }
+    &--50 { width: 50%; }
+    &--60 { width: 60%; }
+    &--70 { width: 70%; }
+    &--75 { width: 75%; }
+    &--80 { width: 80%; }
+    &--90 { width: 90%; }
+    &--100 { width: 100%; }
   }
 
   // --------------------------------------------------------------------------
@@ -116,34 +132,34 @@
 // Progress with Label
 // --------------------------------------------------------------------------
 
-.progress-labeled {
+.progress__labeled {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-2xs;
+}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.progress__labeled-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  &__label {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    color: var(--fg);
-  }
+.progress__labeled-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--fg);
+}
 
-  &__value {
-    font-size: $font-size-sm;
-    color: var(--fg-muted);
-  }
+.progress__labeled-value {
+  font-size: $font-size-sm;
+  color: var(--fg-muted);
 }
 
 // --------------------------------------------------------------------------
 // Circular Progress
 // --------------------------------------------------------------------------
 
-.progress-circle {
+.progress__circle {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -151,44 +167,16 @@
   width: 3rem;
   height: 3rem;
 
-  &__svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-  }
-
-  &__track {
-    fill: none;
-    stroke: var(--bg-muted);
-    stroke-width: 4;
-  }
-
-  &__bar {
-    fill: none;
-    stroke: var(--primary);
-    stroke-width: 4;
-    stroke-linecap: round;
-    @include transition-default;
-  }
-
-  &__value {
-    position: absolute;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-semibold;
-    color: var(--fg);
-  }
-
-  // Sizes
   &--sm {
     width: 2rem;
     height: 2rem;
 
-    .progress-circle__track,
-    .progress-circle__bar {
+    .progress__circle-track,
+    .progress__circle-bar {
       stroke-width: 3;
     }
 
-    .progress-circle__value {
+    .progress__circle-value {
       font-size: 0.625rem;
     }
   }
@@ -197,7 +185,7 @@
     width: 4rem;
     height: 4rem;
 
-    .progress-circle__value {
+    .progress__circle-value {
       font-size: $font-size-sm;
     }
   }
@@ -206,33 +194,60 @@
     width: 6rem;
     height: 6rem;
 
-    .progress-circle__track,
-    .progress-circle__bar {
+    .progress__circle-track,
+    .progress__circle-bar {
       stroke-width: 6;
     }
 
-    .progress-circle__value {
+    .progress__circle-value {
       font-size: $font-size-base;
     }
   }
 
   // Variants
-  &--success .progress-circle__bar {
+  &--success .progress__circle-bar {
     stroke: var(--success);
   }
 
-  &--warning .progress-circle__bar {
+  &--warning .progress__circle-bar {
     stroke: var(--warning);
   }
 
-  &--destructive .progress-circle__bar {
+  &--destructive .progress__circle-bar {
     stroke: var(--destructive);
   }
 
   // Indeterminate
-  &--indeterminate .progress-circle__svg {
+  &--indeterminate .progress__circle-svg {
     animation: spin 1.5s linear infinite;
   }
+}
+
+.progress__circle-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress__circle-track {
+  fill: none;
+  stroke: var(--bg-muted);
+  stroke-width: 4;
+}
+
+.progress__circle-bar {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  @include transition-default;
+}
+
+.progress__circle-value {
+  position: absolute;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--fg);
 }
 
 // --------------------------------------------------------------------------
@@ -272,7 +287,7 @@
     flex: 1;
     height: 2px;
     background-color: var(--bg-muted);
-    margin: 0 $spacing-2;
+    margin: 0 $spacing-2xs;
     @include transition-colors;
   }
 

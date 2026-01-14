@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="records.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Users</span>
+          </a>
+          <a href="#" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item navmenu__item--active">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <button class="navmenu__avatar">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Settings</h2>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__list">
+            <a href="settings.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M7 15v-6l4 3z"/></svg>
+              <span class="subnav__item-text">Overview</span>
+            </a>
+            <a href="settings-account.html" class="subnav__item subnav__item--active">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="subnav__item-text">Account</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
+              <span class="subnav__item-text">Security</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="subnav__item-text">Notifications</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+              <span class="subnav__item-text">Integrations</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+              <span class="subnav__item-text">Team</span>
+            </a>
+            <a href="#" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 21l18 0"/><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0m0 -1v1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"/><path d="M5 21l0 -10.15"/><path d="M19 21l0 -10.15"/><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"/></svg>
+              <span class="subnav__item-text">Billing</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <a href="settings.html" class="breadcrumb__link">Settings</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Account</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <span class="avatar">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </span>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <!-- Page Header -->
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">Account Settings</h1>
+            <p class="pageheader__description">Manage your profile and account preferences.</p>
+          </div>
+          <div class="pageheader__actions">
+            <button class="btn btn--primary" id="saveBtn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+              Save Changes
+            </button>
+          </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="stack stack--2xl">
+
+          <!-- Profile Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Profile Information</h2>
+              <p class="card__description">Update your personal details and public profile.</p>
+            </div>
+            <div class="card__content">
+              <div class="form">
+
+                <!-- Avatar Upload -->
+                <div class="formfield">
+                  <label class="formfield__label">Profile Photo</label>
+                  <div class="cluster cluster--sm">
+                    <span class="avatar avatar--xl">
+                      <span class="avatar__fallback">JD</span>
+                    </span>
+                    <div class="stack stack--xs">
+                      <div class="cluster cluster--xs">
+                        <button class="btn btn--outline btn--sm">Upload</button>
+                        <button class="btn btn--ghost btn--sm">Remove</button>
+                      </div>
+                      <p class="text--xs text--muted">JPG, GIF or PNG. Max size 2MB.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="firstName">First Name</label>
+                    <input type="text" class="input" id="firstName" value="John">
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="lastName">Last Name</label>
+                    <input type="text" class="input" id="lastName" value="Doe">
+                  </div>
+                </div>
+
+                <div class="formfield">
+                  <label class="formfield__label" for="displayName">Display Name</label>
+                  <input type="text" class="input" id="displayName" value="johndoe">
+                  <span class="formfield__hint">This is how your name will appear publicly.</span>
+                </div>
+
+                <div class="formfield">
+                  <label class="formfield__label" for="bio">Bio</label>
+                  <textarea class="textarea" id="bio" rows="3" placeholder="Tell us a little about yourself...">Product designer based in San Francisco. I love creating beautiful user experiences.</textarea>
+                  <span class="formfield__hint">Brief description for your profile. Max 160 characters.</span>
+                </div>
+
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="website">Website</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">https://</span>
+                      <input type="text" class="input" id="website" value="johndoe.design">
+                    </div>
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="location">Location</label>
+                    <input type="text" class="input" id="location" value="San Francisco, CA">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Email Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Email Addresses</h2>
+              <p class="card__description">Manage your email addresses and primary contact.</p>
+            </div>
+            <div class="card__content">
+              <div class="stack stack--md stack--divided">
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+                    <div>
+                      <div class="cluster cluster--xs">
+                        <span class="text--semibold">john@example.com</span>
+                        <span class="badge badge--success-muted">Primary</span>
+                      </div>
+                      <p class="text--sm text--muted">Added on Jan 15, 2024</p>
+                    </div>
+                  </div>
+                  <button class="btn btn--ghost btn--sm">Remove</button>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <svg class="icon icon--muted" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+                    <div>
+                      <div class="cluster cluster--xs">
+                        <span class="text--semibold">johndoe@work.com</span>
+                      </div>
+                      <p class="text--sm text--muted">Added on Feb 20, 2024</p>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--xs">
+                    <button class="btn btn--ghost btn--sm">Make Primary</button>
+                    <button class="btn btn--ghost btn--sm">Remove</button>
+                  </div>
+                </div>
+
+              </div>
+
+              <button class="btn btn--outline btn--sm mt--lg">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                Add Email Address
+              </button>
+            </div>
+          </section>
+
+          <!-- Social Profiles Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Social Profiles</h2>
+              <p class="card__description">Connect your social media accounts.</p>
+            </div>
+            <div class="card__content">
+              <div class="form">
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="twitter">Twitter</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">@</span>
+                      <input type="text" class="input" id="twitter" value="johndoe">
+                    </div>
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="linkedin">LinkedIn</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">linkedin.com/in/</span>
+                      <input type="text" class="input" id="linkedin" value="johndoe">
+                    </div>
+                  </div>
+                </div>
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="github">GitHub</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">github.com/</span>
+                      <input type="text" class="input" id="github" value="johndoe">
+                    </div>
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="dribbble">Dribbble</label>
+                    <div class="inputgroup">
+                      <span class="inputgroup__addon">dribbble.com/</span>
+                      <input type="text" class="input" id="dribbble" placeholder="username">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Preferences Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Preferences</h2>
+              <p class="card__description">Customize your account experience.</p>
+            </div>
+            <div class="card__content">
+              <div class="form">
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="language">Language</label>
+                    <select class="select" id="language">
+                      <option value="en" selected>English (US)</option>
+                      <option value="en-gb">English (UK)</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="de">German</option>
+                      <option value="ja">Japanese</option>
+                    </select>
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="timezone">Timezone</label>
+                    <select class="select" id="timezone">
+                      <option value="pst" selected>Pacific Time (PT)</option>
+                      <option value="mst">Mountain Time (MT)</option>
+                      <option value="cst">Central Time (CT)</option>
+                      <option value="est">Eastern Time (ET)</option>
+                      <option value="utc">UTC</option>
+                      <option value="gmt">GMT</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form__row form__row--2">
+                  <div class="formfield">
+                    <label class="formfield__label" for="dateFormat">Date Format</label>
+                    <select class="select" id="dateFormat">
+                      <option value="mdy" selected>MM/DD/YYYY</option>
+                      <option value="dmy">DD/MM/YYYY</option>
+                      <option value="ymd">YYYY-MM-DD</option>
+                    </select>
+                  </div>
+                  <div class="formfield">
+                    <label class="formfield__label" for="timeFormat">Time Format</label>
+                    <select class="select" id="timeFormat">
+                      <option value="12" selected>12-hour (1:30 PM)</option>
+                      <option value="24">24-hour (13:30)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="formfield">
+                  <label class="formfield__label" for="currency">Currency</label>
+                  <select class="select" id="currency" style="max-width: 20rem;">
+                    <option value="usd" selected>USD - US Dollar ($)</option>
+                    <option value="eur">EUR - Euro (€)</option>
+                    <option value="gbp">GBP - British Pound (£)</option>
+                    <option value="jpy">JPY - Japanese Yen (¥)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Privacy Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Privacy</h2>
+              <p class="card__description">Control your privacy and visibility settings.</p>
+            </div>
+            <div class="card__content">
+              <div class="stack stack--lg stack--divided">
+
+                <div class="cluster cluster--between">
+                  <div>
+                    <h4 class="text--semibold">Profile visibility</h4>
+                    <p class="text--sm text--muted">Control who can see your profile information</p>
+                  </div>
+                  <select class="select select--sm" style="width: auto;">
+                    <option value="public" selected>Public</option>
+                    <option value="private">Private</option>
+                    <option value="team">Team only</option>
+                  </select>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div>
+                    <h4 class="text--semibold">Show online status</h4>
+                    <p class="text--sm text--muted">Let others see when you're active</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input" checked>
+                    <span class="switch__slider"></span>
+                  </label>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div>
+                    <h4 class="text--semibold">Show activity status</h4>
+                    <p class="text--sm text--muted">Display your recent activity to others</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input" checked>
+                    <span class="switch__slider"></span>
+                  </label>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div>
+                    <h4 class="text--semibold">Allow search engines to index</h4>
+                    <p class="text--sm text--muted">Make your profile discoverable via search</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input">
+                    <span class="switch__slider"></span>
+                  </label>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div>
+                    <h4 class="text--semibold">Share usage data</h4>
+                    <p class="text--sm text--muted">Help us improve by sharing anonymous usage data</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" class="switch__input" checked>
+                    <span class="switch__slider"></span>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Connected Accounts Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Connected Accounts</h2>
+              <p class="card__description">Manage third-party accounts linked to your profile.</p>
+            </div>
+            <div class="card__content">
+              <div class="stack stack--md stack--divided">
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <div class="box box--icon box--sm">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M20.945 11a9 9 0 1 1 -3.284 -5.997l-2.655 2.392a5.5 5.5 0 1 0 2.119 6.605h-4.125v-3h7.945z"/></svg>
+                    </div>
+                    <div>
+                      <span class="text--semibold">Google</span>
+                      <p class="text--sm text--muted">john@gmail.com</p>
+                    </div>
+                  </div>
+                  <button class="btn btn--ghost btn--sm text--destructive">Disconnect</button>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <div class="box box--icon box--sm">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
+                    </div>
+                    <div>
+                      <span class="text--semibold">GitHub</span>
+                      <p class="text--sm text--muted">@johndoe</p>
+                    </div>
+                  </div>
+                  <button class="btn btn--ghost btn--sm text--destructive">Disconnect</button>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <div class="box box--icon box--sm">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                    </div>
+                    <div>
+                      <span class="text--semibold">X (Twitter)</span>
+                      <p class="text--sm text--muted">Not connected</p>
+                    </div>
+                  </div>
+                  <button class="btn btn--outline btn--sm">Connect</button>
+                </div>
+
+                <div class="cluster cluster--between">
+                  <div class="cluster cluster--sm">
+                    <div class="box box--icon box--sm">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></svg>
+                    </div>
+                    <div>
+                      <span class="text--semibold">Facebook</span>
+                      <p class="text--sm text--muted">Not connected</p>
+                    </div>
+                  </div>
+                  <button class="btn btn--outline btn--sm">Connect</button>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Data Export Section -->
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title">Data Export</h2>
+              <p class="card__description">Download a copy of your data.</p>
+            </div>
+            <div class="card__content">
+              <div class="stack stack--md">
+                <p class="text--sm text--muted">
+                  You can export all your account data including your profile information, activity history,
+                  and uploaded files. The export will be delivered as a ZIP file containing JSON and CSV files.
+                </p>
+                <div class="cluster cluster--sm">
+                  <button class="btn btn--outline">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                    Export All Data
+                  </button>
+                  <button class="btn btn--ghost">View Previous Exports</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Danger Zone Section -->
+          <section class="card card--destructive">
+            <div class="card__header">
+              <h2 class="card__title">Danger Zone</h2>
+              <p class="card__description">Irreversible and destructive actions.</p>
+            </div>
+            <div class="card__content">
+              <div class="stack stack--lg stack--divided">
+
+                <div class="cluster cluster--between cluster--start">
+                  <div>
+                    <h4 class="text--semibold">Deactivate account</h4>
+                    <p class="text--sm text--muted">Temporarily disable your account. You can reactivate it anytime.</p>
+                  </div>
+                  <button class="btn btn--outline btn--sm">Deactivate</button>
+                </div>
+
+                <div class="cluster cluster--between cluster--start">
+                  <div>
+                    <h4 class="text--semibold">Delete account</h4>
+                    <p class="text--sm text--muted">Permanently delete your account and all associated data. This cannot be undone.</p>
+                  </div>
+                  <button class="btn btn--destructive btn--sm">Delete Account</button>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', function() {
+      alert('Settings saved successfully!');
+    });
+  </script>
+
+</body>
+</html>
