@@ -1,0 +1,226 @@
+// ==========================================================================
+// Table Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Table Wrapper (for horizontal scroll)
+// --------------------------------------------------------------------------
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  @include scrollbar-thin;
+}
+
+// --------------------------------------------------------------------------
+// Base Table
+// --------------------------------------------------------------------------
+
+.table {
+  width: 100%;
+  caption-side: bottom;
+  font-size: $font-size-sm;
+  text-align: left;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__body {
+    // Rows alternate striping handled by modifier
+  }
+
+  &__footer {
+    border-top: 1px solid var(--border);
+    font-weight: $font-weight-medium;
+  }
+
+  &__row {
+    border-bottom: 1px solid var(--border);
+    @include transition-colors;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__head {
+    height: $spacing-12;
+    padding: 0 $spacing-4;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    vertical-align: middle;
+    white-space: nowrap;
+
+    &--sortable {
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        color: var(--fg);
+      }
+    }
+
+    &--sorted {
+      color: var(--fg);
+    }
+  }
+
+  &__cell {
+    padding: $spacing-4;
+    vertical-align: middle;
+  }
+
+  &__caption {
+    margin-top: $spacing-4;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+    text-align: center;
+  }
+
+  // Empty state
+  &__empty {
+    padding: $spacing-8 $spacing-4;
+    text-align: center;
+    color: var(--fg-muted);
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Striped rows
+  &--striped {
+    .table__body .table__row:nth-child(even) {
+      background-color: var(--bg-muted);
+    }
+  }
+
+  // Hoverable rows
+  &--hoverable {
+    .table__body .table__row {
+      &:hover {
+        background-color: var(--bg-muted);
+      }
+    }
+  }
+
+  // Bordered (all cells have borders)
+  &--bordered {
+    .table__head,
+    .table__cell {
+      border: 1px solid var(--border);
+    }
+  }
+
+  // Compact
+  &--compact {
+    .table__head {
+      height: $spacing-8;
+      padding: 0 $spacing-2;
+    }
+
+    .table__cell {
+      padding: $spacing-2;
+    }
+  }
+
+  // Fixed layout
+  &--fixed {
+    table-layout: fixed;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Sortable Header Icon
+// --------------------------------------------------------------------------
+
+.table__sort-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: $spacing-1;
+  width: $icon-size-sm;
+  height: $icon-size-sm;
+  color: var(--fg-subtle);
+
+  &--asc,
+  &--desc {
+    color: var(--fg);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Checkbox Column
+// --------------------------------------------------------------------------
+
+.table__checkbox {
+  width: $spacing-8;
+  text-align: center;
+}
+
+// --------------------------------------------------------------------------
+// Actions Column
+// --------------------------------------------------------------------------
+
+.table__actions {
+  width: auto;
+  text-align: right;
+  white-space: nowrap;
+
+  .btn + .btn {
+    margin-left: $spacing-1;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Responsive: Card layout on mobile
+// --------------------------------------------------------------------------
+
+@include max-md {
+  .table--responsive {
+    .table__header {
+      @include sr-only;
+    }
+
+    .table__body {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-4;
+    }
+
+    .table__row {
+      display: flex;
+      flex-direction: column;
+      padding: $spacing-4;
+      border: 1px solid var(--border);
+      border-radius: $radius;
+    }
+
+    .table__cell {
+      display: flex;
+      justify-content: space-between;
+      padding: $spacing-2 0;
+      border-bottom: 1px solid var(--border-muted);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: attr(data-label);
+        font-weight: $font-weight-medium;
+        color: var(--fg-muted);
+        margin-right: $spacing-4;
+      }
+    }
+  }
+}

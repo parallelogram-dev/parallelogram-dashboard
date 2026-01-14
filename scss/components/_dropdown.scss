@@ -1,0 +1,245 @@
+// ==========================================================================
+// Dropdown Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Dropdown
+// --------------------------------------------------------------------------
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__trigger {
+    // Trigger inherits from button or can be custom
+    // Just ensure it's clickable
+    cursor: pointer;
+  }
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: $z-dropdown;
+    min-width: 12rem;
+    padding: $spacing-1;
+    background-color: var(--popover);
+    color: var(--popover-fg);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25rem);
+    @include transition-default;
+
+    // Open state (toggle via JS)
+    &--open,
+    .dropdown--open & {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY($spacing-1);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Position Variants
+  // --------------------------------------------------------------------------
+
+  &--right &__menu,
+  &__menu--right {
+    left: auto;
+    right: 0;
+  }
+
+  &--top &__menu,
+  &__menu--top {
+    top: auto;
+    bottom: 100%;
+    transform: translateY(0.25rem);
+
+    &--open,
+    .dropdown--open & {
+      transform: translateY(-$spacing-1);
+    }
+  }
+
+  &--center &__menu,
+  &__menu--center {
+    left: 50%;
+    transform: translateX(-50%) translateY(-0.25rem);
+
+    &--open,
+    .dropdown--open & {
+      transform: translateX(-50%) translateY($spacing-1);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Menu Elements
+  // --------------------------------------------------------------------------
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    width: 100%;
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    color: var(--popover-fg);
+    border-radius: $radius-sm;
+    text-align: left;
+    @include interactive;
+
+    &:hover {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+    }
+
+    &--active {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+    }
+
+    &--disabled {
+      @include disabled;
+    }
+
+    &--destructive {
+      color: var(--destructive);
+
+      &:hover {
+        background-color: var(--destructive);
+        color: var(--destructive-fg);
+      }
+    }
+  }
+
+  &__item-icon {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    flex-shrink: 0;
+  }
+
+  &__item-text {
+    flex: 1;
+  }
+
+  &__item-shortcut {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    margin-left: auto;
+  }
+
+  &__item-check {
+    width: $icon-size-sm;
+    height: $icon-size-sm;
+    margin-left: auto;
+    opacity: 0;
+
+    &--checked {
+      opacity: 1;
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: var(--border);
+    margin: $spacing-1 0;
+  }
+
+  &__label {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+  }
+
+  // Submenu (nested)
+  &__submenu {
+    position: relative;
+
+    &-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &-arrow {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+      margin-left: $spacing-2;
+    }
+
+    &-content {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin-left: $spacing-1;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Dropdown Menu (standalone, for context menus)
+// --------------------------------------------------------------------------
+
+.dropdown-menu {
+  position: fixed;
+  z-index: $z-popover;
+  min-width: 12rem;
+  padding: $spacing-1;
+  background-color: var(--popover);
+  color: var(--popover-fg);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  animation: scale-in $transition-fast $transition-easing;
+
+  &__item {
+    @extend .dropdown__item;
+  }
+
+  &__divider {
+    @extend .dropdown__divider;
+  }
+
+  &__label {
+    @extend .dropdown__label;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Width Variants
+// --------------------------------------------------------------------------
+
+.dropdown__menu {
+  &--sm {
+    min-width: 8rem;
+  }
+
+  &--md {
+    min-width: 12rem;
+  }
+
+  &--lg {
+    min-width: 16rem;
+  }
+
+  &--xl {
+    min-width: 20rem;
+  }
+
+  &--full {
+    min-width: 100%;
+  }
+}

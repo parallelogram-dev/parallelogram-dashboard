@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Demo - Parallelogram Dashboard</title>
+  <link rel="stylesheet" href="../dist/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../node_modules/@tabler/icons-webfont/tabler-icons.min.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="main-nav">
+      <div class="main-nav__header">
+        <a href="#" class="main-nav__logo">
+          <i class="ti ti-sparkles" style="font-size: 1.5rem;"></i>
+        </a>
+      </div>
+
+      <div class="main-nav__content">
+        <div class="main-nav__section">
+          <a href="#" class="main-nav__item main-nav__item--active" data-section="home">
+            <i class="ti ti-home"></i>
+            <span class="main-nav__tooltip">Home</span>
+          </a>
+          <a href="#" class="main-nav__item" data-section="projects">
+            <i class="ti ti-folder"></i>
+            <span class="main-nav__tooltip">Projects</span>
+          </a>
+          <a href="#" class="main-nav__item" data-section="tasks">
+            <i class="ti ti-clipboard-check"></i>
+            <span class="main-nav__tooltip">Tasks</span>
+          </a>
+          <a href="#" class="main-nav__item" data-section="analytics">
+            <i class="ti ti-chart-line"></i>
+            <span class="main-nav__tooltip">Analytics</span>
+          </a>
+          <a href="#" class="main-nav__item" data-section="team">
+            <i class="ti ti-users"></i>
+            <span class="main-nav__tooltip">Team</span>
+          </a>
+        </div>
+
+        <div class="main-nav__section">
+          <a href="#" class="main-nav__item" data-section="settings">
+            <i class="ti ti-settings"></i>
+            <span class="main-nav__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="main-nav__footer">
+        <button class="main-nav__avatar">
+          <span class="main-nav__avatar-fallback">JD</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="sub-nav">
+      <div class="sub-nav__header">
+        <h2 class="sub-nav__title">Home</h2>
+        <div class="sub-nav__actions">
+          <button class="sub-nav__action" data-tooltip="Search" data-tooltip-position="bottom">
+            <i class="ti ti-search"></i>
+          </button>
+          <button class="sub-nav__action" data-tooltip="Add new" data-tooltip-position="bottom">
+            <i class="ti ti-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="sub-nav__search">
+        <input type="text" class="sub-nav__search-input" placeholder="Search...">
+      </div>
+
+      <div class="sub-nav__content">
+        <!-- Favorites Section -->
+        <div class="sub-nav__section">
+          <div class="sub-nav__section-header">
+            <span class="sub-nav__section-title">Favorites</span>
+            <button class="sub-nav__section-action">
+              <i class="ti ti-plus"></i>
+            </button>
+          </div>
+          <div class="sub-nav__list">
+            <a href="#" class="sub-nav__item sub-nav__item--active">
+              <i class="ti ti-layout-dashboard sub-nav__item-icon"></i>
+              <span class="sub-nav__item-text">Dashboard</span>
+            </a>
+            <a href="#" class="sub-nav__item">
+              <i class="ti ti-users sub-nav__item-icon"></i>
+              <span class="sub-nav__item-text">Customers</span>
+              <span class="sub-nav__item-badge">128</span>
+            </a>
+            <a href="#" class="sub-nav__item">
+              <i class="ti ti-bell sub-nav__item-icon"></i>
+              <span class="sub-nav__item-text">Notifications</span>
+              <span class="sub-nav__item-badge">5</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Projects Section with Submenus -->
+        <div class="sub-nav__section">
+          <div class="sub-nav__section-header">
+            <span class="sub-nav__section-title">Projects</span>
+            <button class="sub-nav__section-action">
+              <i class="ti ti-plus"></i>
+            </button>
+          </div>
+          <div class="sub-nav__list">
+            <div>
+              <button class="sub-nav__item" aria-expanded="true" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('sub-nav__submenu--open')">
+                <i class="ti ti-folder sub-nav__item-icon"></i>
+                <span class="sub-nav__item-text">Website Redesign</span>
+                <i class="ti ti-chevron-right sub-nav__item-arrow"></i>
+              </button>
+              <div class="sub-nav__submenu sub-nav__submenu--open">
+                <a href="#" class="sub-nav__subitem sub-nav__subitem--active">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Overview</span>
+                </a>
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Tasks</span>
+                </a>
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Files</span>
+                </a>
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Settings</span>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <button class="sub-nav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('sub-nav__submenu--open')">
+                <i class="ti ti-folder sub-nav__item-icon"></i>
+                <span class="sub-nav__item-text">Mobile App</span>
+                <i class="ti ti-chevron-right sub-nav__item-arrow"></i>
+              </button>
+              <div class="sub-nav__submenu">
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Overview</span>
+                </a>
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Tasks</span>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <button class="sub-nav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('sub-nav__submenu--open')">
+                <i class="ti ti-folder sub-nav__item-icon"></i>
+                <span class="sub-nav__item-text">API Integration</span>
+                <i class="ti ti-chevron-right sub-nav__item-arrow"></i>
+              </button>
+              <div class="sub-nav__submenu">
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Documentation</span>
+                </a>
+                <a href="#" class="sub-nav__subitem">
+                  <span class="sub-nav__subitem-dot"></span>
+                  <span>Endpoints</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teams Section -->
+        <div class="sub-nav__section">
+          <div class="sub-nav__section-header">
+            <span class="sub-nav__section-title">Teams</span>
+          </div>
+          <div class="sub-nav__list">
+            <a href="#" class="sub-nav__item">
+              <span class="avatar avatar--xs">
+                <span class="avatar__fallback" style="background-color: #3b82f6;">D</span>
+              </span>
+              <span class="sub-nav__item-text">Design</span>
+            </a>
+            <a href="#" class="sub-nav__item">
+              <span class="avatar avatar--xs">
+                <span class="avatar__fallback" style="background-color: #22c55e;">E</span>
+              </span>
+              <span class="sub-nav__item-text">Engineering</span>
+            </a>
+            <a href="#" class="sub-nav__item">
+              <span class="avatar avatar--xs">
+                <span class="avatar__fallback" style="background-color: #f59e0b;">M</span>
+              </span>
+              <span class="sub-nav__item-text">Marketing</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-nav__footer">
+        <button class="btn btn--ghost btn--sm btn--full" style="justify-content: flex-start;">
+          <i class="ti ti-plus" style="font-size: 1rem;"></i>
+          New Project
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="#" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <i class="ti ti-chevron-right"></i>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Dashboard</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <i class="ti ti-sun"></i>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <i class="ti ti-bell"></i>
+          </button>
+          <span class="avatar">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </span>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <!-- Page Header -->
+        <div class="page-header page-header--row">
+          <div class="page-header__content">
+            <h1 class="page-header__title">Dashboard</h1>
+            <p class="page-header__description">Welcome back! Here's an overview of your workspace.</p>
+          </div>
+          <div class="page-header__actions">
+            <button class="btn btn--outline">
+              <i class="ti ti-upload" style="font-size: 1rem;"></i>
+              Export
+            </button>
+            <button class="btn btn--primary">
+              <i class="ti ti-plus" style="font-size: 1rem;"></i>
+              New Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stat-grid" style="margin-bottom: 1.5rem;">
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Total Revenue</span>
+              <i class="ti ti-currency-dollar stat__icon"></i>
+            </div>
+            <div class="stat__value">$45,231.89</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">
+                <i class="ti ti-trending-up stat__trend-icon"></i>
+                +20.1%
+              </span>
+              from last month
+            </p>
+          </div>
+
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Subscriptions</span>
+              <i class="ti ti-users stat__icon"></i>
+            </div>
+            <div class="stat__value">+2,350</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">
+                <i class="ti ti-trending-up stat__trend-icon"></i>
+                +180.1%
+              </span>
+              from last month
+            </p>
+          </div>
+
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Active Now</span>
+              <i class="ti ti-activity stat__icon"></i>
+            </div>
+            <div class="stat__value">+573</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">
+                <i class="ti ti-trending-up stat__trend-icon"></i>
+                +201
+              </span>
+              since last hour
+            </p>
+          </div>
+
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Bounce Rate</span>
+              <i class="ti ti-chart-line stat__icon"></i>
+            </div>
+            <div class="stat__value">24.5%</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--down">
+                <i class="ti ti-trending-down stat__trend-icon"></i>
+                -4.3%
+              </span>
+              from last month
+            </p>
+          </div>
+        </div>
+
+        <!-- Content Cards -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card__header card__header--row">
+              <div>
+                <h3 class="card__title">Recent Activity</h3>
+                <p class="card__description">Your team's latest updates</p>
+              </div>
+              <button class="btn btn--ghost btn--sm">View all</button>
+            </div>
+            <div class="card__content">
+              <div class="table-wrapper" style="border: none;">
+                <table class="table table--hoverable">
+                  <thead class="table__header">
+                    <tr class="table__row">
+                      <th class="table__head">User</th>
+                      <th class="table__head">Action</th>
+                      <th class="table__head">Date</th>
+                      <th class="table__head">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table__body">
+                    <tr class="table__row">
+                      <td class="table__cell">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                          <span class="avatar avatar--sm"><span class="avatar__fallback">AS</span></span>
+                          <span>Alice Smith</span>
+                        </div>
+                      </td>
+                      <td class="table__cell">Created new project</td>
+                      <td class="table__cell text--muted">2 min ago</td>
+                      <td class="table__cell"><span class="badge badge--success-muted">Completed</span></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                          <span class="avatar avatar--sm"><span class="avatar__fallback">BW</span></span>
+                          <span>Bob Wilson</span>
+                        </div>
+                      </td>
+                      <td class="table__cell">Updated dashboard</td>
+                      <td class="table__cell text--muted">15 min ago</td>
+                      <td class="table__cell"><span class="badge badge--info-muted">In Progress</span></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                          <span class="avatar avatar--sm"><span class="avatar__fallback">CJ</span></span>
+                          <span>Carol Jones</span>
+                        </div>
+                      </td>
+                      <td class="table__cell">Deployed to production</td>
+                      <td class="table__cell text--muted">1 hour ago</td>
+                      <td class="table__cell"><span class="badge badge--success-muted">Completed</span></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                          <span class="avatar avatar--sm"><span class="avatar__fallback">DM</span></span>
+                          <span>Dan Miller</span>
+                        </div>
+                      </td>
+                      <td class="table__cell">Reviewed PR #423</td>
+                      <td class="table__cell text--muted">2 hours ago</td>
+                      <td class="table__cell"><span class="badge badge--warning-muted">Pending</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Members -->
+          <div class="card">
+            <div class="card__header">
+              <h3 class="card__title">Team Members</h3>
+              <p class="card__description">Active contributors</p>
+            </div>
+            <div class="card__content">
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="avatar">
+                    <span class="avatar__fallback">AS</span>
+                    <span class="avatar__status avatar__status--online"></span>
+                  </span>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 500;">Alice Smith</div>
+                    <div class="text--sm text--muted">Product Designer</div>
+                  </div>
+                  <button class="btn btn--ghost btn--icon btn--sm">
+                    <i class="ti ti-dots"></i>
+                  </button>
+                </div>
+
+                <div class="separator"></div>
+
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="avatar">
+                    <span class="avatar__fallback">BW</span>
+                    <span class="avatar__status avatar__status--online"></span>
+                  </span>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 500;">Bob Wilson</div>
+                    <div class="text--sm text--muted">Frontend Developer</div>
+                  </div>
+                  <button class="btn btn--ghost btn--icon btn--sm">
+                    <i class="ti ti-dots"></i>
+                  </button>
+                </div>
+
+                <div class="separator"></div>
+
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="avatar">
+                    <span class="avatar__fallback">CJ</span>
+                    <span class="avatar__status avatar__status--away"></span>
+                  </span>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 500;">Carol Jones</div>
+                    <div class="text--sm text--muted">Backend Developer</div>
+                  </div>
+                  <button class="btn btn--ghost btn--icon btn--sm">
+                    <i class="ti ti-dots"></i>
+                  </button>
+                </div>
+
+                <div class="separator"></div>
+
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="avatar">
+                    <span class="avatar__fallback">DM</span>
+                    <span class="avatar__status avatar__status--offline"></span>
+                  </span>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 500;">Dan Miller</div>
+                    <div class="text--sm text--muted">DevOps Engineer</div>
+                  </div>
+                  <button class="btn btn--ghost btn--icon btn--sm">
+                    <i class="ti ti-dots"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card__footer card__footer--border">
+              <button class="btn btn--outline btn--sm btn--full">
+                <i class="ti ti-user-plus" style="font-size: 1rem;"></i>
+                Invite Member
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="card" style="margin-top: 1.5rem;">
+          <div class="card__header">
+            <h3 class="card__title">Project Progress</h3>
+            <p class="card__description">Current sprint completion status</p>
+          </div>
+          <div class="card__content">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+              <div class="progress-labeled">
+                <div class="progress-labeled__header">
+                  <span class="progress-labeled__label">Website Redesign</span>
+                  <span class="progress-labeled__value">75%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress__bar" style="width: 75%;"></div>
+                </div>
+              </div>
+
+              <div class="progress-labeled">
+                <div class="progress-labeled__header">
+                  <span class="progress-labeled__label">Mobile App</span>
+                  <span class="progress-labeled__value">45%</span>
+                </div>
+                <div class="progress progress--info">
+                  <div class="progress__bar" style="width: 45%;"></div>
+                </div>
+              </div>
+
+              <div class="progress-labeled">
+                <div class="progress-labeled__header">
+                  <span class="progress-labeled__label">API Integration</span>
+                  <span class="progress-labeled__value">90%</span>
+                </div>
+                <div class="progress progress--success">
+                  <div class="progress__bar" style="width: 90%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    }
+
+    // Main nav item switching
+    document.querySelectorAll('.main-nav__item[data-section]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.main-nav__item').forEach(i => i.classList.remove('main-nav__item--active'));
+        item.classList.add('main-nav__item--active');
+
+        // Update sub-nav title
+        const section = item.dataset.section;
+        const titles = {
+          home: 'Home',
+          projects: 'Projects',
+          tasks: 'Tasks',
+          analytics: 'Analytics',
+          team: 'Team',
+          settings: 'Settings'
+        };
+        document.querySelector('.sub-nav__title').textContent = titles[section] || section;
+      });
+    });
+  </script>
+
+</body>
+</html>

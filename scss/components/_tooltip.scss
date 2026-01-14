@@ -1,0 +1,191 @@
+// ==========================================================================
+// Tooltip Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Tooltip Trigger (wrapper)
+// --------------------------------------------------------------------------
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+
+  // --------------------------------------------------------------------------
+  // Tooltip Content
+  // --------------------------------------------------------------------------
+
+  &__content {
+    position: absolute;
+    z-index: $z-tooltip;
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--primary-fg);
+    background-color: var(--primary);
+    border-radius: $radius-md;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    @include transition-opacity;
+
+    // Arrow
+    &::before {
+      content: "";
+      position: absolute;
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--primary);
+      transform: rotate(45deg);
+    }
+  }
+
+  &:hover &__content,
+  &:focus-within &__content,
+  &__content--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // --------------------------------------------------------------------------
+  // Positions
+  // --------------------------------------------------------------------------
+
+  // Top (default)
+  &__content,
+  &__content--top {
+    bottom: calc(100% + $spacing-2);
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::before {
+      bottom: -0.25rem;
+      left: 50%;
+      margin-left: -0.25rem;
+    }
+  }
+
+  // Bottom
+  &__content--bottom {
+    top: calc(100% + $spacing-2);
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::before {
+      top: -0.25rem;
+      bottom: auto;
+      left: 50%;
+      margin-left: -0.25rem;
+    }
+  }
+
+  // Left
+  &__content--left {
+    right: calc(100% + $spacing-2);
+    left: auto;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+
+    &::before {
+      right: -0.25rem;
+      left: auto;
+      top: 50%;
+      bottom: auto;
+      margin-top: -0.25rem;
+      margin-left: 0;
+    }
+  }
+
+  // Right
+  &__content--right {
+    left: calc(100% + $spacing-2);
+    right: auto;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+
+    &::before {
+      left: -0.25rem;
+      right: auto;
+      top: 50%;
+      bottom: auto;
+      margin-top: -0.25rem;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &__content--light {
+    color: var(--fg);
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    box-shadow: $shadow-md;
+
+    &::before {
+      background-color: var(--popover);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Simple Tooltip (CSS-only with data attribute)
+// --------------------------------------------------------------------------
+
+[data-tooltip] {
+  position: relative;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + $spacing-2);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--primary-fg);
+    background-color: var(--primary);
+    border-radius: $radius-md;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: $z-tooltip;
+    @include transition-opacity;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Position variants
+  &[data-tooltip-position="bottom"]::after {
+    bottom: auto;
+    top: calc(100% + $spacing-2);
+  }
+
+  &[data-tooltip-position="left"]::after {
+    bottom: auto;
+    left: auto;
+    right: calc(100% + $spacing-2);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &[data-tooltip-position="right"]::after {
+    bottom: auto;
+    left: calc(100% + $spacing-2);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

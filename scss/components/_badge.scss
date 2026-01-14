@@ -1,0 +1,173 @@
+// ==========================================================================
+// Badge Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Badge
+// --------------------------------------------------------------------------
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: 0.125rem $spacing-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+  border-radius: $radius-md;
+  white-space: nowrap;
+  @include transition-colors;
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Primary (default)
+  &--primary,
+  &:not([class*="badge--"]):not(.badge--secondary):not(.badge--outline):not(.badge--destructive):not(.badge--success):not(.badge--warning):not(.badge--info) {
+    background-color: var(--primary);
+    color: var(--primary-fg);
+  }
+
+  // Secondary
+  &--secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-fg);
+  }
+
+  // Outline
+  &--outline {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+  }
+
+  // Destructive
+  &--destructive {
+    background-color: var(--destructive);
+    color: var(--destructive-fg);
+  }
+
+  // Destructive muted
+  &--destructive-muted {
+    background-color: var(--destructive-muted);
+    color: var(--destructive-muted-fg);
+  }
+
+  // Success
+  &--success {
+    background-color: var(--success);
+    color: var(--success-fg);
+  }
+
+  // Success muted
+  &--success-muted {
+    background-color: var(--success-muted);
+    color: var(--success-muted-fg);
+  }
+
+  // Warning
+  &--warning {
+    background-color: var(--warning);
+    color: var(--warning-fg);
+  }
+
+  // Warning muted
+  &--warning-muted {
+    background-color: var(--warning-muted);
+    color: var(--warning-muted-fg);
+  }
+
+  // Info
+  &--info {
+    background-color: var(--info);
+    color: var(--info-fg);
+  }
+
+  // Info muted
+  &--info-muted {
+    background-color: var(--info-muted);
+    color: var(--info-muted-fg);
+  }
+
+  // --------------------------------------------------------------------------
+  // Sizes
+  // --------------------------------------------------------------------------
+
+  &--sm {
+    padding: 0 $spacing-1;
+    font-size: 0.625rem;
+  }
+
+  &--lg {
+    padding: $spacing-1 $spacing-3;
+    font-size: $font-size-sm;
+  }
+
+  // --------------------------------------------------------------------------
+  // Shapes
+  // --------------------------------------------------------------------------
+
+  &--pill {
+    border-radius: $radius-full;
+  }
+
+  // Dot indicator (no text, just a colored dot)
+  &--dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border-radius: $radius-full;
+  }
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__icon {
+    width: $icon-size-sm;
+    height: $icon-size-sm;
+    flex-shrink: 0;
+
+    &--only {
+      margin: 0 calc($spacing-1 * -1);
+    }
+  }
+
+  // Removable badge
+  &__remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    margin-left: $spacing-1;
+    margin-right: calc($spacing-1 * -1);
+    border-radius: $radius-sm;
+    cursor: pointer;
+    opacity: 0.7;
+    @include transition-opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Badge Group
+// --------------------------------------------------------------------------
+
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-1;
+}

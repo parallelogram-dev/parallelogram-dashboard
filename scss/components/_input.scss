@@ -1,0 +1,282 @@
+// ==========================================================================
+// Input Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Input
+// --------------------------------------------------------------------------
+
+.input {
+  display: flex;
+  width: 100%;
+  height: $input-height-md;
+  padding: 0 $spacing-3;
+  font-size: $font-size-sm;
+  background-color: transparent;
+  border: 1px solid var(--input);
+  border-radius: $radius-md;
+  color: var(--fg);
+  @include transition-colors;
+
+  &::placeholder {
+    color: var(--input-placeholder);
+  }
+
+  &:focus {
+    @include focus-ring;
+    border-color: var(--ring);
+  }
+
+  &:disabled,
+  &[disabled],
+  &--disabled {
+    @include disabled;
+    background-color: var(--bg-muted);
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--error {
+    border-color: var(--destructive);
+
+    &:focus {
+      outline-color: var(--destructive);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Sizes
+  // --------------------------------------------------------------------------
+
+  &--sm {
+    height: $input-height-sm;
+    padding: 0 $spacing-2;
+    font-size: $font-size-xs;
+    border-radius: $radius-sm;
+  }
+
+  &--lg {
+    height: $input-height-lg;
+    padding: 0 $spacing-4;
+    font-size: $font-size-base;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Textarea
+// --------------------------------------------------------------------------
+
+.textarea {
+  @extend .input;
+  height: auto;
+  min-height: 5rem;
+  padding: $spacing-3;
+  resize: vertical;
+  line-height: $line-height-normal;
+}
+
+// --------------------------------------------------------------------------
+// Select
+// --------------------------------------------------------------------------
+
+.select {
+  @extend .input;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $spacing-3 center;
+  padding-right: $spacing-10;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Checkbox & Radio
+// --------------------------------------------------------------------------
+
+.checkbox,
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+  user-select: none;
+
+  &__input {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--input);
+    background-color: transparent;
+    @include transition-default;
+    cursor: pointer;
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &:checked {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    &:disabled {
+      @include disabled;
+      cursor: not-allowed;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    line-height: 1;
+  }
+
+  &--disabled {
+    @include disabled;
+    cursor: not-allowed;
+  }
+}
+
+.checkbox__input {
+  border-radius: $radius-sm;
+
+  &:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.radio__input {
+  border-radius: $radius-full;
+
+  &:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='4' fill='white'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Form Group
+// --------------------------------------------------------------------------
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+  }
+
+  &__error {
+    font-size: $font-size-sm;
+    color: var(--destructive);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Input with Icon
+// --------------------------------------------------------------------------
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    position: absolute;
+    left: $spacing-3;
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    pointer-events: none;
+
+    &--right {
+      left: auto;
+      right: $spacing-3;
+    }
+  }
+
+  .input {
+    &--icon-left {
+      padding-left: $spacing-10;
+    }
+
+    &--icon-right {
+      padding-right: $spacing-10;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Switch / Toggle
+// --------------------------------------------------------------------------
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  &__input {
+    appearance: none;
+    width: 2.75rem;
+    height: 1.5rem;
+    background-color: var(--input);
+    border-radius: $radius-full;
+    position: relative;
+    cursor: pointer;
+    @include transition-default;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: calc(1.5rem - 4px);
+      height: calc(1.5rem - 4px);
+      background-color: var(--bg);
+      border-radius: $radius-full;
+      @include transition-transform;
+    }
+
+    &:checked {
+      background-color: var(--primary);
+
+      &::before {
+        transform: translateX(1.25rem);
+      }
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &:disabled {
+      @include disabled;
+      cursor: not-allowed;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    user-select: none;
+  }
+}

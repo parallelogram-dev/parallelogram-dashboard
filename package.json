@@ -1,0 +1,27 @@
+{
+  "name": "parallelogram-dashboard",
+  "version": "1.0.0",
+  "description": "A BEM-style CSS dashboard library inspired by shadcn/ui",
+  "main": "dist/parallelogram-dashboard.css",
+  "scripts": {
+    "build": "sass scss/main.scss dist/parallelogram-dashboard.css",
+    "build:min": "sass scss/main.scss dist/parallelogram-dashboard.min.css --style=compressed",
+    "watch": "sass --watch scss/main.scss dist/parallelogram-dashboard.css",
+    "dev": "sass --watch scss/main.scss dist/parallelogram-dashboard.css"
+  },
+  "keywords": [
+    "css",
+    "scss",
+    "bem",
+    "dashboard",
+    "ui",
+    "components"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.69.0"
+  },
+  "dependencies": {
+    "@tabler/icons-webfont": "^3.36.1"
+  }
+}

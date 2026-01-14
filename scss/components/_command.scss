@@ -1,0 +1,263 @@
+// ==========================================================================
+// Command Palette Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Command Palette (⌘K style)
+// --------------------------------------------------------------------------
+
+.command {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  opacity: 0;
+  visibility: hidden;
+  @include transition-opacity;
+
+  &--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // --------------------------------------------------------------------------
+  // Backdrop
+  // --------------------------------------------------------------------------
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  // --------------------------------------------------------------------------
+  // Dialog
+  // --------------------------------------------------------------------------
+
+  &__dialog {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    max-height: 24rem;
+    margin: 0 $spacing-4;
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    box-shadow: $shadow-xl;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(-0.5rem);
+    @include transition-default;
+
+    .command--open & {
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Search Input
+  // --------------------------------------------------------------------------
+
+  &__input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-3 $spacing-4;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__icon {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    flex-shrink: 0;
+  }
+
+  &__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-size: $font-size-base;
+    color: var(--fg);
+    outline: none;
+
+    &::placeholder {
+      color: var(--fg-muted);
+    }
+  }
+
+  &__shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-1;
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 $spacing-1;
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: $radius-sm;
+    font-size: $font-size-xs;
+  }
+
+  // --------------------------------------------------------------------------
+  // Results List
+  // --------------------------------------------------------------------------
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-2;
+    @include scrollbar-thin;
+  }
+
+  &__empty {
+    padding: $spacing-8 $spacing-4;
+    text-align: center;
+    color: var(--fg-muted);
+    font-size: $font-size-sm;
+  }
+
+  &__group {
+    & + & {
+      margin-top: $spacing-2;
+    }
+  }
+
+  &__group-heading {
+    padding: $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    color: var(--fg);
+    border-radius: $radius-md;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover,
+    &--selected {
+      background-color: var(--accent);
+    }
+
+    &--disabled {
+      @include disabled;
+    }
+  }
+
+  &__item-icon {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+    flex-shrink: 0;
+  }
+
+  &__item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  &__item-title {
+    @include text-truncate;
+  }
+
+  &__item-description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    @include text-truncate;
+  }
+
+  &__item-shortcut {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  // --------------------------------------------------------------------------
+  // Footer
+  // --------------------------------------------------------------------------
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-2 $spacing-4;
+    border-top: 1px solid var(--border);
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__hint {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+
+  &__hint-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Keyboard Shortcut Display
+// --------------------------------------------------------------------------
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 $spacing-1;
+  font-family: $font-mono;
+  font-size: $font-size-xs;
+  color: var(--fg-muted);
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
+  box-shadow: inset 0 -1px 0 var(--border);
+
+  &--sm {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
+
+  &--lg {
+    min-width: 2rem;
+    height: 2rem;
+    font-size: $font-size-sm;
+  }
+}

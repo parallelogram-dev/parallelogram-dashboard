@@ -1,0 +1,302 @@
+// ==========================================================================
+// Base Styles - Reset & Typography
+// ==========================================================================
+
+@use "variables" as *;
+@use "mixins" as *;
+
+// --------------------------------------------------------------------------
+// CSS Reset (Modern, minimal)
+// --------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: $font-sans;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: var(--fg);
+  background-color: var(--bg);
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Remove default focus outline (we use custom focus rings)
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// --------------------------------------------------------------------------
+// Typography
+// --------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+  color: var(--fg);
+}
+
+h1 {
+  font-size: $font-size-4xl;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  line-height: $line-height-relaxed;
+}
+
+small {
+  font-size: $font-size-sm;
+}
+
+strong, b {
+  font-weight: $font-weight-semibold;
+}
+
+code, kbd, samp, pre {
+  font-family: $font-mono;
+  font-size: 0.875em;
+}
+
+code {
+  background-color: var(--bg-muted);
+  padding: 0.125rem 0.25rem;
+  border-radius: $radius-sm;
+}
+
+pre {
+  background-color: var(--bg-muted);
+  padding: $spacing-4;
+  border-radius: $radius;
+  overflow-x: auto;
+  @include scrollbar-thin;
+
+  code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+
+blockquote {
+  border-left: 4px solid var(--border);
+  padding-left: $spacing-4;
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: $spacing-6 0;
+}
+
+// --------------------------------------------------------------------------
+// Links (when styled)
+// --------------------------------------------------------------------------
+
+.link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  @include transition-colors;
+
+  &:hover {
+    color: var(--primary-hover);
+  }
+
+  &--muted {
+    color: var(--fg-muted);
+
+    &:hover {
+      color: var(--fg);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Text Utility Classes
+// --------------------------------------------------------------------------
+
+.text {
+  &--xs { font-size: $font-size-xs; }
+  &--sm { font-size: $font-size-sm; }
+  &--base { font-size: $font-size-base; }
+  &--lg { font-size: $font-size-lg; }
+  &--xl { font-size: $font-size-xl; }
+  &--2xl { font-size: $font-size-2xl; }
+  &--3xl { font-size: $font-size-3xl; }
+  &--4xl { font-size: $font-size-4xl; }
+
+  &--muted { color: var(--fg-muted); }
+  &--subtle { color: var(--fg-subtle); }
+
+  &--normal { font-weight: $font-weight-normal; }
+  &--medium { font-weight: $font-weight-medium; }
+  &--semibold { font-weight: $font-weight-semibold; }
+  &--bold { font-weight: $font-weight-bold; }
+
+  &--left { text-align: left; }
+  &--center { text-align: center; }
+  &--right { text-align: right; }
+
+  &--truncate { @include text-truncate; }
+}
+
+// --------------------------------------------------------------------------
+// Prose (for content areas)
+// --------------------------------------------------------------------------
+
+.prose {
+  max-width: 65ch;
+
+  > * + * {
+    margin-top: $spacing-4;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: $spacing-8;
+    margin-bottom: $spacing-4;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  ul, ol {
+    padding-left: $spacing-6;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li + li {
+    margin-top: $spacing-2;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Screen Reader Only
+// --------------------------------------------------------------------------
+
+.sr-only {
+  @include sr-only;
+}
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+.container {
+  width: 100%;
+  max-width: $breakpoint-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-4;
+  padding-right: $spacing-4;
+
+  @include md {
+    padding-left: $spacing-6;
+    padding-right: $spacing-6;
+  }
+
+  @include lg {
+    padding-left: $spacing-8;
+    padding-right: $spacing-8;
+  }
+
+  &--sm { max-width: $breakpoint-sm; }
+  &--md { max-width: $breakpoint-md; }
+  &--lg { max-width: $breakpoint-lg; }
+  &--xl { max-width: $breakpoint-xl; }
+  &--2xl { max-width: $breakpoint-2xl; }
+  &--full { max-width: none; }
+}

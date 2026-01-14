@@ -1,0 +1,226 @@
+// ==========================================================================
+// Tabs Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Tabs
+// --------------------------------------------------------------------------
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__list {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-1;
+    background-color: var(--bg-muted);
+    border-radius: $radius-md;
+    gap: $spacing-1;
+  }
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    white-space: nowrap;
+    border-radius: $radius-sm;
+    @include interactive;
+
+    &:hover:not(.tabs__trigger--active) {
+      color: var(--fg);
+    }
+
+    &--active {
+      color: var(--fg);
+      background-color: var(--bg);
+      box-shadow: $shadow-sm;
+    }
+
+    &--disabled {
+      @include disabled;
+    }
+  }
+
+  &__trigger-icon {
+    width: $icon-size-md;
+    height: $icon-size-md;
+  }
+
+  &__content {
+    margin-top: $spacing-4;
+
+    // Hide non-active panels
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Underline style (like browser tabs)
+  &--underline {
+    .tabs__list {
+      background-color: transparent;
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      gap: 0;
+    }
+
+    .tabs__trigger {
+      padding: $spacing-3 $spacing-4;
+      border-radius: 0;
+      margin-bottom: -1px;
+      border-bottom: 2px solid transparent;
+
+      &--active {
+        background-color: transparent;
+        box-shadow: none;
+        border-bottom-color: var(--primary);
+      }
+    }
+  }
+
+  // Pills style
+  &--pills {
+    .tabs__list {
+      background-color: transparent;
+      padding: 0;
+      gap: $spacing-2;
+    }
+
+    .tabs__trigger {
+      border: 1px solid var(--border);
+      border-radius: $radius-md;
+
+      &--active {
+        background-color: var(--primary);
+        color: var(--primary-fg);
+        border-color: var(--primary);
+        box-shadow: none;
+      }
+    }
+  }
+
+  // Vertical tabs
+  &--vertical {
+    flex-direction: row;
+    gap: $spacing-6;
+
+    .tabs__list {
+      flex-direction: column;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .tabs__trigger {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .tabs__content {
+      margin-top: 0;
+      flex: 1;
+    }
+  }
+
+  // Full width triggers
+  &--full {
+    .tabs__list {
+      width: 100%;
+    }
+
+    .tabs__trigger {
+      flex: 1;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Segmented Control (alternative naming)
+// --------------------------------------------------------------------------
+
+.segmented-control {
+  @extend .tabs;
+  @extend .tabs--full;
+
+  &__list {
+    @extend .tabs__list;
+  }
+
+  &__item {
+    @extend .tabs__trigger;
+  }
+
+  &__item--active {
+    @extend .tabs__trigger--active;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Tab Badges
+// --------------------------------------------------------------------------
+
+.tabs__trigger-badge {
+  font-size: $font-size-xs;
+  padding: 0 $spacing-1;
+  background-color: var(--bg-subtle);
+  border-radius: $radius-full;
+  margin-left: $spacing-1;
+
+  .tabs__trigger--active & {
+    background-color: var(--accent);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Scrollable Tabs (for many tabs)
+// --------------------------------------------------------------------------
+
+.tabs--scrollable {
+  .tabs__list {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    @include scrollbar-hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabs__trigger {
+    flex-shrink: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Animated Indicator (for JS-based tabs)
+// --------------------------------------------------------------------------
+
+.tabs--animated {
+  .tabs__list {
+    position: relative;
+  }
+
+  .tabs__indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--primary);
+    border-radius: $radius-full;
+    @include transition-default;
+    // Position/width set via JS
+  }
+}

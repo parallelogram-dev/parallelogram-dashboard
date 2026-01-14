@@ -1,0 +1,340 @@
+// ==========================================================================
+// Design Tokens - Inspired by shadcn/ui
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Color Palette (Zinc-based, shadcn style)
+// --------------------------------------------------------------------------
+
+$zinc-50: #fafafa;
+$zinc-100: #f4f4f5;
+$zinc-200: #e4e4e7;
+$zinc-300: #d4d4d8;
+$zinc-400: #a1a1aa;
+$zinc-500: #71717a;
+$zinc-600: #52525b;
+$zinc-700: #3f3f46;
+$zinc-800: #27272a;
+$zinc-900: #18181b;
+$zinc-950: #09090b;
+
+// Accent Colors
+$red-50: #fef2f2;
+$red-100: #fee2e2;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-900: #7f1d1d;
+
+$green-50: #f0fdf4;
+$green-100: #dcfce7;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-900: #14532d;
+
+$blue-50: #eff6ff;
+$blue-100: #dbeafe;
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-900: #1e3a8a;
+
+$amber-50: #fffbeb;
+$amber-100: #fef3c7;
+$amber-500: #f59e0b;
+$amber-600: #d97706;
+$amber-900: #78350f;
+
+// --------------------------------------------------------------------------
+// CSS Custom Properties (Light Theme)
+// --------------------------------------------------------------------------
+
+:root {
+  // Background
+  --bg: #{$zinc-50};
+  --bg-muted: #{$zinc-100};
+  --bg-subtle: #{$zinc-200};
+
+  // Foreground
+  --fg: #{$zinc-950};
+  --fg-muted: #{$zinc-500};
+  --fg-subtle: #{$zinc-400};
+
+  // Border
+  --border: #{$zinc-200};
+  --border-muted: #{$zinc-100};
+
+  // Primary (dark on light)
+  --primary: #{$zinc-900};
+  --primary-fg: #{$zinc-50};
+  --primary-hover: #{$zinc-800};
+
+  // Secondary
+  --secondary: #{$zinc-100};
+  --secondary-fg: #{$zinc-900};
+  --secondary-hover: #{$zinc-200};
+
+  // Destructive
+  --destructive: #{$red-500};
+  --destructive-fg: #{$zinc-50};
+  --destructive-hover: #{$red-600};
+  --destructive-muted: #{$red-50};
+  --destructive-muted-fg: #{$red-900};
+
+  // Success
+  --success: #{$green-500};
+  --success-fg: #{$zinc-50};
+  --success-muted: #{$green-50};
+  --success-muted-fg: #{$green-900};
+
+  // Warning
+  --warning: #{$amber-500};
+  --warning-fg: #{$zinc-950};
+  --warning-muted: #{$amber-50};
+  --warning-muted-fg: #{$amber-900};
+
+  // Info
+  --info: #{$blue-500};
+  --info-fg: #{$zinc-50};
+  --info-muted: #{$blue-50};
+  --info-muted-fg: #{$blue-900};
+
+  // Accent (used for highlights, selections)
+  --accent: #{$zinc-100};
+  --accent-fg: #{$zinc-900};
+
+  // Focus ring
+  --ring: #{$zinc-400};
+  --ring-offset: #{$zinc-50};
+
+  // Card
+  --card: #{$zinc-50};
+  --card-fg: #{$zinc-950};
+
+  // Popover/Dropdown
+  --popover: #{$zinc-50};
+  --popover-fg: #{$zinc-950};
+
+  // Input
+  --input: #{$zinc-200};
+  --input-placeholder: #{$zinc-400};
+
+  // Sidebar
+  --sidebar: #{$zinc-50};
+  --sidebar-fg: #{$zinc-950};
+  --sidebar-muted: #{$zinc-500};
+  --sidebar-border: #{$zinc-200};
+  --sidebar-accent: #{$zinc-100};
+  --sidebar-accent-fg: #{$zinc-900};
+}
+
+// --------------------------------------------------------------------------
+// Dark Theme
+// --------------------------------------------------------------------------
+
+[data-theme="dark"] {
+  // Background
+  --bg: #{$zinc-950};
+  --bg-muted: #{$zinc-900};
+  --bg-subtle: #{$zinc-800};
+
+  // Foreground
+  --fg: #{$zinc-50};
+  --fg-muted: #{$zinc-400};
+  --fg-subtle: #{$zinc-500};
+
+  // Border
+  --border: #{$zinc-800};
+  --border-muted: #{$zinc-900};
+
+  // Primary (light on dark)
+  --primary: #{$zinc-50};
+  --primary-fg: #{$zinc-900};
+  --primary-hover: #{$zinc-200};
+
+  // Secondary
+  --secondary: #{$zinc-800};
+  --secondary-fg: #{$zinc-50};
+  --secondary-hover: #{$zinc-700};
+
+  // Destructive
+  --destructive: #{$red-600};
+  --destructive-fg: #{$zinc-50};
+  --destructive-hover: #{$red-500};
+  --destructive-muted: #{$red-900};
+  --destructive-muted-fg: #{$red-100};
+
+  // Success
+  --success: #{$green-500};
+  --success-fg: #{$zinc-950};
+  --success-muted: #{$green-900};
+  --success-muted-fg: #{$green-100};
+
+  // Warning
+  --warning: #{$amber-500};
+  --warning-fg: #{$zinc-950};
+  --warning-muted: #{$amber-900};
+  --warning-muted-fg: #{$amber-100};
+
+  // Info
+  --info: #{$blue-500};
+  --info-fg: #{$zinc-50};
+  --info-muted: #{$blue-900};
+  --info-muted-fg: #{$blue-100};
+
+  // Accent
+  --accent: #{$zinc-800};
+  --accent-fg: #{$zinc-50};
+
+  // Focus ring
+  --ring: #{$zinc-500};
+  --ring-offset: #{$zinc-950};
+
+  // Card
+  --card: #{$zinc-900};
+  --card-fg: #{$zinc-50};
+
+  // Popover/Dropdown
+  --popover: #{$zinc-900};
+  --popover-fg: #{$zinc-50};
+
+  // Input
+  --input: #{$zinc-700};
+  --input-placeholder: #{$zinc-500};
+
+  // Sidebar
+  --sidebar: #{$zinc-950};
+  --sidebar-fg: #{$zinc-50};
+  --sidebar-muted: #{$zinc-400};
+  --sidebar-border: #{$zinc-800};
+  --sidebar-accent: #{$zinc-800};
+  --sidebar-accent-fg: #{$zinc-50};
+}
+
+// --------------------------------------------------------------------------
+// Typography
+// --------------------------------------------------------------------------
+
+$font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+            "Liberation Mono", monospace;
+
+$font-size-xs: 0.75rem;      // 12px
+$font-size-sm: 0.875rem;     // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-lg: 1.125rem;     // 18px
+$font-size-xl: 1.25rem;      // 20px
+$font-size-2xl: 1.5rem;      // 24px
+$font-size-3xl: 1.875rem;    // 30px
+$font-size-4xl: 2.25rem;     // 36px
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$line-height-none: 1;
+$line-height-tight: 1.25;
+$line-height-snug: 1.375;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.625;
+
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+
+// --------------------------------------------------------------------------
+// Spacing
+// --------------------------------------------------------------------------
+
+$spacing-0: 0;
+$spacing-1: 0.25rem;   // 4px
+$spacing-2: 0.5rem;    // 8px
+$spacing-3: 0.75rem;   // 12px
+$spacing-4: 1rem;      // 16px
+$spacing-5: 1.25rem;   // 20px
+$spacing-6: 1.5rem;    // 24px
+$spacing-8: 2rem;      // 32px
+$spacing-10: 2.5rem;   // 40px
+$spacing-12: 3rem;     // 48px
+$spacing-16: 4rem;     // 64px
+
+// --------------------------------------------------------------------------
+// Border Radius
+// --------------------------------------------------------------------------
+
+$radius-none: 0;
+$radius-sm: 0.25rem;    // 4px
+$radius-md: 0.375rem;   // 6px (shadcn default for smaller elements)
+$radius-lg: 0.5rem;     // 8px (shadcn default)
+$radius-xl: 0.75rem;    // 12px
+$radius-2xl: 1rem;      // 16px
+$radius-full: 9999px;
+
+// Default radius (matches shadcn)
+$radius: $radius-lg;
+
+// --------------------------------------------------------------------------
+// Shadows
+// --------------------------------------------------------------------------
+
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+// --------------------------------------------------------------------------
+// Transitions
+// --------------------------------------------------------------------------
+
+$transition-fast: 150ms;
+$transition-base: 200ms;
+$transition-slow: 300ms;
+$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// --------------------------------------------------------------------------
+// Z-Index Scale
+// --------------------------------------------------------------------------
+
+$z-dropdown: 50;
+$z-sticky: 100;
+$z-fixed: 200;
+$z-modal-backdrop: 300;
+$z-modal: 400;
+$z-popover: 500;
+$z-tooltip: 600;
+
+// --------------------------------------------------------------------------
+// Breakpoints
+// --------------------------------------------------------------------------
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// --------------------------------------------------------------------------
+// Component Sizes
+// --------------------------------------------------------------------------
+
+// Button heights
+$btn-height-sm: 2rem;      // 32px
+$btn-height-md: 2.5rem;    // 40px
+$btn-height-lg: 2.75rem;   // 44px
+
+// Input heights
+$input-height-sm: 2rem;    // 32px
+$input-height-md: 2.5rem;  // 40px
+$input-height-lg: 2.75rem; // 44px
+
+// Icon sizes
+$icon-size-sm: 1rem;       // 16px
+$icon-size-md: 1.25rem;    // 20px
+$icon-size-lg: 1.5rem;     // 24px
+
+// Sidebar width
+$sidebar-width: 16rem;     // 256px
+$sidebar-width-collapsed: 4rem; // 64px
+
+// Navbar height
+$navbar-height: 4rem;      // 64px

@@ -1,0 +1,183 @@
+// ==========================================================================
+// Alert Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Alert
+// --------------------------------------------------------------------------
+
+.alert {
+  position: relative;
+  display: flex;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  border-radius: $radius;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--fg);
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Info
+  &--info {
+    background-color: var(--info-muted);
+    border-color: var(--info);
+    color: var(--info-muted-fg);
+
+    .alert__icon {
+      color: var(--info);
+    }
+  }
+
+  // Success
+  &--success {
+    background-color: var(--success-muted);
+    border-color: var(--success);
+    color: var(--success-muted-fg);
+
+    .alert__icon {
+      color: var(--success);
+    }
+  }
+
+  // Warning
+  &--warning {
+    background-color: var(--warning-muted);
+    border-color: var(--warning);
+    color: var(--warning-muted-fg);
+
+    .alert__icon {
+      color: var(--warning);
+    }
+  }
+
+  // Error / Destructive
+  &--error,
+  &--destructive {
+    background-color: var(--destructive-muted);
+    border-color: var(--destructive);
+    color: var(--destructive-muted-fg);
+
+    .alert__icon {
+      color: var(--destructive);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Elements
+  // --------------------------------------------------------------------------
+
+  &__icon {
+    flex-shrink: 0;
+    width: $icon-size-md;
+    height: $icon-size-md;
+    margin-top: 0.125rem;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-1;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+  }
+
+  &__close {
+    position: absolute;
+    top: $spacing-3;
+    right: $spacing-3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: $radius-sm;
+    color: var(--fg-muted);
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      color: var(--fg);
+      background-color: var(--accent);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    svg {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+    }
+  }
+
+  // Add padding for close button
+  &--closable {
+    padding-right: $spacing-10;
+  }
+
+  // --------------------------------------------------------------------------
+  // Layout Variants
+  // --------------------------------------------------------------------------
+
+  // Centered content
+  &--centered {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+
+    .alert__icon {
+      margin-top: 0;
+    }
+  }
+
+  // Compact (inline style)
+  &--compact {
+    padding: $spacing-2 $spacing-3;
+    gap: $spacing-2;
+
+    .alert__icon {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+      margin-top: 0.0625rem;
+    }
+
+    .alert__title {
+      font-size: $font-size-xs;
+    }
+
+    .alert__description {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Alert Banner (full-width, no radius)
+// --------------------------------------------------------------------------
+
+.alert-banner {
+  @extend .alert;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+
+  &:first-child {
+    border-top: none;
+  }
+}

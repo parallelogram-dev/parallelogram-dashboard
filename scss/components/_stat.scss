@@ -1,0 +1,217 @@
+// ==========================================================================
+// Stat Card Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Stat
+// --------------------------------------------------------------------------
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  padding: $spacing-6;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+  }
+
+  &__icon {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    color: var(--fg-muted);
+  }
+
+  &__value {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-tight;
+    line-height: $line-height-none;
+    color: var(--fg);
+  }
+
+  &__description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__trend {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-1;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+
+    &--up {
+      color: var(--success);
+    }
+
+    &--down {
+      color: var(--destructive);
+    }
+
+    &--neutral {
+      color: var(--fg-muted);
+    }
+  }
+
+  &__trend-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--elevated {
+    border: none;
+    box-shadow: $shadow-md;
+  }
+
+  &--primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+
+    .stat__label,
+    .stat__value,
+    .stat__description,
+    .stat__icon {
+      color: var(--primary-fg);
+    }
+
+    .stat__trend--up,
+    .stat__trend--down,
+    .stat__trend--neutral {
+      color: var(--primary-fg);
+      opacity: 0.8;
+    }
+  }
+
+  &--compact {
+    padding: $spacing-4;
+
+    .stat__value {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Horizontal Layout
+  // --------------------------------------------------------------------------
+
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-4;
+
+    .stat__icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--bg-muted);
+      border-radius: $radius-md;
+
+      svg {
+        width: $icon-size-lg;
+        height: $icon-size-lg;
+        color: var(--fg-muted);
+      }
+    }
+
+    .stat__content {
+      flex: 1;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Stat Grid
+// --------------------------------------------------------------------------
+
+.stat-grid {
+  display: grid;
+  gap: $spacing-4;
+  grid-template-columns: repeat(1, 1fr);
+
+  @include sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--3 {
+    @include lg {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Stat with Sparkline
+// --------------------------------------------------------------------------
+
+.stat-sparkline {
+  @extend .stat;
+  position: relative;
+  overflow: hidden;
+
+  &__chart {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    opacity: 0.2;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Mini Stat (inline)
+// --------------------------------------------------------------------------
+
+.mini-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+
+  &__label {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+  }
+
+  &__value {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+  }
+
+  &__divider {
+    width: 1px;
+    height: 1rem;
+    background-color: var(--border);
+  }
+}

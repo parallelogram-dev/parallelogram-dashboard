@@ -1,0 +1,114 @@
+// ==========================================================================
+// Separator Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Separator
+// --------------------------------------------------------------------------
+
+.separator {
+  background-color: var(--border);
+  flex-shrink: 0;
+
+  // Horizontal (default)
+  &--horizontal,
+  &:not(.separator--vertical) {
+    height: 1px;
+    width: 100%;
+  }
+
+  // Vertical
+  &--vertical {
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  &--muted {
+    background-color: var(--border-muted);
+  }
+
+  &--strong {
+    background-color: var(--fg-subtle);
+  }
+
+  // --------------------------------------------------------------------------
+  // With Label
+  // --------------------------------------------------------------------------
+
+  &--label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    background-color: transparent;
+    height: auto;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: var(--border);
+    }
+  }
+
+  &__text {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+    white-space: nowrap;
+  }
+
+  // --------------------------------------------------------------------------
+  // Spacing
+  // --------------------------------------------------------------------------
+
+  &--sm {
+    margin: $spacing-2 0;
+
+    &.separator--vertical {
+      margin: 0 $spacing-2;
+    }
+  }
+
+  &--md {
+    margin: $spacing-4 0;
+
+    &.separator--vertical {
+      margin: 0 $spacing-4;
+    }
+  }
+
+  &--lg {
+    margin: $spacing-6 0;
+
+    &.separator--vertical {
+      margin: 0 $spacing-6;
+    }
+  }
+
+  &--xl {
+    margin: $spacing-8 0;
+
+    &.separator--vertical {
+      margin: 0 $spacing-8;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Divider (alias)
+// --------------------------------------------------------------------------
+
+.divider {
+  @extend .separator;
+}
