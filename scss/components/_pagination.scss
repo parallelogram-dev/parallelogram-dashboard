@@ -31,10 +31,11 @@
     border: 1px solid transparent;
     border-radius: $radius-md;
 
-    &:hover:not(:disabled):not(.pagination__item--active) {
+    &:hover:not(:disabled, [aria-disabled="true"], [aria-current="page"], .pagination__item--active) {
       background-color: var(--accent);
     }
 
+    &[aria-current="page"],
     &--active {
       background-color: var(--primary);
       color: var(--primary-fg);
@@ -45,8 +46,9 @@
       }
     }
 
-    &--disabled,
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"],
+    &--disabled {
       @include disabled;
     }
   }
@@ -72,11 +74,12 @@
     .pagination__item {
       border-color: var(--border);
 
-      &:hover:not(:disabled):not(.pagination__item--active) {
+      &:hover:not(:disabled, [aria-disabled="true"], [aria-current="page"], .pagination__item--active) {
         border-color: var(--border);
         background-color: var(--accent);
       }
 
+      &[aria-current="page"],
       &--active {
         border-color: var(--primary);
       }
@@ -145,7 +148,7 @@
 
 @include max-sm {
   .pagination {
-    &__item:not(.pagination__prev):not(.pagination__next):not(.pagination__item--active) {
+    &__item:not(.pagination__prev):not(.pagination__next):not([aria-current="page"], .pagination__item--active) {
       display: none;
     }
 

@@ -303,6 +303,7 @@
     }
   }
 
+  &__item[aria-current="step"],
   &__item--active {
     .steps__indicator {
       background-color: var(--primary);

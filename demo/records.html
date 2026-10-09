@@ -25,7 +25,7 @@
             <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
             <span class="navmenu__tooltip">Home</span>
           </a>
-          <a href="records.html" class="navmenu__item navmenu__item--active">
+          <a href="records.html" class="navmenu__item" aria-current="page">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
             <span class="navmenu__tooltip">Records</span>
           </a>
@@ -71,7 +71,7 @@
             <span class="subnav__section-title">Views</span>
           </div>
           <div class="subnav__list">
-            <a href="#" class="subnav__item subnav__item--active">
+            <a href="#" class="subnav__item" aria-current="page">
               <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
               <span class="subnav__item-text">All Records</span>
               <span class="subnav__item-badge">1,248</span>
@@ -192,7 +192,7 @@
               <div class="toolbar__inputwrapper">
                 <svg class="icon toolbar__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
                 <input type="text" class="toolbar__input" placeholder="Search records..." id="searchInput">
-                <button class="toolbar__clear" id="clearSearch">
+                <button class="toolbar__clear" id="clearSearch" aria-label="Clear search">
                   <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
                 </button>
               </div>
@@ -255,9 +255,9 @@
                       <input type="checkbox" class="checkbox__input" id="selectAll">
                     </label>
                   </th>
-                  <th class="table__head table__head--sortable table__head--sorted">
+                  <th class="table__head table__head--sortable" aria-sort="ascending">
                     ID
-                    <span class="table__sort-icon table__sort-icon--asc">
+                    <span class="table__sort-icon">
                       <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M18 11l-6 -6"/><path d="M6 11l6 -6"/></svg>
                     </span>
                   </th>
@@ -611,10 +611,10 @@
                 </select>
               </div>
               <nav class="pagination">
-                <button class="pagination__prev pagination__item--disabled" disabled>
+                <button class="pagination__prev" disabled>
                   <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
                 </button>
-                <button class="pagination__item pagination__item--active">1</button>
+                <button class="pagination__item" aria-current="page">1</button>
                 <button class="pagination__item">2</button>
                 <button class="pagination__item">3</button>
                 <span class="pagination__ellipsis">...</span>
@@ -685,13 +685,8 @@
     const searchInput = document.getElementById('searchInput');
     const clearBtn = document.getElementById('clearSearch');
 
-    searchInput.addEventListener('input', function() {
-      clearBtn.classList.toggle('toolbar__clear--visible', this.value.length > 0);
-    });
-
     clearBtn.addEventListener('click', function() {
       searchInput.value = '';
-      clearBtn.classList.remove('toolbar__clear--visible');
       searchInput.focus();
     });
 
@@ -722,7 +717,6 @@
     function clearFilters() {
       document.getElementById('activeFilters').hidden = true;
       searchInput.value = '';
-      clearBtn.classList.remove('toolbar__clear--visible');
     }
   </script>
 

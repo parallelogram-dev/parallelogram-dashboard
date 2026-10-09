@@ -214,7 +214,7 @@
     }
   }
 
-  // Error state
+  // Deprecated: set aria-invalid="true" on the control instead
   &--error {
     .input,
     .textarea,

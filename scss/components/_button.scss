@@ -23,9 +23,20 @@
   @include interactive;
 
   &:disabled,
-  &[disabled],
+  &[aria-disabled="true"],
   &--disabled {
     @include disabled;
+  }
+
+  &[aria-busy="true"] {
+    cursor: progress;
+  }
+
+  // Toggle buttons: only the neutral variants have a distinct "on" look
+  &--outline[aria-pressed="true"],
+  &--ghost[aria-pressed="true"] {
+    background-color: var(--accent);
+    color: var(--accent-fg);
   }
 
   // --------------------------------------------------------------------------

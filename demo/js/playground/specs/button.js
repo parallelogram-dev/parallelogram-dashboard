@@ -3,10 +3,7 @@ import { bem, cx, escape, icon } from '../lib.js';
 function button(s, label = s.label) {
   const iconOnly = s.content === 'icon-only';
   const asLink = s.element === 'a';
-  const className = cx(
-    bem('btn', s.variant, s.size, iconOnly && 'icon', s.full && 'full', s.full && s.start && 'start'),
-    asLink && s.disabled && 'btn--disabled'
-  );
+  const className = bem('btn', s.variant, s.size, iconOnly && 'icon', s.full && 'full', s.full && s.start && 'start');
 
   let inner = escape(label);
   if (s.loading) {
@@ -22,7 +19,7 @@ function button(s, label = s.label) {
     const disabled = s.disabled ? ' aria-disabled="true" tabindex="-1"' : '';
     return `<a href="#" class="${className}"${a11y}${disabled}>${inner}</a>`;
   }
-  const disabled = s.disabled || s.loading ? ' disabled' : '';
+  const disabled = (s.disabled || s.loading ? ' disabled' : '') + (s.loading ? ' aria-busy="true"' : '');
   return `<button type="button" class="${className}"${a11y}${disabled}>${inner}</button>`;
 }
 

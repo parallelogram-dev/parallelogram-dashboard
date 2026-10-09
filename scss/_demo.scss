@@ -315,11 +315,11 @@
     display: none;
   }
 
-  &--open &__icon--menu {
+  &:has(> [aria-expanded="true"]) &__icon--menu {
     display: none;
   }
 
-  &--open &__icon--close {
+  &:has(> [aria-expanded="true"]) &__icon--close {
     display: block;
   }
 
@@ -362,7 +362,7 @@
                 transform $transition-base $transition-easing;
   }
 
-  &--open &__menu {
+  &:has(> [aria-expanded="true"]) &__menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -383,7 +383,7 @@
       background-color: var(--bg-muted);
     }
 
-    &--active {
+    &[aria-current="page"] {
       background-color: var(--bg-muted);
       font-weight: $font-weight-medium;
     }
