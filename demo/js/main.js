@@ -292,6 +292,776 @@ class Toggle {
 }
 
 // ============================================================================
+// Chart Component
+// ============================================================================
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function svgEl(tag, attrs = {}, parent = null) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
+  parent?.append(el);
+  return el;
+}
+
+/** Round up to a clean axis maximum: 1, 2, 2.5 or 5 times a power of ten. */
+function niceMax(value) {
+  if (value <= 0) return 1;
+  const power = 10 ** Math.floor(Math.log10(value));
+  return [1, 2, 2.5, 5, 10].find(step => step * power >= value) * power;
+}
+
+/**
+ * Renders a data <table> inside <figure class="chart" data-chart="..."> as an SVG chart.
+ *
+ * Types: line, area, bar (grouped when there are several series) and stacked-bar.
+ * The first column holds the x labels and every other column is a series. Cells may carry
+ * data-value when their text is formatted. data-chart-format is "number", "currency" or
+ * "percent". The table stays in the page as the accessible table view.
+ */
+class Chart {
+  constructor() {
+    this.elements = new WeakMap();
+  }
+
+  mount(figure) {
+    if (this.elements.has(figure)) return;
+    const table = figure.querySelector('table');
+    if (!table) return;
+
+    const data = this._parse(table);
+    if (!data.rows.length || !data.series.length) return;
+
+    const state = {
+      figure,
+      table,
+      data,
+      type: figure.dataset.chart || 'line',
+      format: this._formatter(figure.dataset.chartFormat),
+      plot: document.createElement('div'),
+      tooltip: document.createElement('div'),
+      index: null,
+    };
+
+    table.classList.add('chart__table');
+    table.hidden = true;
+
+    state.plot.className = 'chart__plot';
+    state.plot.tabIndex = 0;
+    state.plot.setAttribute('role', 'group');
+    const title = figure.querySelector('.chart__title')?.textContent.trim() || 'Chart';
+    state.plot.setAttribute('aria-label', `${title}. Use the arrow keys to read values.`);
+
+    state.tooltip.className = 'chart__tooltip';
+    state.tooltip.hidden = true;
+    state.tooltip.setAttribute('aria-live', 'polite');
+
+    const legend = data.series.length > 1 ? this._legend(state) : null;
+    table.before(...[legend, state.plot].filter(Boolean));
+    this._addTableToggle(state, legend);
+
+    state.plot.addEventListener('keydown', (e) => this._handleKey(e, state));
+    state.plot.addEventListener('focus', () => this._show(state, state.index ?? data.rows.length - 1));
+    state.plot.addEventListener('blur', () => this._hide(state));
+    state.plot.addEventListener('pointerleave', () => this._hide(state));
+
+    // Render now; the observer re-renders on resize (it may not fire in a background tab)
+    this._render(state);
+    new ResizeObserver(() => this._render(state)).observe(state.plot);
+    figure.setAttribute('data-chart-enhanced', 'true');
+    this.elements.set(figure, state);
+  }
+
+  _parse(table) {
+    const headers = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    const rows = [...table.querySelectorAll('tbody tr')].map(tr => {
+      const cells = [...tr.children];
+      return {
+        label: cells[0]?.textContent.trim() ?? '',
+        values: cells.slice(1).map(cell => {
+          const raw = cell.dataset.value ?? cell.textContent.replace(/[^0-9.\-]/g, '');
+          return Number.parseFloat(raw) || 0;
+        }),
+      };
+    });
+    return { series: headers.slice(1), rows };
+  }
+
+  _formatter(kind) {
+    const options = {
+      currency: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
+      percent: { style: 'percent', maximumFractionDigits: 1 },
+    }[kind] || { maximumFractionDigits: 1 };
+    const full = new Intl.NumberFormat('en-US', options);
+    const compact = new Intl.NumberFormat('en-US', { ...options, notation: 'compact', maximumFractionDigits: 1 });
+    const scale = kind === 'percent' ? 0.01 : 1;
+    return {
+      full: value => full.format(value * scale),
+      compact: value => compact.format(value * scale),
+    };
+  }
+
+  _legend(state) {
+    const legend = document.createElement('ul');
+    legend.className = 'chart__legend';
+    const isBar = state.type.includes('bar');
+    state.data.series.forEach((name, i) => {
+      const item = document.createElement('li');
+      item.className = 'chart__legend-item';
+      const key = document.createElement('span');
+      key.className = isBar ? 'chart__key chart__key--box' : 'chart__key';
+      key.style.color = `var(--chart-${i + 1})`;
+      item.append(key, document.createTextNode(name));
+      legend.append(item);
+    });
+    return legend;
+  }
+
+  _addTableToggle(state, legend) {
+    const header = state.figure.querySelector('.chart__header');
+    if (!header) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn--ghost btn--sm';
+    button.textContent = 'Table';
+    button.setAttribute('aria-pressed', 'false');
+    button.addEventListener('click', () => {
+      const showTable = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(showTable));
+      state.table.hidden = !showTable;
+      state.plot.hidden = showTable;
+      if (legend) legend.hidden = showTable;
+    });
+    header.append(button);
+  }
+
+  _render(state) {
+    const { plot, data, type, format } = state;
+    const width = plot.clientWidth;
+    const height = plot.clientHeight;
+    if (!width || !height) return;
+
+    const stacked = type === 'stacked-bar';
+    const isBar = type.includes('bar');
+    const n = data.rows.length;
+    const peak = Math.max(...data.rows.map(r => (stacked ? r.values.reduce((a, b) => a + b, 0) : Math.max(...r.values))));
+    const max = niceMax(peak);
+    const ticks = [0, 0.25, 0.5, 0.75, 1].map(t => t * max);
+
+    const tickWidth = Math.max(...ticks.map(t => format.compact(t).length)) * 6.5 + 8;
+    const endLabel = !isBar && data.series.length === 1 ? format.compact(data.rows[n - 1].values[0]).length * 6.5 + 10 : 8;
+    const box = { left: tickWidth, right: width - endLabel, top: 8, bottom: height - 22 };
+    const y = value => box.bottom - (value / max) * (box.bottom - box.top);
+    const band = (box.right - box.left) / n;
+    const x = isBar
+      ? i => box.left + band * (i + 0.5)
+      : i => box.left + (n === 1 ? 0 : (i * (box.right - box.left)) / (n - 1));
+    state.geometry = { box, x, band, isBar };
+
+    const root = svgEl('svg', { 'aria-hidden': 'true' });
+
+    for (const t of ticks) {
+      svgEl('line', { class: t ? 'chart__grid' : 'chart__baseline', x1: box.left, x2: box.right, y1: y(t), y2: y(t) }, root);
+      svgEl('text', { class: 'chart__tick', x: box.left - 8, y: y(t), 'text-anchor': 'end', 'dominant-baseline': 'middle' }, root)
+        .textContent = format.compact(t);
+    }
+
+    const labelWidth = Math.max(...data.rows.map(r => r.label.length)) * 6.5 + 12;
+    const slot = (box.right - box.left) / (isBar ? n : Math.max(1, n - 1));
+    const every = Math.max(1, Math.ceil(labelWidth / slot));
+    data.rows.forEach((row, i) => {
+      // Skip labels that would crowd their neighbours, keeping the last one and the space before it
+      if (i % every !== 0 && i !== n - 1) return;
+      if (i !== n - 1 && i % every === 0 && n - 1 - i < every) return;
+      const anchor = isBar ? 'middle' : i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle';
+      svgEl('text', { class: 'chart__tick', x: x(i), y: height - 6, 'text-anchor': anchor }, root).textContent = row.label;
+    });
+
+    if (isBar) {
+      this._renderBars(state, root, y, stacked);
+    } else {
+      this._renderLines(state, root, y, type === 'area');
+    }
+
+    state.crosshair = svgEl('line', { class: 'chart__crosshair', y1: box.top, y2: box.bottom, visibility: 'hidden' }, root);
+    state.hoverDots = data.series.map((_, s) => svgEl('circle', { class: 'chart__dot', r: 4, fill: `var(--chart-${s + 1})`, visibility: 'hidden' }, root));
+    if (isBar) state.hoverDots.forEach(dot => dot.remove());
+
+    const hit = svgEl('rect', { class: 'chart__hit', x: box.left, y: box.top, width: box.right - box.left, height: box.bottom - box.top }, root);
+    hit.addEventListener('pointermove', (e) => {
+      const bounds = plot.getBoundingClientRect();
+      const px = e.clientX - bounds.left;
+      const i = isBar
+        ? Math.floor((px - box.left) / band)
+        : Math.round(((px - box.left) / (box.right - box.left)) * (n - 1));
+      this._show(state, Math.min(n - 1, Math.max(0, i)));
+    });
+
+    plot.replaceChildren(root, state.tooltip);
+    if (state.index !== null && !state.tooltip.hidden) this._show(state, state.index);
+  }
+
+  _renderLines(state, root, y, area) {
+    const { data, format } = state;
+    const { box, x } = state.geometry;
+    data.series.forEach((name, s) => {
+      const color = `var(--chart-${s + 1})`;
+      const points = data.rows.map((row, i) => [x(i), y(row.values[s])]);
+      const line = points.map(([px, py], i) => `${i ? 'L' : 'M'}${px},${py}`).join(' ');
+      if (area || data.series.length === 1) {
+        svgEl('path', { class: 'chart__area', d: `${line} L${points.at(-1)[0]},${box.bottom} L${points[0][0]},${box.bottom} Z`, fill: color }, root);
+      }
+      svgEl('path', { class: 'chart__line', d: line, stroke: color }, root);
+      const [ex, ey] = points.at(-1);
+      svgEl('circle', { class: 'chart__dot', cx: ex, cy: ey, r: 4, fill: color }, root);
+      if (data.series.length === 1) {
+        svgEl('text', { class: 'chart__label', x: ex + 8, y: ey, 'dominant-baseline': 'middle' }, root)
+          .textContent = format.compact(data.rows.at(-1).values[s]);
+      }
+    });
+  }
+
+  _renderBars(state, root, y, stacked) {
+    const { data } = state;
+    const { box, x, band } = state.geometry;
+    const groups = stacked ? 1 : data.series.length;
+    const gap = 2;
+    const barWidth = Math.max(2, Math.min(24, (band * 0.7 - gap * (groups - 1)) / groups));
+    const groupWidth = barWidth * groups + gap * (groups - 1);
+    state.bars = data.rows.map(() => []);
+
+    data.rows.forEach((row, i) => {
+      let base = 0;
+      row.values.forEach((value, s) => {
+        if (value <= 0) return;
+        const left = x(i) - groupWidth / 2 + (stacked ? 0 : s * (barWidth + gap));
+        const bottom = y(base);
+        const top = y(base + value);
+        const isTop = !stacked || row.values.slice(s + 1).every(v => v <= 0);
+        const r = isTop ? Math.min(4, barWidth / 2, bottom - top) : 0;
+        const d = `M${left},${bottom} V${top + r} Q${left},${top} ${left + r},${top} H${left + barWidth - r} Q${left + barWidth},${top} ${left + barWidth},${top + r} V${bottom} Z`;
+        state.bars[i].push(svgEl('path', { class: 'chart__bar', d, fill: `var(--chart-${s + 1})` }, root));
+        if (stacked) base += value;
+      });
+    });
+  }
+
+  _show(state, index) {
+    const { data, format, tooltip, geometry } = state;
+    if (!geometry) return;
+    state.index = index;
+    const row = data.rows[index];
+    const { box, x, isBar } = geometry;
+    const px = x(index);
+
+    if (isBar) {
+      state.bars.flat().forEach(bar => bar.classList.remove('chart__bar--active'));
+      state.bars[index].forEach(bar => bar.classList.add('chart__bar--active'));
+    } else {
+      state.crosshair.setAttribute('x1', px);
+      state.crosshair.setAttribute('x2', px);
+      state.crosshair.setAttribute('visibility', 'visible');
+      const max = niceMax(Math.max(...data.rows.map(r => Math.max(...r.values))));
+      state.hoverDots.forEach((dot, s) => {
+        dot.setAttribute('cx', px);
+        dot.setAttribute('cy', box.bottom - (row.values[s] / max) * (box.bottom - box.top));
+        dot.setAttribute('visibility', 'visible');
+      });
+    }
+
+    const heading = document.createElement('div');
+    heading.className = 'chart__tooltip-title';
+    heading.textContent = row.label;
+    const rows = data.series.map((name, s) => {
+      const line = document.createElement('div');
+      line.className = 'chart__tooltip-row';
+      const key = document.createElement('span');
+      key.className = 'chart__key';
+      key.style.color = `var(--chart-${s + 1})`;
+      const value = document.createElement('strong');
+      value.textContent = format.full(row.values[s]);
+      const label = document.createElement('span');
+      label.textContent = name;
+      line.append(key, value, label);
+      return line;
+    });
+    if (state.type === 'stacked-bar' && data.series.length > 1) {
+      const total = document.createElement('div');
+      total.className = 'chart__tooltip-row';
+      const value = document.createElement('strong');
+      value.textContent = format.full(row.values.reduce((a, b) => a + b, 0));
+      const label = document.createElement('span');
+      label.textContent = 'Total';
+      total.append(document.createElement('span'), value, label);
+      rows.push(total);
+    }
+    tooltip.replaceChildren(heading, ...rows);
+    tooltip.hidden = false;
+
+    const tipWidth = tooltip.offsetWidth;
+    const left = px + 12 + tipWidth > state.plot.clientWidth ? px - 12 - tipWidth : px + 12;
+    tooltip.style.left = `${Math.max(0, left)}px`;
+    tooltip.style.top = `${box.top}px`;
+  }
+
+  _hide(state) {
+    state.tooltip.hidden = true;
+    state.crosshair?.setAttribute('visibility', 'hidden');
+    state.hoverDots?.forEach(dot => dot.setAttribute('visibility', 'hidden'));
+    state.bars?.flat().forEach(bar => bar.classList.remove('chart__bar--active'));
+  }
+
+  _handleKey(event, state) {
+    const last = state.data.rows.length - 1;
+    const current = state.index ?? last;
+    const next = { ArrowLeft: current - 1, ArrowRight: current + 1, Home: 0, End: last }[event.key];
+    if (event.key === 'Escape') {
+      this._hide(state);
+      return;
+    }
+    if (next === undefined) return;
+    event.preventDefault();
+    this._show(state, Math.min(last, Math.max(0, next)));
+  }
+
+  static enhanceAll(selector = '[data-chart]', root = document) {
+    const instance = new Chart();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+// ============================================================================
+// Action Bar Component
+// ============================================================================
+
+const ACTIONBAR_MORE_ICON = '<svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>';
+let actionBarCount = 0;
+
+/**
+ * Folds an action bar's lower-priority segments into a "more" menu when the bar runs out of room.
+ *
+ * Segments opt in with data-priority="low" (folded first) or "medium". Buttons and links become
+ * menu items that click the original; a segment holding a switch or checkbox becomes a
+ * menuitemcheckbox that stays in sync with it. Give a segment data-label for its menu text.
+ */
+class ActionBar {
+  constructor() {
+    this.elements = new WeakMap();
+  }
+
+  mount(bar) {
+    if (this.elements.has(bar)) return;
+    const rank = { low: 0, medium: 1 };
+    const collapsible = [...bar.querySelectorAll(':scope > [data-priority]')]
+      .filter(segment => segment.dataset.priority in rank)
+      .sort((a, b) => rank[a.dataset.priority] - rank[b.dataset.priority]);
+    if (!collapsible.length) return;
+
+    const state = { bar, collapsible, more: this._ensureMore(bar) };
+    new ResizeObserver(() => this._fit(state)).observe(bar);
+    this._fit(state);
+    this.elements.set(bar, state);
+  }
+
+  _ensureMore(bar) {
+    let more = bar.querySelector(':scope > .actionbar__more');
+    if (!more) {
+      const id = `actionbar-more-${++actionBarCount}`;
+      more = document.createElement('div');
+      more.className = 'actionbar__segment actionbar__more dropdown';
+      more.innerHTML = `<button type="button" class="actionbar__trigger dropdown__trigger" aria-label="More actions" aria-haspopup="menu" data-toggle data-toggle-target="#${id}" data-toggle-capture="true">${ACTIONBAR_MORE_ICON}</button>
+        <div class="dropdown__menu" id="${id}" role="menu"></div>`;
+      bar.append(more);
+    }
+    more.hidden = true;
+    return more;
+  }
+
+  _fit(state) {
+    const { bar, collapsible, more } = state;
+    collapsible.forEach(segment => { segment.hidden = false; });
+    more.hidden = true;
+
+    const folded = [];
+    for (const segment of collapsible) {
+      if (bar.scrollWidth <= bar.clientWidth) break;
+      more.hidden = false;
+      segment.hidden = true;
+      folded.push(segment);
+    }
+    // The "more" segment needs room too; fold one more if showing it caused an overflow
+    const next = collapsible[folded.length];
+    if (folded.length && next && bar.scrollWidth > bar.clientWidth) {
+      next.hidden = true;
+      folded.push(next);
+    }
+    this._fillMenu(more.querySelector('[role="menu"]'), folded);
+  }
+
+  _fillMenu(menu, folded) {
+    // Keep bar order in the menu
+    const ordered = folded.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    menu.replaceChildren(...ordered.map(segment => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'dropdown__item';
+      const text = document.createElement('span');
+      text.className = 'dropdown__item-text';
+      text.textContent = segment.dataset.label || segment.textContent.trim();
+      item.append(text);
+
+      const input = segment.querySelector('input[type="checkbox"]');
+      if (input) {
+        item.setAttribute('role', 'menuitemcheckbox');
+        item.setAttribute('aria-checked', String(input.checked));
+        item.insertAdjacentHTML('beforeend', '<svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>');
+        item.addEventListener('click', () => {
+          input.click();
+          item.setAttribute('aria-checked', String(input.checked));
+        });
+      } else {
+        item.setAttribute('role', 'menuitem');
+        const target = segment.matches('a, button') ? segment : segment.querySelector('a, button');
+        item.addEventListener('click', () => target?.click());
+      }
+      return item;
+    }));
+  }
+
+  static enhanceAll(selector = '.actionbar', root = document) {
+    const instance = new ActionBar();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+/**
+ * Behaviour for an .actionbar__list: expand and collapse, and optional reordering.
+ *
+ * An .actionbar__toggle with aria-controls shows or hides the child list it names.
+ *
+ * data-actionbar-sortable reorders items within the list; data-actionbar-sortable="tree" makes the
+ * list and every .actionbar__list nested inside it one tree, so items can also move between
+ * parents. Drag an .actionbar__handle: the bar under the pointer shows a line before or after it,
+ * or (in a tree, over the middle of a bar) an outline for "drop inside as a child". With the
+ * keyboard, focus a handle and press Space to pick the item up, the up and down arrows to move
+ * it, and in a tree the right arrow to make it a child of the item above and the left arrow to
+ * move it out a level; Space drops and Escape cancels. Moves are announced to screen readers and
+ * the root list dispatches a bubbling "actionbar:reorder" event with
+ * { item, from, to, fromParent, toParent }, where the parents are the owning <li> or null.
+ */
+class ActionBarList {
+  constructor() {
+    this.elements = new WeakMap();
+  }
+
+  mount(list) {
+    if (this.elements.has(list)) return;
+    list.addEventListener('click', (e) => this._toggle(e, list));
+
+    // Lists inside a tree are driven by the tree's root
+    const insideTree = list.parentElement?.closest('[data-actionbar-sortable="tree"]');
+    if (!list.hasAttribute('data-actionbar-sortable') || insideTree) {
+      this.elements.set(list, {});
+      return;
+    }
+
+    const status = document.createElement('div');
+    status.className = 'sr-only';
+    status.setAttribute('aria-live', 'assertive');
+    list.after(status);
+
+    const state = { root: list, tree: list.dataset.actionbarSortable === 'tree', status, grabbed: null, origin: null };
+    list.addEventListener('pointerdown', (e) => this._pointerDown(e, state));
+    list.addEventListener('keydown', (e) => this._keyDown(e, state));
+    this.elements.set(list, state);
+  }
+
+  _toggle(event, list) {
+    const toggle = event.target.closest('.actionbar__toggle[aria-controls]');
+    if (!toggle || toggle.closest('.actionbar__list') !== list) return;
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    const children = document.getElementById(toggle.getAttribute('aria-controls'));
+    if (children) children.hidden = !open;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Structure helpers
+  // ---------------------------------------------------------------------------
+
+  /** The list item a handle belongs to, if the handle is part of this root. */
+  _itemFor(handle, state) {
+    if (!handle) return null;
+    const item = handle.closest('li');
+    const owner = item?.parentElement;
+    if (!owner?.matches('.actionbar__list')) return null;
+    if (state.tree ? !state.root.contains(owner) : owner !== state.root) return null;
+    // A nested sortable root handles its own items
+    const nearestRoot = owner.closest('[data-actionbar-sortable]');
+    return nearestRoot === state.root || (state.tree && state.root.contains(nearestRoot)) ? item : null;
+  }
+
+  _bar(item) {
+    return item.querySelector(':scope > .actionbar');
+  }
+
+  _name(item) {
+    return this._bar(item)?.querySelector('.actionbar__label')?.textContent.trim() || 'Item';
+  }
+
+  _parentItem(item) {
+    const owner = item.parentElement;
+    return owner === this._rootOf(item) ? null : owner.closest('li');
+  }
+
+  _rootOf(item) {
+    return item.closest('[data-actionbar-sortable="tree"]') || item.parentElement;
+  }
+
+  _childList(item) {
+    return item.querySelector(':scope > .actionbar__list');
+  }
+
+  _position(item) {
+    return { list: item.parentElement, index: [...item.parentElement.children].indexOf(item), parent: this._parentItem(item) };
+  }
+
+  /** Items a dragged item could land next to: visible, and not the item or its descendants. */
+  _candidates(state, item) {
+    const all = state.tree ? [...state.root.querySelectorAll('li')] : [...state.root.children];
+    return all.filter(li => li !== item && !item.contains(li) && this._bar(li) && li.offsetParent !== null);
+  }
+
+  /** Give an item a child list (and a live toggle) so something can be dropped inside it. */
+  _ensureChildList(parent) {
+    let list = this._childList(parent);
+    if (!list) {
+      list = document.createElement('ul');
+      list.className = 'actionbar__list';
+      list.id = `${parent.id || 'actionbar-item'}-${Math.random().toString(36).slice(2, 8)}-children`;
+      list.setAttribute('aria-label', `Under ${this._name(parent)}`);
+      parent.append(list);
+    }
+    const toggle = this._bar(parent).querySelector('.actionbar__toggle');
+    if (toggle && toggle.tagName !== 'BUTTON') {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = toggle.className;
+      button.setAttribute('aria-label', `Show items under ${this._name(parent)}`);
+      button.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>';
+      toggle.replaceWith(button);
+    }
+    const button = this._bar(parent).querySelector('button.actionbar__toggle');
+    if (button) {
+      button.setAttribute('aria-controls', list.id);
+      button.setAttribute('aria-expanded', 'true');
+    }
+    list.hidden = false;
+    return list;
+  }
+
+  /** Remove a nested list left empty by a move, and turn its toggle back into a spacer. */
+  _pruneEmpty(list, state) {
+    if (!list || list === state.root || list.children.length) return;
+    const parent = list.closest('li');
+    list.remove();
+    const toggle = parent && this._bar(parent).querySelector('button.actionbar__toggle');
+    if (toggle) {
+      const spacer = document.createElement('span');
+      spacer.className = toggle.className;
+      spacer.setAttribute('aria-hidden', 'true');
+      toggle.replaceWith(spacer);
+    }
+  }
+
+  _place(item, target, where, state) {
+    const oldList = item.parentElement;
+    if (where === 'inside') {
+      this._ensureChildList(target).append(item);
+    } else if (where === 'first-inside') {
+      this._ensureChildList(target).prepend(item);
+    } else {
+      target.parentElement.insertBefore(item, where === 'before' ? target : target.nextElementSibling);
+    }
+    this._pruneEmpty(oldList, state);
+  }
+
+  _dispatch(state, item) {
+    const from = state.origin;
+    const to = this._position(item);
+    if (from.list === to.list && from.index === to.index) return;
+    state.root.dispatchEvent(new CustomEvent('actionbar:reorder', {
+      bubbles: true,
+      detail: { item, from: from.index, to: to.index, fromParent: from.parent, toParent: to.parent },
+    }));
+  }
+
+  _announce(state, message) {
+    state.status.textContent = message;
+  }
+
+  _describe(item) {
+    const { index, list, parent } = this._position(item);
+    const where = parent ? `under ${this._name(parent)}` : 'at the top level';
+    return `position ${index + 1} of ${list.children.length} ${where}`;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Pointer dragging
+  // ---------------------------------------------------------------------------
+
+  _pointerDown(event, state) {
+    const handle = event.target.closest('.actionbar__handle');
+    const item = this._itemFor(handle, state);
+    if (!item || event.button !== 0) return;
+    event.preventDefault();
+
+    const bar = this._bar(item);
+    const startY = event.clientY;
+    state.origin = this._position(item);
+    bar.setAttribute('data-dragging', '');
+    let drop = null;
+
+    const clear = () => {
+      if (drop) this._bar(drop.target).removeAttribute('data-drop');
+    };
+
+    // Listen on the document: nothing moves until the drop, so the pointer can roam freely
+    const move = (e) => {
+      bar.style.transform = `translateY(${e.clientY - startY}px)`;
+      const next = this._dropTarget(state, item, e.clientY);
+      if (drop?.target === next?.target && drop?.where === next?.where) return;
+      clear();
+      drop = next;
+      if (drop) this._bar(drop.target).setAttribute('data-drop', drop.where);
+    };
+
+    const end = (e) => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', end);
+      document.removeEventListener('pointercancel', end);
+      bar.removeAttribute('data-dragging');
+      bar.style.transform = '';
+      clear();
+      if (e.type === 'pointerup' && drop) {
+        this._place(item, drop.target, drop.where, state);
+        this._dispatch(state, item);
+      }
+    };
+
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', end);
+    document.addEventListener('pointercancel', end);
+  }
+
+  /** Where the dragged item would land for a pointer at clientY. */
+  _dropTarget(state, item, y) {
+    let best = null;
+    for (const candidate of this._candidates(state, item)) {
+      const rect = this._bar(candidate).getBoundingClientRect();
+      const distance = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
+      if (!best || distance < best.distance) best = { target: candidate, rect, distance };
+    }
+    if (!best) return null;
+
+    const { target, rect } = best;
+    const ratio = (y - rect.top) / rect.height;
+    if (!state.tree) {
+      return { target, where: ratio < 0.5 ? 'before' : 'after' };
+    }
+    if (ratio < 0.25) return { target, where: 'before' };
+    if (ratio > 0.75) {
+      // Below an open parent, the next visible slot is its first child
+      const children = this._childList(target);
+      return children && !children.hidden && children.children.length
+        ? { target, where: 'first-inside' }
+        : { target, where: 'after' };
+    }
+    return { target, where: 'inside' };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Keyboard
+  // ---------------------------------------------------------------------------
+
+  _keyDown(event, state) {
+    const handle = event.target.closest('.actionbar__handle');
+    const item = this._itemFor(handle, state);
+    if (!item) return;
+    const bar = this._bar(item);
+    const name = this._name(item);
+
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      if (state.grabbed === item) {
+        state.grabbed = null;
+        handle.setAttribute('aria-pressed', 'false');
+        bar.removeAttribute('data-dragging');
+        this._announce(state, `${name} dropped at ${this._describe(item)}.`);
+        this._dispatch(state, item);
+      } else {
+        state.grabbed = item;
+        state.origin = this._position(item);
+        handle.setAttribute('aria-pressed', 'true');
+        bar.setAttribute('data-dragging', '');
+        const levels = state.tree ? ', right arrow to nest it under the item above, left arrow to move it out a level' : '';
+        this._announce(state, `${name} grabbed. Use the up and down arrow keys to move it${levels}. Space drops, Escape cancels.`);
+      }
+      return;
+    }
+
+    if (state.grabbed !== item) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      const { list, index, parent } = state.origin;
+      const oldList = item.parentElement;
+      // The original list may have been removed when the move emptied it
+      const home = list.isConnected ? list : this._ensureChildList(parent);
+      home.insertBefore(item, [...home.children].filter(el => el !== item)[index] || null);
+      if (home !== oldList) this._pruneEmpty(oldList, state);
+      state.grabbed = null;
+      handle.setAttribute('aria-pressed', 'false');
+      bar.removeAttribute('data-dragging');
+      handle.focus();
+      this._announce(state, `Move cancelled. ${name} is back at ${this._describe(item)}.`);
+      return;
+    }
+
+    const siblings = [...item.parentElement.children];
+    const index = siblings.indexOf(item);
+    let moved = false;
+
+    if (event.key === 'ArrowUp' && index > 0) {
+      item.parentElement.insertBefore(item, siblings[index - 1]);
+      moved = true;
+    } else if (event.key === 'ArrowDown' && index < siblings.length - 1) {
+      item.parentElement.insertBefore(item, siblings[index + 1].nextElementSibling);
+      moved = true;
+    } else if (state.tree && event.key === 'ArrowRight' && index > 0) {
+      this._place(item, siblings[index - 1], 'inside', state);
+      moved = true;
+    } else if (state.tree && event.key === 'ArrowLeft' && this._parentItem(item)) {
+      this._place(item, this._parentItem(item), 'after', state);
+      moved = true;
+    }
+
+    if (!moved) return;
+    event.preventDefault();
+    handle.focus();
+    this._announce(state, `${name} moved to ${this._describe(item)}.`);
+  }
+
+  static enhanceAll(selector = '.actionbar__list', root = document) {
+    const instance = new ActionBarList();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+// ============================================================================
 // Toast Manager
 // ============================================================================
 
@@ -381,7 +1151,11 @@ class DemoNav {
     this.pages = [
       { name: 'Components', href: 'index.html', icon: 'grid' },
       { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },
+      { name: 'Pages', href: 'pages.html', icon: 'edit' },
       { name: 'Records List', href: 'records.html', icon: 'database' },
+      { name: 'Media', href: 'media.html', icon: 'grid' },
+      { name: 'Analytics', href: 'analytics.html', icon: 'home' },
+      { name: 'Team', href: 'team.html', icon: 'user' },
       { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
       { name: 'Record Delete', href: 'record-delete.html', icon: 'trash' },
       { name: 'Settings', href: 'settings.html', icon: 'settings' },
@@ -526,15 +1300,41 @@ function init(root = document) {
   loadParallelogramJs(root);
 
   return {
+    // Action bars run first so the "more" menus they create get their toggle behaviour
+    actionbar: ActionBar.enhanceAll('.actionbar', root),
+    actionbarList: ActionBarList.enhanceAll('.actionbar__list', root),
     accordion: Accordion.enhanceAll('[data-accordion]', root),
     tabs: Tabs.enhanceAll('[data-tabs]', root),
     toggle: Toggle.enhanceAll('[data-toggle]', root),
+    chart: Chart.enhanceAll('[data-chart]', root),
   };
 }
 
-window.Parallelogram = { init, Accordion, Tabs, Toggle, ToastManager };
+window.Parallelogram = { init, ActionBar, ActionBarList, Accordion, Tabs, Toggle, Chart, ToastManager };
+
+/**
+ * Fallback for the Invoker Commands API (button commandfor/command) in browsers without it,
+ * covering the dialog commands the overlay components use.
+ */
+function polyfillDialogCommands() {
+  if ('commandForElement' in HTMLButtonElement.prototype) return;
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('button[commandfor][command]');
+    const target = button && document.getElementById(button.getAttribute('commandfor'));
+    if (!(target instanceof HTMLDialogElement)) return;
+
+    const command = button.getAttribute('command');
+    if (command === 'show-modal' && !target.open) {
+      target.showModal();
+    } else if (command === 'close' && target.open) {
+      target.close();
+    }
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+  polyfillDialogCommands();
   init();
 
   // Create global toast manager

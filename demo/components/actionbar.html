@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Action Bar - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="actionbar">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Data display</p>
+        <h1 class="docs__title">Action Bar</h1>
+        <p class="docs__lead">A segmented bar standing for one record, with a reorder handle, title, switches, dropdowns and actions.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="playground-heading">
+        <h2 id="playground-heading" class="docs__h2">Playground</h2>
+        <div data-playground></div>
+      </section>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <p class="text--sm text--muted spacer--md">An action bar stands for one record. Segments are joined by keylines: <code>.actionbar__handle</code> to reorder, <code>.actionbar__select</code> for bulk selection, <code>.actionbar__title</code> (label, meta and badge), then switches, dropdowns and actions. Mark segments that may fold into the "⋯" menu on narrow widths with <code>data-priority="low"</code> or <code>"medium"</code>. Put bars in <code>&lt;ul class="actionbar__list" data-actionbar-sortable&gt;</code> to reorder them by dragging a handle, or focus a handle and press Space, then the up and down arrows. With <code>data-actionbar-sortable="tree"</code> the nested lists inside become one tree: drop onto the middle of a bar to nest an item under it, and use the right and left arrows to nest or un-nest. An <code>.actionbar__toggle</code> with <code>aria-controls</code> expands and collapses a child list. The root list fires <code>actionbar:reorder</code> with <code>{ item, from, to, fromParent, toParent }</code>.</p>
+
+          <div class="demo-label">Page tree (data-actionbar-sortable="tree")</div>
+            <ul class="actionbar__list" data-actionbar-sortable="tree" aria-label="Pages">
+              <li>
+                <div class="actionbar">
+                  <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder Home"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Home</a>
+                    <span class="actionbar__meta">/</span>
+                    <span class="badge badge--sm badge--success-muted">Published</span>
+                  </div>
+                  <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                    <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-1" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                    <div class="dropdown__menu" id="ab-template-1" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                  </div>
+                  <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                    <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                  </label>
+                  <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                </div>
+              </li>
+              <li>
+                <div class="actionbar">
+                  <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder About us"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">About us</a>
+                    <span class="actionbar__meta">/about</span>
+                    <span class="badge badge--sm badge--success-muted">Published</span>
+                  </div>
+                  <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                    <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-2" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                    <div class="dropdown__menu" id="ab-template-2" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                  </div>
+                  <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                    <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                  </label>
+                  <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                </div>
+                <ul class="actionbar__list" aria-label="Child pages">
+                      <li>
+                        <div class="actionbar">
+                          <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder Our team"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                          <div class="actionbar__segment actionbar__title">
+                            <a href="../record-form.html" class="actionbar__label">Our team</a>
+                            <span class="actionbar__meta">/about/team</span>
+                            <span class="badge badge--sm badge--success-muted">Published</span>
+                          </div>
+                          <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                            <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-3" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                            <div class="dropdown__menu" id="ab-template-3" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                          </div>
+                          <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                            <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                          </label>
+                          <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                          <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="actionbar">
+                          <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder Careers"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                          <div class="actionbar__segment actionbar__title">
+                            <a href="../record-form.html" class="actionbar__label">Careers</a>
+                            <span class="actionbar__meta">/about/careers</span>
+                            <span class="badge badge--sm badge--secondary">Draft</span>
+                          </div>
+                          <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                            <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-4" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                            <div class="dropdown__menu" id="ab-template-4" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                          </div>
+                          <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                            <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                          </label>
+                          <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                          <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                        </div>
+                      </li>
+                    </ul>
+              </li>
+              <li>
+                <div class="actionbar">
+                  <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder Blog"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Blog</a>
+                    <span class="actionbar__meta">/blog</span>
+                    <span class="badge badge--sm badge--success-muted">Published</span>
+                  </div>
+                  <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                    <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-5" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                    <div class="dropdown__menu" id="ab-template-5" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                  </div>
+                  <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                    <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                  </label>
+                  <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                </div>
+              </li>
+              <li>
+                <div class="actionbar">
+                  <button type="button" class="actionbar__segment actionbar__handle" aria-label="Reorder Contact"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Contact</a>
+                    <span class="actionbar__meta">/contact</span>
+                    <span class="badge badge--sm badge--info-muted">Scheduled</span>
+                  </div>
+                  <div class="actionbar__segment dropdown" data-priority="medium" data-label="Template: Article">
+                    <button type="button" class="actionbar__trigger dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#ab-template-6" data-toggle-capture="true">Article <svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg></button>
+                    <div class="dropdown__menu" id="ab-template-6" role="menu"><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true"><span class="dropdown__item-text">Article</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Landing page</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button><button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false"><span class="dropdown__item-text">Gallery</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button></div>
+                  </div>
+                  <label class="actionbar__segment" data-priority="low" data-label="Visible in navigation">
+                    <span class="switch switch--sm"><input type="checkbox" class="switch__input" role="switch" checked><span class="switch__label">Visible</span></span>
+                  </label>
+                  <a href="#" class="actionbar__segment" data-priority="low"><svg class="icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg><span>Preview</span></a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--primary">Edit</a>
+                </div>
+              </li>
+            </ul>
+
+          <div class="demo-label">Record index with selection</div>
+            <ul class="actionbar__list" aria-label="Invoices">
+              <li>
+                <div class="actionbar">
+                  <label class="actionbar__segment actionbar__select"><input type="checkbox" class="checkbox__input" aria-label="Select Invoice INV-2024-089" checked></label>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Invoice INV-2024-089</a>
+                    <span class="actionbar__meta">Jan 12, 2024</span>
+                    <span class="badge badge--sm badge--secondary">Draft</span>
+                  </div>
+                  <a href="#" class="actionbar__segment" data-priority="low">Duplicate</a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--outline">Edit</a>
+                </div>
+              </li>
+              <li>
+                <div class="actionbar">
+                  <label class="actionbar__segment actionbar__select"><input type="checkbox" class="checkbox__input" aria-label="Select Invoice INV-2024-088"></label>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Invoice INV-2024-088</a>
+                    <span class="actionbar__meta">Jan 10, 2024</span>
+                    <span class="badge badge--sm badge--success-muted">Published</span>
+                  </div>
+                  <a href="#" class="actionbar__segment" data-priority="low">Duplicate</a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--outline">Edit</a>
+                </div>
+              </li>
+              <li>
+                <div class="actionbar">
+                  <label class="actionbar__segment actionbar__select"><input type="checkbox" class="checkbox__input" aria-label="Select Invoice INV-2024-087"></label>
+                  <div class="actionbar__segment actionbar__title">
+                    <a href="../record-form.html" class="actionbar__label">Invoice INV-2024-087</a>
+                    <span class="actionbar__meta">Jan 8, 2024</span>
+                    <span class="badge badge--sm badge--info-muted">Scheduled</span>
+                  </div>
+                  <a href="#" class="actionbar__segment" data-priority="low">Duplicate</a>
+                  <a href="../record-form.html" class="actionbar__segment actionbar__segment--outline">Edit</a>
+                </div>
+              </li>
+            </ul>
+
+          <div class="demo-label">Segment emphasis</div>
+          <div class="stack stack--sm">
+            <div class="actionbar">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Edit segment: plain</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment">Edit</a>
+            </div>
+            <div class="actionbar">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Edit segment: .actionbar__segment--primary</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--primary">Edit</a>
+            </div>
+            <div class="actionbar">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Edit segment: .actionbar__segment--outline</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--outline">Edit</a>
+            </div>
+            <div class="actionbar">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Edit segment: .actionbar__segment--muted</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--muted">Edit</a>
+            </div>
+          </div>
+
+          <div class="demo-label">Sizes</div>
+          <div class="stack stack--sm">
+            <div class="actionbar actionbar--sm">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Small (.actionbar--sm)</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--primary">Edit</a>
+            </div>
+            <div class="actionbar">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Default</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--primary">Edit</a>
+            </div>
+            <div class="actionbar actionbar--lg">
+              <div class="actionbar__segment actionbar__title"><span class="actionbar__label">Large (.actionbar--lg)</span></div>
+              <button type="button" class="actionbar__segment">Preview</button>
+              <a href="#" class="actionbar__segment actionbar__segment--primary">Edit</a>
+            </div>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

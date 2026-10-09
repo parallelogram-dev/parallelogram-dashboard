@@ -3,6 +3,7 @@ import specs from '../playground/specs/index.js';
 import { mountPlayground } from '../playground/widget.js';
 import { bindThemeToggle } from './theme.js';
 import { escape } from '../playground/lib.js';
+import { formatHtml } from '../playground/format.js';
 
 const slug = document.body.dataset.component;
 const pages = manifest.flatMap(group => group.pages);
@@ -98,6 +99,56 @@ function addLlmCopy(intro) {
 }
 
 addLlmCopy(document.querySelector('.docs__intro'));
+
+/**
+ * Give every static example an "HTML" disclosure with its formatted markup and a copy button.
+ *
+ * An example is the element after each .demo-label, or each top-level block when a page has no
+ * labels. Markup is captured before main.js enhances the page, so it carries no runtime
+ * attributes, and demo-* layout classes are stripped because they are not part of the library.
+ */
+function addExampleCode(section) {
+  if (!section) {
+    return;
+  }
+  const labels = [...section.querySelectorAll('.demo-label')];
+  const examples = labels.length
+    ? labels.map(label => label.nextElementSibling).filter(Boolean)
+    : [...section.children].filter(el => !el.matches('h2, p, .docs__code'));
+
+  for (const example of examples) {
+    const clone = example.cloneNode(true);
+    for (const el of [clone, ...clone.querySelectorAll('[class]')]) {
+      const kept = [...el.classList].filter(c => !c.startsWith('demo-') && !/^(spacer|constrain|layout)--?/.test(c));
+      if (kept.length) {
+        el.setAttribute('class', kept.join(' '));
+      } else {
+        el.removeAttribute('class');
+      }
+    }
+    const code = formatHtml(clone.outerHTML);
+
+    const details = document.createElement('details');
+    details.className = 'docs__code';
+    details.innerHTML = `<summary class="docs__codesummary">HTML</summary>
+      <div class="docs__codebody">
+        <button type="button" class="btn btn--ghost btn--sm docs__codecopy">Copy</button>
+        <pre class="docs__pre"><code></code></pre>
+      </div>`;
+    details.querySelector('code').textContent = code;
+    details.querySelector('.docs__codecopy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        window.toast?.success('Markup copied to clipboard', { duration: 2000 });
+      } catch {
+        window.toast?.error('Copy failed. Select the code and copy it manually.');
+      }
+    });
+    example.after(details);
+  }
+}
+
+addExampleCode(document.querySelector('[aria-labelledby="examples-heading"]'));
 
 const playground = document.querySelector('[data-playground]');
 const spec = specs.find(s => s.id === pages[index]?.spec);

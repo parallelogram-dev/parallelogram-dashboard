@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+  <div class="dashboard">
+
+    <nav class="navmenu" aria-label="Main">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo" aria-label="Dashboard home">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="pages.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+            <span class="navmenu__tooltip">Pages</span>
+          </a>
+          <a href="records.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="media.html" class="navmenu__item" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg>
+            <span class="navmenu__tooltip">Media</span>
+          </a>
+          <a href="analytics.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+          <a href="team.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Team</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <a href="settings-account.html" class="navmenu__avatar" aria-label="Your account">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Media</h2>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Library</span>
+          </div>
+          <div class="subnav__list">
+            <a href="media.html" class="subnav__item" aria-current="page">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg>
+              <span class="subnav__item-text">All media</span>
+              <span class="subnav__item-badge">312</span>
+            </a>
+            <a href="media.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+              <span class="subnav__item-text">Favourites</span>
+              <span class="subnav__item-badge">18</span>
+            </a>
+            <a href="media.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>
+              <span class="subnav__item-text">Recent uploads</span>
+              <span class="subnav__item-badge">24</span>
+            </a>
+          </div>
+        </div>
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Folders</span>
+          </div>
+          <div class="subnav__list">
+            <a href="media.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+              <span class="subnav__item-text">Marketing</span>
+              <span class="subnav__item-badge">96</span>
+            </a>
+            <a href="media.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+              <span class="subnav__item-text">Product</span>
+              <span class="subnav__item-badge">134</span>
+            </a>
+            <a href="media.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+              <span class="subnav__item-text">Blog</span>
+              <span class="subnav__item-badge">82</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Media</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <a href="settings-account.html" class="avatar" aria-label="Your account">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">Media</h1>
+            <p class="pageheader__description">Images and files used across your records.</p>
+          </div>
+          <div class="pageheader__actions">
+            <a href="record-form.html" class="btn btn--primary">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>
+              Upload
+            </a>
+          </div>
+        </div>
+
+        <div class="card mb--lg">
+          <div class="card__content card__content--pt">
+            <div class="toolbar">
+              <div class="toolbar__group">
+                <svg class="icon toolbar__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                <input type="search" class="toolbar__input" placeholder="Search media..." aria-label="Search media">
+              </div>
+              <div class="toolbar__filters">
+                <div class="btn__group" role="group" aria-label="Filter media">
+                <div class="dropdown">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#media-type" data-toggle-capture="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"/></svg>
+                    Type
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                  <div id="media-type" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Images</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Vectors</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Documents</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#media-status" data-toggle-capture="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+                    Status
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                  <div id="media-status" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Published</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Draft</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Scheduled</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#media-date" data-toggle-capture="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>
+                    Uploaded
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                  <div id="media-date" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true">
+                      <span class="dropdown__item-text">Any time</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 7 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 30 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">This year</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div class="toolbar__actions">
+                <div class="btn__group" role="group" aria-label="View">
+                  <a href="records.html" class="btn btn--outline btn--icon" title="List view" aria-label="List view"><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg></a>
+                  <button type="button" class="btn btn--outline btn--icon" title="Grid view" aria-label="Grid view" aria-pressed="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="media__grid">
+            <a href="record-form.html?id=1" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%2322c55e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='287' cy='97' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Homepage hero</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">hero-homepage.jpg</p>
+                <p class="text--xs text--muted">2400 × 1350 &middot; 1.8 MB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=2" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='274' cy='114' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Team offsite</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">team-offsite.jpg</p>
+                <p class="text--xs text--muted">3000 × 2000 &middot; 2.4 MB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=3" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%2314b8a6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='261' cy='131' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Product shot 01</h3>
+                  <span class="badge badge--sm badge--secondary">Draft</span>
+                </div>
+                <p class="text--xs text--muted">product-shot-01.png</p>
+                <p class="text--xs text--muted">1600 × 1600 &middot; 940 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=4" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='248' cy='148' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Pricing blog cover</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">blog-cover-pricing.jpg</p>
+                <p class="text--xs text--muted">1920 × 1080 &middot; 1.1 MB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=5" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23eab308'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='235' cy='165' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Event banner</h3>
+                  <span class="badge badge--sm badge--info-muted">Scheduled</span>
+                </div>
+                <p class="text--xs text--muted">event-banner.jpg</p>
+                <p class="text--xs text--muted">2560 × 640 &middot; 780 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=6" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2310b981'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='222' cy='92' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Logo mark</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">logo-mark.svg</p>
+                <p class="text--xs text--muted">Vector &middot; 12 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=7" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='209' cy='109' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Acme case study</h3>
+                  <span class="badge badge--sm badge--secondary">Draft</span>
+                </div>
+                <p class="text--xs text--muted">case-study-acme.jpg</p>
+                <p class="text--xs text--muted">1800 × 1200 &middot; 1.3 MB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=8" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2364748b'/%3E%3Cstop offset='1' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='196' cy='126' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Office interior</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">office-interior.jpg</p>
+                <p class="text--xs text--muted">4000 × 2667 &middot; 3.2 MB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=9" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ec4899'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='183' cy='143' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Newsletter header</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">newsletter-header.png</p>
+                <p class="text--xs text--muted">1200 × 400 &middot; 420 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=10" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%23eab308'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='170' cy='160' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Feature illustration</h3>
+                  <span class="badge badge--sm badge--secondary">Draft</span>
+                </div>
+                <p class="text--xs text--muted">feature-illustration.svg</p>
+                <p class="text--xs text--muted">Vector &middot; 38 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=11" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2306b6d4'/%3E%3Cstop offset='1' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='157' cy='87' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">Webinar thumbnail</h3>
+                  <span class="badge badge--sm badge--info-muted">Scheduled</span>
+                </div>
+                <p class="text--xs text--muted">webinar-thumb.jpg</p>
+                <p class="text--xs text--muted">1280 × 720 &middot; 610 KB</p>
+              </div>
+            </a>
+            <a href="record-form.html?id=12" class="card card--interactive media__card">
+              <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f43f5e'/%3E%3Cstop offset='1' stop-color='%23fb923c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='144' cy='104' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
+              <div class="card__content card__content--pt">
+                <div class="cluster cluster--between">
+                  <h3 class="text--sm text--semibold">About page portrait</h3>
+                  <span class="badge badge--sm badge--success-muted">Published</span>
+                </div>
+                <p class="text--xs text--muted">about-portrait.jpg</p>
+                <p class="text--xs text--muted">1200 × 1500 &middot; 890 KB</p>
+              </div>
+            </a>
+        </div>
+
+        <div class="cluster cluster--between mt--lg">
+          <p class="text--sm text--muted">Showing 1–12 of 312 files</p>
+          <nav class="pagination" aria-label="Media pages">
+            <a href="#" class="pagination__item pagination__prev" aria-disabled="true">Previous</a>
+            <a href="#" class="pagination__item" aria-current="page">1</a>
+            <a href="#" class="pagination__item">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <span class="pagination__ellipsis">&hellip;</span>
+            <a href="#" class="pagination__item">26</a>
+            <a href="#" class="pagination__item pagination__next">Next</a>
+          </nav>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <style>
+    /* Demo layout for the media grid; thumbnails keep a 3:2 frame */
+    .media__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
+    .media__card { color: inherit; text-decoration: none; overflow: hidden; }
+    .media__thumb { aspect-ratio: 3 / 2; }
+  </style>
+  <script>
+    // Filter menus: checkbox items toggle, radio items select exactly one
+    document.querySelectorAll('[role="menuitemcheckbox"], [role="menuitemradio"]').forEach(item => {
+      item.addEventListener('click', () => {
+        if (item.getAttribute('role') === 'menuitemradio') {
+          item.closest('[role="menu"]').querySelectorAll('[role="menuitemradio"]').forEach(i => i.setAttribute('aria-checked', String(i === item)));
+        } else {
+          item.setAttribute('aria-checked', String(item.getAttribute('aria-checked') !== 'true'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -10,6 +10,9 @@
 // --------------------------------------------------------------------------
 
 .sheet {
+  // Where the panel sits while closed; each edge modifier sets its own
+  --sheet-from: translateX(100%);
+
   position: fixed;
   inset: 0;
   z-index: $z-modal;
@@ -22,6 +25,11 @@
   &--open {
     opacity: 1;
     visibility: visible;
+
+    // Fade in from the closed state when a <dialog> is first shown
+    @starting-style {
+      opacity: 0;
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -31,6 +39,10 @@
   &__backdrop {
     position: absolute;
     inset: 0;
+    // Often a <button command="close">, so clear the button chrome
+    padding: 0;
+    border: 0;
+    cursor: default;
     background-color: rgb(0 0 0 / 0.5);
     backdrop-filter: blur(2px);
   }
@@ -41,80 +53,66 @@
 
   &__panel {
     position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 24rem;
     background-color: var(--bg);
     box-shadow: $shadow-xl;
+    transform: var(--sheet-from);
     @include transition-default;
   }
 
-  // --------------------------------------------------------------------------
-  // Positions
-  // --------------------------------------------------------------------------
+  &:is([open], .sheet--open) &__panel {
+    transform: none;
 
-  // Right (default)
-  &--right &__panel,
-  &__panel {
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    max-width: 24rem;
-    transform: translateX(100%);
-
-    :is(.sheet[open], .sheet--open) & {
-      transform: translateX(0);
+    // Slide in from the edge when a <dialog> is first shown
+    @starting-style {
+      transform: var(--sheet-from);
     }
   }
 
-  // Left
+  &--right {
+    --sheet-from: translateX(100%);
+  }
+
+  &--left {
+    --sheet-from: translateX(-100%);
+  }
+
   &--left &__panel {
     left: 0;
     right: auto;
-    transform: translateX(-100%);
-
-    :is(.sheet[open], .sheet--open) & {
-      transform: translateX(0);
-    }
   }
 
-  // Top
-  &--top &__panel {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-    width: 100%;
-    max-width: none;
-    height: auto;
-    max-height: 80vh;
-    transform: translateY(-100%);
-
-    :is(.sheet[open], .sheet--open) & {
-      transform: translateY(0);
-    }
+  &--top {
+    --sheet-from: translateY(-100%);
   }
 
-  // Bottom
+  &--bottom {
+    --sheet-from: translateY(100%);
+  }
+
+  &--top &__panel,
   &--bottom &__panel {
-    bottom: 0;
     left: 0;
     right: 0;
-    top: auto;
     width: 100%;
     max-width: none;
     height: auto;
     max-height: 80vh;
-    transform: translateY(100%);
-
-    :is(.sheet[open], .sheet--open) & {
-      transform: translateY(0);
-    }
   }
 
-  // --------------------------------------------------------------------------
-  // Size Variants
-  // --------------------------------------------------------------------------
+  &--top &__panel {
+    bottom: auto;
+  }
+
+  &--bottom &__panel {
+    top: auto;
+  }
 
   &--sm &__panel {
     max-width: 20rem;

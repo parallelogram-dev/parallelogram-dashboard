@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+</head>
+<body>
+  <div class="dashboard">
+
+    <nav class="navmenu" aria-label="Main">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo" aria-label="Dashboard home">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="pages.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+            <span class="navmenu__tooltip">Pages</span>
+          </a>
+          <a href="records.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="media.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg>
+            <span class="navmenu__tooltip">Media</span>
+          </a>
+          <a href="analytics.html" class="navmenu__item" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+          <a href="team.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Team</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="navmenu__footer">
+        <a href="settings-account.html" class="navmenu__avatar" aria-label="Your account">
+          <span class="navmenu__avatar-fallback">JD</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">Analytics</h2>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Reports</span>
+          </div>
+          <div class="subnav__list">
+            <a href="analytics.html" class="subnav__item" aria-current="page">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+              <span class="subnav__item-text">Overview</span>
+            </a>
+            <a href="analytics.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+              <span class="subnav__item-text">Revenue</span>
+            </a>
+            <a href="analytics.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+              <span class="subnav__item-text">Audience</span>
+            </a>
+          </div>
+        </div>
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Saved</span>
+          </div>
+          <div class="subnav__list">
+            <a href="analytics.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+              <span class="subnav__item-text">Board pack</span>
+            </a>
+            <a href="analytics.html" class="subnav__item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+              <span class="subnav__item-text">Weekly growth</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Analytics</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+          </button>
+          <a href="settings-account.html" class="avatar" aria-label="Your account">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">Analytics</h1>
+            <p class="pageheader__description">Revenue, traffic and signups across your workspace.</p>
+          </div>
+          <div class="pageheader__actions">
+            <a href="records.html" class="btn btn--outline">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+              Export
+            </a>
+          </div>
+        </div>
+
+        <div class="cluster mb--lg" role="group" aria-label="Report filters">
+          <div class="btn__group" role="group" aria-label="Date range">
+                <div class="dropdown">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#range" data-toggle-capture="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>
+                    Last 12 months
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                  <div id="range" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 7 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 30 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 90 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true">
+                      <span class="dropdown__item-text">Last 12 months</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#segment" data-toggle-capture="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"/></svg>
+                    All plans
+                    <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                  </button>
+                  <div id="segment" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Free</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Pro</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Team</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
+          </div>
+        </div>
+
+        <div class="stat__grid mb--lg">
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Revenue</span>
+            </div>
+            <div class="stat__value">$45,231</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">+20.1%</span>
+              vs last month
+            </p>
+          </div>
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Visitors</span>
+            </div>
+            <div class="stat__value">12,040</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">+8.4%</span>
+              vs last week
+            </p>
+          </div>
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Conversion rate</span>
+            </div>
+            <div class="stat__value">3.2%</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">+0.4 pts</span>
+              vs last month
+            </p>
+          </div>
+          <div class="stat">
+            <div class="stat__header">
+              <span class="stat__label">Churn</span>
+            </div>
+            <div class="stat__value">1.8%</div>
+            <p class="stat__description">
+              <span class="stat__trend stat__trend--up">-0.3 pts</span>
+              vs last month
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid--2 mb--lg">
+          <div class="card">
+            <div class="card__content card__content--pt">
+              <figure class="chart" data-chart="area" data-chart-format="currency" aria-labelledby="revenue-title">
+                <div class="chart__header">
+                  <div>
+                    <h3 class="chart__title" id="revenue-title">Revenue</h3>
+                    <p class="chart__description">Monthly revenue, last 12 months</p>
+                    <p class="chart__value">$45,231</p>
+                  </div>
+                </div>
+                <table>
+                  <thead><tr><th scope="col">Month</th><th scope="col">Revenue</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Nov</th><td data-value="28400">$28,400</td></tr>
+                    <tr><th scope="row">Dec</th><td data-value="31250">$31,250</td></tr>
+                    <tr><th scope="row">Jan</th><td data-value="29800">$29,800</td></tr>
+                    <tr><th scope="row">Feb</th><td data-value="33600">$33,600</td></tr>
+                    <tr><th scope="row">Mar</th><td data-value="35900">$35,900</td></tr>
+                    <tr><th scope="row">Apr</th><td data-value="34700">$34,700</td></tr>
+                    <tr><th scope="row">May</th><td data-value="38200">$38,200</td></tr>
+                    <tr><th scope="row">Jun</th><td data-value="41500">$41,500</td></tr>
+                    <tr><th scope="row">Jul</th><td data-value="39900">$39,900</td></tr>
+                    <tr><th scope="row">Aug</th><td data-value="43100">$43,100</td></tr>
+                    <tr><th scope="row">Sep</th><td data-value="44800">$44,800</td></tr>
+                    <tr><th scope="row">Oct</th><td data-value="45231">$45,231</td></tr>
+                  </tbody>
+                </table>
+              </figure>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__content card__content--pt">
+              <figure class="chart" data-chart="line" data-chart-format="number" aria-labelledby="traffic-title">
+                <div class="chart__header">
+                  <div>
+                    <h3 class="chart__title" id="traffic-title">Traffic by source</h3>
+                    <p class="chart__description">Weekly visitors, last 12 weeks</p>
+                  </div>
+                </div>
+                <table>
+                  <thead><tr><th scope="col">Week</th><th scope="col">Search</th><th scope="col">Direct</th><th scope="col">Social</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">W29</th><td data-value="4200">4,200</td><td data-value="2900">2,900</td><td data-value="1300">1,300</td></tr>
+                    <tr><th scope="row">W30</th><td data-value="4350">4,350</td><td data-value="2950">2,950</td><td data-value="1650">1,650</td></tr>
+                    <tr><th scope="row">W31</th><td data-value="4500">4,500</td><td data-value="3010">3,010</td><td data-value="1420">1,420</td></tr>
+                    <tr><th scope="row">W32</th><td data-value="4380">4,380</td><td data-value="3100">3,100</td><td data-value="1880">1,880</td></tr>
+                    <tr><th scope="row">W33</th><td data-value="4720">4,720</td><td data-value="3050">3,050</td><td data-value="1760">1,760</td></tr>
+                    <tr><th scope="row">W34</th><td data-value="4910">4,910</td><td data-value="3180">3,180</td><td data-value="2140">2,140</td></tr>
+                    <tr><th scope="row">W35</th><td data-value="5050">5,050</td><td data-value="3240">3,240</td><td data-value="1980">1,980</td></tr>
+                    <tr><th scope="row">W36</th><td data-value="4980">4,980</td><td data-value="3300">3,300</td><td data-value="2310">2,310</td></tr>
+                    <tr><th scope="row">W37</th><td data-value="5260">5,260</td><td data-value="3290">3,290</td><td data-value="2250">2,250</td></tr>
+                    <tr><th scope="row">W38</th><td data-value="5410">5,410</td><td data-value="3410">3,410</td><td data-value="2600">2,600</td></tr>
+                    <tr><th scope="row">W39</th><td data-value="5590">5,590</td><td data-value="3480">3,480</td><td data-value="2480">2,480</td></tr>
+                    <tr><th scope="row">W40</th><td data-value="5730">5,730</td><td data-value="3520">3,520</td><td data-value="2790">2,790</td></tr>
+                  </tbody>
+                </table>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid--2">
+          <div class="card">
+            <div class="card__content card__content--pt">
+              <figure class="chart" data-chart="stacked-bar" data-chart-format="number" aria-labelledby="signups-title">
+                <div class="chart__header">
+                  <div>
+                    <h3 class="chart__title" id="signups-title">New signups by plan</h3>
+                    <p class="chart__description">Monthly, last 6 months</p>
+                  </div>
+                </div>
+                <table>
+                  <thead><tr><th scope="col">Month</th><th scope="col">Free</th><th scope="col">Pro</th><th scope="col">Team</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">May</th><td data-value="820">820</td><td data-value="210">210</td><td data-value="45">45</td></tr>
+                    <tr><th scope="row">Jun</th><td data-value="860">860</td><td data-value="240">240</td><td data-value="52">52</td></tr>
+                    <tr><th scope="row">Jul</th><td data-value="910">910</td><td data-value="255">255</td><td data-value="60">60</td></tr>
+                    <tr><th scope="row">Aug</th><td data-value="990">990</td><td data-value="290">290</td><td data-value="66">66</td></tr>
+                    <tr><th scope="row">Sep</th><td data-value="1040">1,040</td><td data-value="320">320</td><td data-value="74">74</td></tr>
+                    <tr><th scope="row">Oct</th><td data-value="1120">1,120</td><td data-value="350">350</td><td data-value="85">85</td></tr>
+                  </tbody>
+                </table>
+              </figure>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__content card__content--pt">
+              <figure class="chart" data-chart="bar" data-chart-format="number" aria-labelledby="channels-title">
+                <div class="chart__header">
+                  <div>
+                    <h3 class="chart__title" id="channels-title">Visitors by channel</h3>
+                    <p class="chart__description">Last 30 days</p>
+                  </div>
+                </div>
+                <table>
+                  <thead><tr><th scope="col">Channel</th><th scope="col">Visitors</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Search</th><td data-value="18420">18,420</td></tr>
+                    <tr><th scope="row">Direct</th><td data-value="11230">11,230</td></tr>
+                    <tr><th scope="row">Social</th><td data-value="7860">7,860</td></tr>
+                    <tr><th scope="row">Referral</th><td data-value="4310">4,310</td></tr>
+                    <tr><th scope="row">Email</th><td data-value="2980">2,980</td></tr>
+                  </tbody>
+                </table>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Filter menus: checkbox items toggle, radio items select exactly one
+    document.querySelectorAll('[role="menuitemcheckbox"], [role="menuitemradio"]').forEach(item => {
+      item.addEventListener('click', () => {
+        if (item.getAttribute('role') === 'menuitemradio') {
+          item.closest('[role="menu"]').querySelectorAll('[role="menuitemradio"]').forEach(i => i.setAttribute('aria-checked', String(i === item)));
+        } else {
+          item.setAttribute('aria-checked', String(item.getAttribute('aria-checked') !== 'true'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -27,35 +27,129 @@
 
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
-          <div class="demo-box constrain--sm">
-            <div class="sheet__panel demo-preview--sheet">
+          <div class="demo-row">
+            <button type="button" class="btn btn--outline" commandfor="sheet-right" command="show-modal">Open right</button>
+            <button type="button" class="btn btn--outline" commandfor="sheet-left" command="show-modal">Open left</button>
+            <button type="button" class="btn btn--outline" commandfor="sheet-top" command="show-modal">Open top</button>
+            <button type="button" class="btn btn--outline" commandfor="sheet-bottom" command="show-modal">Open bottom</button>
+          </div>
+
+          <p class="text--sm text--muted spacer--md">A sheet is a <code>&lt;dialog class="sheet"&gt;</code>. Buttons open it with <code>commandfor="id" command="show-modal"</code> and close it with <code>command="close"</code>, so no JavaScript is needed in current browsers (<code>main.js</code> adds a fallback). <code>showModal()</code> traps focus, closes on Escape and makes the page behind inert. Add <code>.sheet--left</code>, <code>.sheet--top</code> or <code>.sheet--bottom</code> to change the edge.</p>
+
+          <dialog class="sheet sheet--right" id="sheet-right" aria-labelledby="sheet-right-title">
+            <button type="button" class="sheet__backdrop" commandfor="sheet-right" command="close" aria-label="Close" tabindex="-1"></button>
+            <div class="sheet__panel">
               <div class="sheet__header">
                 <div>
-                  <h3 class="sheet__title">Edit Profile</h3>
-                  <p class="sheet__description">Make changes to your profile settings here.</p>
+                  <h3 class="sheet__title" id="sheet-right-title">Edit Profile</h3>
+                  <p class="sheet__description">Slides in from the right (default).</p>
                 </div>
-                <button class="sheet__close">
+                <button type="button" class="sheet__close" commandfor="sheet-right" command="close" aria-label="Close">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
                 </button>
               </div>
-              <div class="sheet__content demo-preview--overflow-visible">
+              <div class="sheet__content">
                 <div class="form__field spacer--md">
-                  <label class="form__label">Name</label>
-                  <input type="text" class="input form__control" value="John Doe">
+                  <label class="form__label" for="sheet-right-name">Name</label>
+                  <input type="text" id="sheet-right-name" class="input form__control" value="John Doe">
                 </div>
                 <div class="form__field">
-                  <label class="form__label">Email</label>
-                  <input type="email" class="input form__control" value="john@example.com">
+                  <label class="form__label" for="sheet-right-email">Email</label>
+                  <input type="email" id="sheet-right-email" class="input form__control" value="john@example.com">
                 </div>
               </div>
               <div class="sheet__footer">
-                <button class="btn btn--outline">Cancel</button>
-                <button class="btn btn--primary">Save Changes</button>
+                <button type="button" class="btn btn--outline" commandfor="sheet-right" command="close">Cancel</button>
+                <button type="button" class="btn btn--primary" commandfor="sheet-right" command="close">Save Changes</button>
               </div>
             </div>
-          </div>
-
-          <p class="text--sm text--muted spacer--md">Sheets can slide in from right, left, top, or bottom. Use <code>.sheet--left</code>, <code>.sheet--top</code>, or <code>.sheet--bottom</code> variants.</p>
+          </dialog>
+          <dialog class="sheet sheet--left" id="sheet-left" aria-labelledby="sheet-left-title">
+            <button type="button" class="sheet__backdrop" commandfor="sheet-left" command="close" aria-label="Close" tabindex="-1"></button>
+            <div class="sheet__panel">
+              <div class="sheet__header">
+                <div>
+                  <h3 class="sheet__title" id="sheet-left-title">Navigation</h3>
+                  <p class="sheet__description">Slides in from the left with .sheet--left.</p>
+                </div>
+                <button type="button" class="sheet__close" commandfor="sheet-left" command="close" aria-label="Close">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="sheet__content">
+                <div class="form__field spacer--md">
+                  <label class="form__label" for="sheet-left-name">Name</label>
+                  <input type="text" id="sheet-left-name" class="input form__control" value="John Doe">
+                </div>
+                <div class="form__field">
+                  <label class="form__label" for="sheet-left-email">Email</label>
+                  <input type="email" id="sheet-left-email" class="input form__control" value="john@example.com">
+                </div>
+              </div>
+              <div class="sheet__footer">
+                <button type="button" class="btn btn--outline" commandfor="sheet-left" command="close">Cancel</button>
+                <button type="button" class="btn btn--primary" commandfor="sheet-left" command="close">Save Changes</button>
+              </div>
+            </div>
+          </dialog>
+          <dialog class="sheet sheet--top" id="sheet-top" aria-labelledby="sheet-top-title">
+            <button type="button" class="sheet__backdrop" commandfor="sheet-top" command="close" aria-label="Close" tabindex="-1"></button>
+            <div class="sheet__panel">
+              <div class="sheet__header">
+                <div>
+                  <h3 class="sheet__title" id="sheet-top-title">Announcements</h3>
+                  <p class="sheet__description">Drops down from the top with .sheet--top.</p>
+                </div>
+                <button type="button" class="sheet__close" commandfor="sheet-top" command="close" aria-label="Close">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="sheet__content">
+                <div class="form__field spacer--md">
+                  <label class="form__label" for="sheet-top-name">Name</label>
+                  <input type="text" id="sheet-top-name" class="input form__control" value="John Doe">
+                </div>
+                <div class="form__field">
+                  <label class="form__label" for="sheet-top-email">Email</label>
+                  <input type="email" id="sheet-top-email" class="input form__control" value="john@example.com">
+                </div>
+              </div>
+              <div class="sheet__footer">
+                <button type="button" class="btn btn--outline" commandfor="sheet-top" command="close">Cancel</button>
+                <button type="button" class="btn btn--primary" commandfor="sheet-top" command="close">Save Changes</button>
+              </div>
+              <div class="sheet__handle"></div>
+            </div>
+          </dialog>
+          <dialog class="sheet sheet--bottom" id="sheet-bottom" aria-labelledby="sheet-bottom-title">
+            <button type="button" class="sheet__backdrop" commandfor="sheet-bottom" command="close" aria-label="Close" tabindex="-1"></button>
+            <div class="sheet__panel">
+              <div class="sheet__handle"></div>
+              <div class="sheet__header">
+                <div>
+                  <h3 class="sheet__title" id="sheet-bottom-title">Share</h3>
+                  <p class="sheet__description">Rises from the bottom with .sheet--bottom.</p>
+                </div>
+                <button type="button" class="sheet__close" commandfor="sheet-bottom" command="close" aria-label="Close">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="sheet__content">
+                <div class="form__field spacer--md">
+                  <label class="form__label" for="sheet-bottom-name">Name</label>
+                  <input type="text" id="sheet-bottom-name" class="input form__control" value="John Doe">
+                </div>
+                <div class="form__field">
+                  <label class="form__label" for="sheet-bottom-email">Email</label>
+                  <input type="email" id="sheet-bottom-email" class="input form__control" value="john@example.com">
+                </div>
+              </div>
+              <div class="sheet__footer">
+                <button type="button" class="btn btn--outline" commandfor="sheet-bottom" command="close">Cancel</button>
+                <button type="button" class="btn btn--primary" commandfor="sheet-bottom" command="close">Save Changes</button>
+              </div>
+            </div>
+          </dialog>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

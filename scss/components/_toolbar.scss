@@ -19,7 +19,7 @@
   // Elements
   // --------------------------------------------------------------------------
 
-  &__inputwrapper {
+  &__group {
     position: relative;
     flex: 1;
     max-width: 24rem;
@@ -106,7 +106,7 @@
   // --------------------------------------------------------------------------
 
   &--compact {
-    .toolbar__inputwrapper {
+    .toolbar__group {
       max-width: 16rem;
     }
 
@@ -117,7 +117,7 @@
   }
 
   &--full {
-    .toolbar__inputwrapper {
+    .toolbar__group {
       max-width: none;
     }
   }
@@ -217,7 +217,7 @@
   .toolbar {
     flex-wrap: wrap;
 
-    &__inputwrapper {
+    &__group {
       flex-basis: 100%;
       max-width: none;
       order: 1;

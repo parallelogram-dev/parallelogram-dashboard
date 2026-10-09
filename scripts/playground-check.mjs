@@ -21,15 +21,18 @@ const pages = manifest.flatMap(group => group.pages);
 
 function renderedClasses(spec) {
   const base = defaultState(spec);
-  const states = [base, ...(spec.presets || []).map(p => ({ ...base, ...p.state }))];
+  // Vary each control from the defaults and from every preset, never from earlier variations,
+  // so the work grows with controls × presets rather than exponentially
+  const seeds = [base, ...(spec.presets || []).map(p => ({ ...base, ...p.state }))];
+  const states = [...seeds];
 
   for (const control of spec.controls) {
     const values = control.type === 'select'
       ? normaliseOptions(control.options).map(o => o.value)
       : control.type === 'toggle' ? [true, false] : [];
-    for (const start of [base, ...states.slice(1)]) {
+    for (const seed of seeds) {
       for (const value of values) {
-        states.push({ ...start, [control.key]: value });
+        states.push({ ...seed, [control.key]: value });
       }
     }
   }
