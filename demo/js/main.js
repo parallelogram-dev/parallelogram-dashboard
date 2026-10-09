@@ -304,10 +304,10 @@ class ToastManager {
   }
 
   _ensureContainer() {
-    this.container = document.querySelector(`.toast-container--${this.position}`);
+    this.container = document.querySelector(`.toast__container--${this.position}`);
     if (!this.container) {
       this.container = document.createElement('div');
-      this.container.className = `toast-container toast-container--${this.position}`;
+      this.container.className = `toast__container toast__container--${this.position}`;
       document.body.appendChild(this.container);
     }
   }
