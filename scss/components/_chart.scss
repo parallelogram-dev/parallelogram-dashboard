@@ -1,0 +1,246 @@
+// ==========================================================================
+// Chart Component
+// A <figure class="chart" data-chart="line|area|bar|stacked-bar"> wrapping a data <table>.
+// Without JavaScript the table is the chart; main.js renders the SVG plot, legend and
+// tooltip from it and keeps the table available as the accessible table view.
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.chart {
+  --chart-height: 15rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin: 0;
+  min-width: 0;
+
+  &--sm {
+    --chart-height: 10rem;
+  }
+
+  &--lg {
+    --chart-height: 20rem;
+  }
+
+  // --------------------------------------------------------------------------
+  // Header: title, description and the table-view toggle
+  // --------------------------------------------------------------------------
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-sm;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+  }
+
+  &__description {
+    margin-top: $spacing-3xs;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__value {
+    margin-top: $spacing-3xs;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    letter-spacing: $letter-spacing-tight;
+    color: var(--fg);
+  }
+
+  // --------------------------------------------------------------------------
+  // Legend (always shown for two or more series)
+  // --------------------------------------------------------------------------
+
+  &__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-3xs $spacing-sm;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-3xs;
+  }
+
+  // Mirrors the mark: a short line for line/area charts, a square for bars
+  &__key {
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 2px;
+    border-radius: 1px;
+    background-color: currentColor;
+
+    &--box {
+      height: 0.625rem;
+      width: 0.625rem;
+      border-radius: 2px;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Plot
+  // --------------------------------------------------------------------------
+
+  &__plot {
+    position: relative;
+    height: var(--chart-height);
+
+    &:focus-visible {
+      @include focus-ring;
+      border-radius: $radius-sm;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+  }
+
+  &__grid {
+    stroke: var(--chart-grid);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  &__baseline {
+    stroke: var(--chart-axis);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  &__tick {
+    fill: var(--chart-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__line {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  &__area {
+    opacity: 0.1;
+  }
+
+  // Bars and end dots are separated by the surface colour, never by a border
+  &__bar {
+    stroke: var(--chart-surface);
+    stroke-width: 1;
+    @include transition-opacity;
+
+    .chart__plot:has(.chart__bar--active) &:not(.chart__bar--active) {
+      opacity: 0.55;
+    }
+  }
+
+  &__dot {
+    stroke: var(--chart-surface);
+    stroke-width: 2;
+  }
+
+  &__label {
+    fill: var(--fg);
+    font-size: 11px;
+    font-weight: $font-weight-medium;
+  }
+
+  &__crosshair {
+    stroke: var(--chart-axis);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    pointer-events: none;
+  }
+
+  &__hit {
+    fill: transparent;
+    cursor: crosshair;
+  }
+
+  // --------------------------------------------------------------------------
+  // Tooltip: values lead, series names follow
+  // --------------------------------------------------------------------------
+
+  &__tooltip {
+    position: absolute;
+    z-index: $z-tooltip;
+    min-width: 8rem;
+    padding: $spacing-2xs $spacing-xs;
+    font-size: $font-size-xs;
+    color: var(--popover-fg);
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    box-shadow: $shadow-md;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  &__tooltip-title {
+    margin-bottom: $spacing-3xs;
+    color: var(--fg-muted);
+  }
+
+  &__tooltip-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+
+    strong {
+      font-weight: $font-weight-semibold;
+      font-variant-numeric: tabular-nums;
+      color: var(--fg);
+    }
+
+    span:last-child {
+      color: var(--fg-muted);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Table view: the chart's accessible twin
+  // --------------------------------------------------------------------------
+
+  &__table {
+    width: 100%;
+    font-size: $font-size-xs;
+    font-variant-numeric: tabular-nums;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: $spacing-3xs $spacing-2xs;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    thead th {
+      font-weight: $font-weight-medium;
+      color: var(--fg-muted);
+    }
+  }
+}

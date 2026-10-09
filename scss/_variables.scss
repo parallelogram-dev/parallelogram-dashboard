@@ -126,6 +126,21 @@ $amber-900: #78350f;
   --sidebar-border: #{$zinc-200};
   --sidebar-accent: #{$zinc-100};
   --sidebar-accent-fg: #{$zinc-900};
+
+  // Chart series, in fixed order (never cycled). Validated for colour-vision deficiency
+  // against the light card surface; slots 3–5 sit below 3:1, so charts always offer a table view
+  --chart-1: #2a78d6;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #e87ba4;
+  --chart-6: #008300;
+  --chart-7: #4a3aa7;
+  --chart-8: #e34948;
+  --chart-surface: var(--card);
+  --chart-grid: #{$zinc-100};
+  --chart-axis: #{$zinc-300};
+  --chart-muted: #{$zinc-500};
 }
 
 // --------------------------------------------------------------------------
@@ -209,6 +224,19 @@ $amber-900: #78350f;
   --sidebar-border: #{$zinc-800};
   --sidebar-accent: #{$zinc-800};
   --sidebar-accent-fg: #{$zinc-50};
+
+  // Chart series stepped for the dark surface; the same hues and order as light
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #d55181;
+  --chart-6: #008300;
+  --chart-7: #9085e9;
+  --chart-8: #e66767;
+  --chart-grid: #{$zinc-800};
+  --chart-axis: #{$zinc-700};
+  --chart-muted: #{$zinc-400};
 }
 
 // --------------------------------------------------------------------------

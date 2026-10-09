@@ -14,6 +14,7 @@ export default [
   {
     group: 'Actions',
     pages: [
+      { slug: 'actionbar', name: 'Action Bar', description: 'A segmented bar standing for one record, with a reorder handle, title, switches, dropdowns and actions.', scss: 'components/_actionbar.scss', spec: 'actionbar' },
       { slug: 'button', name: 'Button', description: 'Triggers an action. Works on <button> and <a> elements.', scss: 'components/_button.scss', spec: 'button' },
       { slug: 'dropdown', name: 'Dropdown', description: 'Contextual menus and actions.', scss: 'components/_dropdown.scss' },
       { slug: 'command', name: 'Command', description: 'Command palette (⌘K style) for quick actions.', scss: 'components/_command.scss' },
@@ -34,6 +35,7 @@ export default [
       { slug: 'accordion', name: 'Accordion', description: 'Expandable content sections.', scss: 'components/_accordion.scss' },
       { slug: 'avatar', name: 'Avatar', description: 'User profile images with fallbacks.', scss: 'components/_avatar.scss' },
       { slug: 'badge', name: 'Badge', description: 'Small status labels, counts and removable tags.', scss: 'components/_badge.scss', spec: 'badge' },
+      { slug: 'chart', name: 'Chart', description: 'Line, area, bar and stacked bar charts drawn from a data table.', scss: 'components/_chart.scss' },
       { slug: 'card', name: 'Card', description: 'Container for grouped content with optional header, image and footer.', scss: 'components/_card.scss', spec: 'card' },
       { slug: 'data-list', name: 'Data List', description: 'Key-value pair displays for record details.', scss: 'components/_data-list.scss' },
       { slug: 'empty', name: 'Empty State', description: 'Placeholder content for empty views.', scss: 'components/_empty.scss' },

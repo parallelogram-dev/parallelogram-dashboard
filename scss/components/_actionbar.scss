@@ -1,0 +1,316 @@
+// ==========================================================================
+// Action Bar Component
+// A segmented bar that stands for one record, e.g. a page in a page tree or a row in a
+// record index. Segments (reorder handle, selection, title, switches, dropdowns, actions)
+// are joined by keylines. Several bars stack in an .actionbar__list, which can be sorted.
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.actionbar {
+  --actionbar-height: #{$btn-height-md};
+
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  height: var(--actionbar-height);
+  font-size: $font-size-sm;
+  color: var(--fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  @include transition-colors;
+
+  &--sm {
+    --actionbar-height: #{$btn-height-sm};
+
+    font-size: $font-size-xs;
+  }
+
+  &--lg {
+    --actionbar-height: 3rem;
+  }
+
+  // Selected through its own selection checkbox
+  &:has(.actionbar__select :checked) {
+    background-color: var(--accent);
+    border-color: var(--primary);
+  }
+
+  // The record is unavailable, e.g. unpublished or locked; controls stay usable
+  &[aria-disabled="true"] .actionbar__title {
+    opacity: 0.55;
+  }
+
+  // Lifted while being dragged into a new position
+  &[data-dragging] {
+    position: relative;
+    z-index: 2;
+    border-color: var(--primary);
+    box-shadow: $shadow-lg;
+    cursor: grabbing;
+  }
+
+  // Where a dragged bar will land: a line before or after this bar, or inside it as a child
+  &[data-drop] {
+    position: relative;
+  }
+
+  &[data-drop="before"]::after,
+  &[data-drop="after"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--primary);
+    pointer-events: none;
+  }
+
+  // Centred in the gap between bars in a list
+  &[data-drop="before"]::after {
+    top: calc(#{$spacing-2xs} / -2 - 2px);
+  }
+
+  &[data-drop="after"]::after,
+  &[data-drop="first-inside"]::after {
+    bottom: calc(#{$spacing-2xs} / -2 - 2px);
+  }
+
+  // Dropping below an open parent lands as its first child, so the line is indented
+  &[data-drop="first-inside"]::after {
+    content: "";
+    position: absolute;
+    left: $spacing-xl;
+    right: 0;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--primary);
+    pointer-events: none;
+  }
+
+  &[data-drop="inside"] {
+    border-color: var(--primary);
+    box-shadow: inset 0 0 0 1px var(--primary);
+  }
+
+  // --------------------------------------------------------------------------
+  // Segments
+  // --------------------------------------------------------------------------
+
+  &__segment {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: $spacing-2xs;
+    padding: 0 $spacing-xs;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+
+    & + & {
+      border-left: 1px solid var(--border);
+    }
+
+    // Round the outermost *visible* segments: the "more" segment and folded segments stay in
+    // the markup while hidden, and clipping the bar instead would cut off dropdown menus
+    &:not([hidden]):not(:has(~ .actionbar__segment:not([hidden]))) {
+      border-top-right-radius: calc(#{$radius-md} - 1px);
+      border-bottom-right-radius: calc(#{$radius-md} - 1px);
+    }
+
+    &:not([hidden]):first-child {
+      border-top-left-radius: calc(#{$radius-md} - 1px);
+      border-bottom-left-radius: calc(#{$radius-md} - 1px);
+    }
+
+    // A whole segment can be a button or link
+    &:is(button, a) {
+      cursor: pointer;
+      @include transition-colors;
+
+      &:hover {
+        background-color: var(--accent);
+        color: var(--accent-fg);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: -2px;
+      }
+
+      &:disabled,
+      &[aria-disabled="true"] {
+        @include disabled;
+      }
+    }
+
+    .icon {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+      flex-shrink: 0;
+    }
+
+    // Per-segment emphasis
+    &--primary {
+      color: var(--primary-fg);
+      background-color: var(--primary);
+
+      &:is(button, a):hover {
+        color: var(--primary-fg);
+        background-color: var(--primary-hover);
+      }
+    }
+
+    &--outline::before {
+      content: "";
+      position: absolute;
+      inset: $spacing-3xs;
+      border: 1px solid var(--ring);
+      border-radius: $radius-sm;
+      pointer-events: none;
+    }
+
+    &--muted {
+      color: var(--fg-muted);
+      background-color: var(--bg-muted);
+    }
+  }
+
+  // A button that fills its segment, e.g. a dropdown trigger
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    height: 100%;
+    margin: 0 calc(#{$spacing-xs} * -1);
+    padding: 0 $spacing-xs;
+    color: inherit;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: inherit;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover,
+    &[aria-expanded="true"] {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: -2px;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Built-in segments
+  // --------------------------------------------------------------------------
+
+  &__handle {
+    justify-content: center;
+    width: var(--actionbar-height);
+    padding: 0;
+    color: var(--fg-muted);
+    cursor: grab;
+    touch-action: none;
+
+    &:active,
+    &[aria-pressed="true"] {
+      cursor: grabbing;
+      color: var(--primary);
+    }
+  }
+
+  // Shows or hides a nested list of child records
+  &__toggle {
+    justify-content: center;
+    width: var(--actionbar-height);
+    padding: 0;
+    color: var(--fg-muted);
+
+    .icon {
+      @include transition-transform;
+    }
+
+    &[aria-expanded="false"] .icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__select {
+    justify-content: center;
+    width: var(--actionbar-height);
+    padding: 0;
+  }
+
+  // Grows to fill the bar; once it would drop below its minimum, segments fold into "more"
+  &__title {
+    flex: 1 1 auto;
+    min-width: 10rem;
+    gap: $spacing-xs;
+  }
+
+  &__label {
+    min-width: 0;
+    font-weight: $font-weight-medium;
+    color: inherit;
+    text-decoration: none;
+    @include text-truncate;
+
+    &:is(a):hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  // Gives way before the label does
+  &__meta {
+    flex-shrink: 4;
+    min-width: 0;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    @include text-truncate;
+  }
+
+  &__title .badge {
+    flex-shrink: 0;
+  }
+
+  // Holds segments that no longer fit; filled by main.js
+  &__more {
+    padding: 0 $spacing-xs;
+
+    .dropdown__menu {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // List of bars (one record each), optionally nested for trees
+  // --------------------------------------------------------------------------
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xs;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // Nested lists show hierarchy, e.g. child pages
+    & & {
+      margin-top: $spacing-2xs;
+      padding-left: $spacing-xl;
+    }
+  }
+}
