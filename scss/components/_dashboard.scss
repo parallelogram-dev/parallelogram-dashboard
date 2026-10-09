@@ -103,6 +103,7 @@
       background-color: var(--accent);
     }
 
+    &[aria-current="page"],
     &--active {
       color: var(--fg);
       background-color: var(--accent);
@@ -358,12 +359,15 @@
       background-color: var(--accent);
     }
 
+    &[aria-current="page"],
     &--active {
       color: var(--fg);
       background-color: var(--accent);
       font-weight: $font-weight-medium;
     }
 
+    &:disabled,
+    &[aria-disabled="true"],
     &--disabled {
       @include disabled;
     }
@@ -376,6 +380,7 @@
     color: var(--fg-subtle);
 
     .subnav__item:hover &,
+    .subnav__item[aria-current="page"] &,
     .subnav__item--active & {
       color: var(--fg);
     }
@@ -414,6 +419,7 @@
     padding-left: $spacing-lg;
     margin-top: $spacing-3xs;
 
+    .subnav__item[aria-expanded="true"] + &,
     &--open {
       display: flex;
     }
@@ -461,6 +467,7 @@
       background-color: var(--accent);
     }
 
+    &[aria-current="page"],
     &--active {
       color: var(--fg);
       font-weight: $font-weight-medium;
@@ -474,6 +481,7 @@
     border-radius: $radius-full;
     flex-shrink: 0;
 
+    .subnav__subitem[aria-current="page"] &,
     .subnav__subitem--active & {
       background-color: var(--primary);
     }
@@ -595,6 +603,7 @@
       }
     }
 
+    &__item[aria-current="page"]::before,
     &__item--active::before {
       left: 50%;
       top: -$spacing-2xs;

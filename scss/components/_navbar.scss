@@ -99,11 +99,14 @@
       background-color: var(--accent);
     }
 
+    &[aria-current="page"],
     &--active {
       color: var(--fg);
       background-color: var(--accent);
     }
 
+    &:disabled,
+    &[aria-disabled="true"],
     &--disabled {
       @include disabled;
     }
@@ -210,6 +213,7 @@
   display: none;
   flex-direction: column;
 
+  &[open],
   &--open {
     display: flex;
   }
@@ -263,6 +267,7 @@
     @include interactive;
 
     &:hover,
+    &[aria-current="page"],
     &--active {
       background-color: var(--accent);
     }

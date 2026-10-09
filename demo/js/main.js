@@ -3,6 +3,9 @@
  *
  * Standalone browser script for dashboard component interactivity.
  * Uses progressive enhancement - components work without JS but are enhanced when loaded.
+ *
+ * State lives in native and ARIA attributes (aria-expanded, aria-selected, hidden, open);
+ * the stylesheet reads those, so no state classes are toggled here.
  */
 
 // ============================================================================
@@ -11,7 +14,6 @@
 
 class Accordion {
   constructor(options = {}) {
-    this.openClass = options.openClass || 'accordion__item--open';
     this.multiple = options.multiple || false;
     this.elements = new WeakMap();
   }
@@ -20,7 +22,8 @@ class Accordion {
     if (this.elements.has(element)) return;
 
     const items = element.querySelectorAll('.accordion__item');
-    const triggers = element.querySelectorAll('.accordion__trigger');
+    // <details> items toggle natively; only button triggers need wiring
+    const triggers = element.querySelectorAll('button.accordion__trigger');
     const multiple = element.dataset.accordionMultiple === 'true';
 
     const state = {
@@ -45,19 +48,13 @@ class Accordion {
 
     if (!item) return;
 
-    const isOpen = item.classList.contains(this.openClass);
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 
     // Close other items if multiple is not allowed
     if (!state.multiple && !isOpen) {
-      state.items.forEach(i => {
-        i.classList.remove(this.openClass);
-        const t = i.querySelector('.accordion__trigger');
-        if (t) t.setAttribute('aria-expanded', 'false');
-      });
+      state.triggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
     }
 
-    // Toggle current item
-    item.classList.toggle(this.openClass);
     trigger.setAttribute('aria-expanded', String(!isOpen));
   }
 
@@ -73,9 +70,7 @@ class Accordion {
 // ============================================================================
 
 class Tabs {
-  constructor(options = {}) {
-    this.activeClass = options.activeClass || 'tabs__trigger--active';
-    this.panelActiveClass = options.panelActiveClass || 'tab-panel--active';
+  constructor() {
     this.elements = new WeakMap();
   }
 
@@ -174,14 +169,10 @@ class Tabs {
       const isActive = tab.dataset.tab === panelId;
       tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
       tab.setAttribute('tabindex', isActive ? '0' : '-1');
-      tab.classList.toggle(this.activeClass, isActive);
     });
 
-    // Update panel visibility
     state.panels.forEach(panel => {
-      const shouldShow = panel.id === panelId;
-      panel.style.display = shouldShow ? '' : 'none';
-      panel.classList.toggle(this.panelActiveClass, shouldShow);
+      panel.hidden = panel.id !== panelId;
     });
 
     state.activeTab = panelId;
@@ -199,8 +190,7 @@ class Tabs {
 // ============================================================================
 
 class Toggle {
-  constructor(options = {}) {
-    this.openClass = options.openClass || 'open';
+  constructor() {
     this.elements = new WeakMap();
   }
 
@@ -215,17 +205,16 @@ class Toggle {
 
     const capture = element.dataset.toggleCapture === 'true';
     const manual = element.dataset.toggleManual === 'true';
-
-    // data-toggle-class lets a trigger apply the target's own open modifier, e.g. dropdown__menu--open
-    const targetClass = element.dataset.toggleClass || this.openClass;
+    // Optional extra class on the target for markup that is not styled from aria-expanded
+    const targetClass = element.dataset.toggleClass || '';
 
     const state = {
       target,
       targetSelector,
-      targetClass,
       capture,
       manual,
-      isOpen: target.classList.contains(targetClass),
+      targetClass,
+      isOpen: element.getAttribute('aria-expanded') === 'true' || target.hasAttribute('open'),
     };
 
     // Click handler
@@ -235,8 +224,9 @@ class Toggle {
       this.toggle(element);
     });
 
-    // Setup ARIA
+    // The stylesheet reads aria-expanded on the trigger, so it must always be present
     element.setAttribute('aria-expanded', String(state.isOpen));
+    if (target.id) element.setAttribute('aria-controls', target.id);
 
     // Escape key
     document.addEventListener('keydown', (e) => {
@@ -262,7 +252,7 @@ class Toggle {
     const state = this.elements.get(element);
     if (!state) return;
 
-    if (state.target.classList.contains(state.targetClass)) {
+    if (state.isOpen) {
       this.hide(element);
     } else {
       this.show(element);
@@ -270,23 +260,28 @@ class Toggle {
   }
 
   show(element) {
-    const state = this.elements.get(element);
-    if (!state) return;
-
-    state.isOpen = true;
-    state.target.classList.add(state.targetClass);
-    element.setAttribute('aria-expanded', 'true');
-    element.classList.add(this.openClass);
+    this._set(element, true);
   }
 
   hide(element) {
+    this._set(element, false);
+  }
+
+  _set(element, open) {
     const state = this.elements.get(element);
     if (!state) return;
 
-    state.isOpen = false;
-    state.target.classList.remove(state.targetClass);
-    element.setAttribute('aria-expanded', 'false');
-    element.classList.remove(this.openClass);
+    state.isOpen = open;
+    element.setAttribute('aria-expanded', String(open));
+
+    if (state.targetClass) {
+      state.target.classList.toggle(state.targetClass, open);
+    }
+
+    // <dialog> and <details> targets carry their own native open state
+    if (state.target instanceof HTMLDialogElement || state.target instanceof HTMLDetailsElement) {
+      state.target.toggleAttribute('open', open);
+    }
   }
 
   static enhanceAll(selector = '[data-toggle]', root = document) {
@@ -442,7 +437,7 @@ class DemoNav {
     const current = new URL(window.location.pathname.replace(/\/$/, '/index.html'), window.location.origin).href;
     const currentLink = [...this.container.querySelectorAll('a')].find(a => a.href === current);
     if (currentLink) {
-      currentLink.classList.add('demonav__link--active');
+      currentLink.setAttribute('aria-current', 'page');
     }
   }
 
@@ -480,13 +475,11 @@ class DemoNav {
 
   open() {
     this.isOpen = true;
-    this.container.classList.add('demonav--open');
     this.trigger.setAttribute('aria-expanded', 'true');
   }
 
   close() {
     this.isOpen = false;
-    this.container.classList.remove('demonav--open');
     this.trigger.setAttribute('aria-expanded', 'false');
   }
 }

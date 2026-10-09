@@ -75,6 +75,8 @@
       }
     }
 
+    &[aria-sort="ascending"],
+    &[aria-sort="descending"],
     &--sorted {
       color: var(--fg);
     }
@@ -168,6 +170,8 @@
   height: $icon-size-sm;
   color: var(--fg-subtle);
 
+  [aria-sort="ascending"] &,
+  [aria-sort="descending"] &,
   &--asc,
   &--desc {
     color: var(--fg);

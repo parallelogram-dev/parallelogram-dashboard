@@ -385,7 +385,7 @@ body {
     margin-top: 0.75rem;
   }
 
-  .docs__nav--open .docs__navbody {
+  .docs__nav:has([data-nav-toggle][aria-expanded="true"]) .docs__navbody {
     display: block;
   }
 

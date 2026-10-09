@@ -28,8 +28,7 @@ function renderNav(nav) {
 
   const toggle = nav.querySelector('[data-nav-toggle]');
   toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('docs__nav--open');
-    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-expanded', String(toggle.getAttribute('aria-expanded') !== 'true'));
   });
 
   nav.querySelector('[data-nav-filter]').addEventListener('input', event => {

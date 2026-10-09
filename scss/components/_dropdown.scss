@@ -5,6 +5,9 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// The menu is open when the dropdown's trigger reports aria-expanded="true"
+$dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dropdown--open';
+
 // --------------------------------------------------------------------------
 // Base Dropdown
 // --------------------------------------------------------------------------
@@ -40,9 +43,8 @@
     transform: translateY(-0.25rem);
     @include transition-default;
 
-    // Open state (toggle via JS)
     &--open,
-    .dropdown--open & {
+    :is(#{$dropdown-open}) & {
       opacity: 1;
       visibility: visible;
       transform: translateY($spacing-3xs);
@@ -64,22 +66,26 @@
     top: auto;
     bottom: 100%;
     transform: translateY(0.25rem);
+  }
 
-    &--open,
-    .dropdown--open & {
-      transform: translateY(-$spacing-3xs);
-    }
+  &--top > &__menu--open,
+  &__menu--top#{&}__menu--open,
+  &--top:is(#{$dropdown-open}) > &__menu,
+  :is(#{$dropdown-open}) > &__menu--top {
+    transform: translateY(-$spacing-3xs);
   }
 
   &--center &__menu,
   &__menu--center {
     left: 50%;
     transform: translateX(-50%) translateY(-0.25rem);
+  }
 
-    &--open,
-    .dropdown--open & {
-      transform: translateX(-50%) translateY($spacing-3xs);
-    }
+  &--center > &__menu--open,
+  &__menu--center#{&}__menu--open,
+  &--center:is(#{$dropdown-open}) > &__menu,
+  :is(#{$dropdown-open}) > &__menu--center {
+    transform: translateX(-50%) translateY($spacing-3xs);
   }
 
   // --------------------------------------------------------------------------
@@ -103,11 +109,14 @@
       color: var(--accent-fg);
     }
 
+    &[aria-current="true"],
     &--active {
       background-color: var(--accent);
       color: var(--accent-fg);
     }
 
+    &:disabled,
+    &[aria-disabled="true"],
     &--disabled {
       @include disabled;
     }
@@ -144,6 +153,7 @@
     margin-left: auto;
     opacity: 0;
 
+    [aria-checked="true"] &,
     &--checked {
       opacity: 1;
     }

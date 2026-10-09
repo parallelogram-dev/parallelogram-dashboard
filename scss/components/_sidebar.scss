@@ -134,12 +134,15 @@
       color: var(--sidebar-accent-fg);
     }
 
+    &[aria-current="page"],
     &--active {
       background-color: var(--sidebar-accent);
       color: var(--sidebar-accent-fg);
       font-weight: $font-weight-medium;
     }
 
+    &:disabled,
+    &[aria-disabled="true"],
     &--disabled {
       @include disabled;
     }
@@ -281,6 +284,7 @@
   padding-left: $spacing-xl;
   margin-top: $spacing-3xs;
 
+  [aria-expanded="true"] + &,
   &--open {
     display: flex;
   }
