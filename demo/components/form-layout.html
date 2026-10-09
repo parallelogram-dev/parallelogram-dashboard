@@ -29,52 +29,50 @@
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
           <div class="constrain constrain--md">
             <div class="demo-label">Form Field with Counter</div>
-            <div class="formfield spacer--lg">
-              <label class="formfield__label">
+            <div class="form__field spacer--lg">
+              <label class="form__label">
                 Description
-                <span class="formfield__required">*</span>
+                <span class="form__required">*</span>
               </label>
-              <textarea class="textarea" placeholder="Enter description..." maxlength="200">This is an example description text.</textarea>
-              <div class="formfield__counter">35 / 200</div>
+              <textarea class="textarea form__control" placeholder="Enter description..." maxlength="200">This is an example description text.</textarea>
+              <div class="form__counter">35 / 200</div>
             </div>
 
             <div class="demo-label">Form Field with Error</div>
-            <div class="formfield formfield--error spacer--lg">
-              <label class="formfield__label">Email Address</label>
-              <input type="email" class="input" value="invalid-email">
-              <p class="formfield__error">Please enter a valid email address.</p>
+            <div class="form__field form__field--error spacer--lg">
+              <label class="form__label">Email Address</label>
+              <input type="email" class="input form__control" value="invalid-email">
+              <p class="form__error">Please enter a valid email address.</p>
             </div>
 
             <div class="demo-label">Input Group with Addon</div>
-            <div class="inputgroup spacer--lg">
-              <span class="inputgroup__addon">https://</span>
-              <input type="text" class="input" placeholder="example.com">
+            <div class="form__group spacer--lg">
+              <span class="form__addon">https://</span>
+              <input type="text" class="input form__control" placeholder="example.com">
             </div>
 
             <div class="demo-label">Input Group with Button</div>
-            <div class="inputgroup spacer--lg">
-              <input type="email" class="input" placeholder="Enter email">
+            <div class="form__group spacer--lg">
+              <input type="email" class="input form__control" placeholder="Enter email">
               <button class="btn btn--primary">Subscribe</button>
             </div>
 
             <div class="demo-label">Fieldset</div>
-            <fieldset class="fieldset">
-              <legend class="fieldset__legend">Contact Information</legend>
-              <div class="fieldset__content">
-                <div class="form__row form__row--2">
-                  <div class="form__group">
-                    <label class="form__group-label">First Name</label>
-                    <input type="text" class="input" placeholder="John">
-                  </div>
-                  <div class="form__group">
-                    <label class="form__group-label">Last Name</label>
-                    <input type="text" class="input" placeholder="Doe">
-                  </div>
+            <fieldset class="form__fieldset">
+              <legend class="form__legend">Contact Information</legend>
+              <div class="form__row form__row--2">
+                <div class="form__field">
+                  <label class="form__label">First Name</label>
+                  <input type="text" class="input form__control" placeholder="John">
                 </div>
-                <div class="form__group">
-                  <label class="form__group-label">Email</label>
-                  <input type="email" class="input" placeholder="john@example.com">
+                <div class="form__field">
+                  <label class="form__label">Last Name</label>
+                  <input type="text" class="input form__control" placeholder="Doe">
                 </div>
+              </div>
+              <div class="form__field">
+                <label class="form__label">Email</label>
+                <input type="email" class="input form__control" placeholder="john@example.com">
               </div>
             </fieldset>
           </div>

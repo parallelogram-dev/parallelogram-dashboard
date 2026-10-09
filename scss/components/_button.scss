@@ -32,9 +32,10 @@
   // Variants
   // --------------------------------------------------------------------------
 
-  // Primary (default)
-  &--primary,
-  &:not([class*="btn--"]) {
+  // Primary (default): the bare block carries primary styling so size and
+  // layout modifiers keep it; colour variants below override it by source order
+  &,
+  &--primary {
     background-color: var(--primary);
     color: var(--primary-fg);
 
@@ -96,6 +97,7 @@
     padding: 0;
 
     &:hover:not(:disabled) {
+      background-color: transparent;
       text-decoration-thickness: 2px;
     }
   }
