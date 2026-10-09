@@ -120,55 +120,27 @@
   }
 
   // --------------------------------------------------------------------------
-  // Variants
+  // Field (label, control(s), description, error and any extra markup)
   // --------------------------------------------------------------------------
 
-  &--horizontal {
-    .form__group {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: $spacing-sm;
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xs;
 
-      .form__group-label {
-        width: 10rem;
-        flex-shrink: 0;
-        padding-top: $spacing-2xs;
-      }
+    &--error {
+      .input,
+      .textarea,
+      .select,
+      .form__control {
+        border-color: var(--destructive);
 
-      .form__group-field {
-        flex: 1;
-      }
-    }
-
-    @include max-md {
-      .form__group {
-        flex-direction: column;
-
-        .form__group-label {
-          width: auto;
-          padding-top: 0;
+        &:focus {
+          outline-color: var(--destructive);
         }
       }
     }
   }
-
-  &--compact {
-    gap: $spacing-sm;
-
-    .form__section {
-      gap: $spacing-xs;
-    }
-  }
-}
-
-// --------------------------------------------------------------------------
-// Enhanced Form Group
-// --------------------------------------------------------------------------
-
-.formfield {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2xs;
 
   &__label {
     display: flex;
@@ -189,7 +161,7 @@
     color: var(--fg-muted);
   }
 
-  &__hint {
+  &__description {
     font-size: $font-size-xs;
     color: var(--fg-muted);
   }
@@ -214,28 +186,97 @@
     }
   }
 
-  // Error state
-  &--error {
-    .input,
-    .textarea,
-    .select {
-      border-color: var(--destructive);
+  // --------------------------------------------------------------------------
+  // Group (controls joined into one unit, like .btn__group)
+  // --------------------------------------------------------------------------
 
-      &:focus {
-        outline-color: var(--destructive);
+  &__group {
+    display: flex;
+
+    > * {
+      border-radius: 0;
+    }
+
+    > :first-child {
+      border-top-left-radius: $radius-md;
+      border-bottom-left-radius: $radius-md;
+    }
+
+    > :last-child {
+      border-top-right-radius: $radius-md;
+      border-bottom-right-radius: $radius-md;
+    }
+
+    > :not(:first-child) {
+      margin-left: -1px;
+    }
+
+    > :focus,
+    > :focus-visible {
+      position: relative;
+      z-index: 1;
+    }
+
+    > .input,
+    > .select,
+    > .form__control {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &--block {
+      flex-direction: column;
+
+      > .input,
+      > .select,
+      > .form__control {
+        flex: none;
+      }
+
+      > :first-child {
+        border-radius: $radius-md $radius-md 0 0;
+      }
+
+      > :last-child {
+        border-radius: 0 0 $radius-md $radius-md;
+      }
+
+      > :only-child {
+        border-radius: $radius-md;
+      }
+
+      > :not(:first-child) {
+        margin-left: 0;
+        margin-top: -1px;
       }
     }
   }
-}
 
-// --------------------------------------------------------------------------
-// Fieldset
-// --------------------------------------------------------------------------
+  &__addon {
+    @include flex-center;
+    flex-shrink: 0;
+    padding: 0 $spacing-xs;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    background-color: var(--bg-muted);
+    border: 1px solid var(--input);
+    color: var(--fg-muted);
+  }
 
-.fieldset {
-  padding: $spacing-sm;
-  border: 1px solid var(--border);
-  border-radius: $radius;
+  // --------------------------------------------------------------------------
+  // Fieldset
+  // --------------------------------------------------------------------------
+
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    min-width: 0;
+    margin: 0;
+    padding: $spacing-sm;
+    border: 1px solid var(--border);
+    border-radius: $radius;
+  }
 
   &__legend {
     padding: 0 $spacing-2xs;
@@ -244,74 +285,47 @@
     color: var(--fg);
   }
 
-  &__content {
-    display: flex;
-    flex-direction: column;
+  // --------------------------------------------------------------------------
+  // Variants
+  // --------------------------------------------------------------------------
+
+  // Label in the first column; every other part of the field sits in the second
+  &--horizontal {
+    .form__field {
+      display: grid;
+      grid-template-columns: 10rem minmax(0, 1fr);
+      column-gap: $spacing-sm;
+      row-gap: $spacing-2xs;
+      align-items: start;
+
+      > * {
+        grid-column: 2;
+      }
+
+      > .form__label {
+        grid-column: 1;
+        grid-row: 1;
+        padding-top: $spacing-2xs;
+      }
+    }
+
+    @include max-md {
+      .form__field {
+        display: flex;
+        flex-direction: column;
+
+        > .form__label {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  &--compact {
     gap: $spacing-sm;
-  }
-}
 
-// --------------------------------------------------------------------------
-// Input Addons
-// --------------------------------------------------------------------------
-
-.inputgroup {
-  display: flex;
-
-  .input {
-    border-radius: 0;
-
-    &:first-child {
-      border-top-left-radius: $radius-md;
-      border-bottom-left-radius: $radius-md;
-    }
-
-    &:last-child {
-      border-top-right-radius: $radius-md;
-      border-bottom-right-radius: $radius-md;
-    }
-
-    &:not(:last-child) {
-      border-right: none;
-    }
-
-    &:focus {
-      z-index: 1;
-    }
-  }
-
-  &__addon {
-    @include flex-center;
-    padding: 0 $spacing-xs;
-    font-size: $font-size-sm;
-    background-color: var(--bg-muted);
-    border: 1px solid var(--input);
-    color: var(--fg-muted);
-
-    &:first-child {
-      border-top-left-radius: $radius-md;
-      border-bottom-left-radius: $radius-md;
-      border-right: none;
-    }
-
-    &:last-child {
-      border-top-right-radius: $radius-md;
-      border-bottom-right-radius: $radius-md;
-      border-left: none;
-    }
-  }
-
-  .btn {
-    border-radius: 0;
-
-    &:first-child {
-      border-top-left-radius: $radius-md;
-      border-bottom-left-radius: $radius-md;
-    }
-
-    &:last-child {
-      border-top-right-radius: $radius-md;
-      border-bottom-right-radius: $radius-md;
+    .form__section {
+      gap: $spacing-xs;
     }
   }
 }

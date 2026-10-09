@@ -414,20 +414,6 @@ This library follows strict BEM (Block Element Modifier) naming:
 <input class="input">
 <input class="input input--lg">
 
-<!-- With form field wrapper -->
-<div class="formfield">
-  <label class="formfield__label">Email</label>
-  <input type="email" class="input" placeholder="name@example.com">
-  <span class="formfield__hint">We'll never share your email.</span>
-</div>
-
-<!-- Error state -->
-<div class="formfield formfield--error">
-  <label class="formfield__label">Password</label>
-  <input type="password" class="input">
-  <span class="formfield__error">Password is required</span>
-</div>
-
 <!-- Select -->
 <select class="select">
   <option>Option 1</option>
@@ -454,6 +440,64 @@ This library follows strict BEM (Block Element Modifier) naming:
   <input type="checkbox" class="switch__input">
   <span class="switch__slider"></span>
 </label>
+```
+
+### Form `.form`
+
+Form parts are elements of the `.form` block. A `.form__field` bundles a label, the control(s), a description, an error and any extra markup; `.form__control` marks the concrete input, select, textarea or custom widget inside it.
+
+```html
+<form class="form">
+  <!-- Field -->
+  <div class="form__field">
+    <label class="form__label" for="email">Email <span class="form__required">*</span></label>
+    <input type="email" id="email" class="input form__control">
+    <p class="form__description">We'll never share your email.</p>
+  </div>
+
+  <!-- Error state -->
+  <div class="form__field form__field--error">
+    <label class="form__label" for="password">Password</label>
+    <input type="password" id="password" class="input form__control">
+    <p class="form__error">Password is required.</p>
+  </div>
+
+  <!-- Optional marker and character counter -->
+  <div class="form__field">
+    <label class="form__label" for="bio">Bio <span class="form__optional">(optional)</span></label>
+    <textarea id="bio" class="textarea form__control" rows="3"></textarea>
+    <div class="form__counter">0 / 500</div>
+  </div>
+
+  <!-- Group: controls joined into one unit, like .btn__group -->
+  <div class="form__field">
+    <label class="form__label" for="price">Price</label>
+    <div class="form__group">
+      <span class="form__addon">$</span>
+      <input type="number" id="price" class="input form__control">
+      <button type="button" class="btn btn--outline">Apply</button>
+    </div>
+  </div>
+
+  <!-- Stacked group -->
+  <div class="form__group form__group--block">...</div>
+
+  <!-- Fieldset -->
+  <fieldset class="form__fieldset">
+    <legend class="form__legend">Contact</legend>
+    <div class="form__row form__row--2">
+      <div class="form__field">...</div>
+      <div class="form__field">...</div>
+    </div>
+  </fieldset>
+
+  <div class="form__actions form__actions--end">
+    <button class="btn">Save</button>
+  </div>
+</form>
+
+<!-- Horizontal: labels in a fixed column, everything else beside them (stacks below md) -->
+<form class="form form--horizontal">...</form>
 ```
 
 ### Table `.table`
