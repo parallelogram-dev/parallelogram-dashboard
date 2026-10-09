@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="toast">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Feedback</p>
+        <h1 class="docs__title">Toast</h1>
+        <p class="docs__lead">Temporary notification messages.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="demo-label">Try It (click buttons to show toasts)</div>
+          <div class="demo-row spacer--xl">
+            <button class="btn btn--outline" onclick="window.toast?.info('This is an informational message', { title: 'Info' })">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+              Show Info
+            </button>
+            <button class="btn btn--outline" onclick="window.toast?.success('Your changes have been saved successfully!')">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+              Show Success
+            </button>
+            <button class="btn btn--outline" onclick="window.toast?.warning('Please review before continuing', { title: 'Warning' })">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>
+              Show Warning
+            </button>
+            <button class="btn btn--outline" onclick="window.toast?.error('Something went wrong. Please try again.', { title: 'Error' })">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
+              Show Error
+            </button>
+          </div>
+
+          <div class="demo-label">Static Examples</div>
+          <div class="demo-stack constrain--sm">
+            <div class="toast">
+              <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+              <div class="toast__content">
+                <h4 class="toast__title">Notification</h4>
+                <p class="toast__description">This is a default toast message.</p>
+              </div>
+              <button class="toast__close">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="toast toast--success">
+              <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+              <div class="toast__content">
+                <h4 class="toast__title">Success!</h4>
+                <p class="toast__description">Your changes have been saved.</p>
+              </div>
+              <button class="toast__close">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="toast toast--error">
+              <svg class="icon toast__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
+              <div class="toast__content">
+                <h4 class="toast__title">Error</h4>
+                <p class="toast__description">Something went wrong. Please try again.</p>
+              </div>
+              <button class="toast__close">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="toast toast--action toast--compact">
+              <div class="toast__content">
+                <span class="toast__title">File uploaded successfully</span>
+                <div class="toast__actions">
+                  <button class="btn btn--sm btn--ghost">Undo</button>
+                  <button class="btn btn--sm btn--primary">View</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="text--sm text--muted spacer--md">Toasts appear in corners using <code>.toast__container--top-right</code>, <code>.toast__container--bottom-left</code>, etc.</p>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

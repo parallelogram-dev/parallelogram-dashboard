@@ -2,6 +2,8 @@
 // Design Tokens - Inspired by shadcn/ui
 // ==========================================================================
 
+@use "sass:math";
+
 // --------------------------------------------------------------------------
 // Color Palette (Zinc-based, shadcn style)
 // --------------------------------------------------------------------------
@@ -226,6 +228,15 @@ $font-size-xl: 1.25rem;      // 20px
 $font-size-2xl: 1.5rem;      // 24px
 $font-size-3xl: 1.875rem;    // 30px
 $font-size-4xl: 2.25rem;     // 36px
+
+// Heading scale: each level is $type-scale-ratio times the one below it, from h6 at 1rem.
+// Small screens use a gentler ratio so h1 stays readable on a phone.
+$type-scale-ratio: 1.333;        // perfect fourth: 16 / 21 / 28 / 38 / 50 / 67px
+$type-scale-ratio-sm: 1.2;       // minor third:    16 / 19 / 23 / 28 / 33 / 40px
+
+@function type-step($step, $ratio: $type-scale-ratio) {
+  @return math.div(math.round(math.pow($ratio, $step) * 1000), 1000) * 1rem;
+}
 
 $font-weight-normal: 400;
 $font-weight-medium: 500;

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="command">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Actions</p>
+        <h1 class="docs__title">Command</h1>
+        <p class="docs__lead">Command palette (⌘K style) for quick actions.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="demo-box constrain--lg">
+            <div class="command__dialog demo-preview--command">
+              <div class="command__inputwrapper">
+                <svg class="icon command__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                <input type="text" class="command__input" placeholder="Type a command or search...">
+                <span class="command__shortcut">
+                  <kbd class="command__kbd">Esc</kbd>
+                </span>
+              </div>
+              <div class="command__list demo-preview--overflow-visible">
+                <div class="command__group">
+                  <div class="command__group-heading">Suggestions</div>
+                  <button class="command__item command__item--selected">
+                    <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>
+                    <span class="command__item-content">
+                      <span class="command__item-title">Recent Items</span>
+                    </span>
+                  </button>
+                  <button class="command__item">
+                    <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                    <span class="command__item-content">
+                      <span class="command__item-title">Create New</span>
+                    </span>
+                    <span class="command__item-shortcut">
+                      <kbd class="command__kbd">⌘</kbd>
+                      <kbd class="command__kbd">N</kbd>
+                    </span>
+                  </button>
+                  <button class="command__item">
+                    <svg class="icon command__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+                    <span class="command__item-content">
+                      <span class="command__item-title">Settings</span>
+                    </span>
+                    <span class="command__item-shortcut">
+                      <kbd class="command__kbd">⌘</kbd>
+                      <kbd class="command__kbd">,</kbd>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="command__footer">
+                <div class="command__hint">
+                  <span class="command__hint-item">
+                    <kbd class="kbd kbd--sm">↑↓</kbd> Navigate
+                  </span>
+                  <span class="command__hint-item">
+                    <kbd class="kbd kbd--sm">↵</kbd> Select
+                  </span>
+                  <span class="command__hint-item">
+                    <kbd class="kbd kbd--sm">Esc</kbd> Close
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-label demo-label--spaced">Keyboard Shortcuts</div>
+          <div class="demo-row">
+            <kbd class="kbd kbd--sm">⌘</kbd>
+            <kbd class="kbd">K</kbd>
+            <kbd class="kbd kbd--lg">Enter</kbd>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

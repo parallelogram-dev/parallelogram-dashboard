@@ -61,9 +61,9 @@ class Accordion {
     trigger.setAttribute('aria-expanded', String(!isOpen));
   }
 
-  static enhanceAll(selector = '[data-accordion]') {
+  static enhanceAll(selector = '[data-accordion]', root = document) {
     const instance = new Accordion();
-    document.querySelectorAll(selector).forEach(el => instance.mount(el));
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
 }
@@ -187,9 +187,9 @@ class Tabs {
     state.activeTab = panelId;
   }
 
-  static enhanceAll(selector = '[data-tabs]') {
+  static enhanceAll(selector = '[data-tabs]', root = document) {
     const instance = new Tabs();
-    document.querySelectorAll(selector).forEach(el => instance.mount(el));
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
 }
@@ -285,9 +285,9 @@ class Toggle {
     element.classList.remove(this.openClass);
   }
 
-  static enhanceAll(selector = '[data-toggle]') {
+  static enhanceAll(selector = '[data-toggle]', root = document) {
     const instance = new Toggle();
-    document.querySelectorAll(selector).forEach(el => instance.mount(el));
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
 }
@@ -380,7 +380,7 @@ class DemoNav {
   constructor() {
     this.isOpen = false;
     this.pages = [
-      { name: 'Component Library', href: 'index.html', icon: 'grid' },
+      { name: 'Components', href: 'index.html', icon: 'grid' },
       { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },
       { name: 'Records List', href: 'records.html', icon: 'database' },
       { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
@@ -435,8 +435,8 @@ class DemoNav {
     this.menu = this.container.querySelector('.demonav__menu');
 
     // Mark current page
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    const currentLink = this.container.querySelector(`a[href="${currentPath}"]`);
+    const current = new URL(window.location.pathname.replace(/\/$/, '/index.html'), window.location.origin).href;
+    const currentLink = [...this.container.querySelectorAll('a')].find(a => a.href === current);
     if (currentLink) {
       currentLink.classList.add('demonav__link--active');
     }
@@ -444,7 +444,7 @@ class DemoNav {
 
   createPageLink(page) {
     return `
-      <a href="${page.href}" class="demonav__link">
+      <a href="${new URL(`../${page.href}`, import.meta.url).href}" class="demonav__link">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${this.icons[page.icon]}</svg>
         <span>${page.name}</span>
       </a>
@@ -491,17 +491,62 @@ class DemoNav {
 // Initialize on DOM Ready
 // ============================================================================
 
+const VENDOR = new URL('../vendor/parallelogram-js/', import.meta.url);
+
+const WEB_COMPONENTS = {
+  'p-modal': 'components/PModal.js',
+  'p-datetime': 'components/PDatetime.js',
+};
+
+/**
+ * Load the @parallelogram-js/core pieces that markup inside root relies on.
+ *
+ * The package is copied into demo/vendor by `npm run build`; nothing is fetched when a page
+ * does not use these components.
+ */
+async function loadParallelogramJs(root) {
+  const loads = Object.entries(WEB_COMPONENTS)
+    .filter(([tag]) => root.querySelector(tag) && !customElements.get(tag))
+    .map(([, path]) => import(new URL(path, VENDOR).href));
+
+  if (root.querySelector('[data-modal][data-modal-target]')) {
+    loads.push(import(new URL('components/Modal.js', VENDOR).href).then(({ default: Modal }) => Modal.enhanceAll()));
+  }
+
+  try {
+    await Promise.all(loads);
+  } catch (error) {
+    console.error('Could not load @parallelogram-js/core. Run `npm run build` to copy it into demo/vendor.', error);
+  }
+}
+
+/**
+ * Enhance every interactive component inside root.
+ *
+ * Safe to call repeatedly on freshly rendered markup, e.g. from the playground preview.
+ */
+function init(root = document) {
+  loadParallelogramJs(root);
+
+  return {
+    accordion: Accordion.enhanceAll('[data-accordion]', root),
+    tabs: Tabs.enhanceAll('[data-tabs]', root),
+    toggle: Toggle.enhanceAll('[data-toggle]', root),
+  };
+}
+
+window.Parallelogram = { init, Accordion, Tabs, Toggle, ToastManager };
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize components
-  const accordion = Accordion.enhanceAll('[data-accordion]');
-  const tabs = Tabs.enhanceAll('[data-tabs]');
-  const toggle = Toggle.enhanceAll('[data-toggle]');
+  init();
 
   // Create global toast manager
   window.toast = new ToastManager({ position: 'top-right' });
 
-  // Create demo navigation
-  window.demoNav = new DemoNav();
+  // The playground preview frame opts out of the floating demo navigation
+  if (document.body.dataset.demonav !== 'off') {
+    window.demoNav = new DemoNav();
+  }
 
   // Theme toggle
   window.toggleTheme = () => {
