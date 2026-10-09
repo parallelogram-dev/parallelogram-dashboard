@@ -171,32 +171,6 @@
 }
 
 // --------------------------------------------------------------------------
-// Form Group
-// --------------------------------------------------------------------------
-
-.form__group {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2xs;
-
-  &__label {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    color: var(--fg);
-  }
-
-  &__description {
-    font-size: $font-size-sm;
-    color: var(--fg-muted);
-  }
-
-  &__error {
-    font-size: $font-size-sm;
-    color: var(--destructive);
-  }
-}
-
-// --------------------------------------------------------------------------
 // Input with Icon
 // --------------------------------------------------------------------------
 

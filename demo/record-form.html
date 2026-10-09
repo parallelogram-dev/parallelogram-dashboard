@@ -187,22 +187,22 @@
                     <p class="form__section-description">Primary details that identify this record.</p>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label" for="name">
+                  <div class="form__field">
+                    <label class="form__label" for="name">
                       Name
-                      <span class="formfield__required">*</span>
+                      <span class="form__required">*</span>
                     </label>
-                    <input type="text" class="input" id="name" placeholder="Enter record name" required>
-                    <span class="formfield__hint">This will be the primary identifier for the record.</span>
+                    <input type="text" class="input form__control" id="name" placeholder="Enter record name" required>
+                    <span class="form__description">This will be the primary identifier for the record.</span>
                   </div>
 
                   <div class="form__row form__row--2">
-                    <div class="formfield">
-                      <label class="formfield__label" for="category">
+                    <div class="form__field">
+                      <label class="form__label" for="category">
                         Category
-                        <span class="formfield__required">*</span>
+                        <span class="form__required">*</span>
                       </label>
-                      <select class="select" id="category" required>
+                      <select class="select form__control" id="category" required>
                         <option value="">Select a category</option>
                         <option value="products">Products</option>
                         <option value="customers">Customers</option>
@@ -211,22 +211,22 @@
                       </select>
                     </div>
 
-                    <div class="formfield">
-                      <label class="formfield__label" for="sku">
+                    <div class="form__field">
+                      <label class="form__label" for="sku">
                         SKU / Reference
-                        <span class="formfield__optional">(optional)</span>
+                        <span class="form__optional">(optional)</span>
                       </label>
-                      <input type="text" class="input" id="sku" placeholder="e.g., SKU-2024-001">
+                      <input type="text" class="input form__control" id="sku" placeholder="e.g., SKU-2024-001">
                     </div>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label" for="description">
+                  <div class="form__field">
+                    <label class="form__label" for="description">
                       Description
-                      <span class="formfield__optional">(optional)</span>
+                      <span class="form__optional">(optional)</span>
                     </label>
-                    <textarea class="textarea" id="description" rows="4" placeholder="Add a detailed description..." maxlength="500"></textarea>
-                    <div class="formfield__counter" id="descCounter">0 / 500</div>
+                    <textarea class="textarea form__control" id="description" rows="4" placeholder="Add a detailed description..." maxlength="500"></textarea>
+                    <div class="form__counter" id="descCounter">0 / 500</div>
                   </div>
                 </div>
 
@@ -238,33 +238,33 @@
                   </div>
 
                   <div class="form__row form__row--3">
-                    <div class="formfield">
-                      <label class="formfield__label" for="quantity">Quantity</label>
-                      <div class="inputgroup">
-                        <input type="number" class="input" id="quantity" placeholder="0" min="0">
-                        <span class="inputgroup__addon">units</span>
+                    <div class="form__field">
+                      <label class="form__label" for="quantity">Quantity</label>
+                      <div class="form__group">
+                        <input type="number" class="input form__control" id="quantity" placeholder="0" min="0">
+                        <span class="form__addon">units</span>
                       </div>
                     </div>
 
-                    <div class="formfield">
-                      <label class="formfield__label" for="price">Price</label>
-                      <div class="inputgroup">
-                        <span class="inputgroup__addon">$</span>
-                        <input type="number" class="input" id="price" placeholder="0.00" step="0.01" min="0">
+                    <div class="form__field">
+                      <label class="form__label" for="price">Price</label>
+                      <div class="form__group">
+                        <span class="form__addon">$</span>
+                        <input type="number" class="input form__control" id="price" placeholder="0.00" step="0.01" min="0">
                       </div>
                     </div>
 
-                    <div class="formfield">
-                      <label class="formfield__label" for="tax">Tax Rate</label>
-                      <div class="inputgroup">
-                        <input type="number" class="input" id="tax" placeholder="0" min="0" max="100">
-                        <span class="inputgroup__addon">%</span>
+                    <div class="form__field">
+                      <label class="form__label" for="tax">Tax Rate</label>
+                      <div class="form__group">
+                        <input type="number" class="input form__control" id="tax" placeholder="0" min="0" max="100">
+                        <span class="form__addon">%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label">Date Range</label>
+                  <div class="form__field">
+                    <label class="form__label">Date Range</label>
                     <p-datetime
                       name="startDate"
                       mode="date"
@@ -286,34 +286,34 @@
                   </div>
 
                   <div class="form__row form__row--2">
-                    <div class="formfield">
-                      <label class="formfield__label" for="email">Email Address</label>
+                    <div class="form__field">
+                      <label class="form__label" for="email">Email Address</label>
                       <div class="inputwrapper">
                         <svg class="icon inputwrapper__icon" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
-                        <input type="email" class="input input--icon-left" id="email" placeholder="email@example.com">
+                        <input type="email" class="input input--icon-left form__control" id="email" placeholder="email@example.com">
                       </div>
                     </div>
 
-                    <div class="formfield">
-                      <label class="formfield__label" for="phone">Phone Number</label>
+                    <div class="form__field">
+                      <label class="form__label" for="phone">Phone Number</label>
                       <div class="inputwrapper">
                         <svg class="icon inputwrapper__icon" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg>
-                        <input type="tel" class="input input--icon-left" id="phone" placeholder="+1 (555) 000-0000">
+                        <input type="tel" class="input input--icon-left form__control" id="phone" placeholder="+1 (555) 000-0000">
                       </div>
                     </div>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label" for="website">Website</label>
-                    <div class="inputgroup">
-                      <span class="inputgroup__addon">https://</span>
-                      <input type="text" class="input" id="website" placeholder="www.example.com">
+                  <div class="form__field">
+                    <label class="form__label" for="website">Website</label>
+                    <div class="form__group">
+                      <span class="form__addon">https://</span>
+                      <input type="text" class="input form__control" id="website" placeholder="www.example.com">
                     </div>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label" for="address">Address</label>
-                    <textarea class="textarea" id="address" rows="2" placeholder="Street address, city, state, zip code"></textarea>
+                  <div class="form__field">
+                    <label class="form__label" for="address">Address</label>
+                    <textarea class="textarea form__control" id="address" rows="2" placeholder="Street address, city, state, zip code"></textarea>
                   </div>
                 </div>
 
@@ -324,10 +324,10 @@
                     <p class="form__section-description">Add tags to help organize and find this record.</p>
                   </div>
 
-                  <div class="formfield">
-                    <label class="formfield__label" for="tags">Tags</label>
-                    <input type="text" class="input" id="tags" placeholder="Enter tags separated by commas">
-                    <span class="formfield__hint">Example: important, follow-up, priority</span>
+                  <div class="form__field">
+                    <label class="form__label" for="tags">Tags</label>
+                    <input type="text" class="input form__control" id="tags" placeholder="Enter tags separated by commas">
+                    <span class="form__description">Example: important, follow-up, priority</span>
                   </div>
                 </div>
 
@@ -344,8 +344,8 @@
                 <h3 class="card__title">Status</h3>
               </div>
               <div class="card__content">
-                <div class="formfield">
-                  <label class="formfield__label">Visibility</label>
+                <div class="form__field">
+                  <label class="form__label">Visibility</label>
                   <div class="stack stack--sm">
                     <label class="radio">
                       <input type="radio" name="status" class="radio__input" value="draft" checked>
@@ -364,14 +364,14 @@
 
                 <div class="separator my--md"></div>
 
-                <div class="formfield">
+                <div class="form__field">
                   <label class="switch">
                     <input type="checkbox" class="switch__input" id="featured">
                     <span class="switch__label">Featured</span>
                   </label>
                 </div>
 
-                <div class="formfield">
+                <div class="form__field">
                   <label class="switch">
                     <input type="checkbox" class="switch__input" id="notifyChanges" checked>
                     <span class="switch__label">Notify on changes</span>
@@ -471,15 +471,15 @@
       counter.textContent = `${count} / 500`;
 
       if (count > 450) {
-        counter.classList.add('formfield__counter--warning');
+        counter.classList.add('form__counter--warning');
       } else {
-        counter.classList.remove('formfield__counter--warning');
+        counter.classList.remove('form__counter--warning');
       }
 
       if (count >= 500) {
-        counter.classList.add('formfield__counter--error');
+        counter.classList.add('form__counter--error');
       } else {
-        counter.classList.remove('formfield__counter--error');
+        counter.classList.remove('form__counter--error');
       }
     });
 

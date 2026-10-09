@@ -8,12 +8,12 @@ function control(s) {
 
   switch (s.type) {
     case 'textarea':
-      return { id, html: `<textarea id="${id}" class="${cx('textarea', s.size && `input--${s.size}`, s.state === 'error' && 'input--error')}" rows="3"${placeholder}${invalid}${disabled}></textarea>` };
+      return { id, html: `<textarea id="${id}" class="${cx('textarea', s.size && `input--${s.size}`, s.state === 'error' && 'input--error', s.grouped && 'form__control')}" rows="3"${placeholder}${invalid}${disabled}></textarea>` };
 
     case 'select':
       return {
         id,
-        html: `<select id="${id}" class="${cx(bem('select', s.autoWidth && 'auto'), s.size && `input--${s.size}`, s.state === 'error' && 'input--error')}"${invalid}${disabled}>`
+        html: `<select id="${id}" class="${cx(bem('select', s.autoWidth && 'auto'), s.size && `input--${s.size}`, s.state === 'error' && 'input--error', s.grouped && 'form__control')}"${invalid}${disabled}>`
           + '<option>Select a framework</option><option>Laminas</option><option>Mezzio</option><option>Symfony</option></select>',
       };
 
@@ -37,7 +37,7 @@ function control(s) {
     }
 
     default: {
-      const className = bem('input', s.size, s.state === 'error' && 'error', s.state === 'disabled-class' && 'disabled', s.icon && `icon-${s.icon}`);
+      const className = cx(bem('input', s.size, s.state === 'error' && 'error', s.state === 'disabled-class' && 'disabled', s.icon && `icon-${s.icon}`), s.grouped && 'form__control');
       const input = `<input id="${id}" type="${s.type === 'email' ? 'email' : 'text'}" class="${className}"${placeholder}${invalid}${disabled}>`;
       if (!s.icon) {
         return { id, html: input };
@@ -94,7 +94,7 @@ export default {
     { key: 'checked', label: 'Checked', type: 'toggle', default: true, when: s => ['checkbox', 'radio', 'switch'].includes(s.type) },
     { key: 'label', label: 'Label', type: 'text', default: 'Email address' },
     { key: 'placeholder', label: 'Placeholder', type: 'text', default: 'you@example.com', when: s => ['text', 'email', 'textarea'].includes(s.type) },
-    { key: 'grouped', label: 'Form group', type: 'toggle', default: true, when: s => !['checkbox', 'radio', 'switch'].includes(s.type) },
+    { key: 'grouped', label: 'Form field', type: 'toggle', default: true, when: s => !['checkbox', 'radio', 'switch'].includes(s.type) },
     { key: 'hint', label: 'Hint text', type: 'text', default: "We'll never share your email.", when: s => s.grouped && !['checkbox', 'radio', 'switch'].includes(s.type) },
   ],
   presets: [
@@ -111,8 +111,8 @@ export default {
     if (field.inline || !s.grouped) {
       return field.html;
     }
-    const hintClass = s.state === 'error' ? 'form__group__error' : 'form__group__description';
-    const hint = s.hint ? `<p class="${hintClass}">${escape(s.hint)}</p>` : '';
-    return `<div class="form__group"><label class="form__group__label" for="${field.id}">${escape(s.label)}</label>${field.html}${hint}</div>`;
+    const error = s.state === 'error';
+    const hint = s.hint ? `<p class="${error ? 'form__error' : 'form__description'}">${escape(s.hint)}</p>` : '';
+    return `<div class="${bem('form__field', error && 'error')}"><label class="form__label" for="${field.id}">${escape(s.label)}</label>${field.html}${hint}</div>`;
   },
 };
