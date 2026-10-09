@@ -216,12 +216,16 @@ class Toggle {
     const capture = element.dataset.toggleCapture === 'true';
     const manual = element.dataset.toggleManual === 'true';
 
+    // data-toggle-class lets a trigger apply the target's own open modifier, e.g. dropdown__menu--open
+    const targetClass = element.dataset.toggleClass || this.openClass;
+
     const state = {
       target,
       targetSelector,
+      targetClass,
       capture,
       manual,
-      isOpen: target.classList.contains(this.openClass),
+      isOpen: target.classList.contains(targetClass),
     };
 
     // Click handler
@@ -258,7 +262,7 @@ class Toggle {
     const state = this.elements.get(element);
     if (!state) return;
 
-    if (state.target.classList.contains(this.openClass)) {
+    if (state.target.classList.contains(state.targetClass)) {
       this.hide(element);
     } else {
       this.show(element);
@@ -270,7 +274,7 @@ class Toggle {
     if (!state) return;
 
     state.isOpen = true;
-    state.target.classList.add(this.openClass);
+    state.target.classList.add(state.targetClass);
     element.setAttribute('aria-expanded', 'true');
     element.classList.add(this.openClass);
   }
@@ -280,7 +284,7 @@ class Toggle {
     if (!state) return;
 
     state.isOpen = false;
-    state.target.classList.remove(this.openClass);
+    state.target.classList.remove(state.targetClass);
     element.setAttribute('aria-expanded', 'false');
     element.classList.remove(this.openClass);
   }

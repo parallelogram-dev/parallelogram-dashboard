@@ -20,7 +20,11 @@ function control(s) {
     case 'checkbox':
     case 'radio':
     case 'switch': {
-      const wrapper = cx(s.type, s.state === 'disabled' && s.type !== 'switch' && `${s.type}--disabled`);
+      const wrapper = cx(
+        s.type,
+        s.type === 'switch' && s.size && `switch--${s.size}`,
+        s.state === 'disabled' && s.type !== 'switch' && `${s.type}--disabled`
+      );
       const inputType = s.type === 'radio' ? 'radio' : 'checkbox';
       const role = s.type === 'switch' ? ' role="switch"' : '';
       const checked = s.checked ? ' checked' : '';
@@ -78,7 +82,7 @@ export default {
         { value: 'disabled-class', label: 'Disabled (class only)' },
       ],
     },
-    { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'], when: s => ['text', 'email', 'textarea', 'select'].includes(s.type) },
+    { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'], when: s => ['text', 'email', 'textarea', 'select', 'switch'].includes(s.type) },
     {
       key: 'icon',
       label: 'Icon',

@@ -1448,36 +1448,49 @@ code.code--sm {
 .btn__group {
   display: inline-flex;
 }
-.btn__group .btn {
+.btn__group > .btn,
+.btn__group > * > .btn {
+  position: relative;
   border-radius: 0;
 }
-.btn__group .btn:first-child {
+.btn__group > .btn:hover, .btn__group > .btn:focus-visible, .btn__group > .btn[aria-expanded=true],
+.btn__group > * > .btn:hover,
+.btn__group > * > .btn:focus-visible,
+.btn__group > * > .btn[aria-expanded=true] {
+  z-index: 1;
+}
+.btn__group > .btn:focus-visible, .btn__group > .btn[aria-expanded=true],
+.btn__group > * > .btn:focus-visible,
+.btn__group > * > .btn[aria-expanded=true] {
+  border-color: var(--primary);
+}
+.btn__group > :not(:first-child) {
+  margin-left: -1px;
+}
+.btn__group > .btn:first-child,
+.btn__group > :first-child > .btn {
   border-top-left-radius: 0.375rem;
   border-bottom-left-radius: 0.375rem;
 }
-.btn__group .btn:last-child {
+.btn__group > .btn:last-child,
+.btn__group > :last-child > .btn {
   border-top-right-radius: 0.375rem;
   border-bottom-right-radius: 0.375rem;
-}
-.btn__group .btn:not(:first-child) {
-  margin-left: -1px;
 }
 .btn__group--vertical {
   flex-direction: column;
 }
-.btn__group--vertical .btn:first-child {
-  border-radius: 0;
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
-}
-.btn__group--vertical .btn:last-child {
-  border-radius: 0;
-  border-bottom-left-radius: 0.375rem;
-  border-bottom-right-radius: 0.375rem;
-}
-.btn__group--vertical .btn:not(:first-child) {
+.btn__group--vertical > :not(:first-child) {
   margin-left: 0;
   margin-top: -1px;
+}
+.btn__group--vertical > .btn:first-child,
+.btn__group--vertical > :first-child > .btn {
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+.btn__group--vertical > .btn:last-child,
+.btn__group--vertical > :last-child > .btn {
+  border-radius: 0 0 0.375rem 0.375rem;
 }
 
 .input, .select, .textarea {
@@ -1658,15 +1671,20 @@ code.code--sm {
 }
 
 .switch {
+  --switch-width: 2.25rem;
+  --switch-height: 1.25rem;
+  --switch-inset: 2px;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  margin-block: 0.25rem;
   cursor: pointer;
 }
 .switch__input {
   appearance: none;
-  width: 2.75rem;
-  height: 1.5rem;
+  flex-shrink: 0;
+  width: var(--switch-width);
+  height: var(--switch-height);
   background-color: var(--input);
   border-radius: 9999px;
   position: relative;
@@ -1678,10 +1696,10 @@ code.code--sm {
 .switch__input::before {
   content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: calc(1.5rem - 4px);
-  height: calc(1.5rem - 4px);
+  top: var(--switch-inset);
+  left: var(--switch-inset);
+  width: calc(var(--switch-height) - 2 * var(--switch-inset));
+  height: calc(var(--switch-height) - 2 * var(--switch-inset));
   background-color: var(--bg);
   border-radius: 9999px;
   transition-property: transform;
@@ -1692,7 +1710,7 @@ code.code--sm {
   background-color: var(--primary);
 }
 .switch__input:checked::before {
-  transform: translateX(1.25rem);
+  transform: translateX(calc(var(--switch-width) - var(--switch-height)));
 }
 .switch__input:focus-visible {
   outline: 2px solid var(--ring);
@@ -1706,6 +1724,20 @@ code.code--sm {
 .switch__label {
   font-size: 0.875rem;
   user-select: none;
+}
+.switch--sm {
+  --switch-width: 1.75rem;
+  --switch-height: 1rem;
+}
+.switch--sm .switch__label {
+  font-size: 0.75rem;
+}
+.switch--lg {
+  --switch-width: 2.75rem;
+  --switch-height: 1.5rem;
+}
+.switch--lg .switch__label {
+  font-size: 1rem;
 }
 
 .card {

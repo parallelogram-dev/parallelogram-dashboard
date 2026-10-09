@@ -197,33 +197,93 @@
                 </button>
               </div>
               <div class="toolbar__filters">
+                <div class="btn__group" role="group" aria-label="Filter records">
                 <div class="dropdown">
-                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#filter-status" data-toggle-class="dropdown__menu--open" data-toggle-capture="true">
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"/></svg>
                     Status
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                   </button>
+                  <div id="filter-status" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="true">
+                      <span class="dropdown__item-text">Active</span>
+                      <svg class="icon dropdown__item-check dropdown__item-check--checked" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Pending</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Completed</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Archived</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
                 </div>
                 <div class="dropdown">
-                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#filter-category" data-toggle-class="dropdown__menu--open" data-toggle-capture="true">
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 4h6v6h-6z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6h-6z"/><path d="M14 14h6v6h-6z"/></svg>
                     Category
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                   </button>
+                  <div id="filter-category" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Design</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Development</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Marketing</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Operations</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
                 </div>
                 <div class="dropdown">
-                  <button class="btn btn--outline btn--sm dropdown__trigger">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#filter-date" data-toggle-class="dropdown__menu--open" data-toggle-capture="true">
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/><path d="M11 15h1"/><path d="M12 15v3"/></svg>
                     Date Range
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                   </button>
+                  <div id="filter-date" class="dropdown__menu" role="menu">
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true">
+                      <span class="dropdown__item-text">Any time</span>
+                      <svg class="icon dropdown__item-check dropdown__item-check--checked" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Today</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 7 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">Last 30 days</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
+                      <span class="dropdown__item-text">This year</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                  </div>
+                </div>
                 </div>
               </div>
               <div class="toolbar__actions">
-                <button class="btn btn--ghost btn--sm btn--icon" title="List view">
+                <button class="btn btn--ghost btn--icon" title="List view">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
                 </button>
-                <button class="btn btn--ghost btn--sm btn--icon" title="Grid view">
+                <button class="btn btn--ghost btn--icon" title="Grid view">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg>
                 </button>
               </div>
@@ -680,6 +740,20 @@
       const current = html.getAttribute('data-theme');
       html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
     }
+
+    // Filter menus: checkbox items toggle, radio items (date range) select exactly one
+    document.querySelectorAll('.toolbar__filters [role="menuitemcheckbox"], .toolbar__filters [role="menuitemradio"]').forEach(item => {
+      item.addEventListener('click', () => {
+        const items = item.getAttribute('role') === 'menuitemradio'
+          ? item.closest('[role="menu"]').querySelectorAll('[role="menuitemradio"]')
+          : [item];
+        items.forEach(i => {
+          const checked = i === item ? (i.getAttribute('role') === 'menuitemradio' || i.getAttribute('aria-checked') !== 'true') : false;
+          i.setAttribute('aria-checked', String(checked));
+          i.querySelector('.dropdown__item-check').classList.toggle('dropdown__item-check--checked', checked);
+        });
+      });
+    });
 
     // Search functionality
     const searchInput = document.getElementById('searchInput');
