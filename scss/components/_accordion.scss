@@ -5,6 +5,10 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// An item is open when it is a <details open> or its trigger has aria-expanded="true"
+$accordion-open: '.accordion__item[open], .accordion__item:has(> .accordion__trigger[aria-expanded="true"], > * > .accordion__trigger[aria-expanded="true"]), .accordion__item--open';
+$collapsible-open: '.collapsible[open], .collapsible:has(> .collapsible__trigger[aria-expanded="true"]), .collapsible--open';
+
 // --------------------------------------------------------------------------
 // Accordion Container
 // --------------------------------------------------------------------------
@@ -30,6 +34,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    list-style: none;
     padding: $spacing-sm 0;
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
@@ -48,6 +53,10 @@
       @include focus-ring;
       border-radius: $radius-sm;
     }
+
+    &::-webkit-details-marker {
+      display: none;
+    }
   }
 
   &__icon {
@@ -57,7 +66,7 @@
     color: var(--fg-muted);
     @include transition-default;
 
-    .accordion__item--open & {
+    :is(#{$accordion-open}) & {
       transform: rotate(180deg);
     }
   }
@@ -67,7 +76,7 @@
     max-height: 0;
     @include transition-default;
 
-    .accordion__item--open & {
+    :is(#{$accordion-open}) & {
       max-height: 500px; // Adjust as needed, or use JS for dynamic height
     }
   }
@@ -161,10 +170,15 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    list-style: none;
     @include transition-colors;
 
     &:hover {
       background-color: var(--bg-muted);
+    }
+
+    &::-webkit-details-marker {
+      display: none;
     }
   }
 
@@ -175,7 +189,7 @@
     color: var(--fg-muted);
     @include transition-default;
 
-    .collapsible--open & {
+    :is(#{$collapsible-open}) & {
       transform: rotate(180deg);
     }
   }
@@ -185,7 +199,7 @@
     max-height: 0;
     @include transition-default;
 
-    .collapsible--open & {
+    :is(#{$collapsible-open}) & {
       max-height: 1000px;
     }
   }

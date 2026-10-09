@@ -31,16 +31,22 @@
   }
 
   &:disabled,
-  &[disabled],
   &--disabled {
     @include disabled;
     background-color: var(--bg-muted);
   }
 
+  &[readonly] {
+    background-color: var(--bg-muted);
+    cursor: default;
+  }
+
   // --------------------------------------------------------------------------
-  // Variants
+  // Validation
   // --------------------------------------------------------------------------
 
+  &[aria-invalid="true"],
+  &:user-invalid,
   &--error {
     border-color: var(--destructive);
 
@@ -128,9 +134,15 @@
       @include focus-ring;
     }
 
-    &:checked {
+    &:checked,
+    &:indeterminate {
       background-color: var(--primary);
       border-color: var(--primary);
+    }
+
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--destructive);
     }
 
     &:disabled {
@@ -144,6 +156,7 @@
     line-height: 1;
   }
 
+  &:has(:disabled),
   &--disabled {
     @include disabled;
     cursor: not-allowed;
@@ -155,6 +168,12 @@
 
   &:checked {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &:indeterminate {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -209,15 +228,23 @@
 // --------------------------------------------------------------------------
 
 .switch {
+  // Track size; the thumb and its travel are derived from these
+  --switch-width: 2.25rem;
+  --switch-height: 1.25rem;
+  --switch-inset: 2px;
+
   display: inline-flex;
   align-items: center;
   gap: $spacing-2xs;
+  // Keeps stacked switches from touching when their container has no gap
+  margin-block: $spacing-3xs;
   cursor: pointer;
 
   &__input {
     appearance: none;
-    width: 2.75rem;
-    height: 1.5rem;
+    flex-shrink: 0;
+    width: var(--switch-width);
+    height: var(--switch-height);
     background-color: var(--input);
     border-radius: $radius-full;
     position: relative;
@@ -227,10 +254,10 @@
     &::before {
       content: "";
       position: absolute;
-      top: 2px;
-      left: 2px;
-      width: calc(1.5rem - 4px);
-      height: calc(1.5rem - 4px);
+      top: var(--switch-inset);
+      left: var(--switch-inset);
+      width: calc(var(--switch-height) - 2 * var(--switch-inset));
+      height: calc(var(--switch-height) - 2 * var(--switch-inset));
       background-color: var(--bg);
       border-radius: $radius-full;
       @include transition-transform;
@@ -240,7 +267,7 @@
       background-color: var(--primary);
 
       &::before {
-        transform: translateX(1.25rem);
+        transform: translateX(calc(var(--switch-width) - var(--switch-height)));
       }
     }
 
@@ -257,5 +284,27 @@
   &__label {
     font-size: $font-size-sm;
     user-select: none;
+  }
+
+  &--sm {
+    --switch-width: 1.75rem;
+    --switch-height: 1rem;
+
+    .switch__label {
+      font-size: $font-size-xs;
+    }
+  }
+
+  &--lg {
+    --switch-width: 2.75rem;
+    --switch-height: 1.5rem;
+
+    .switch__label {
+      font-size: $font-size-base;
+    }
+  }
+
+  &:has(:disabled) {
+    cursor: not-allowed;
   }
 }

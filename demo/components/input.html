@@ -45,9 +45,9 @@
             </div>
 
             <div class="form__field">
-              <label class="form__label">With Error</label>
-              <input type="text" class="input input--error form__control" value="Invalid input">
-              <p class="form__error">This field is required.</p>
+              <label class="form__label" for="demo-input-error">With Error</label>
+              <input type="text" id="demo-input-error" class="input form__control" aria-invalid="true" aria-describedby="demo-input-error-message" value="Invalid input">
+              <p class="form__error" id="demo-input-error-message">This field is required.</p>
             </div>
 
             <div class="form__field">

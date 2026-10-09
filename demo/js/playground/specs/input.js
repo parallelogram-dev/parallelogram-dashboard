@@ -3,24 +3,25 @@ import { bem, cx, escape, icon } from '../lib.js';
 function control(s) {
   const disabled = s.state === 'disabled' ? ' disabled' : '';
   const invalid = s.state === 'error' ? ' aria-invalid="true"' : '';
+  const readonly = s.state === 'readonly' && !['select', 'checkbox', 'radio', 'switch'].includes(s.type) ? ' readonly' : '';
   const placeholder = s.placeholder ? ` placeholder="${escape(s.placeholder)}"` : '';
   const id = `field-${s.type}`;
 
   switch (s.type) {
     case 'textarea':
-      return { id, html: `<textarea id="${id}" class="${cx('textarea', s.size && `input--${s.size}`, s.state === 'error' && 'input--error', s.grouped && 'form__control')}" rows="3"${placeholder}${invalid}${disabled}></textarea>` };
+      return { id, html: `<textarea id="${id}" class="${cx('textarea', s.size && `input--${s.size}`, s.grouped && 'form__control')}" rows="3"${placeholder}${invalid}${readonly}${disabled}></textarea>` };
 
     case 'select':
       return {
         id,
-        html: `<select id="${id}" class="${cx(bem('select', s.autoWidth && 'auto'), s.size && `input--${s.size}`, s.state === 'error' && 'input--error', s.grouped && 'form__control')}"${invalid}${disabled}>`
+        html: `<select id="${id}" class="${cx(bem('select', s.autoWidth && 'auto'), s.size && `input--${s.size}`, s.grouped && 'form__control')}"${invalid}${disabled}>`
           + '<option>Select a framework</option><option>Laminas</option><option>Mezzio</option><option>Symfony</option></select>',
       };
 
     case 'checkbox':
     case 'radio':
     case 'switch': {
-      const wrapper = cx(s.type, s.state === 'disabled' && s.type !== 'switch' && `${s.type}--disabled`);
+      const wrapper = cx(s.type, s.type === 'switch' && s.size && `switch--${s.size}`);
       const inputType = s.type === 'radio' ? 'radio' : 'checkbox';
       const role = s.type === 'switch' ? ' role="switch"' : '';
       const checked = s.checked ? ' checked' : '';
@@ -33,8 +34,8 @@ function control(s) {
     }
 
     default: {
-      const className = cx(bem('input', s.size, s.state === 'error' && 'error', s.state === 'disabled-class' && 'disabled', s.icon && `icon-${s.icon}`), s.grouped && 'form__control');
-      const input = `<input id="${id}" type="${s.type === 'email' ? 'email' : 'text'}" class="${className}"${placeholder}${invalid}${disabled}>`;
+      const className = cx(bem('input', s.size, s.icon && `icon-${s.icon}`), s.grouped && 'form__control');
+      const input = `<input id="${id}" type="${s.type === 'email' ? 'email' : 'text'}" class="${className}"${placeholder}${invalid}${readonly}${disabled}>`;
       if (!s.icon) {
         return { id, html: input };
       }
@@ -75,10 +76,10 @@ export default {
         { value: '', label: 'Default' },
         { value: 'error', label: 'Error' },
         { value: 'disabled', label: 'Disabled' },
-        { value: 'disabled-class', label: 'Disabled (class only)' },
+        { value: 'readonly', label: 'Read-only' },
       ],
     },
-    { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'], when: s => ['text', 'email', 'textarea', 'select'].includes(s.type) },
+    { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'], when: s => ['text', 'email', 'textarea', 'select', 'switch'].includes(s.type) },
     {
       key: 'icon',
       label: 'Icon',

@@ -39,16 +39,19 @@
     border-radius: $radius-sm;
     @include interactive;
 
-    &:hover:not(.tabs__trigger--active) {
+    &:hover:not([aria-selected="true"], .tabs__trigger--active) {
       color: var(--fg);
     }
 
+    &[aria-selected="true"],
     &--active {
       color: var(--fg);
       background-color: var(--bg);
       box-shadow: $shadow-sm;
     }
 
+    &:disabled,
+    &[aria-disabled="true"],
     &--disabled {
       @include disabled;
     }
@@ -62,10 +65,6 @@
   &__content {
     margin-top: $spacing-sm;
 
-    // Hide non-active panels
-    &[hidden] {
-      display: none;
-    }
   }
 
   // --------------------------------------------------------------------------
@@ -88,6 +87,7 @@
       margin-bottom: -1px;
       border-bottom: 2px solid transparent;
 
+      &[aria-selected="true"],
       &--active {
         background-color: transparent;
         box-shadow: none;
@@ -108,6 +108,7 @@
       border: 1px solid var(--border);
       border-radius: $radius-md;
 
+      &[aria-selected="true"],
       &--active {
         background-color: var(--primary);
         color: var(--primary-fg);
@@ -167,6 +168,8 @@
     @extend .tabs__trigger;
   }
 
+  &__item[aria-pressed="true"],
+  &__item[aria-checked="true"],
   &__item--active {
     @extend .tabs__trigger--active;
   }
@@ -183,6 +186,7 @@
   border-radius: $radius-full;
   margin-left: $spacing-3xs;
 
+  .tabs__trigger[aria-selected="true"] &,
   .tabs__trigger--active & {
     background-color: var(--accent);
   }

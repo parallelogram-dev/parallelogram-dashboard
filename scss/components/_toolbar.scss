@@ -80,6 +80,8 @@
       background-color: var(--bg-muted);
     }
 
+    // Shown while the search input has a value; the input needs a placeholder for :placeholder-shown
+    .toolbar__input:not(:placeholder-shown) ~ &,
     &--visible {
       opacity: 1;
       visibility: visible;
@@ -143,6 +145,7 @@
     background-color: var(--bg-subtle);
   }
 
+  &[aria-pressed="true"],
   &--active {
     background-color: var(--primary);
     border-color: var(--primary);

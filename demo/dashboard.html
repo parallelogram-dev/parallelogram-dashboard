@@ -21,7 +21,7 @@
 
       <div class="navmenu__content">
         <div class="navmenu__section">
-          <a href="#" class="navmenu__item navmenu__item--active" data-section="home">
+          <a href="#" class="navmenu__item" aria-current="page" data-section="home">
             <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
             <span class="navmenu__tooltip">Home</span>
           </a>
@@ -86,7 +86,7 @@
             </button>
           </div>
           <div class="subnav__list">
-            <a href="#" class="subnav__item subnav__item--active">
+            <a href="#" class="subnav__item" aria-current="page">
               <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M4 4h6v8h-6z"/><path d="M4 16h6v4h-6z"/><path d="M14 12h6v8h-6z"/><path d="M14 4h6v4h-6z"/></svg>
               <span class="subnav__item-text">Dashboard</span>
             </a>
@@ -113,13 +113,13 @@
           </div>
           <div class="subnav__list">
             <div>
-              <button class="subnav__item" aria-expanded="true" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('subnav__submenu--open')">
+              <button class="subnav__item" aria-expanded="true" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');">
                 <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
                 <span class="subnav__item-text">Website Redesign</span>
                 <svg class="icon icon--sm subnav__item-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
               </button>
-              <div class="subnav__submenu subnav__submenu--open">
-                <a href="#" class="subnav__subitem subnav__subitem--active">
+              <div class="subnav__submenu">
+                <a href="#" class="subnav__subitem" aria-current="page">
                   <span class="subnav__subitem-dot"></span>
                   <span>Overview</span>
                 </a>
@@ -139,7 +139,7 @@
             </div>
 
             <div>
-              <button class="subnav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('subnav__submenu--open')">
+              <button class="subnav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');">
                 <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
                 <span class="subnav__item-text">Mobile App</span>
                 <svg class="icon icon--sm subnav__item-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
@@ -157,7 +157,7 @@
             </div>
 
             <div>
-              <button class="subnav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); this.nextElementSibling.classList.toggle('subnav__submenu--open')">
+              <button class="subnav__item" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');">
                 <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
                 <span class="subnav__item-text">API Integration</span>
                 <svg class="icon icon--sm subnav__item-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
@@ -539,8 +539,8 @@
     document.querySelectorAll('.navmenu__item[data-section]').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
-        document.querySelectorAll('.navmenu__item').forEach(i => i.classList.remove('navmenu__item--active'));
-        item.classList.add('navmenu__item--active');
+        document.querySelectorAll('.navmenu__item').forEach(i => i.removeAttribute('aria-current'));
+        item.setAttribute('aria-current', 'page');
 
         // Update subnav title
         const section = item.dataset.section;

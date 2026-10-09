@@ -50,7 +50,8 @@
     }
   }
 
-  &__page {
+  &__page,
+  &__link[aria-current="page"] {
     display: inline-flex;
     align-items: center;
     gap: $spacing-3xs;
@@ -195,6 +196,7 @@
     visibility: hidden;
     @include transition-default;
 
+    [aria-expanded="true"] + &,
     &--open {
       opacity: 1;
       visibility: visible;

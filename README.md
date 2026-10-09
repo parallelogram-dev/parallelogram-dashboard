@@ -259,6 +259,113 @@ This library follows strict BEM (Block Element Modifier) naming:
 
 ---
 
+## State Conventions
+
+Classes describe what a component *looks like* (variant, size, layout). What a component *is
+doing* — disabled, open, current, selected, invalid — is expressed with native HTML attributes,
+pseudo-classes and ARIA states, and the stylesheet reads those directly. The markup that is
+correct for assistive technology is then also the markup that gets styled, and scripts only
+ever flip attributes.
+
+| State | Markup | Applies to |
+|---|---|---|
+| Disabled | `disabled` on form controls; `aria-disabled="true"` on links and other non-form elements | `.btn`, `.input`, `.select`, `.textarea`, `.checkbox__input`, `.radio__input`, `.switch__input`, `.dropdown__item`, `.tabs__trigger`, `.pagination__item`, `.command__item`, nav items |
+| Disabled wrapper | automatic via `:has(:disabled)` | `.checkbox`, `.radio`, `.switch` |
+| Hidden | `hidden` (forced with `display: none !important`) | anything |
+| Open (overlay) | `<dialog open>` (or `showModal()`) | `.modal`, `.modaloverlay`, `.sheet`, `.command`, `.navbarmobile` |
+| Open (disclosure) | `aria-expanded="true"` on the trigger, or `<details open>` | `.accordion__item`, `.collapsible`, `.dropdown`, `.breadcrumb__dropdown`, `.sidebar__submenu`, `.subnav__submenu` |
+| Current | `aria-current="page"` (navigation), `aria-current="step"` (steps) | `.navbar__item`, `.navbarmobile__item`, `.sidebar__item`, `.navmenu__item`, `.subnav__item`, `.subnav__subitem`, `.pagination__item`, `.breadcrumb__link`, `.steps__item` |
+| Selected | `aria-selected="true"` | `.tabs__trigger` (`role="tab"`), `.command__item` (`role="option"`) |
+| Pressed | `aria-pressed="true"` | `.btn` (toggle buttons), `.segmented-control__item`, `.filter__label` |
+| Checked | `role="menuitemcheckbox" aria-checked="true"` | `.dropdown__item` (shows its `.dropdown__item-check`) |
+| Invalid | `aria-invalid="true"`, or automatically via `:user-invalid` once the user has interacted | `.input`, `.select`, `.textarea`, `.checkbox__input`, `.radio__input` |
+| Required | `required` on the control, plus an explicit `.formfield__required` marker in the label (not added automatically, so existing forms keep their look) | `.formfield` |
+| Read-only | `readonly` | `.input`, `.textarea` |
+| Busy | `aria-busy="true"` | `.btn` (pair with `disabled` and a `.btn__spinner`) |
+| Sorted | `aria-sort="ascending"` / `"descending"` on the `<th>` | `.table__head`, `.table__sort-icon` |
+| Search has value | automatic via `.toolbar__input:not(:placeholder-shown)` (the input needs a `placeholder`) | `.toolbar__clear` |
+
+```html
+<a class="btn btn--outline" href="#" aria-disabled="true" tabindex="-1">Archived</a>
+<button class="btn" disabled aria-busy="true"><svg class="icon btn__icon btn__spinner">…</svg>Saving</button>
+
+<input class="input" type="email" aria-invalid="true" aria-describedby="email-error">
+
+<nav class="pagination">
+  <button class="pagination__item" aria-current="page">1</button>
+  <button class="pagination__item">2</button>
+</nav>
+
+<dialog class="sheet sheet--right" open>…</dialog>
+```
+
+**Content behind overlays.** When a `.modal`, `.sheet` or `.command` is open without
+`showModal()`, mark the rest of the page `inert` so it cannot be focused or clicked, and remove
+the attribute on close. `showModal()` does this for you.
+
+```js
+document.querySelector('.dashboard').inert = true;
+```
+
+**Still classes.** States with no native or ARIA equivalent remain modifiers for now:
+`.sidebar--collapsed`, `.subnav--collapsed`, `.sidebar--open` / `.subnav--open` (mobile
+off-canvas), `.sidebaroverlay--visible`, `.dashboard__overlay--visible`,
+`.tooltip__content--visible`, `.steps__item--completed`, `.formfield__counter--warning` /
+`--error`, and `.filter__label--active` (an applied-filter chip, not a toggle).
+
+### Deprecated state classes
+
+These classes still work for one release and will then be removed. `npm run playground:check`
+warns when a playground spec or demo page renders one. The list lives in
+`scripts/deprecated-states.mjs`.
+
+| Deprecated class | Use instead |
+|---|---|
+| `.btn--disabled` | disabled, or aria-disabled="true" on <a> |
+| `.input--disabled` | disabled |
+| `.input--error` | aria-invalid="true" (or rely on :user-invalid) |
+| `.checkbox--disabled` | disabled on the inner .checkbox__input |
+| `.radio--disabled` | disabled on the inner .radio__input |
+| `.formfield--error` | aria-invalid="true" on the control |
+| `.accordion__item--open` | aria-expanded="true" on .accordion__trigger, or <details open> |
+| `.collapsible--open` | aria-expanded="true" on .collapsible__trigger, or <details open> |
+| `.dropdown--open` | aria-expanded="true" on .dropdown__trigger |
+| `.dropdown__menu--open` | aria-expanded="true" on .dropdown__trigger |
+| `.dropdown__item--active` | aria-current="true" |
+| `.dropdown__item--disabled` | disabled, or aria-disabled="true" |
+| `.dropdown__item-check--checked` | role="menuitemcheckbox" aria-checked="true" on .dropdown__item |
+| `.tabs__trigger--active` | aria-selected="true" |
+| `.tabs__trigger--disabled` | disabled, or aria-disabled="true" |
+| `.segmented-control__item--active` | aria-pressed="true" |
+| `.pagination__item--active` | aria-current="page" |
+| `.pagination__item--disabled` | disabled, or aria-disabled="true" |
+| `.breadcrumb__dropdown-menu--open` | aria-expanded="true" on .breadcrumb__dropdown-trigger |
+| `.steps__item--active` | aria-current="step" |
+| `.table__head--sorted` | aria-sort="ascending\|descending" on the <th> |
+| `.table__sort-icon--asc` | aria-sort="ascending" on the <th> |
+| `.table__sort-icon--desc` | aria-sort="descending" on the <th> |
+| `.toolbar__clear--visible` | automatic: shown while .toolbar__input is not :placeholder-shown |
+| `.command--open` | <dialog class="command" open> |
+| `.command__item--selected` | role="option" aria-selected="true" |
+| `.command__item--disabled` | aria-disabled="true" |
+| `.modal--open` | <dialog class="modal" open> |
+| `.modaloverlay--open` | [open] |
+| `.sheet--open` | <dialog class="sheet" open> |
+| `.navbar__item--active` | aria-current="page" |
+| `.navbar__item--disabled` | aria-disabled="true" |
+| `.navbarmobile--open` | <dialog class="navbarmobile" open> |
+| `.navbarmobile__item--active` | aria-current="page" |
+| `.sidebar__item--active` | aria-current="page" |
+| `.sidebar__item--disabled` | aria-disabled="true" |
+| `.sidebar__submenu--open` | aria-expanded="true" on the preceding .sidebar__item |
+| `.navmenu__item--active` | aria-current="page" |
+| `.subnav__item--active` | aria-current="page" |
+| `.subnav__item--disabled` | aria-disabled="true" |
+| `.subnav__subitem--active` | aria-current="page" |
+| `.subnav__submenu--open` | aria-expanded="true" on the preceding .subnav__item |
+
+---
+
 ## Components
 
 ### Button `.btn`
@@ -455,11 +562,11 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
     <p class="form__description">We'll never share your email.</p>
   </div>
 
-  <!-- Error state -->
-  <div class="form__field form__field--error">
+  <!-- Error state: aria-invalid on the control (form__field--error is deprecated) -->
+  <div class="form__field">
     <label class="form__label" for="password">Password</label>
-    <input type="password" id="password" class="input form__control">
-    <p class="form__error">Password is required.</p>
+    <input type="password" id="password" class="input form__control" required aria-invalid="true" aria-describedby="password-error">
+    <p class="form__error" id="password-error">Password is required.</p>
   </div>
 
   <!-- Optional marker and character counter -->
@@ -543,9 +650,9 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 </th>
 
 <!-- Sortable header -->
-<th class="table__head table__head--sortable table__head--sorted">
+<th class="table__head table__head--sortable" aria-sort="ascending">
   Name
-  <span class="table__sort-icon table__sort-icon--asc">
+  <span class="table__sort-icon">
     <svg class="icon icon--sm">...</svg>
   </span>
 </th>
@@ -556,14 +663,14 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 ```html
 <div class="tabs" data-tabs>
   <div class="tabs__list" data-tabs-list>
-    <button class="tabs__trigger tabs__trigger--active" data-tab="tab1" aria-selected="true">Tab 1</button>
-    <button class="tabs__trigger" data-tab="tab2">Tab 2</button>
-    <button class="tabs__trigger" data-tab="tab3">Tab 3</button>
+    <button class="tabs__trigger" data-tab="tab1" aria-selected="true">Tab 1</button>
+    <button class="tabs__trigger" data-tab="tab2" aria-selected="false">Tab 2</button>
+    <button class="tabs__trigger" data-tab="tab3" aria-selected="false">Tab 3</button>
   </div>
   <div class="tabs__panels" data-tabs-panels>
-    <div class="tabs__panel tabs__panel--active" data-tab-panel="tab1">Content 1</div>
-    <div class="tabs__panel" data-tab-panel="tab2">Content 2</div>
-    <div class="tabs__panel" data-tab-panel="tab3">Content 3</div>
+    <div class="tabs__content" id="tab1" data-tab-panel>Content 1</div>
+    <div class="tabs__content" id="tab2" data-tab-panel hidden>Content 2</div>
+    <div class="tabs__content" id="tab3" data-tab-panel hidden>Content 3</div>
   </div>
 </div>
 
@@ -593,15 +700,22 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 <!-- Allow multiple open -->
 <div class="accordion" data-accordion data-accordion-multiple="true">...</div>
 
-<!-- Pre-opened item -->
-<div class="accordion__item accordion__item--open">...</div>
+<!-- Pre-opened item: the trigger's aria-expanded drives the open state -->
+<button class="accordion__trigger" aria-expanded="true">...</button>
+
+<!-- No-JS alternative: native <details> -->
+<details class="accordion__item" open>
+  <summary class="accordion__trigger">Section Title <svg class="icon accordion__icon">...</svg></summary>
+  <div class="accordion__content"><div class="accordion__body">Content goes here</div></div>
+</details>
 ```
 
 ### Dropdown `.dropdown`
 
 ```html
+<!-- aria-expanded="true" on the trigger opens the menu -->
 <div class="dropdown">
-  <button class="btn dropdown__trigger">
+  <button class="btn dropdown__trigger" aria-expanded="false" aria-haspopup="menu">
     Options
     <svg class="icon icon--sm">...</svg>
   </button>
@@ -673,7 +787,7 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
     <button class="pagination__prev" disabled>
       <svg class="icon">...</svg>
     </button>
-    <button class="pagination__item pagination__item--active">1</button>
+    <button class="pagination__item" aria-current="page">1</button>
     <button class="pagination__item">2</button>
     <button class="pagination__item">3</button>
     <span class="pagination__ellipsis">...</span>
@@ -885,13 +999,22 @@ The `demo/js/main.js` file provides interactive behavior for:
 </div>
 ```
 
-### Dropdown
+### Toggle (dropdowns and other disclosures)
 
 ```html
-<div class="dropdown" data-dropdown>
-  <!-- Click to toggle -->
+<div class="dropdown">
+  <button class="btn dropdown__trigger" data-toggle data-toggle-target="#menu" data-toggle-capture="true">Options</button>
+  <div class="dropdown__menu" id="menu">...</div>
 </div>
 ```
+
+Toggle sets `aria-expanded` on the trigger (and `open` when the target is a `<dialog>` or
+`<details>`); the stylesheet does the rest. Escape and, with `data-toggle-capture`, an
+outside click close it again. `data-toggle-class="…"` additionally toggles that class on the
+target, for markup that isn't styled from `aria-expanded`.
+
+None of the scripts add state classes: Accordion flips `aria-expanded`, Tabs flips
+`aria-selected` and the panels' `hidden` attribute.
 
 ### Dark Mode Toggle
 

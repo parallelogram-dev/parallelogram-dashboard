@@ -39,10 +39,10 @@
             </div>
 
             <div class="demo-label">Form Field with Error</div>
-            <div class="form__field form__field--error spacer--lg">
-              <label class="form__label">Email Address</label>
-              <input type="email" class="input form__control" value="invalid-email">
-              <p class="form__error">Please enter a valid email address.</p>
+            <div class="form__field spacer--lg">
+              <label class="form__label" for="demo-email-error">Email Address</label>
+              <input type="email" id="demo-email-error" class="input form__control" value="invalid-email" aria-invalid="true" aria-describedby="demo-email-error-message">
+              <p class="form__error" id="demo-email-error-message">Please enter a valid email address.</p>
             </div>
 
             <div class="demo-label">Input Group with Addon</div>
