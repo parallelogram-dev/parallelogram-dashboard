@@ -1352,11 +1352,11 @@ code.code--sm {
   pointer-events: none;
   opacity: 0.5;
 }
-.btn--primary, .btn:not([class*=btn--]) {
+.btn, .btn--primary {
   background-color: var(--primary);
   color: var(--primary-fg);
 }
-.btn--primary:hover:not(:disabled), .btn:not([class*=btn--]):hover:not(:disabled) {
+.btn:hover:not(:disabled), .btn--primary:hover:not(:disabled) {
   background-color: var(--primary-hover);
 }
 .btn--secondary {
@@ -1399,6 +1399,7 @@ code.code--sm {
   padding: 0;
 }
 .btn--link:hover:not(:disabled) {
+  background-color: transparent;
   text-decoration-thickness: 2px;
 }
 .btn--sm {
@@ -1877,7 +1878,7 @@ code.code--sm {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-.badge--primary, .badge:not([class*=badge--]):not(.badge--secondary):not(.badge--outline):not(.badge--destructive):not(.badge--success):not(.badge--warning):not(.badge--info) {
+.badge, .badge--primary {
   background-color: var(--primary);
   color: var(--primary-fg);
 }

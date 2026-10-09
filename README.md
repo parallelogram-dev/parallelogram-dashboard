@@ -272,7 +272,7 @@ This library follows strict BEM (Block Element Modifier) naming:
 <button class="btn btn--ghost">Ghost</button>
 <button class="btn btn--link">Link</button>
 
-<!-- Sizes -->
+<!-- Sizes (a bare .btn is primary; add a variant to change colour) -->
 <button class="btn btn--sm">Small</button>
 <button class="btn">Default</button>
 <button class="btn btn--lg">Large</button>
@@ -361,6 +361,7 @@ This library follows strict BEM (Block Element Modifier) naming:
 
 ```html
 <span class="badge">Default</span>
+<span class="badge badge--sm badge--pill">Primary, small pill</span>
 <span class="badge badge--secondary">Secondary</span>
 <span class="badge badge--outline">Outline</span>
 <span class="badge badge--destructive">Destructive</span>

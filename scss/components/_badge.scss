@@ -25,9 +25,10 @@
   // Variants
   // --------------------------------------------------------------------------
 
-  // Primary (default)
-  &--primary,
-  &:not([class*="badge--"]):not(.badge--secondary):not(.badge--outline):not(.badge--destructive):not(.badge--success):not(.badge--warning):not(.badge--info) {
+  // Primary (default): the bare block carries primary styling so size and
+  // shape modifiers keep it; colour variants below override it by source order
+  &,
+  &--primary {
     background-color: var(--primary);
     color: var(--primary-fg);
   }
