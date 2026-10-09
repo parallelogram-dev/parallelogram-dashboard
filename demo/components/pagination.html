@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="pagination">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Navigation &amp; layout</p>
+        <h1 class="docs__title">Pagination</h1>
+        <p class="docs__lead">Page navigation controls.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="demo-label">Default</div>
+          <nav class="pagination spacer--lg">
+            <button class="pagination__prev" disabled>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+            </button>
+            <button class="pagination__item pagination__item--active">1</button>
+            <button class="pagination__item">2</button>
+            <button class="pagination__item">3</button>
+            <span class="pagination__ellipsis">...</span>
+            <button class="pagination__item">10</button>
+            <button class="pagination__next">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </button>
+          </nav>
+
+          <div class="demo-label">Outline Variant</div>
+          <nav class="pagination pagination--outline spacer--lg">
+            <button class="pagination__prev">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+            </button>
+            <button class="pagination__item">1</button>
+            <button class="pagination__item pagination__item--active">2</button>
+            <button class="pagination__item">3</button>
+            <button class="pagination__next">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+            </button>
+          </nav>
+
+          <div class="demo-label">With Info</div>
+          <div class="pagination__info">
+            <span class="pagination__text">Showing <strong>1</strong> to <strong>10</strong> of <strong>97</strong> results</span>
+            <nav class="pagination pagination--sm">
+              <button class="pagination__prev" disabled>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></svg>
+              </button>
+              <button class="pagination__item pagination__item--active">1</button>
+              <button class="pagination__item">2</button>
+              <button class="pagination__item">3</button>
+              <button class="pagination__next">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+              </button>
+            </nav>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

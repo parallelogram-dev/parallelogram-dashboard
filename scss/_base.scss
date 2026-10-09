@@ -91,28 +91,49 @@ table {
 h1, h2, h3, h4, h5, h6 {
   font-weight: $font-weight-semibold;
   line-height: $line-height-tight;
+  text-wrap: balance;
   letter-spacing: $letter-spacing-tight;
   color: var(--fg);
 }
 
 h1 {
-  font-size: $font-size-4xl;
+  font-size: type-step(5, $type-scale-ratio-sm);
+
+  @include md {
+    font-size: type-step(5);
+  }
 }
 
 h2 {
-  font-size: $font-size-3xl;
+  font-size: type-step(4, $type-scale-ratio-sm);
+
+  @include md {
+    font-size: type-step(4);
+  }
 }
 
 h3 {
-  font-size: $font-size-2xl;
+  font-size: type-step(3, $type-scale-ratio-sm);
+
+  @include md {
+    font-size: type-step(3);
+  }
 }
 
 h4 {
-  font-size: $font-size-xl;
+  font-size: type-step(2, $type-scale-ratio-sm);
+
+  @include md {
+    font-size: type-step(2);
+  }
 }
 
 h5 {
-  font-size: $font-size-lg;
+  font-size: type-step(1, $type-scale-ratio-sm);
+
+  @include md {
+    font-size: type-step(1);
+  }
 }
 
 h6 {

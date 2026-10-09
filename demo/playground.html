@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parallelogram Dashboard - Playground</title>
+  <script>
+    // Playground links used to look like playground.html#/button?variant=x; each component now has its own page
+    var match = location.hash.match(/^#\/([a-z-]+)\??(.*)$/);
+    location.replace(match ? 'components/' + match[1] + '.html' + (match[2] ? '#' + match[2] : '') : 'index.html');
+  </script>
+</head>
+<body>
+  <p><a href="index.html">Go to the component pages</a></p>
+</body>
+</html>

@@ -13,7 +13,39 @@ npm run build
 
 # Watch for changes during development
 npm run watch
+
+# Serve the demo pages at http://localhost:8080 (no caching, so edits show on reload)
+npm run serve
 ```
+
+## Component Pages and Playground
+
+`demo/index.html` links to one page per component in `demo/components/`, each with examples and,
+where available, a live playground: controls for every variant, size and state, an "All variants"
+grid, viewport widths and copyable markup. Each variant is labelled with its BEM classes, with
+buttons to copy the class list (`btn btn--outline btn--sm`) or a CSS selector (`.btn.btn--outline.btn--sm`).
+The playground state is kept in the URL hash, e.g. `components/button.html#variant=destructive&size=sm`.
+
+- `demo/js/components/manifest.js` lists every page, its group and the SCSS partial it documents.
+- `demo/js/playground/specs/` holds one spec per component: controls, presets, a `target` selector for
+  the element the variants apply to, and a `render(state)` function returning HTML. Register specs in
+  `specs/index.js` and set `spec` on the component's manifest entry.
+
+`npm run playground:check` fails if a spec never renders a class its SCSS `sources` define, or if a
+component partial has no page, and lists pages still without a playground. It runs in CI before the
+demo is deployed to GitHub Pages.
+
+### LLM references
+
+`npm run build` generates [llms.txt](https://llmstxt.org) files (git-ignored, published with the demo):
+`demo/llms.txt` lists every component with usage rules, `demo/llms/<slug>.md` holds each component's
+classes, modifiers and example markup, and `demo/llms-full.txt` concatenates them all. Each component page
+has a **Copy for LLM** button that copies its reference plus the current playground markup. Links use
+`SITE_URL` (default: the GitHub Pages address).
+
+`npm run build` also copies `@parallelogram-js/core` into `demo/vendor/` (git-ignored); the demo pages
+load `<p-modal>`, `<p-datetime>` and the modal trigger from there. Pages must be served over HTTP
+(`npm run serve`) because they use ES modules, which browsers block on `file://` URLs.
 
 ## File Structure
 
@@ -133,6 +165,11 @@ $font-size-xl: 1.25rem;    // 20px
 $font-size-2xl: 1.5rem;    // 24px
 $font-size-3xl: 1.875rem;  // 30px
 $font-size-4xl: 2.25rem;   // 36px
+
+// Heading scale (h6 → h1): each level is the ratio times the one below, from 1rem.
+// Below the md breakpoint the gentler ratio keeps h1 readable on phones.
+$type-scale-ratio: 1.333;     // 16 / 21 / 28 / 38 / 50 / 67px
+$type-scale-ratio-sm: 1.2;    // 16 / 19 / 23 / 28 / 33 / 40px
 
 // Font weights
 $font-weight-normal: 400;

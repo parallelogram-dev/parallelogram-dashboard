@@ -1,6 +1,6 @@
 // ==========================================================================
 // Modal / Dialog Component
-// Compatible with @peptolab/parallelogram <p-modal> web component
+// Compatible with @parallelogram-js/core <p-modal> web component
 // ==========================================================================
 
 @use "../variables" as *;
@@ -83,6 +83,13 @@ p-datetime.input {
 // PModal Web Component Custom Properties
 // These CSS custom properties theme the shadow DOM of <p-modal>
 // --------------------------------------------------------------------------
+
+p-modal > [slot="title"] {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
 
 p-modal {
   // Colors - inherit from theme

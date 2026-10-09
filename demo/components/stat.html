@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stat - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="stat">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Data display</p>
+        <h1 class="docs__title">Stat</h1>
+        <p class="docs__lead">Statistics and metric cards.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="stat__grid constrain--lg">
+            <div class="stat">
+              <div class="stat__header">
+                <span class="stat__label">Total Revenue</span>
+                <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2"/><path d="M12 3v3m0 12v3"/></svg>
+              </div>
+              <div class="stat__value">$45,231</div>
+              <p class="stat__description">
+                <span class="stat__trend stat__trend--up">
+                  <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8"/><path d="M14 7l7 0l0 7"/></svg>
+                  12%
+                </span>
+                from last month
+              </p>
+            </div>
+
+            <div class="stat">
+              <div class="stat__header">
+                <span class="stat__label">Active Users</span>
+                <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+              </div>
+              <div class="stat__value">2,350</div>
+              <p class="stat__description">
+                <span class="stat__trend stat__trend--up">
+                  <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8"/><path d="M14 7l7 0l0 7"/></svg>
+                  8%
+                </span>
+                from last month
+              </p>
+            </div>
+
+            <div class="stat">
+              <div class="stat__header">
+                <span class="stat__label">Bounce Rate</span>
+                <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>
+              </div>
+              <div class="stat__value">24.5%</div>
+              <p class="stat__description">
+                <span class="stat__trend stat__trend--down">
+                  <svg class="icon stat__trend-icon" viewBox="0 0 24 24"><path d="M3 7l6 6l4 -4l8 8"/><path d="M21 10l0 7l-7 0"/></svg>
+                  3%
+                </span>
+                from last month
+              </p>
+            </div>
+
+            <div class="stat stat--primary">
+              <div class="stat__header">
+                <span class="stat__label">Conversion</span>
+                <svg class="icon stat__icon" viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"/><path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"/><path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+              </div>
+              <div class="stat__value">4.2%</div>
+              <p class="stat__description">
+                <span class="stat__trend stat__trend--up">+0.5%</span>
+                from last month
+              </p>
+            </div>
+          </div>
+
+          <div class="demo-label demo-label--spaced-lg">Mini Stats</div>
+          <div class="demo-row">
+            <span class="ministat">
+              <span class="ministat__label">Views:</span>
+              <span class="ministat__value">12,543</span>
+            </span>
+            <span class="ministat__divider"></span>
+            <span class="ministat">
+              <span class="ministat__label">Clicks:</span>
+              <span class="ministat__value">1,234</span>
+            </span>
+            <span class="ministat__divider"></span>
+            <span class="ministat">
+              <span class="ministat__label">CTR:</span>
+              <span class="ministat__value">9.8%</span>
+            </span>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

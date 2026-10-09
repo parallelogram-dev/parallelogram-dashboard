@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="avatar">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Data display</p>
+        <h1 class="docs__title">Avatar</h1>
+        <p class="docs__lead">User profile images with fallbacks.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="demo-label">Sizes</div>
+          <div class="demo-row spacer--lg">
+            <span class="avatar avatar--xs"><span class="avatar__fallback">XS</span></span>
+            <span class="avatar avatar--sm"><span class="avatar__fallback">SM</span></span>
+            <span class="avatar"><span class="avatar__fallback">MD</span></span>
+            <span class="avatar avatar--lg"><span class="avatar__fallback">LG</span></span>
+            <span class="avatar avatar--xl"><span class="avatar__fallback">XL</span></span>
+          </div>
+
+          <div class="demo-label">With Status</div>
+          <div class="demo-row spacer--lg">
+            <span class="avatar">
+              <span class="avatar__fallback">ON</span>
+              <span class="avatar__status avatar__status--online"></span>
+            </span>
+            <span class="avatar">
+              <span class="avatar__fallback">AW</span>
+              <span class="avatar__status avatar__status--away"></span>
+            </span>
+            <span class="avatar">
+              <span class="avatar__fallback">BS</span>
+              <span class="avatar__status avatar__status--busy"></span>
+            </span>
+            <span class="avatar">
+              <span class="avatar__fallback">OF</span>
+              <span class="avatar__status avatar__status--offline"></span>
+            </span>
+          </div>
+
+          <div class="demo-label">Avatar Group</div>
+          <div class="demo-row">
+            <div class="avatar__group">
+              <span class="avatar"><span class="avatar__fallback">A</span></span>
+              <span class="avatar"><span class="avatar__fallback">B</span></span>
+              <span class="avatar"><span class="avatar__fallback">C</span></span>
+              <span class="avatar__group-overflow">+5</span>
+            </div>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>
