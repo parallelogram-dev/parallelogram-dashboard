@@ -30,7 +30,7 @@ function segmented(label, attr, options) {
 const TEMPLATE = `
   <div class="pw__bar" role="toolbar" aria-label="Preview options">
     ${segmented('View', 'data-view', [['single', 'Single'], ['matrix', 'All variants']])}
-    ${segmented('Viewport width', 'data-viewport', [['375', 'Mobile'], ['768', 'Tablet'], ['full', 'Full']])}
+    ${segmented('Viewport width', 'data-viewport', [['375', 'Mobile'], ['768', 'Tablet'], ['1280', 'Desktop'], ['full', 'Fit']])}
     <label class="switch">
       <input type="checkbox" class="switch__input" role="switch" data-checker>
       <span class="switch__label text--sm">Checkerboard</span>
@@ -95,6 +95,25 @@ async function copy(text, what) {
   } catch {
     window.toast?.error('Copy failed. Select the text and copy it manually.');
   }
+}
+
+const ID_REFERENCES = /(\s(?:id|for|aria-controls|aria-labelledby|aria-describedby|aria-owns|commandfor|headers|list)=")([^"]+)"/g;
+
+/**
+ * Give every id in a fragment a suffix, and update the attributes that refer to those ids.
+ *
+ * Each cell of the variants grid renders the same spec, so without this the copies would share
+ * ids and toggles, labels and dialogs in later cells would act on the first one.
+ */
+function scopeIds(html, suffix) {
+  const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
+  if (!ids.size) {
+    return html;
+  }
+  const scope = value => (ids.has(value) ? `${value}${suffix}` : value);
+  return html
+    .replace(ID_REFERENCES, (match, attr, value) => `${attr}${value.split(/\s+/).map(scope).join(' ')}"`)
+    .replace(/(\s(?:data-toggle-target|href)="#)([^"]+)"/g, (match, attr, value) => `${attr}${scope(value)}"`);
 }
 
 /**
@@ -196,9 +215,9 @@ export function mountPlayground(container, spec) {
     const cols = normaliseOptions(colsControl.options);
 
     const head = `<tr><th></th>${cols.map(c => `<th scope="col">${escape(colsControl.label)}: ${escape(c.label)}</th>`).join('')}</tr>`;
-    const body = rows.map(r => {
-      const cells = cols.map(c => {
-        const html = spec.render({ ...state, [rowsControl.key]: r.value, [colsControl.key]: c.value });
+    const body = rows.map((r, ri) => {
+      const cells = cols.map((c, ci) => {
+        const html = scopeIds(spec.render({ ...state, [rowsControl.key]: r.value, [colsControl.key]: c.value }), `-r${ri}c${ci}`);
         const classes = escape(targetClasses(spec, html));
         return `<td><div class="pg-cell"><div class="pg-cell__preview">${html}</div>`
           + `<button type="button" class="pg-class" data-copy-text="${classes}" title="Copy class names"><code>${classes}</code>${COPY_ICON}</button></div></td>`;
@@ -216,7 +235,7 @@ export function mountPlayground(container, spec) {
     const html = spec.render(state);
     const matrix = settings.view === 'matrix' && spec.matrix;
 
-    root.className = spec.layout === 'block' ? 'pg-stage pg-stage--block' : 'pg-stage';
+    root.className = spec.layout ? `pg-stage pg-stage--${spec.layout}` : 'pg-stage';
     root.innerHTML = matrix ? matrixHtml() : html;
     els.frame.contentWindow.Parallelogram?.init(root);
 
@@ -233,10 +252,13 @@ export function mountPlayground(container, spec) {
       doc.body.classList.toggle('pg-checker', settings.checker);
     }
 
-    els.viewport.style.width = settings.viewport === 'full' ? '' : `${settings.viewport}px`;
+    // Page-level layouts (navbar, sidebar, dashboard) collapse below 1024px, so they open at desktop width
+    const viewport = settings.viewport === 'full' && spec.layout === 'full' ? '1280' : settings.viewport;
+    els.viewport.style.width = viewport === 'full' ? '' : `${viewport}px`;
+    els.viewport.style.maxWidth = viewport === 'full' ? '' : 'none';
     els.checker.checked = settings.checker;
     container.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === settings.view)));
-    container.querySelectorAll('[data-viewport]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.viewport === settings.viewport)));
+    container.querySelectorAll('[data-viewport]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.viewport === viewport)));
     container.querySelector('[data-view="matrix"]').disabled = !spec.matrix;
   }
 

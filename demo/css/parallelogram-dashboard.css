@@ -208,7 +208,7 @@
   display: none !important;
 }
 
-:where(dialog.modal, dialog.modaloverlay, dialog.sheet, dialog.command, dialog.navbarmobile) {
+:where(dialog.modal, dialog.modaloverlay, dialog.alertdialog, dialog.sheet, dialog.drawer, dialog.command, dialog.navbarmobile) {
   width: auto;
   height: auto;
   max-width: none;
@@ -220,7 +220,7 @@
   color: inherit;
   overflow: visible;
 }
-:where(dialog.modal, dialog.modaloverlay, dialog.sheet, dialog.command, dialog.navbarmobile)::backdrop {
+:where(dialog.modal, dialog.modaloverlay, dialog.alertdialog, dialog.sheet, dialog.drawer, dialog.command, dialog.navbarmobile)::backdrop {
   background: transparent;
 }
 
@@ -5242,7 +5242,7 @@ p-modal {
   background-color: var(--border);
   flex-shrink: 0;
 }
-.separator--horizontal, .separator:not(.separator--vertical), .divider:not(.separator--vertical) {
+.separator--horizontal, .separator:not(.separator--vertical, .separator--label), .divider:not(.separator--vertical, .separator--label) {
   height: 1px;
   width: 100%;
 }
@@ -7392,6 +7392,7 @@ dl.descriptionlist dd {
 }
 
 .toast {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;

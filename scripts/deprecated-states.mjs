@@ -10,7 +10,7 @@ export default {
   'input--error': 'aria-invalid="true" (or rely on :user-invalid)',
   'checkbox--disabled': 'disabled on the inner .checkbox__input',
   'radio--disabled': 'disabled on the inner .radio__input',
-  'formfield--error': 'aria-invalid="true" on the control',
+  'form__field--error': 'aria-invalid="true" on the control',
   'accordion__item--open': 'aria-expanded="true" on .accordion__trigger, or <details open>',
   'collapsible--open': 'aria-expanded="true" on .collapsible__trigger, or <details open>',
   'dropdown--open': 'aria-expanded="true" on .dropdown__trigger',

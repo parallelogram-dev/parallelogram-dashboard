@@ -12,7 +12,8 @@
     "serve": "python3 scripts/serve.py 8080",
     "playground:check": "node scripts/playground-check.mjs",
     "vendor": "rm -rf demo/vendor && mkdir -p demo/vendor && rsync -a --exclude dev --exclude types --exclude '*.map' node_modules/@parallelogram-js/core/dist/ demo/vendor/parallelogram-js/",
-    "llms": "node scripts/build-llms.mjs"
+    "llms": "node scripts/build-llms.mjs",
+    "playground:register": "node scripts/register-specs.mjs"
   },
   "keywords": [
     "css",

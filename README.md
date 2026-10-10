@@ -31,8 +31,16 @@ The playground state is kept in the URL hash, e.g. `components/button.html#varia
   the element the variants apply to, and a `render(state)` function returning HTML. Register specs in
   `specs/index.js` and set `spec` on the component's manifest entry.
 
+Specs can also set `layout: 'block'` (full-width stage) or `layout: 'full'` (no padding, opens at the
+Desktop width; for page-level layouts such as the dashboard shell). In the "All variants" grid each
+cell gets its own ids, so toggles and labels keep working in every copy.
+
+`npm run playground:register` registers every spec file in `specs/`: it rewrites `specs/index.js`, sets
+`spec` on the matching manifest entry and adds the Playground section to the component page.
+
 `npm run playground:check` fails if a spec never renders a class its SCSS `sources` define, or if a
-component partial has no page, and lists pages still without a playground. It runs in CI before the
+component partial has no page, and lists pages still without a playground. Pass spec files to check
+just those, before registering them: `node scripts/playground-check.mjs demo/js/playground/specs/table.js`. It runs in CI before the
 demo is deployed to GitHub Pages.
 
 ### LLM references
