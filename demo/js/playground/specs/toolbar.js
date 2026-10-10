@@ -31,7 +31,7 @@ function actions(s, compact) {
 
 function activeFilters(s) {
   const chips = APPLIED.map(label => `<span class="filter__label filter__label--active">${escape(label)}`
-    + `<button type="button" class="filter__label__remove" aria-label="Remove filter ${escape(label)}">${icon('x', 'icon--sm')}</button></span>`).join('');
+    + `<button type="button" class="filter__remove" aria-label="Remove filter ${escape(label)}">${icon('x', 'icon--sm')}</button></span>`).join('');
   return `<div class="activefilters"><span class="activefilters__label">Filters:</span>${chips}`
     + '<button type="button" class="activefilters__clear">Clear all</button></div>';
 }
@@ -55,6 +55,7 @@ export default {
         { value: 'full', label: 'Full-width search' },
       ],
     },
+    { key: 'size', label: 'Size', type: 'select', options: ['', 'sm'], when: s => s.variant !== 'compact' },
     {
       key: 'filters',
       label: 'Filters',
@@ -87,17 +88,18 @@ export default {
     { name: 'Searching', state: { query: 'pricing', applied: true } },
     { name: 'Status chips', state: { filters: 'chips', actions: '' } },
     { name: 'Compact', state: { variant: 'compact', actions: 'search' } },
+    { name: 'Small, full width', state: { variant: 'full', size: 'sm', filters: 'chips' } },
     { name: 'Full-width search', state: { variant: 'full', filters: '', actions: 'search', placeholder: 'Search everything…' } },
     { name: 'Applied filters', state: { filters: '', actions: '', applied: true, query: 'launch' } },
   ],
   render(s) {
-    const compact = s.variant === 'compact';
+    const compact = s.variant === 'compact' || s.size === 'sm';
     const clear = s.clear
       ? `<button type="button" class="toolbar__clear" aria-label="Clear search">${icon('x')}</button>`
       : '';
     const search = `<div class="toolbar__group">${icon('search', 'toolbar__icon')}`
       + `<input type="text" class="toolbar__input" aria-label="Search" placeholder="${escape(s.placeholder || ' ')}" value="${escape(s.query)}">${clear}</div>`;
-    const bar = `<div class="${bem('toolbar', s.variant)}" role="search">${search}${filters(s, compact)}${actions(s, compact)}</div>`;
+    const bar = `<div class="${bem('toolbar', s.variant, s.variant !== 'compact' && s.size)}" role="search">${search}${filters(s, compact)}${actions(s, compact)}</div>`;
     return s.applied ? `<div>${bar}${activeFilters(s)}</div>` : bar;
   },
 };

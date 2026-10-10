@@ -167,6 +167,21 @@
   width: 3rem;
   height: 3rem;
 
+  // Too small for a readable value; the progressbar's aria-valuenow still carries it
+  &--xs {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    .progress__circle-track,
+    .progress__circle-bar {
+      stroke-width: 4;
+    }
+
+    .progress__circle-value {
+      display: none;
+    }
+  }
+
   &--sm {
     width: 2rem;
     height: 2rem;
@@ -215,6 +230,10 @@
 
   &--destructive .progress__circle-bar {
     stroke: var(--destructive);
+  }
+
+  &--info .progress__circle-bar {
+    stroke: var(--info);
   }
 
   // Indeterminate

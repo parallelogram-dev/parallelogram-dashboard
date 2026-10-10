@@ -17,6 +17,7 @@ import formLayout from './form-layout.js';
 import input from './input.js';
 import modal from './modal.js';
 import navbar from './navbar.js';
+import pageheader from './pageheader.js';
 import pagination from './pagination.js';
 import progress from './progress.js';
 import separator from './separator.js';
@@ -31,4 +32,4 @@ import toast from './toast.js';
 import toolbar from './toolbar.js';
 import tooltip from './tooltip.js';
 
-export default [accordion, actionbar, alert, avatar, badge, banner, breadcrumb, button, card, chart, command, dashboard, dataList, dropdown, empty, formLayout, input, modal, navbar, pagination, progress, separator, sheet, sidebar, skeleton, stat, table, tabs, timeline, toast, toolbar, tooltip];
+export default [accordion, actionbar, alert, avatar, badge, banner, breadcrumb, button, card, chart, command, dashboard, dataList, dropdown, empty, formLayout, input, modal, navbar, pageheader, pagination, progress, separator, sheet, sidebar, skeleton, stat, table, tabs, timeline, toast, toolbar, tooltip];

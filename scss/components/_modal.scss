@@ -7,79 +7,6 @@
 @use "../mixins" as *;
 
 // --------------------------------------------------------------------------
-// PDatetime Web Component Custom Properties
-// These CSS custom properties theme the shadow DOM of <p-datetime>
-// --------------------------------------------------------------------------
-
-p-datetime {
-  // Colors - inherit from theme
-  --datetime-text: var(--fg);
-  --datetime-muted: var(--fg-muted);
-  --datetime-accent: var(--primary);
-  --datetime-hover: var(--accent);
-  --datetime-bg: var(--popover);
-  --datetime-border: var(--border);
-  --datetime-shadow-color: rgba(0, 0, 0, 0.12);
-  --datetime-focus-shadow: rgba(59, 130, 246, 0.1);
-  --datetime-btn-hover-bg: var(--accent);
-
-  // Opacity
-  --datetime-placeholder-opacity: 0.6;
-  --datetime-icon-opacity: 0.7;
-  --datetime-disabled-opacity: 0.4;
-
-  // Spacing
-  --datetime-padding-x: #{$spacing-xs};
-  --datetime-padding-y: #{$spacing-2xs};
-  --datetime-space-xs: 0.125rem;
-  --datetime-space-sm: #{$spacing-3xs};
-  --datetime-space-md: #{$spacing-2xs};
-  --datetime-space-lg: #{$spacing-xs};
-  --datetime-gap: #{$spacing-2xs};
-
-  // Border radius
-  --datetime-radius: #{$radius};
-  --datetime-radius-lg: #{$radius-md};
-  --datetime-radius-xl: #{$radius-lg};
-
-  // Borders
-  --datetime-border-width: 1px;
-  --datetime-focus-ring-width: 2px;
-  --datetime-today-border-width: 2px;
-
-  // Shadows
-  --datetime-shadow: #{$shadow-lg};
-
-  // Timing
-  --datetime-transition: #{$transition-base};
-  --datetime-animation-duration: 0.5s;
-
-  // Sizes
-  --datetime-cell-size: 2.5rem;
-  --datetime-font-sm: #{$font-size-xs};
-  --datetime-font-md: #{$font-size-sm};
-
-  // Display
-  display: block;
-  width: 100%;
-}
-
-// Styling p-datetime to match our input styles
-p-datetime.input {
-  position: relative;
-  min-height: #{$btn-height-md};
-  background-color: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: #{$radius-md};
-  font-size: #{$font-size-sm};
-
-  &:focus-within {
-    border-color: var(--ring);
-    box-shadow: 0 0 0 3px var(--ring-alpha);
-  }
-}
-
-// --------------------------------------------------------------------------
 // PModal Web Component Custom Properties
 // These CSS custom properties theme the shadow DOM of <p-modal>
 // --------------------------------------------------------------------------
@@ -194,6 +121,13 @@ p-modal {
   &[open],
   &--open {
     pointer-events: auto;
+  }
+
+  // Opened with showModal() (or command="show-modal"), the dialog draws its own backdrop,
+  // so no separate .modaloverlay is needed
+  &:modal::backdrop {
+    background-color: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(2px);
   }
 
   // --------------------------------------------------------------------------

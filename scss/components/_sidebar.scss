@@ -54,6 +54,11 @@
     right: 0;
     border-right: none;
     border-left: 1px solid var(--sidebar-border);
+
+    .sidebar__toggle {
+      right: auto;
+      left: -1rem;
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -230,6 +235,17 @@
       margin-left: $sidebar-width-collapsed;
     }
   }
+
+  // A right-hand sidebar offsets the other side
+  &:has(> .sidebar--right) > &__main {
+    margin-left: 0;
+    margin-right: $sidebar-width;
+  }
+
+  &:has(> .sidebar--right.sidebar--collapsed) > &__main,
+  &:has(> .sidebar--right) > &__main--collapsed {
+    margin-right: $sidebar-width-collapsed;
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -268,8 +284,10 @@
     }
   }
 
-  .sidebarlayout__main {
+  .sidebarlayout__main,
+  .sidebarlayout:has(> .sidebar--right) > .sidebarlayout__main {
     margin-left: 0;
+    margin-right: 0;
   }
 }
 

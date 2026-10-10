@@ -104,6 +104,7 @@
   // --------------------------------------------------------------------------
 
   &__marker--success {
+    --timeline-tone: var(--success);
     border-color: var(--success);
     background-color: var(--success-muted);
 
@@ -113,6 +114,7 @@
   }
 
   &__marker--error {
+    --timeline-tone: var(--destructive);
     border-color: var(--destructive);
     background-color: var(--destructive-muted);
 
@@ -122,6 +124,7 @@
   }
 
   &__marker--warning {
+    --timeline-tone: var(--warning);
     border-color: var(--warning);
     background-color: var(--warning-muted);
 
@@ -131,6 +134,7 @@
   }
 
   &__marker--info {
+    --timeline-tone: var(--info);
     border-color: var(--info);
     background-color: var(--info-muted);
 
@@ -140,6 +144,7 @@
   }
 
   &__marker--primary {
+    --timeline-tone: var(--primary);
     border-color: var(--primary);
     background-color: var(--primary);
 
@@ -164,8 +169,9 @@
 
   // Compact
   &--compact {
+    // Centres the 2px line on the 0.75rem dots
     &::before {
-      left: 0.375rem;
+      left: 0.3125rem;
     }
 
     .timeline__item {
@@ -173,11 +179,17 @@
       gap: $spacing-xs;
     }
 
+    // Markers become tone-coloured dots, too small to hold an icon
     .timeline__marker {
       width: 0.75rem;
       height: 0.75rem;
-      background-color: var(--border);
+      margin: 0.25rem 0 0;
+      background-color: var(--timeline-tone, var(--border));
       border: none;
+
+      svg {
+        display: none;
+      }
     }
 
     .timeline__content {
@@ -245,6 +257,21 @@
 
     .timeline__content {
       padding-top: $spacing-xs;
+    }
+
+    // Centre the dot on the horizontal line rather than the vertical one
+    .timeline__marker--dot {
+      margin-top: 0.625rem;
+    }
+
+    &.timeline--compact {
+      &::before {
+        top: 0.5625rem;
+      }
+
+      .timeline__marker {
+        margin: 0.25rem 0 0;
+      }
     }
   }
 }

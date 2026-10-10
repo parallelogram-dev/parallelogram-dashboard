@@ -36,33 +36,33 @@
             <div class="demo-label">Default (click to toggle)</div>
             <div class="accordion spacer--xl" data-accordion>
               <div class="accordion__item">
-                <button class="accordion__trigger" aria-expanded="true">
+                <button type="button" class="accordion__trigger" aria-controls="faq-1" aria-expanded="true">
                   Is it accessible?
                   <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                 </button>
-                <div class="accordion__content">
+                <div class="accordion__content" id="faq-1">
                   <div class="accordion__body">
                     Yes. It adheres to the WAI-ARIA design pattern and can be navigated using keyboard controls.
                   </div>
                 </div>
               </div>
               <div class="accordion__item">
-                <button class="accordion__trigger" aria-expanded="false">
+                <button type="button" class="accordion__trigger" aria-controls="faq-2" aria-expanded="false">
                   Is it styled?
                   <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                 </button>
-                <div class="accordion__content">
+                <div class="accordion__content" id="faq-2">
                   <div class="accordion__body">
                     Yes. It comes with default styles that match the other components' aesthetic.
                   </div>
                 </div>
               </div>
               <div class="accordion__item">
-                <button class="accordion__trigger" aria-expanded="false">
+                <button type="button" class="accordion__trigger" aria-controls="faq-3" aria-expanded="false">
                   Is it animated?
                   <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                 </button>
-                <div class="accordion__content">
+                <div class="accordion__content" id="faq-3">
                   <div class="accordion__body">
                     Yes. It's animated by default with smooth transitions for opening and closing.
                   </div>
@@ -73,26 +73,59 @@
             <div class="demo-label">Multiple Open (data-accordion-multiple="true")</div>
             <div class="accordion accordion--separated" data-accordion data-accordion-multiple="true">
               <div class="accordion__item">
-                <button class="accordion__trigger" aria-expanded="true">
+                <button type="button" class="accordion__trigger" aria-controls="faq-4" aria-expanded="true">
                   What payment methods do you accept?
                   <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                 </button>
-                <div class="accordion__content">
+                <div class="accordion__content" id="faq-4">
                   <div class="accordion__body">
                     We accept all major credit cards, PayPal, and bank transfers.
                   </div>
                 </div>
               </div>
               <div class="accordion__item">
-                <button class="accordion__trigger" aria-expanded="false">
+                <button type="button" class="accordion__trigger" aria-controls="faq-5" aria-expanded="false">
                   How long does shipping take?
                   <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                 </button>
-                <div class="accordion__content">
+                <div class="accordion__content" id="faq-5">
                   <div class="accordion__body">
                     Standard shipping takes 3-5 business days. Express shipping is available for 1-2 day delivery.
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="demo-label">Native &lt;details&gt; with a shared name (one open at a time, no JS)</div>
+            <div class="accordion accordion--bordered spacer--xl">
+              <details class="accordion__item" name="shipping" open>
+                <summary class="accordion__trigger">
+                  Where do you ship?
+                  <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                </summary>
+                <div class="accordion__content">
+                  <div class="accordion__body">We ship to over 40 countries across Europe, North America and Asia-Pacific.</div>
+                </div>
+              </details>
+              <details class="accordion__item" name="shipping">
+                <summary class="accordion__trigger">
+                  Can I change my address?
+                  <svg class="icon accordion__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                </summary>
+                <div class="accordion__content">
+                  <div class="accordion__body">Yes, until the order has been packed. Contact support with your order number.</div>
+                </div>
+              </details>
+            </div>
+
+            <div class="demo-label">Collapsible with a button trigger</div>
+            <div class="collapsible">
+              <button type="button" class="collapsible__trigger" aria-expanded="false" aria-controls="advanced-options">
+                <span>Advanced options</span>
+                <svg class="icon collapsible__icon" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+              </button>
+              <div class="collapsible__content" id="advanced-options">
+                <div class="collapsible__body">Cache headers, custom domains and webhook signing secrets.</div>
               </div>
             </div>
           </div>

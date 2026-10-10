@@ -40,11 +40,6 @@ export default {
   target: '.tabs, .segmented-control',
   matrix: { rows: 'variant', cols: 'orientation' },
   layout: 'block',
-  ignore: [
-    // The indicator needs JS to measure and position it under the selected tab, and none ships with the library
-    'tabs--animated',
-    'tabs__indicator',
-  ],
   controls: [
     {
       key: 'kind',
@@ -80,6 +75,7 @@ export default {
     { key: 'icons', label: 'Icons', type: 'toggle', when: s => s.kind === 'tabs' },
     { key: 'badge', label: 'Count badge', type: 'toggle', when: s => s.kind === 'tabs' },
     { key: 'disabled', label: 'Disable last tab', type: 'toggle', when: s => s.kind === 'tabs' },
+    { key: 'animated', label: 'Sliding indicator', type: 'toggle', when: s => s.kind === 'tabs' && s.orientation !== 'vertical' },
   ],
   presets: [
     { name: 'Default', state: {} },
@@ -88,6 +84,7 @@ export default {
     { name: 'Vertical settings', state: { orientation: 'vertical', icons: true } },
     { name: 'Full width', state: { full: true, icons: true } },
     { name: 'Scrollable', state: { variant: 'underline', many: true } },
+    { name: 'Sliding underline', state: { variant: 'underline', animated: true } },
     { name: 'Segmented control', state: { kind: 'segmented', selected: '1' } },
   ],
   render(s) {
@@ -108,8 +105,10 @@ export default {
     const panels = tabs.map((tab, i) => `<div class="card" id="${id}-panel-${i}" data-tab-panel aria-labelledby="${id}-tab-${i}"${i === selected ? '' : ' hidden'}>`
       + `<div class="card__content card__content--pt"><strong>${escape(tab.label)}</strong><p class="text--sm text--muted">${escape(tab.text)}</p></div></div>`).join('');
 
-    const className = cx(bem('tabs', s.variant, s.orientation, s.full && 'full'), s.many && 'tabs--scrollable');
-    return `<div class="${className}" data-tabs><div class="tabs__list" data-tabs-list aria-label="Settings">${triggers}</div>`
+    const animated = s.animated && s.orientation !== 'vertical';
+    const className = cx(bem('tabs', s.variant, s.orientation, s.full && 'full', animated && 'animated'), s.many && 'tabs--scrollable');
+    const indicator = animated ? '<span class="tabs__indicator" aria-hidden="true"></span>' : '';
+    return `<div class="${className}" data-tabs><div class="tabs__list" data-tabs-list aria-label="Settings">${triggers}${indicator}</div>`
       + `<div class="tabs__content" data-tabs-panels>${panels}</div></div>`;
   },
 };

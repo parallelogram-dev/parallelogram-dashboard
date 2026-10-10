@@ -96,6 +96,24 @@
     --sheet-from: translateY(100%);
   }
 
+  &--sm &__panel {
+    max-width: 20rem;
+  }
+
+  &--lg &__panel {
+    max-width: 32rem;
+  }
+
+  &--xl &__panel {
+    max-width: 40rem;
+  }
+
+  &--full &__panel {
+    max-width: none;
+    width: 100%;
+  }
+
+  // After the widths so a size modifier never caps a full-width top or bottom panel
   &--top &__panel,
   &--bottom &__panel {
     left: 0;
@@ -112,23 +130,6 @@
 
   &--bottom &__panel {
     top: auto;
-  }
-
-  &--sm &__panel {
-    max-width: 20rem;
-  }
-
-  &--lg &__panel {
-    max-width: 32rem;
-  }
-
-  &--xl &__panel {
-    max-width: 40rem;
-  }
-
-  &--full &__panel {
-    max-width: none;
-    width: 100%;
   }
 
   // --------------------------------------------------------------------------
@@ -199,11 +200,26 @@
 }
 
 // --------------------------------------------------------------------------
-// Drawer (alias with different defaults)
+// Drawer: a sheet whose panel has a border on its inner edge
+//
+// Usable on its own with drawer__* elements and drawer--* modifiers, or added alongside
+// .sheet classes on the same markup.
 // --------------------------------------------------------------------------
 
 .drawer {
   @extend .sheet;
+
+  @each $modifier in (right, left, top, bottom, sm, lg, xl, full) {
+    &--#{$modifier} {
+      @extend .sheet--#{$modifier};
+    }
+  }
+
+  @each $element in (backdrop, panel, header, title, description, close, content, footer, handle) {
+    &__#{$element} {
+      @extend .sheet__#{$element};
+    }
+  }
 
   &__panel {
     border-left: 1px solid var(--border);

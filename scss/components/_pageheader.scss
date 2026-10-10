@@ -1,0 +1,56 @@
+// ==========================================================================
+// Page Header Component
+// ==========================================================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Base Page Header (title, description and actions; usually led by a .breadcrumb)
+// --------------------------------------------------------------------------
+
+.pageheader {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xs;
+  margin-bottom: $spacing-lg;
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-tight;
+    line-height: $line-height-tight;
+  }
+
+  &__description {
+    font-size: $font-size-base;
+    color: var(--fg-muted);
+    max-width: 65ch;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    margin-top: $spacing-2xs;
+  }
+
+  // With actions on same row
+  &--row {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+
+    .pageheader__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-2xs;
+    }
+
+    .pageheader__actions {
+      margin-top: 0;
+    }
+  }
+}

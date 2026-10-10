@@ -44,9 +44,17 @@ function accordion(s) {
 
 function collapsible(s) {
   const [, , body] = ITEMS[0];
-  return `<details class="collapsible"${s.open ? ' open' : ''}>`
-    + `<summary class="collapsible__trigger"><span>${escape(s.title)}</span>${chevron('collapsible__icon')}</summary>`
-    + `<div class="collapsible__content"><div class="collapsible__body">${escape(body)}</div></div></details>`;
+  const label = `<span>${escape(s.title)}</span>${chevron('collapsible__icon')}`;
+  const content = `<div class="collapsible__body">${escape(body)}</div>`;
+
+  if (s.element === 'details') {
+    return `<details class="collapsible"${s.open ? ' open' : ''}>`
+      + `<summary class="collapsible__trigger">${label}</summary>`
+      + `<div class="collapsible__content">${content}</div></details>`;
+  }
+  return '<div class="collapsible">'
+    + `<button type="button" class="collapsible__trigger" aria-expanded="${s.open}" aria-controls="collapsible-1">${label}</button>`
+    + `<div class="collapsible__content" id="collapsible-1">${content}</div></div>`;
 }
 
 function nativeList(s) {
@@ -82,7 +90,7 @@ export default {
         { value: 'button', label: '<button> + aria-expanded' },
         { value: 'details', label: '<details> (no JS)' },
       ],
-      when: s => s.type === 'accordion',
+      when: s => s.type !== 'native',
     },
     { key: 'title', label: 'First title', type: 'text', default: 'Is it accessible?' },
     { key: 'open', label: 'First item open', type: 'toggle', default: true },

@@ -10,7 +10,9 @@
 // --------------------------------------------------------------------------
 
 .separator {
-  background-color: var(--border);
+  // Tone modifiers set this so labelled separators colour their lines too
+  --separator-color: var(--border);
+  background-color: var(--separator-color);
   flex-shrink: 0;
 
   // Horizontal (default)
@@ -32,11 +34,11 @@
   // --------------------------------------------------------------------------
 
   &--muted {
-    background-color: var(--border-muted);
+    --separator-color: var(--border-muted);
   }
 
   &--strong {
-    background-color: var(--fg-subtle);
+    --separator-color: var(--fg-subtle);
   }
 
   // --------------------------------------------------------------------------
@@ -55,7 +57,7 @@
       content: "";
       flex: 1;
       height: 1px;
-      background-color: var(--border);
+      background-color: var(--separator-color);
     }
   }
 

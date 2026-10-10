@@ -67,9 +67,8 @@ export default {
     if (!s.group) {
       return avatar(s);
     }
-    // The group lays out in row-reverse, so the overflow count comes first and the first person last
-    const people = [s.name, ...TEAM.filter(n => n !== s.name).slice(0, 3)].reverse();
+    const people = [s.name, ...TEAM.filter(n => n !== s.name).slice(0, 3)];
     const overflow = s.overflow ? '<span class="avatar__group-overflow" role="img" aria-label="5 more">+5</span>' : '';
-    return `<div class="${bem('avatar__group', s.groupSpacing)}">${overflow}${people.map(n => avatar(s, n)).join('')}</div>`;
+    return `<div class="${bem('avatar__group', s.groupSpacing)}">${people.map(n => avatar(s, n)).join('')}${overflow}</div>`;
   },
 };
