@@ -75,7 +75,7 @@ export default {
     }
     parts.push(`<div class="toast__content">${content.join('')}</div>`);
     if (s.closable) {
-      parts.push(`<button type="button" class="toast__close" aria-label="Dismiss">${icon('x')}</button>`);
+      parts.push(`<button type="button" class="toast__close" aria-label="Dismiss notification">${icon('x')}</button>`);
     }
     if (s.progress) {
       parts.push('<div class="toast__progress" aria-hidden="true"></div>');
@@ -85,6 +85,6 @@ export default {
     if (!s.container) {
       return toast;
     }
-    return `<section class="${bem('toast__container', s.container)}" aria-label="Notifications">${toast}</section>`;
+    return `<section class="${bem('toast__container', s.container)}" aria-label="Notifications" aria-live="polite">${toast}</section>`;
   },
 };

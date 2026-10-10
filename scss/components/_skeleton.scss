@@ -5,17 +5,12 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
-// --------------------------------------------------------------------------
-// Base Skeleton
-// --------------------------------------------------------------------------
-
-.skeleton {
+// Placeholder fill with the shimmer sweep, shared by .skeleton and the compound blocks
+%skeleton-block {
   position: relative;
   background-color: var(--bg-muted);
-  border-radius: $radius-md;
   overflow: hidden;
 
-  // Shimmer animation
   &::after {
     content: "";
     position: absolute;
@@ -28,6 +23,26 @@
     );
     animation: skeleton-shimmer 1.5s ease infinite;
   }
+
+  .skeleton--static &::after,
+  &.skeleton--static::after {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Base Skeleton
+// --------------------------------------------------------------------------
+
+.skeleton {
+  @extend %skeleton-block;
+  border-radius: $radius-md;
 
   // --------------------------------------------------------------------------
   // Shapes
@@ -45,14 +60,20 @@
     border-radius: $radius-sm;
   }
 
+  // Square shapes default to avatar size; a size modifier sets both sides
+  &--circle,
+  &--square {
+    width: 2.5rem;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
   &--circle {
     border-radius: $radius-full;
-    aspect-ratio: 1;
   }
 
   &--square {
     border-radius: $radius;
-    aspect-ratio: 1;
   }
 
   &--button {
@@ -76,15 +97,16 @@
   // Sizes
   // --------------------------------------------------------------------------
 
-  &--xs { height: 0.5rem; }
-  &--sm { height: 0.75rem; }
-  &--md { height: 1rem; }
-  &--lg { height: 1.5rem; }
-  &--xl { height: 2rem; }
+  @each $name, $size in (xs: 0.5rem, sm: 0.75rem, md: 1rem, lg: 1.5rem, xl: 2rem, h-lg: 8rem, h-xl: 10rem) {
+    &--#{$name} {
+      height: $size;
+    }
 
-  // Height modifiers for specific uses
-  &--h-lg { height: 8rem; }
-  &--h-xl { height: 10rem; }
+    &--circle.skeleton--#{$name},
+    &--square.skeleton--#{$name} {
+      width: $size;
+    }
+  }
 
   // Width modifiers
   &--w-50 { width: 50%; }
@@ -92,13 +114,6 @@
   &--w-70 { width: 70%; }
   &--w-80 { width: 80%; }
 
-  // --------------------------------------------------------------------------
-  // No Animation
-  // --------------------------------------------------------------------------
-
-  &--static::after {
-    display: none;
-  }
 }
 
 @keyframes skeleton-shimmer {
@@ -119,10 +134,9 @@
   flex-direction: column;
   gap: $spacing-2xs;
 
-  .skeleton {
-    &:last-child {
-      width: 70%;
-    }
+  // A ragged last line, unless the markup asks for a width
+  > .skeleton:last-child:not([class*="skeleton--w-"]) {
+    width: 70%;
   }
 }
 
@@ -136,8 +150,8 @@
 }
 
 .skeleton__card-image {
+  @extend %skeleton-block;
   height: 10rem;
-  background-color: var(--bg-muted);
   border-radius: $radius-md;
 }
 
@@ -165,9 +179,9 @@
 }
 
 .skeleton__table-cell {
+  @extend %skeleton-block;
   flex: 1;
   height: 1rem;
-  background-color: var(--bg-muted);
   border-radius: $radius-sm;
 }
 
@@ -208,8 +222,8 @@
 }
 
 .skeleton__dashboard-header {
+  @extend %skeleton-block;
   height: 4rem;
-  background-color: var(--bg-muted);
   border-radius: $radius;
 }
 
@@ -220,13 +234,13 @@
 }
 
 .skeleton__dashboard-stat {
+  @extend %skeleton-block;
   height: 6rem;
-  background-color: var(--bg-muted);
   border-radius: $radius;
 }
 
 .skeleton__dashboard-content {
+  @extend %skeleton-block;
   height: 20rem;
-  background-color: var(--bg-muted);
   border-radius: $radius;
 }

@@ -102,7 +102,7 @@ export default {
         { value: 'plain', label: 'Plain icons' },
         { value: 'dot', label: 'Dots' },
       ],
-      when: s => s.type === 'timeline' && s.layout !== 'compact',
+      when: s => s.type === 'timeline',
     },
     { key: 'items', label: 'Items', type: 'select', default: '4', options: ['2', '3', '4', '5', '6'] },
     { key: 'time', label: 'Timestamps', type: 'toggle', default: true },

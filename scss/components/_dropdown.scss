@@ -43,8 +43,9 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     transform: translateY(-0.25rem);
     @include transition-default;
 
+    // Child combinator so a nested submenu stays closed until it is opened itself
     &--open,
-    :is(#{$dropdown-open}) & {
+    :is(#{$dropdown-open}) > & {
       opacity: 1;
       visibility: visible;
       transform: translateY($spacing-3xs);
@@ -55,13 +56,13 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
   // Position Variants
   // --------------------------------------------------------------------------
 
-  &--right &__menu,
+  &--right > &__menu,
   &__menu--right {
     left: auto;
     right: 0;
   }
 
-  &--top &__menu,
+  &--top > &__menu,
   &__menu--top {
     top: auto;
     bottom: 100%;
@@ -75,7 +76,7 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     transform: translateY(-$spacing-3xs);
   }
 
-  &--center &__menu,
+  &--center > &__menu,
   &__menu--center {
     left: 50%;
     transform: translateX(-50%) translateY(-0.25rem);
@@ -174,7 +175,8 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     letter-spacing: $letter-spacing-wide;
   }
 
-  // Submenu (nested)
+  // Submenu (nested): opens on hover, on keyboard focus inside it, or while its trigger
+  // has aria-expanded="true"
   &__submenu {
     position: relative;
 
@@ -187,14 +189,34 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     &-arrow {
       width: $icon-size-sm;
       height: $icon-size-sm;
-      margin-left: $spacing-2xs;
+      margin-left: auto;
     }
 
     &-content {
       position: absolute;
-      top: 0;
-      left: 100%;
+      // Lines the first item up with the trigger and clears the parent menu's padding and border
+      top: calc(-1 * #{$spacing-3xs} - 1px);
+      left: calc(100% + #{$spacing-3xs} + 1px);
       margin-left: $spacing-3xs;
+      transform: none;
+
+      // Bridges the gap so the pointer can travel from the trigger without closing it
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 100%;
+        width: calc(#{$spacing-3xs} * 2 + 1px);
+      }
+    }
+
+    &:hover > &-content,
+    &:focus-within > &-content,
+    &:has(> .dropdown__submenu-trigger[aria-expanded="true"]) > &-content {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
     }
   }
 }
@@ -217,6 +239,26 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
 
   &__item {
     @extend .dropdown__item;
+
+    &--destructive {
+      @extend .dropdown__item--destructive;
+    }
+  }
+
+  &__item-icon {
+    @extend .dropdown__item-icon;
+  }
+
+  &__item-text {
+    @extend .dropdown__item-text;
+  }
+
+  &__item-shortcut {
+    @extend .dropdown__item-shortcut;
+  }
+
+  &__item-check {
+    @extend .dropdown__item-check;
   }
 
   &__divider {

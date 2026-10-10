@@ -8,6 +8,7 @@
 @use "mixins";
 @use "base";
 @use "icon";
+@use "datetime";
 @use "utilities";
 @use "demo";
 
@@ -26,6 +27,7 @@
 @use "components/modal";
 @use "components/tabs";
 @use "components/breadcrumb";
+@use "components/pageheader";
 @use "components/dashboard";
 
 // Additional Components

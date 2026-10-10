@@ -22,9 +22,7 @@ function bar(s) {
 }
 
 function circle(s) {
-  const size = s.size === 'xs' ? '' : s.size;
-  const variant = s.variant === 'info' ? '' : s.variant;
-  const className = bem('progress__circle', size, variant, s.indeterminate && 'indeterminate');
+  const className = bem('progress__circle', s.size, s.variant, s.indeterminate && 'indeterminate');
   const value = s.indeterminate ? 25 : Number(s.value);
   const aria = s.indeterminate ? '' : ` aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100"`;
   const text = s.indeterminate ? '' : `<span class="progress__circle-value">${value}%</span>`;

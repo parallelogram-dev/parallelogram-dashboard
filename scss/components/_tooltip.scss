@@ -128,10 +128,24 @@
     border: 1px solid var(--border);
     box-shadow: $shadow-md;
 
+    // The arrow is a square rotated 45°; border the two sides that face away from the body
     &::before {
       background-color: var(--popover);
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border: 0 solid var(--border);
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+    }
+
+    &.tooltip__content--bottom::before {
+      border-width: 1px 0 0 1px;
+    }
+
+    &.tooltip__content--left::before {
+      border-width: 1px 1px 0 0;
+    }
+
+    &.tooltip__content--right::before {
+      border-width: 0 0 1px 1px;
     }
   }
 }
@@ -163,7 +177,8 @@
     @include transition-opacity;
   }
 
-  &:hover::after {
+  &:hover::after,
+  &:focus-visible::after {
     opacity: 1;
     visibility: visible;
   }

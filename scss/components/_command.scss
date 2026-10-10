@@ -55,12 +55,11 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transform: scale(0.95) translateY(-0.5rem);
     @include transition-default;
 
-    .command[open] &,
-    .command--open & {
-      transform: scale(1) translateY(0);
+    // Only shrunk while inside a closed overlay, so a standalone dialog draws at full size
+    .command:not([open], .command--open) & {
+      transform: scale(0.95) translateY(-0.5rem);
     }
   }
 

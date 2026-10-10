@@ -9,6 +9,29 @@
 $accordion-open: '.accordion__item[open], .accordion__item:has(> .accordion__trigger[aria-expanded="true"], > * > .accordion__trigger[aria-expanded="true"]), .accordion__item--open';
 $collapsible-open: '.collapsible[open], .collapsible:has(> .collapsible__trigger[aria-expanded="true"]), .collapsible--open';
 
+// Animates from 0 to the content's natural height, however tall it is. Closed content is also
+// hidden from focus and assistive tech, which <details> does natively but button triggers do not.
+@mixin disclosure-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  visibility: hidden;
+  transition:
+    grid-template-rows $transition-base $transition-easing,
+    visibility $transition-base;
+
+  > * {
+    min-height: 0;
+  }
+}
+
+// A grid row cannot shrink below its item's padding, so closed bodies drop theirs
+@mixin disclosure-body {
+  transition-property: padding, border-width;
+  transition-duration: $transition-base;
+  transition-timing-function: $transition-easing;
+}
+
 // --------------------------------------------------------------------------
 // Accordion Container
 // --------------------------------------------------------------------------
@@ -72,16 +95,16 @@ $collapsible-open: '.collapsible[open], .collapsible:has(> .collapsible__trigger
   }
 
   &__content {
-    overflow: hidden;
-    max-height: 0;
-    @include transition-default;
+    @include disclosure-content;
 
     :is(#{$accordion-open}) & {
-      max-height: 500px; // Adjust as needed, or use JS for dynamic height
+      grid-template-rows: 1fr;
+      visibility: visible;
     }
   }
 
   &__body {
+    @include disclosure-body;
     padding-bottom: $spacing-sm;
     font-size: $font-size-sm;
     color: var(--fg-muted);
@@ -195,22 +218,29 @@ $collapsible-open: '.collapsible[open], .collapsible:has(> .collapsible__trigger
   }
 
   &__content {
-    overflow: hidden;
-    max-height: 0;
-    @include transition-default;
+    @include disclosure-content;
 
     :is(#{$collapsible-open}) & {
-      max-height: 1000px;
+      grid-template-rows: 1fr;
+      visibility: visible;
     }
   }
 
   &__body {
+    @include disclosure-body;
     padding: 0 $spacing-sm $spacing-sm;
     font-size: $font-size-sm;
     color: var(--fg-muted);
     border-top: 1px solid var(--border);
     padding-top: $spacing-sm;
   }
+}
+
+.accordion__item:not(#{$accordion-open}) .accordion__body,
+.accordion--flush .accordion__item:not(#{$accordion-open}) .accordion__body,
+.collapsible:not(#{$collapsible-open}) .collapsible__body {
+  padding-block: 0;
+  border-top-width: 0;
 }
 
 // --------------------------------------------------------------------------

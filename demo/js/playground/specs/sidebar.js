@@ -127,9 +127,11 @@ export default {
     const mainClass = bem('sidebarlayout__main', collapsed && 'collapsed');
     return '<div class="sidebarlayout">'
       + sidebar(s)
-      + `<div class="${cx('sidebaroverlay', s.open && 'sidebaroverlay--visible')}" aria-hidden="true"></div>`
+      + `<div class="${cx('sidebaroverlay', s.open && 'sidebaroverlay--visible')}" id="${SIDEBAR_ID}-overlay" aria-hidden="true"></div>`
       + `<main class="${mainClass}"><div class="center center--md my--lg">`
-      + `<button type="button" class="btn btn--outline btn--sm mb--md" aria-controls="${SIDEBAR_ID}" aria-expanded="${s.open}">${svg('icon btn__icon', PATHS.menu)}Menu</button>`
+      + `<button type="button" class="btn btn--outline btn--sm mb--md" aria-controls="${SIDEBAR_ID}" aria-expanded="${s.open}"`
+      + ` data-toggle data-toggle-target="#${SIDEBAR_ID}" data-toggle-class="sidebar--open" data-toggle-overlay="#${SIDEBAR_ID}-overlay">`
+      + `${svg('icon btn__icon', PATHS.menu)}Menu</button>`
       + '<h1 class="text--lg text--semibold">Dashboard</h1>'
       + '<p class="text--sm text--muted">Welcome back! Here’s an overview of your workspace.</p>'
       + '</div></main></div>';

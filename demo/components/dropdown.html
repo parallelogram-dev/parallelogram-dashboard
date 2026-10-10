@@ -35,23 +35,23 @@
           <div class="demo-row demo-row--lg">
             <!-- Interactive dropdown with data-toggle -->
             <div class="dropdown layout--relative">
-              <button class="btn btn--outline dropdown__trigger" data-toggle data-toggle-target="#demo-dropdown" data-toggle-capture="true">
+              <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#demo-dropdown" data-toggle-capture="true">
                 Click to Toggle
-                <svg class="icon dropdown__chevron" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                <svg class="icon btn__icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
               </button>
-              <div id="demo-dropdown" class="dropdown__menu demo-preview--dropdown-abs">
-                <button class="dropdown__item">
+              <div id="demo-dropdown" role="menu" class="dropdown__menu demo-preview--dropdown-abs">
+                <button type="button" role="menuitem" class="dropdown__item">
                   <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
                   <span class="dropdown__item-text">Profile</span>
                   <span class="dropdown__item-shortcut">⇧⌘P</span>
                 </button>
-                <button class="dropdown__item">
+                <button type="button" role="menuitem" class="dropdown__item">
                   <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
                   <span class="dropdown__item-text">Settings</span>
                   <span class="dropdown__item-shortcut">⌘S</span>
                 </button>
-                <div class="dropdown__divider"></div>
-                <button class="dropdown__item dropdown__item--destructive">
+                <div class="dropdown__divider" role="separator"></div>
+                <button type="button" role="menuitem" class="dropdown__item dropdown__item--destructive">
                   <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"/><path d="M9 12h12l-3 -3"/><path d="M18 15l3 -3"/></svg>
                   <span class="dropdown__item-text">Logout</span>
                 </button>
@@ -60,16 +60,16 @@
 
             <!-- Static preview (always visible) -->
             <div class="dropdown layout--relative">
-              <button class="btn btn--secondary dropdown__trigger" aria-expanded="true">
+              <button type="button" class="btn btn--secondary dropdown__trigger" aria-haspopup="menu" aria-expanded="true">
                 Static Preview
-                <svg class="icon dropdown__chevron" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                <svg class="icon btn__icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
               </button>
-              <div class="dropdown__menu demo-preview--dropdown">
-                <button class="dropdown__item">
+              <div role="menu" class="dropdown__menu demo-preview--dropdown">
+                <button type="button" role="menuitem" class="dropdown__item">
                   <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
                   <span class="dropdown__item-text">Profile</span>
                 </button>
-                <button class="dropdown__item">
+                <button type="button" role="menuitem" class="dropdown__item">
                   <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
                   <span class="dropdown__item-text">Settings</span>
                 </button>

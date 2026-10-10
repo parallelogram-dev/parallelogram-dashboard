@@ -86,7 +86,9 @@ function subnav(s) {
 }
 
 function main(s) {
-  const toggle = `<button type="button" class="btn btn--ghost btn--icon" aria-label="Toggle section navigation" aria-controls="${SUBNAV_ID}" aria-expanded="${s.subnav !== 'collapsed'}">`
+  // Opens the section navigation off-canvas below the lg breakpoint
+  const toggle = `<button type="button" class="btn btn--ghost btn--icon" aria-label="Toggle section navigation" aria-controls="${SUBNAV_ID}" aria-expanded="${s.subnav === 'open'}"`
+    + ` data-toggle data-toggle-target="#${SUBNAV_ID}" data-toggle-class="subnav--open" data-toggle-overlay="#${SUBNAV_ID}-overlay">`
     + `${svg('icon', PATHS.layoutSidebar)}</button>`;
   const crumb = s.submenu === 'open' ? 'Products' : 'Dashboard';
   const stats = [['Total revenue', '$45,231.89'], ['Subscriptions', '+2,350'], ['Active now', '+573']]
@@ -154,7 +156,7 @@ export default {
     { name: 'Minimal', state: { submenu: '', actions: false, sectionAction: false, badges: false } },
   ],
   render(s) {
-    const overlay = `<div class="${cx('dashboard__overlay', s.subnav === 'open' && 'dashboard__overlay--visible')}" aria-hidden="true"></div>`;
+    const overlay = `<div class="${cx('dashboard__overlay', s.subnav === 'open' && 'dashboard__overlay--visible')}" id="${SUBNAV_ID}-overlay" aria-hidden="true"></div>`;
     return `<div class="dashboard">${navmenu()}${subnav(s)}${overlay}${main(s)}</div>`;
   },
 };

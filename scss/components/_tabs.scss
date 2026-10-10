@@ -218,13 +218,25 @@
     position: relative;
   }
 
+  // Tabs sets --tabs-indicator-left/width on the list from the selected tab
   .tabs__indicator {
     position: absolute;
     bottom: 0;
+    left: var(--tabs-indicator-left, 0);
+    width: var(--tabs-indicator-width, 0);
     height: 2px;
     background-color: var(--primary);
     border-radius: $radius-full;
-    @include transition-default;
-    // Position/width set via JS
+    pointer-events: none;
+    transition: left $transition-base $transition-easing, width $transition-base $transition-easing;
+  }
+
+  &.tabs--underline .tabs__indicator {
+    bottom: -1px;
+  }
+
+  // Once the indicator is live it replaces the selected underline, so it can slide between tabs
+  &.tabs--underline[data-tabs-enhanced] .tabs__trigger[aria-selected="true"] {
+    border-bottom-color: transparent;
   }
 }

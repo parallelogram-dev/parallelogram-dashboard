@@ -323,8 +323,14 @@
     opacity: 0;
     @include interactive;
 
-    .subnav__section:hover & {
+    .subnav__section:hover &,
+    .subnav__section:focus-within &,
+    &:focus-visible {
       opacity: 1;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
     }
 
     &:hover {

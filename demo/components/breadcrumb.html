@@ -33,12 +33,12 @@
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
           <div class="demo-label">With Chevron</div>
-          <nav class="breadcrumb spacer--lg">
+          <nav class="breadcrumb spacer--lg" aria-label="Breadcrumb">
             <ol class="breadcrumb__list">
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Home</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
                 </span>
@@ -46,34 +46,34 @@
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Components</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
                 </span>
               </li>
               <li class="breadcrumb__item">
-                <span class="breadcrumb__page">Breadcrumb</span>
+                <span class="breadcrumb__page" aria-current="page">Breadcrumb</span>
               </li>
             </ol>
           </nav>
 
           <div class="demo-label">With Slash</div>
-          <nav class="breadcrumb breadcrumb--slash">
+          <nav class="breadcrumb breadcrumb--slash" aria-label="Breadcrumb (slash separators)">
             <ol class="breadcrumb__list">
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Home</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator"></span>
               </li>
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Settings</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator"></span>
               </li>
               <li class="breadcrumb__item">
-                <span class="breadcrumb__page">Profile</span>
+                <span class="breadcrumb__page" aria-current="page">Profile</span>
               </li>
             </ol>
           </nav>

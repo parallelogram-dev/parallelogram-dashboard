@@ -48,7 +48,7 @@ function svg(name, className) {
   return `<svg class="${cx('icon', className)}" viewBox="0 0 24 24">${PATHS[name]}</svg>`;
 }
 
-function item(s, cls, [text, iconName, shortcut, checked], extra = {}) {
+function item(s, block, cls, [text, iconName, shortcut, checked], extra = {}) {
   const role = extra.role || ROLES[s.selection];
   const attrs = [`role="${role}"`];
   if (role !== 'menuitem') {
@@ -65,14 +65,14 @@ function item(s, cls, [text, iconName, shortcut, checked], extra = {}) {
   }
   const parts = [];
   if (s.decoration && iconName) {
-    parts.push(svg(iconName, 'dropdown__item-icon'));
+    parts.push(svg(iconName, `${block}__item-icon`));
   }
-  parts.push(`<span class="dropdown__item-text">${escape(text)}</span>`);
+  parts.push(`<span class="${block}__item-text">${escape(text)}</span>`);
   if (s.decoration === 'shortcuts' && shortcut && !extra.popup) {
-    parts.push(`<span class="dropdown__item-shortcut">${escape(shortcut)}</span>`);
+    parts.push(`<span class="${block}__item-shortcut">${escape(shortcut)}</span>`);
   }
   if (role !== 'menuitem') {
-    parts.push(svg('check', 'dropdown__item-check'));
+    parts.push(svg('check', `${block}__item-check`));
   }
   if (extra.popup) {
     parts.push(svg('right', 'dropdown__submenu-arrow'));
@@ -91,7 +91,7 @@ function menuItems(s, block, id) {
   }
   menu.items.forEach((entry, i) => {
     const target = i === 1;
-    parts.push(item(s, itemClass, entry, {
+    parts.push(item(s, block, itemClass, entry, {
       current: target && s.itemState === 'current',
       disabled: target && s.itemState === 'disabled',
     }));
@@ -101,14 +101,14 @@ function menuItems(s, block, id) {
     const open = s.submenu === 'open';
     const subId = `${id}-invite`;
     const sub = [['Email', 'mail'], ['Message', 'message'], ['More…', '']]
-      .map(entry => item(s, itemClass, entry, { role: 'menuitem' }))
+      .map(entry => item(s, block, itemClass, entry, { role: 'menuitem' }))
       .join('');
     if (s.grouped) {
       parts.push(divider);
     }
     parts.push(`<div class="dropdown__submenu">`
-      + item(s, cx(itemClass, 'dropdown__submenu-trigger'), ['Invite users', 'invite'], { role: 'menuitem', popup: subId, expanded: open })
-      + `<div class="dropdown__menu dropdown__submenu-content" id="${subId}" role="menu" aria-label="Invite users"${open ? '' : ' hidden'}>${sub}</div>`
+      + item(s, block, cx(itemClass, 'dropdown__submenu-trigger'), ['Invite users', 'invite'], { role: 'menuitem', popup: subId, expanded: open })
+      + `<div class="dropdown__menu dropdown__submenu-content" id="${subId}" role="menu" aria-label="Invite users">${sub}</div>`
       + '</div>');
   }
 
@@ -116,7 +116,7 @@ function menuItems(s, block, id) {
     if (s.grouped) {
       parts.push(divider);
     }
-    parts.push(item(s, cx(itemClass, 'dropdown__item--destructive'), menu.destructive, { role: 'menuitem' }));
+    parts.push(item(s, block, cx(itemClass, `${block}__item--destructive`), menu.destructive, { role: 'menuitem' }));
   }
   return parts.join('');
 }

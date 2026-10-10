@@ -129,19 +129,29 @@
     }
   }
 
+  // Icon in the first column, everything else stacked in the second; an .empty__content
+  // wrapper around the text is optional
   &--inline {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    justify-items: start;
+    column-gap: $spacing-sm;
     padding: $spacing-lg $spacing-sm;
     text-align: left;
-    gap: $spacing-sm;
+
+    > :not(.empty__icon) {
+      grid-column: 2;
+    }
 
     .empty__icon {
+      grid-column: 1;
+      grid-row: 1 / span 3;
       margin-bottom: 0;
-      flex-shrink: 0;
     }
 
     .empty__content {
-      flex: 1;
+      min-width: 0;
     }
 
     .empty__title {
@@ -153,11 +163,19 @@
     }
   }
 
-  // Contextual variants
-  &--search {
+  // Contextual variants; --search is the --info treatment named for "no results" views
+  &--search,
+  &--info {
     .empty__icon {
       background-color: var(--info-muted);
       color: var(--info);
+    }
+  }
+
+  &--warning {
+    .empty__icon {
+      background-color: var(--warning-muted);
+      color: var(--warning);
     }
   }
 

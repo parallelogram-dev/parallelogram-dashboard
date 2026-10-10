@@ -105,14 +105,38 @@
   // Variants
   // --------------------------------------------------------------------------
 
+  // Small controls at any width; --compact is a narrow search box at this size.
+  // Pair with .btn--sm and .input--sm on the controls placed inside.
+  &--sm,
   &--compact {
-    .toolbar__group {
-      max-width: 16rem;
+    gap: $spacing-2xs;
+
+    .toolbar__icon {
+      left: $spacing-2xs;
+      width: $icon-size-sm;
+      height: $icon-size-sm;
     }
 
     .toolbar__input {
       height: $input-height-sm;
+      padding-left: $spacing-xl;
       font-size: $font-size-xs;
+    }
+
+    .toolbar__clear {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .filter__label {
+      height: 1.75rem;
+      padding: 0 $spacing-2xs;
+    }
+  }
+
+  &--compact {
+    .toolbar__group {
+      max-width: 16rem;
     }
   }
 
@@ -155,25 +179,26 @@
       background-color: var(--primary-hover);
     }
   }
+}
 
-  &__remove {
-    @include flex-center;
-    width: 1rem;
-    height: 1rem;
-    margin-left: $spacing-3xs;
-    margin-right: -$spacing-3xs;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: $radius-full;
-    color: inherit;
-    cursor: pointer;
-    opacity: 0.7;
+// Remove button inside an applied-filter chip
+.filter__remove {
+  @include flex-center;
+  width: 1rem;
+  height: 1rem;
+  margin-left: $spacing-3xs;
+  margin-right: -$spacing-3xs;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: $radius-full;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
 
-    &:hover {
-      opacity: 1;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 
