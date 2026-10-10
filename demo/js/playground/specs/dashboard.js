@@ -87,7 +87,7 @@ function subnav(s) {
 
 function main(s) {
   // Opens the section navigation off-canvas below the lg breakpoint
-  const toggle = `<button type="button" class="btn btn--ghost btn--icon" aria-label="Toggle section navigation" aria-controls="${SUBNAV_ID}" aria-expanded="${s.subnav === 'open'}"`
+  const toggle = `<button type="button" class="btn btn--ghost btn--icon dashboard__subnav-toggle" aria-label="Toggle section navigation" aria-controls="${SUBNAV_ID}" aria-expanded="${s.subnav === 'open'}"`
     + ` data-toggle data-toggle-target="#${SUBNAV_ID}" data-toggle-class="subnav--open" data-toggle-overlay="#${SUBNAV_ID}-overlay">`
     + `${svg('icon', PATHS.layoutSidebar)}</button>`;
   const crumb = s.submenu === 'open' ? 'Products' : 'Dashboard';

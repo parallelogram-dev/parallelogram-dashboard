@@ -541,6 +541,13 @@
   @include scrollbar-thin;
 }
 
+// Opens the off-canvas .subnav; only needed below lg, where the subnav leaves the layout
+.dashboard__subnav-toggle {
+  @include lg {
+    display: none;
+  }
+}
+
 // --------------------------------------------------------------------------
 // Responsive Behavior
 // --------------------------------------------------------------------------
@@ -624,9 +631,10 @@
     }
   }
 
+  // Leaves a strip of the overlay showing so a tap beside the panel closes it
   .subnav {
     left: 0;
-    width: 100%;
+    width: min(20rem, calc(100% - 3rem));
   }
 
   .dashboard__main {
@@ -651,5 +659,10 @@
   &--visible {
     display: block;
     opacity: 1;
+  }
+
+  // The subnav is back in the layout, so a left-open overlay must not cover the page
+  @include lg {
+    display: none;
   }
 }
