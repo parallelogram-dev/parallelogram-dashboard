@@ -26,7 +26,7 @@
 }
 
 // Let <dialog open> drive overlay components without the UA dialog box styles getting in the way
-:where(dialog.modal, dialog.modaloverlay, dialog.sheet, dialog.command, dialog.navbarmobile) {
+:where(dialog.modal, dialog.modaloverlay, dialog.alertdialog, dialog.sheet, dialog.drawer, dialog.command, dialog.navbarmobile) {
   width: auto;
   height: auto;
   max-width: none;

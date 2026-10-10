@@ -250,6 +250,7 @@ body {
 
 .pw__stage {
   min-width: 0;
+  overflow-x: auto;
   padding: 1rem;
   background-color: var(--bg-muted);
 }

@@ -36,7 +36,7 @@
       display: block;
     }
 
-    .pg-stage--block > :not(.pg-matrix) {
+    .pg-stage--block > :not(.pg-matrix, dialog) {
       max-width: 40rem;
       margin-inline: auto;
     }
@@ -65,6 +65,32 @@
 
     .pg-stage--block .pg-matrix td {
       min-width: 16rem;
+    }
+
+    /* Page-level layouts fill the frame with no padding */
+    .pg-stage--full {
+      display: block;
+      padding: 0;
+    }
+
+    .pg-stage--full:has(> .pg-matrix) {
+      padding: 1.5rem;
+    }
+
+    /* Each cell is its own small viewport: fixed children stay inside it, and
+       viewport-height layouts fill the cell rather than the frame */
+    .pg-stage--full .pg-cell__preview {
+      position: relative;
+      contain: layout paint;
+      width: 64rem;
+      height: 28rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 0.375rem;
+    }
+
+    .pg-stage--full .pg-cell__preview :is(.dashboard, .sidebarlayout) {
+      min-height: 100%;
     }
 
     .pg-cell {

@@ -110,6 +110,6 @@ export default {
     }
     const error = s.state === 'error';
     const hint = s.hint ? `<p class="${error ? 'form__error' : 'form__description'}">${escape(s.hint)}</p>` : '';
-    return `<div class="${bem('form__field', error && 'error')}"><label class="form__label" for="${field.id}">${escape(s.label)}</label>${field.html}${hint}</div>`;
+    return `<div class="form__field"><label class="form__label" for="${field.id}">${escape(s.label)}</label>${field.html}${hint}</div>`;
   },
 };

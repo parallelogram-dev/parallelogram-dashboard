@@ -8,13 +8,20 @@
  *
  * Deprecated state classes (see deprecated-states.mjs) are exempt from the coverage check and
  * produce a warning wherever a spec or demo page still renders them.
+ *
+ * Pass spec file paths to check only those specs, before they are registered:
+ *   node scripts/playground-check.mjs demo/js/playground/specs/table.js
  */
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import deprecated from './deprecated-states.mjs';
 import { definedClasses, importDemo, root, scssDir } from './lib.mjs';
 
-const { default: specs } = await importDemo('js/playground/specs/index.js');
+const only = process.argv.slice(2);
+const specs = only.length
+  ? await Promise.all(only.map(async file => (await import(pathToFileURL(resolve(file)))).default))
+  : (await importDemo('js/playground/specs/index.js')).default;
 const { defaultState, normaliseOptions } = await importDemo('js/playground/lib.js');
 const { default: manifest } = await importDemo('js/components/manifest.js');
 const pages = manifest.flatMap(group => group.pages);
@@ -72,6 +79,11 @@ for (const spec of specs) {
       console.log(`✓ ${spec.name} (${source})`);
     }
   }
+}
+
+if (only.length) {
+  if (warnings.length) console.warn(`\n${warnings.join('\n')}`);
+  process.exit(failed ? 1 : 0);
 }
 
 const documented = new Set(pages.map(p => p.scss).filter(Boolean));

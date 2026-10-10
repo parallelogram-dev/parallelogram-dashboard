@@ -15,7 +15,7 @@
 
   // Horizontal (default)
   &--horizontal,
-  &:not(.separator--vertical) {
+  &:not(.separator--vertical, .separator--label) {
     height: 1px;
     width: 100%;
   }

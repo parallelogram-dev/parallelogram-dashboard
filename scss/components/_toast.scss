@@ -59,6 +59,8 @@
 // --------------------------------------------------------------------------
 
 .toast {
+  // Anchors the absolutely positioned progress bar
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: $spacing-xs;
