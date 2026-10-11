@@ -8,7 +8,7 @@ export default [
   {
     group: 'Foundations',
     pages: [
-      { slug: 'typography', name: 'Typography', description: 'Text styles and hierarchy.', scss: '_base.scss' },
+      { slug: 'typography', name: 'Typography', description: 'Compact type scale, heading classes and text styles.', scss: '_base.scss' },
     ],
   },
   {

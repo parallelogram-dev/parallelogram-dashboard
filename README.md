@@ -8,7 +8,7 @@ A BEM-style CSS dashboard component library inspired by shadcn/ui. Built with SC
 # Install dependencies
 npm install
 
-# Build CSS
+# Build the library (expanded and minified) and the demo stylesheet
 npm run build
 
 # Watch for changes during development
@@ -60,13 +60,14 @@ load `<p-modal>`, `<p-datetime>` and the modal trigger from there. Pages must be
 ```
 parallelogram-dashboard/
 ├── scss/                       # SCSS source files
-│   ├── _variables.scss         # Design tokens (colors, spacing, etc.)
+│   ├── _variables.scss         # Sass values (palette, spacing, type, breakpoints); emits no CSS
+│   ├── _tokens.scss            # Theme custom properties and the @parallelogram-js/core tokens they feed
 │   ├── _mixins.scss            # Reusable SCSS mixins
 │   ├── _base.scss              # Reset & base styles
 │   ├── _utilities.scss         # Utility classes
 │   ├── _icon.scss              # Icon styles
 │   ├── _datetime.scss          # <p-datetime> web component theming
-│   ├── _demo.scss              # Demo-specific styles
+│   ├── _demo.scss              # Demo page styles (not part of the library)
 │   ├── components/             # Component styles
 │   │   ├── _accordion.scss
 │   │   ├── _alert.scss
@@ -99,7 +100,8 @@ parallelogram-dashboard/
 │   │   ├── _toast.scss
 │   │   ├── _toolbar.scss
 │   │   └── _tooltip.scss
-│   └── main.scss               # Main entry point
+│   ├── main.scss               # Library entry point → dist/parallelogram-dashboard.css
+│   └── demo-pages.scss         # Demo entry point → demo/css/demo.css
 ├── demo/                       # Demo pages & assets
 │   ├── css/                    # Built CSS (auto-copied on build)
 │   ├── js/
@@ -115,7 +117,8 @@ parallelogram-dashboard/
 
 ### Colors
 
-Colors are defined as CSS custom properties for easy theming. Edit `scss/_variables.scss` to customize.
+Colors are defined as CSS custom properties for easy theming. Edit the `$theme-tokens` map in
+`scss/_tokens.scss` to customize; each entry holds its light and dark value.
 
 #### Semantic Colors
 
@@ -1078,12 +1081,14 @@ Apart from `data-toggle-class`, none of the scripts add state classes: Accordion
 
 ### Dark Mode Toggle
 
+The page follows the OS until a toggle pins it, so the toggle writes an explicit theme:
+
 ```javascript
-// Toggle theme
 function toggleTheme() {
   const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+  const theme = html.getAttribute('data-theme');
+  const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
 }
 ```
 
@@ -1097,34 +1102,68 @@ A floating navigation button is automatically added to all demo pages, allowing 
 
 ### Light/Dark Mode
 
-Dark mode is activated by adding `data-theme="dark"` to the `<html>` element:
+The theme follows the operating system's light or dark setting. Each colour token is a
+`light-dark()` pair and `:root` sets `color-scheme: light dark`, so no second block of overrides
+is needed. Set `data-theme` to pin a theme, on `<html>` or on any element to pin just that subtree:
 
 ```html
 <html data-theme="dark">
+<section data-theme="light">
 ```
 
 ### Customizing Colors
 
-Edit the CSS custom properties in `scss/_variables.scss`:
+Edit the `$theme-tokens` map in `scss/_tokens.scss`. Each entry is a light and a dark value, and
+an entry whose two values match is emitted as a plain colour:
 
 ```scss
+$theme-tokens: (
+  primary: (#your-light-primary, #your-dark-primary),
+  primary-fg: (#text-on-light-primary, #text-on-dark-primary),
+  success: (#22c55e, #22c55e),
+  // ...
+);
+```
+
+At runtime, override a token for both themes with a plain value or keep the pair:
+
+```css
 :root {
-  // Change primary color
-  --primary: #your-color;
-  --primary-fg: #text-color;
-  --primary-hover: #hover-color;
-
-  // Change accent colors
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --destructive: #ef4444;
-}
-
-[data-theme="dark"] {
-  // Dark mode overrides
-  --primary: #your-dark-primary;
+  --primary: light-dark(#4f46e5, #818cf8);
 }
 ```
+
+### Typography
+
+`html` keeps the reader's browser font size (`100%`), so every `rem` scales with it. Element
+styles for headings, `code`, `kbd`, `pre`, `blockquote` and `hr` sit inside `:where()` and carry
+no specificity, so any component class overrides them.
+
+Headings use a compact fluid scale, set in `$heading-sizes` in `scss/_variables.scss` and
+exposed as `--heading-1` to `--heading-6`. h1 runs from 24px on a phone to 30px on desktop, h3
+from 18px to 20px, and h4 to h6 are fixed at 18, 16 and 14px. Fonts and leading are
+`--font-sans`, `--font-mono`, `--leading-tight`, `--leading-normal` and `--leading-relaxed`.
+
+| Class | Use |
+|-------|-----|
+| `.heading .heading--1` … `--6` | Heading sizes on any element, for when the look and the outline level differ |
+| `.text--lead` | Introductory paragraph under a page or section title |
+| `.text--overline` | Small uppercase label above a title |
+| `.text--tabular` | Tabular figures; tables and `.stat__value` already use them |
+| `.text--mono` | Monospace text |
+
+### @parallelogram-js/core
+
+`scss/_tokens.scss` also sets core's role and surface tokens (`--color-*`, `--surface-*`,
+`--button-*`, `--form-control-*`, `--framework-focus-*`, `--framework-transition-*`) from the
+dashboard theme. Core's web components (`<p-modal>`, `<p-datetime>`, `<p-select>`, `<p-uploader>`,
+toasts) and its per-component stylesheets (`styles/components/*.css`) therefore match the
+dashboard in both themes with no further theming. Load this stylesheet instead of core's
+`styles/index.css`, whose own `:root` palette would compete with it.
+
+The dashboard's transitions and focus rings read the same `--framework-transition-duration`,
+`--framework-transition-easing` and `--framework-focus-*` tokens, and transitions drop to `0s`
+under `prefers-reduced-motion: reduce`.
 
 ---
 
@@ -1188,13 +1227,6 @@ Use these as starting templates:
   </div>
 
   <script type="module" src="js/main.js"></script>
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
-    }
-  </script>
 </body>
 </html>
 ```

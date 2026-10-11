@@ -46,200 +46,6 @@ $amber-600: #d97706;
 $amber-900: #78350f;
 
 // --------------------------------------------------------------------------
-// CSS Custom Properties (Light Theme)
-// --------------------------------------------------------------------------
-
-:root {
-  // Background
-  --bg: #{$zinc-50};
-  --bg-muted: #{$zinc-100};
-  --bg-subtle: #{$zinc-200};
-
-  // Foreground
-  --fg: #{$zinc-950};
-  --fg-muted: #{$zinc-500};
-  --fg-subtle: #{$zinc-400};
-
-  // Border
-  --border: #{$zinc-200};
-  --border-muted: #{$zinc-100};
-
-  // Primary (dark on light)
-  --primary: #{$zinc-900};
-  --primary-fg: #{$zinc-50};
-  --primary-hover: #{$zinc-800};
-
-  // Secondary
-  --secondary: #{$zinc-100};
-  --secondary-fg: #{$zinc-900};
-  --secondary-hover: #{$zinc-200};
-
-  // Destructive
-  --destructive: #{$red-500};
-  --destructive-fg: #{$zinc-50};
-  --destructive-hover: #{$red-600};
-  --destructive-muted: #{$red-50};
-  --destructive-muted-fg: #{$red-900};
-
-  // Success
-  --success: #{$green-500};
-  --success-fg: #{$zinc-50};
-  --success-muted: #{$green-50};
-  --success-muted-fg: #{$green-900};
-
-  // Warning
-  --warning: #{$amber-500};
-  --warning-fg: #{$zinc-950};
-  --warning-muted: #{$amber-50};
-  --warning-muted-fg: #{$amber-900};
-
-  // Info
-  --info: #{$blue-500};
-  --info-fg: #{$zinc-50};
-  --info-muted: #{$blue-50};
-  --info-muted-fg: #{$blue-900};
-
-  // Accent (used for highlights, selections)
-  --accent: #{$zinc-100};
-  --accent-fg: #{$zinc-900};
-
-  // Focus ring
-  --ring: #{$zinc-400};
-  --ring-offset: #{$zinc-50};
-
-  // Card
-  --card: #{$zinc-50};
-  --card-fg: #{$zinc-950};
-
-  // Popover/Dropdown
-  --popover: #{$zinc-50};
-  --popover-fg: #{$zinc-950};
-
-  // Input
-  --input: #{$zinc-200};
-  --input-placeholder: #{$zinc-400};
-
-  // Sidebar
-  --sidebar: #{$zinc-50};
-  --sidebar-fg: #{$zinc-950};
-  --sidebar-muted: #{$zinc-500};
-  --sidebar-border: #{$zinc-200};
-  --sidebar-accent: #{$zinc-100};
-  --sidebar-accent-fg: #{$zinc-900};
-
-  // Chart series, in fixed order (never cycled). Validated for colour-vision deficiency
-  // against the light card surface; slots 3–5 sit below 3:1, so charts always offer a table view
-  --chart-1: #2a78d6;
-  --chart-2: #eb6834;
-  --chart-3: #1baf7a;
-  --chart-4: #eda100;
-  --chart-5: #e87ba4;
-  --chart-6: #008300;
-  --chart-7: #4a3aa7;
-  --chart-8: #e34948;
-  --chart-surface: var(--card);
-  --chart-grid: #{$zinc-100};
-  --chart-axis: #{$zinc-300};
-  --chart-muted: #{$zinc-500};
-}
-
-// --------------------------------------------------------------------------
-// Dark Theme
-// --------------------------------------------------------------------------
-
-[data-theme="dark"] {
-  // Background
-  --bg: #{$zinc-950};
-  --bg-muted: #{$zinc-900};
-  --bg-subtle: #{$zinc-800};
-
-  // Foreground
-  --fg: #{$zinc-50};
-  --fg-muted: #{$zinc-400};
-  --fg-subtle: #{$zinc-500};
-
-  // Border
-  --border: #{$zinc-800};
-  --border-muted: #{$zinc-900};
-
-  // Primary (light on dark)
-  --primary: #{$zinc-50};
-  --primary-fg: #{$zinc-900};
-  --primary-hover: #{$zinc-200};
-
-  // Secondary
-  --secondary: #{$zinc-800};
-  --secondary-fg: #{$zinc-50};
-  --secondary-hover: #{$zinc-700};
-
-  // Destructive
-  --destructive: #{$red-600};
-  --destructive-fg: #{$zinc-50};
-  --destructive-hover: #{$red-500};
-  --destructive-muted: #{$red-900};
-  --destructive-muted-fg: #{$red-100};
-
-  // Success
-  --success: #{$green-500};
-  --success-fg: #{$zinc-950};
-  --success-muted: #{$green-900};
-  --success-muted-fg: #{$green-100};
-
-  // Warning
-  --warning: #{$amber-500};
-  --warning-fg: #{$zinc-950};
-  --warning-muted: #{$amber-900};
-  --warning-muted-fg: #{$amber-100};
-
-  // Info
-  --info: #{$blue-500};
-  --info-fg: #{$zinc-50};
-  --info-muted: #{$blue-900};
-  --info-muted-fg: #{$blue-100};
-
-  // Accent
-  --accent: #{$zinc-800};
-  --accent-fg: #{$zinc-50};
-
-  // Focus ring
-  --ring: #{$zinc-500};
-  --ring-offset: #{$zinc-950};
-
-  // Card
-  --card: #{$zinc-900};
-  --card-fg: #{$zinc-50};
-
-  // Popover/Dropdown
-  --popover: #{$zinc-900};
-  --popover-fg: #{$zinc-50};
-
-  // Input
-  --input: #{$zinc-700};
-  --input-placeholder: #{$zinc-500};
-
-  // Sidebar
-  --sidebar: #{$zinc-950};
-  --sidebar-fg: #{$zinc-50};
-  --sidebar-muted: #{$zinc-400};
-  --sidebar-border: #{$zinc-800};
-  --sidebar-accent: #{$zinc-800};
-  --sidebar-accent-fg: #{$zinc-50};
-
-  // Chart series stepped for the dark surface; the same hues and order as light
-  --chart-1: #3987e5;
-  --chart-2: #d95926;
-  --chart-3: #199e70;
-  --chart-4: #c98500;
-  --chart-5: #d55181;
-  --chart-6: #008300;
-  --chart-7: #9085e9;
-  --chart-8: #e66767;
-  --chart-grid: #{$zinc-800};
-  --chart-axis: #{$zinc-700};
-  --chart-muted: #{$zinc-400};
-}
-
-// --------------------------------------------------------------------------
 // Typography
 // --------------------------------------------------------------------------
 
@@ -257,13 +63,27 @@ $font-size-2xl: 1.5rem;      // 24px
 $font-size-3xl: 1.875rem;    // 30px
 $font-size-4xl: 2.25rem;     // 36px
 
-// Heading scale: each level is $type-scale-ratio times the one below it, from h6 at 1rem.
-// Small screens use a gentler ratio so h1 stays readable on a phone.
-$type-scale-ratio: 1.333;        // perfect fourth: 16 / 21 / 28 / 38 / 50 / 67px
-$type-scale-ratio-sm: 1.2;       // minor third:    16 / 19 / 23 / 28 / 33 / 40px
+// Heading scale, compact for dashboards. Each step is (phone, desktop) in rem; fluid() eases
+// between them across $fluid-min-width to $fluid-max-width, and equal values stay fixed.
+$fluid-min-width: 23.4375rem;    // 375px
+$fluid-max-width: 80rem;         // 1280px
 
-@function type-step($step, $ratio: $type-scale-ratio) {
-  @return math.div(math.round(math.pow($ratio, $step) * 1000), 1000) * 1rem;
+$heading-sizes: (
+  1: (1.5rem, 1.875rem),         // 24 → 30px
+  2: (1.25rem, 1.5rem),          // 20 → 24px
+  3: (1.125rem, 1.25rem),        // 18 → 20px
+  4: (1.125rem, 1.125rem),       // 18px
+  5: (1rem, 1rem),               // 16px
+  6: (0.875rem, 0.875rem),       // 14px
+);
+
+@function fluid($min, $max) {
+  @if $min == $max {
+    @return $min;
+  }
+  $slope: math.div($max - $min, $fluid-max-width - $fluid-min-width);
+  $intercept: $min - $slope * $fluid-min-width;
+  @return clamp(#{$min}, #{math.div(math.round($intercept * 1000), 1000)} + #{math.div(math.round($slope * 100000), 1000)}vw, #{$max});
 }
 
 $font-weight-normal: 400;

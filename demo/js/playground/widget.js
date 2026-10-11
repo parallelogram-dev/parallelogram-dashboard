@@ -1,5 +1,6 @@
 import { defaultState, escape, normaliseOptions } from './lib.js';
 import { formatHtml } from './format.js';
+import { codeButton, refreshCode } from '../components/code-sheet.js';
 
 const SETTINGS_KEY = 'pg-settings';
 const FRAME_SRC = new URL('../../playground-frame.html', import.meta.url).href;
@@ -35,6 +36,7 @@ const TEMPLATE = `
       <input type="checkbox" class="switch__input" role="switch" data-checker>
       <span class="switch__label text--sm">Checkerboard</span>
     </label>
+    <span class="pw__baraction" data-code-slot></span>
   </div>
   <div class="pw__body">
     <div class="pw__stage">
@@ -60,13 +62,6 @@ const TEMPLATE = `
       </div>
       <form class="pw__controls" data-controls></form>
     </aside>
-  </div>
-  <div class="pw__code" data-code-panel>
-    <div class="pw__codebar">
-      <span class="text--sm text--medium">HTML</span>
-      <button type="button" class="btn btn--ghost btn--sm" data-copy>Copy</button>
-    </div>
-    <pre class="pw__pre"><code data-code></code></pre>
   </div>
 `;
 
@@ -121,6 +116,7 @@ function scopeIds(html, suffix) {
  *
  * State lives in the URL hash as query parameters (e.g. `#variant=destructive&size=sm`) so
  * a configured preview can be shared. Only values that differ from the defaults are written.
+ * Returns the current markup getter for callers such as "Copy for LLM".
  */
 export function mountPlayground(container, spec) {
   container.classList.add('pw');
@@ -131,10 +127,8 @@ export function mountPlayground(container, spec) {
     viewport: $('[data-viewport-frame]'),
     widthLabel: $('[data-width-label]'),
     frame: $('[data-frame]'),
-    codePanel: $('[data-code-panel]'),
     classesBar: $('[data-classes-bar]'),
     classes: $('[data-classes]'),
-    code: $('[data-code]'),
     presetsBlock: $('[data-presets-block]'),
     presets: $('[data-presets]'),
     controls: $('[data-controls]'),
@@ -144,6 +138,15 @@ export function mountPlayground(container, spec) {
   const settings = { view: 'single', viewport: 'full', checker: false, ...loadSettings() };
   let state = defaultState(spec);
   let frameReady = false;
+  let markup = '';
+
+  const codeTrigger = codeButton({
+    title: `${spec.name} playground`,
+    description: 'Markup for the current controls and preset.',
+    getCode: () => markup,
+    className: 'btn btn--outline btn--sm',
+  });
+  $('[data-code-slot]').append(codeTrigger);
 
   function readHash() {
     state = defaultState(spec);
@@ -239,9 +242,10 @@ export function mountPlayground(container, spec) {
     root.innerHTML = matrix ? matrixHtml() : html;
     els.frame.contentWindow.Parallelogram?.init(root);
 
-    els.code.textContent = formatHtml(html);
+    markup = formatHtml(html);
+    refreshCode();
     els.classes.textContent = targetClasses(spec, html);
-    els.codePanel.hidden = Boolean(matrix);
+    codeTrigger.disabled = Boolean(matrix);
     els.classesBar.hidden = Boolean(matrix);
   }
 
@@ -316,7 +320,6 @@ export function mountPlayground(container, spec) {
     applySettings();
   });
 
-  $('[data-copy]').addEventListener('click', () => copy(els.code.textContent, 'markup'));
   $('[data-copy-classes]').addEventListener('click', () => copy(els.classes.textContent, 'classes'));
   $('[data-copy-selector]').addEventListener('click', () => copy(toSelector(els.classes.textContent), 'selector'));
 
@@ -350,4 +353,6 @@ export function mountPlayground(container, spec) {
   renderControls();
   applySettings();
   els.frame.src = FRAME_SRC;
+
+  return { markup: () => markup };
 }

@@ -1571,10 +1571,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Theme toggle
   window.toggleTheme = () => {
     const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    const theme = html.getAttribute('data-theme');
+    const dark = !(theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches));
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
 
-    window.toast.info(current === 'dark' ? 'Light mode enabled' : 'Dark mode enabled', {
+    window.toast.info(dark ? 'Dark mode enabled' : 'Light mode enabled', {
       duration: 2000,
     });
   };
