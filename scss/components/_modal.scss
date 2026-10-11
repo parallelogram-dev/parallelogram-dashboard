@@ -8,7 +8,8 @@
 
 // --------------------------------------------------------------------------
 // PModal Web Component Custom Properties
-// These CSS custom properties theme the shadow DOM of <p-modal>
+// Colours, surfaces and buttons come from the core tokens in _variables.scss; these are only
+// the sizes and timings where the dashboard differs from core's defaults
 // --------------------------------------------------------------------------
 
 p-modal > [slot="title"] {
@@ -19,36 +20,9 @@ p-modal > [slot="title"] {
 }
 
 p-modal {
-  // Colors - inherit from theme
-  --modal-text: var(--fg);
-  --modal-muted: var(--fg-muted);
-  --modal-accent: var(--primary);
-  --modal-hover: var(--accent);
-  --modal-backdrop-bg: rgb(0 0 0 / 0.5);
-  --modal-panel-bg: var(--bg);
-  --modal-panel-color: var(--fg);
-  --modal-panel-border: var(--border);
-  --modal-header-bg: var(--bg);
-  --modal-header-border: var(--border);
-  --modal-footer-bg: var(--bg);
-  --modal-footer-border: var(--border);
-  --modal-close-hover-bg: var(--accent);
-
-  // Button theming
-  --modal-btn-primary-bg: var(--primary);
-  --modal-btn-primary-color: var(--primary-fg);
-  --modal-btn-primary-hover-bg: var(--primary-hover);
-  --modal-btn-danger-bg: var(--destructive);
-  --modal-btn-danger-color: var(--destructive-fg);
-  --modal-btn-danger-hover-bg: var(--destructive-hover);
-  --modal-btn-bg: var(--secondary);
-  --modal-btn-color: var(--secondary-fg);
-  --modal-btn-hover-bg: var(--secondary-hover);
+  --modal-backdrop-bg: var(--color-overlay);
 
   // Spacing
-  --modal-space-xs: 0.125rem;
-  --modal-space-sm: #{$spacing-3xs};
-  --modal-space-md: #{$spacing-2xs};
   --modal-space-lg: #{$spacing-xs};
   --modal-space-xl: #{$spacing-sm};
   --modal-padding-x: #{$spacing-lg};
@@ -57,11 +31,7 @@ p-modal {
 
   // Border radius
   --modal-radius: #{$radius};
-  --modal-radius-lg: #{$radius-md};
   --modal-radius-xl: #{$radius-lg};
-
-  // Shadows
-  --modal-shadow: #{$shadow-xl};
 
   // Timing
   --modal-transition: #{$transition-base};

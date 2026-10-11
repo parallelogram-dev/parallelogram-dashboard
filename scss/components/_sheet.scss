@@ -12,6 +12,7 @@
 .sheet {
   // Where the panel sits while closed; each edge modifier sets its own
   --sheet-from: translateX(100%);
+  --sheet-duration: calc(var(--framework-transition-duration) * 2);
 
   position: fixed;
   inset: 0;
@@ -19,7 +20,13 @@
   display: flex;
   opacity: 0;
   visibility: hidden;
-  @include transition-opacity;
+  // Closing a <dialog> applies display: none and drops it from the top layer at once; easing
+  // display and overlay as discrete values keeps it on screen until the slide out has finished
+  transition:
+    opacity var(--sheet-duration) var(--framework-transition-easing),
+    visibility var(--sheet-duration) allow-discrete,
+    display var(--sheet-duration) allow-discrete,
+    overlay var(--sheet-duration) allow-discrete;
 
   &[open],
   &--open {
@@ -63,7 +70,7 @@
     background-color: var(--bg);
     box-shadow: $shadow-xl;
     transform: var(--sheet-from);
-    @include transition-default;
+    transition: transform var(--sheet-duration) var(--framework-transition-easing);
   }
 
   &:is([open], .sheet--open) &__panel {

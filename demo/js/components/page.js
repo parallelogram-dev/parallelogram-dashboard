@@ -2,12 +2,14 @@ import manifest from './manifest.js';
 import specs from '../playground/specs/index.js';
 import { mountPlayground } from '../playground/widget.js';
 import { bindThemeToggle } from './theme.js';
+import { codeButton } from './code-sheet.js';
 import { escape } from '../playground/lib.js';
 import { formatHtml } from '../playground/format.js';
 
 const slug = document.body.dataset.component;
 const pages = manifest.flatMap(group => group.pages);
 const index = pages.findIndex(p => p.slug === slug);
+let playgroundMarkup = null;
 
 function renderNav(nav) {
   const current = pages[index]?.name ?? 'Components';
@@ -84,7 +86,7 @@ function addLlmCopy(intro) {
     });
 
   button.addEventListener('click', async () => {
-    const markup = document.querySelector('.pw [data-code]')?.textContent;
+    const markup = playgroundMarkup?.();
     const fence = '```';
     const text = markup
       ? `${reference}\n## Current playground markup\n\n${fence}html\n${markup}\n${fence}\n`
@@ -101,10 +103,11 @@ function addLlmCopy(intro) {
 addLlmCopy(document.querySelector('.docs__intro'));
 
 /**
- * Give every static example an "HTML" disclosure with its formatted markup and a copy button.
+ * Give every static example an "HTML" button that opens its formatted markup in the code sheet.
  *
  * An example is the element after each .demo-label, or each top-level block when a page has no
- * labels. Markup is captured before main.js enhances the page, so it carries no runtime
+ * labels. The button sits at the end of the example's label, or after the example when it has
+ * none. Markup is captured before main.js enhances the page, so it carries no runtime
  * attributes, and demo-* layout classes are stripped because they are not part of the library.
  */
 function addExampleCode(section) {
@@ -113,10 +116,10 @@ function addExampleCode(section) {
   }
   const labels = [...section.querySelectorAll('.demo-label')];
   const examples = labels.length
-    ? labels.map(label => label.nextElementSibling).filter(Boolean)
-    : [...section.children].filter(el => !el.matches('h2, p, .docs__code'));
+    ? labels.map(label => [label.nextElementSibling, label]).filter(([example]) => example)
+    : [...section.children].filter(el => !el.matches('h2, p, .docs__examplebar')).map(example => [example, null]);
 
-  for (const example of examples) {
+  for (const [example, label] of examples) {
     const clone = example.cloneNode(true);
     for (const el of [clone, ...clone.querySelectorAll('[class]')]) {
       const kept = [...el.classList].filter(c => !c.startsWith('demo-') && !/^(spacer|constrain|layout)--?/.test(c));
@@ -127,24 +130,21 @@ function addExampleCode(section) {
       }
     }
     const code = formatHtml(clone.outerHTML);
-
-    const details = document.createElement('details');
-    details.className = 'docs__code';
-    details.innerHTML = `<summary class="docs__codesummary">HTML</summary>
-      <div class="docs__codebody">
-        <button type="button" class="btn btn--ghost btn--sm docs__codecopy">Copy</button>
-        <pre class="docs__pre"><code></code></pre>
-      </div>`;
-    details.querySelector('code').textContent = code;
-    details.querySelector('.docs__codecopy').addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(code);
-        window.toast?.success('Markup copied to clipboard', { duration: 2000 });
-      } catch {
-        window.toast?.error('Copy failed. Select the code and copy it manually.');
-      }
+    const button = codeButton({
+      title: label ? label.textContent.trim() : pages[index].name,
+      description: label ? `${pages[index].name} example` : '',
+      getCode: () => code,
     });
-    example.after(details);
+
+    if (label) {
+      label.classList.add('docs__examplelabel');
+      label.append(button);
+    } else {
+      const bar = document.createElement('div');
+      bar.className = 'docs__examplebar';
+      bar.append(button);
+      example.after(bar);
+    }
   }
 }
 
@@ -153,5 +153,5 @@ addExampleCode(document.querySelector('[aria-labelledby="examples-heading"]'));
 const playground = document.querySelector('[data-playground]');
 const spec = specs.find(s => s.id === pages[index]?.spec);
 if (playground && spec) {
-  mountPlayground(playground, spec);
+  playgroundMarkup = mountPlayground(playground, spec).markup;
 }
