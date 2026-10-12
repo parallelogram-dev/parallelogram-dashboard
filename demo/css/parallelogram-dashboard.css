@@ -3939,6 +3939,7 @@ p-modal {
 }
 .avatar__status {
   position: absolute;
+  z-index: 1;
   bottom: 0;
   right: 0;
   width: 0.75rem;
