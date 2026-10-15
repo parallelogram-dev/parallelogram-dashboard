@@ -54,11 +54,6 @@
         </div>
       </div>
 
-      <div class="navmenu__footer">
-        <a href="settings-account.html" class="navmenu__avatar" aria-label="Your account">
-          <span class="navmenu__avatar-fallback">JD</span>
-        </a>
-      </div>
     </nav>
 
     <!-- Sub Navigation -->
@@ -139,9 +134,58 @@
           <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
           </button>
-          <button class="btn btn--ghost btn--icon">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
-          </button>
+          <div class="dropdown dropdown--right">
+            <button type="button" class="btn btn--ghost btn--icon dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Notifications" data-toggle data-toggle-target="#notificationsPanel" data-toggle-capture="true" style="position: relative;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="badge badge--destructive badge--dot" aria-hidden="true" style="position: absolute; top: 0.375rem; right: 0.375rem;"></span>
+            </button>
+            <div id="notificationsPanel" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Notifications">
+              <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                <span class="text--sm text--semibold">Notifications</span>
+                <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notif__time">5 minutes ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--success" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notif__time">1 hour ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--warning" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notif__time">3 hours ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item notif__item--read">
+                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notif__time">Yesterday</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item notif__item--read">
+                <span class="notif__dot notif__dot--error" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notif__time">2 days ago</span>
+                </span>
+              </a>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item" style="justify-content: center;">
+                <span class="dropdown__item-text">View all notifications</span>
+              </a>
+            </div>
+          </div>
           <a href="settings-account.html" class="avatar" aria-label="Your account">
             <span class="avatar__fallback">JD</span>
             <span class="avatar__status avatar__status--online"></span>
@@ -243,15 +287,15 @@
               </div>
               <div class="toolbar__actions">
                 <div class="btn__group" role="group" aria-label="View">
-                  <a href="records.html" class="btn btn--outline btn--icon" title="List view" aria-label="List view"><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg></a>
-                  <button type="button" class="btn btn--outline btn--icon" title="Grid view" aria-label="Grid view" aria-pressed="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg></button>
+                  <button type="button" class="btn btn--outline btn--icon" id="mediaListBtn" title="List view" aria-label="List view" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg></button>
+                  <button type="button" class="btn btn--outline btn--icon" id="mediaGridBtn" title="Grid view" aria-label="Grid view" aria-pressed="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg></button>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="media__grid">
+        <div class="media__grid" id="mediaGridView">
             <a href="record-form.html?id=1" class="card card--interactive media__card">
               <img class="card__image card__image--top media__thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%2322c55e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g%29'/%3E%3Ccircle cx='287' cy='97' r='46' fill='white' fill-opacity='.18'/%3E%3C/svg%3E" alt="" loading="lazy">
               <div class="card__content card__content--pt">
@@ -386,6 +430,482 @@
             </a>
         </div>
 
+        <div class="card" id="mediaListView" hidden>
+        <div class="table__wrapper table__wrapper--borderless">
+          <table class="table table--hoverable table--card">
+            <thead class="table__header">
+              <tr class="table__row">
+                <th class="table__head">Name</th>
+                <th class="table__head">Type</th>
+                <th class="table__head">Status</th>
+                <th class="table__head">Dimensions</th>
+                <th class="table__head">Size</th>
+                <th class="table__head">Uploaded</th>
+                <th class="table__head table__actions"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g0' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%2322c55e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g0%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Homepage hero</div>
+                        <div class="text--xs text--muted">hero-homepage.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">2400 × 1350</td>
+                  <td class="table__cell text--muted">1.8 MB</td>
+                  <td class="table__cell text--muted">2 hours ago</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Homepage hero" data-toggle data-toggle-target="#media-actions-1" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-1" role="menu" aria-label="Actions for Homepage hero">
+                        <a href="record-form.html?id=1" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g1%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Team offsite</div>
+                        <div class="text--xs text--muted">team-offsite.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">3000 × 2000</td>
+                  <td class="table__cell text--muted">2.4 MB</td>
+                  <td class="table__cell text--muted">Yesterday</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Team offsite" data-toggle data-toggle-target="#media-actions-2" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-2" role="menu" aria-label="Actions for Team offsite">
+                        <a href="record-form.html?id=2" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%2314b8a6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g2%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Product shot 01</div>
+                        <div class="text--xs text--muted">product-shot-01.png</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--secondary">Draft</span></td>
+                  <td class="table__cell text--muted">1600 × 1600</td>
+                  <td class="table__cell text--muted">940 KB</td>
+                  <td class="table__cell text--muted">3 days ago</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Product shot 01" data-toggle data-toggle-target="#media-actions-3" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-3" role="menu" aria-label="Actions for Product shot 01">
+                        <a href="record-form.html?id=3" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g3%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Pricing blog cover</div>
+                        <div class="text--xs text--muted">blog-cover-pricing.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">1920 × 1080</td>
+                  <td class="table__cell text--muted">1.1 MB</td>
+                  <td class="table__cell text--muted">4 days ago</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Pricing blog cover" data-toggle data-toggle-target="#media-actions-4" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-4" role="menu" aria-label="Actions for Pricing blog cover">
+                        <a href="record-form.html?id=4" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g4' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23eab308'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g4%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Event banner</div>
+                        <div class="text--xs text--muted">event-banner.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--info-muted">Scheduled</span></td>
+                  <td class="table__cell text--muted">2560 × 640</td>
+                  <td class="table__cell text--muted">780 KB</td>
+                  <td class="table__cell text--muted">6 days ago</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Event banner" data-toggle data-toggle-target="#media-actions-5" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-5" role="menu" aria-label="Actions for Event banner">
+                        <a href="record-form.html?id=5" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g5' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2310b981'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g5%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Logo mark</div>
+                        <div class="text--xs text--muted">logo-mark.svg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Vector</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">Vector</td>
+                  <td class="table__cell text--muted">12 KB</td>
+                  <td class="table__cell text--muted">1 week ago</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Logo mark" data-toggle data-toggle-target="#media-actions-6" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-6" role="menu" aria-label="Actions for Logo mark">
+                        <a href="record-form.html?id=6" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g6' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g6%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Acme case study</div>
+                        <div class="text--xs text--muted">case-study-acme.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--secondary">Draft</span></td>
+                  <td class="table__cell text--muted">1800 × 1200</td>
+                  <td class="table__cell text--muted">1.3 MB</td>
+                  <td class="table__cell text--muted">Jan 7, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Acme case study" data-toggle data-toggle-target="#media-actions-7" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-7" role="menu" aria-label="Actions for Acme case study">
+                        <a href="record-form.html?id=7" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g7' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2364748b'/%3E%3Cstop offset='1' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g7%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Office interior</div>
+                        <div class="text--xs text--muted">office-interior.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">4000 × 2667</td>
+                  <td class="table__cell text--muted">3.2 MB</td>
+                  <td class="table__cell text--muted">Jan 10, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Office interior" data-toggle data-toggle-target="#media-actions-8" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-8" role="menu" aria-label="Actions for Office interior">
+                        <a href="record-form.html?id=8" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g8' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ec4899'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g8%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Newsletter header</div>
+                        <div class="text--xs text--muted">newsletter-header.png</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">1200 × 400</td>
+                  <td class="table__cell text--muted">420 KB</td>
+                  <td class="table__cell text--muted">Jan 5, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Newsletter header" data-toggle data-toggle-target="#media-actions-9" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-9" role="menu" aria-label="Actions for Newsletter header">
+                        <a href="record-form.html?id=9" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g9' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%23eab308'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g9%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Feature illustration</div>
+                        <div class="text--xs text--muted">feature-illustration.svg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Vector</span></td>
+                  <td class="table__cell"><span class="badge badge--secondary">Draft</span></td>
+                  <td class="table__cell text--muted">Vector</td>
+                  <td class="table__cell text--muted">38 KB</td>
+                  <td class="table__cell text--muted">Jan 12, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Feature illustration" data-toggle data-toggle-target="#media-actions-10" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-10" role="menu" aria-label="Actions for Feature illustration">
+                        <a href="record-form.html?id=10" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g10' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2306b6d4'/%3E%3Cstop offset='1' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g10%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">Webinar thumbnail</div>
+                        <div class="text--xs text--muted">webinar-thumb.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--info-muted">Scheduled</span></td>
+                  <td class="table__cell text--muted">1280 × 720</td>
+                  <td class="table__cell text--muted">610 KB</td>
+                  <td class="table__cell text--muted">Jan 3, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for Webinar thumbnail" data-toggle data-toggle-target="#media-actions-11" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-11" role="menu" aria-label="Actions for Webinar thumbnail">
+                        <a href="record-form.html?id=11" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__cell media__cell--thumb">
+                    <div class="cluster cluster--sm">
+                      <img class="media__thumb-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cdefs%3E%3ClinearGradient id='g11' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f43f5e'/%3E%3Cstop offset='1' stop-color='%23fb923c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url%28%23g11%29'/%3E%3C/svg%3E" alt="" loading="lazy">
+                      <div>
+                        <div class="text--medium">About page portrait</div>
+                        <div class="text--xs text--muted">about-portrait.jpg</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="table__cell"><span class="badge badge--outline">Image</span></td>
+                  <td class="table__cell"><span class="badge badge--success-muted">Published</span></td>
+                  <td class="table__cell text--muted">1200 × 1500</td>
+                  <td class="table__cell text--muted">890 KB</td>
+                  <td class="table__cell text--muted">Jan 9, 2024</td>
+                  <td class="table__cell table__actions">
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for About page portrait" data-toggle data-toggle-target="#media-actions-12" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="media-actions-12" role="menu" aria-label="Actions for About page portrait">
+                        <a href="record-form.html?id=12" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                          <span class="dropdown__item-text">View</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                          <span class="dropdown__item-text">Download</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
         <div class="cluster cluster--between mt--lg">
           <p class="text--sm text--muted">Showing 1–12 of 312 files</p>
           <nav class="pagination" aria-label="Media pages">
@@ -408,6 +928,8 @@
     .media__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
     .media__card { color: inherit; text-decoration: none; overflow: hidden; }
     .media__thumb { aspect-ratio: 3 / 2; }
+    .media__thumb-sm { width: 3.25rem; height: 3.25rem; border-radius: var(--radius); object-fit: cover; flex-shrink: 0; }
+    .table--card .media__cell--thumb { padding-top: 0.125rem; padding-bottom: 0.125rem; padding-left: 0.125rem; }
   </style>
   <script>
     // Filter menus: checkbox items toggle, radio items select exactly one
@@ -419,6 +941,26 @@
           item.setAttribute('aria-checked', String(item.getAttribute('aria-checked') !== 'true'));
         }
       });
+    });
+
+    // View toggle: switch between grid and list layouts for the same media
+    const mediaListBtn = document.getElementById('mediaListBtn');
+    const mediaGridBtn = document.getElementById('mediaGridBtn');
+    const mediaListView = document.getElementById('mediaListView');
+    const mediaGridView = document.getElementById('mediaGridView');
+
+    mediaListBtn.addEventListener('click', function() {
+      mediaListView.hidden = false;
+      mediaGridView.hidden = true;
+      mediaListBtn.setAttribute('aria-pressed', 'true');
+      mediaGridBtn.setAttribute('aria-pressed', 'false');
+    });
+
+    mediaGridBtn.addEventListener('click', function() {
+      mediaListView.hidden = true;
+      mediaGridView.hidden = false;
+      mediaListBtn.setAttribute('aria-pressed', 'false');
+      mediaGridBtn.setAttribute('aria-pressed', 'true');
     });
   </script>
 </body>

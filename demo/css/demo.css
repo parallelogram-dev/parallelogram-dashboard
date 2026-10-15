@@ -162,6 +162,9 @@
   width: 100%;
   max-width: 24rem;
 }
+.auth__container--wide {
+  max-width: 42rem;
+}
 .auth__header {
   text-align: center;
   margin-bottom: 1.5rem;

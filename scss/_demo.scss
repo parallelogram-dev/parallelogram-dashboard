@@ -196,6 +196,10 @@
   &__container {
     width: 100%;
     max-width: 24rem;
+
+    &--wide {
+      max-width: 42rem;
+    }
   }
 
   &__header {

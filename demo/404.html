@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+<body class="bg--muted">
+
+  <div class="auth">
+    <div class="auth__container">
+
+      <!-- Logo -->
+      <div class="auth__header">
+        <a href="dashboard.html" class="auth__logo">
+          <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card__content card__content--pt" style="text-align: center;">
+          <p style="font-size: 4.5rem; font-weight: 700; line-height: 1; color: var(--primary); letter-spacing: -0.03em;">404</p>
+          <h1 class="text--xl text--semibold" style="margin-top: 0.75rem;">Page not found</h1>
+          <p class="text--muted" style="margin-top: 0.5rem;">The page you're looking for doesn't exist or may have been moved.</p>
+
+          <div class="cluster cluster--center" style="margin-top: 1.5rem;">
+            <a href="dashboard.html" class="btn btn--primary">Back to dashboard</a>
+            <button type="button" class="btn btn--outline" onclick="history.back()">Go back</button>
+          </div>
+
+          <div class="separator separator--muted my--lg"></div>
+
+          <p class="text--sm text--muted" style="margin-bottom: 0.75rem;">Or jump to one of these</p>
+          <div class="cluster cluster--center cluster--sm">
+            <a href="records.html" class="btn btn--ghost btn--sm">Records</a>
+            <a href="media.html" class="btn btn--ghost btn--sm">Media</a>
+            <a href="analytics.html" class="btn btn--ghost btn--sm">Analytics</a>
+            <a href="settings.html" class="btn btn--ghost btn--sm">Settings</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <p class="auth__footer">
+        Think this is a mistake? <a href="#" class="link">Contact support</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

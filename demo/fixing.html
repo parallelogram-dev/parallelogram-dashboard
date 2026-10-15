@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixing Issues - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <style>
+    .checklist__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .checklist__item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .checklist__item:first-child {
+      padding-top: 0;
+    }
+  </style>
+</head>
+<body class="bg--muted">
+
+  <div class="auth">
+    <div class="auth__container auth__container--wide">
+
+      <!-- Logo -->
+      <div class="auth__header">
+        <a href="dashboard.html" class="auth__logo">
+          <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+        <h1 class="auth__title">Fixing your workspace</h1>
+        <p class="auth__description">Hang tight — we're resolving the issues you confirmed.</p>
+      </div>
+
+      <!-- Single segmented panel -->
+      <div class="card">
+        <div class="card__content card__content--pt">
+
+          <!-- Segment: Status bar -->
+          <div class="progress__labeled">
+            <div class="progress__labeled-header">
+              <span class="progress__labeled-label">Overall progress · 2 of 3 complete</span>
+              <span class="progress__labeled-value">70%</span>
+            </div>
+            <div class="progress progress--info" role="progressbar" aria-label="Overall progress" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress__bar progress__bar--70"></div>
+            </div>
+          </div>
+
+          <div class="separator separator--muted my--lg"></div>
+
+          <!-- Segment: In progress -->
+          <div class="cluster cluster--between" style="margin-bottom: 0.75rem;">
+            <h3 class="text--sm" style="font-weight: 600;">In progress <span class="badge badge--info-muted pill">1</span></h3>
+          </div>
+          <div class="checklist">
+            <div class="checklist__item">
+              <div class="property__list__info">
+                <div class="property__list__label">API rate limits</div>
+                <div class="property__list__description">Raising hourly quota with the integration provider.</div>
+              </div>
+              <div class="property__list__value">
+                <span class="badge badge--info-muted">Fixing…</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="separator separator--muted my--lg"></div>
+
+          <!-- Segment: Completed -->
+          <div class="cluster cluster--between" style="margin-bottom: 0.75rem;">
+            <h3 class="text--sm" style="font-weight: 600;">Completed <span class="badge badge--success-muted pill">2</span></h3>
+          </div>
+          <div class="checklist">
+            <div class="checklist__item">
+              <div class="property__list__info">
+                <div class="property__list__label">Payment gateway</div>
+                <div class="property__list__description">Reconnected to the Stripe webhook endpoint.</div>
+              </div>
+              <div class="property__list__value">
+                <span class="badge badge--success-muted">Fixed</span>
+              </div>
+            </div>
+            <div class="checklist__item">
+              <div class="property__list__info">
+                <div class="property__list__label">SSL certificate</div>
+                <div class="property__list__description">Renewed and reissued automatically.</div>
+              </div>
+              <div class="property__list__value">
+                <span class="badge badge--success-muted">Fixed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="separator separator--muted my--lg"></div>
+
+          <!-- Segment: Back -->
+          <a href="system-check.html" class="auth__back" style="margin-top: 0;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>
+            Back to checks
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
