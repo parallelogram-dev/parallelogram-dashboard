@@ -257,44 +257,38 @@
                     </button>
                   </div>
                 </div>
-                <div class="dropdown">
-                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" data-toggle data-toggle-target="#filter-date" data-toggle-capture="true">
+                <div class="dropdown dropdown--right">
+                  <button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" data-toggle data-toggle-target="#filter-date" data-toggle-capture="true">
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/><path d="M11 15h1"/><path d="M12 15v3"/></svg>
                     Date Range
                     <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
                   </button>
-                  <div id="filter-date" class="dropdown__menu" role="menu">
-                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="true">
-                      <span class="dropdown__item-text">Any time</span>
-                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
-                    </button>
-                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
-                      <span class="dropdown__item-text">Today</span>
-                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
-                    </button>
-                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
-                      <span class="dropdown__item-text">Last 7 days</span>
-                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
-                    </button>
-                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
-                      <span class="dropdown__item-text">Last 30 days</span>
-                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
-                    </button>
-                    <button type="button" class="dropdown__item" role="menuitemradio" aria-checked="false">
-                      <span class="dropdown__item-text">This year</span>
-                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
-                    </button>
+                  <div id="filter-date" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Filter by date range">
+                    <div style="padding: 0.375rem;">
+                      <p-datetime
+                        name="dateFrom"
+                        mode="date"
+                        range
+                        range-to="dateTo"
+                        from-label="From"
+                        to-label="To"
+                        show-quick-dates
+                        class="input"
+                      ></p-datetime>
+                    </div>
                   </div>
                 </div>
                 </div>
               </div>
               <div class="toolbar__actions">
-                <button class="btn btn--ghost btn--icon" title="List view">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
-                </button>
-                <button class="btn btn--ghost btn--icon" title="Grid view">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg>
-                </button>
+                <div class="btn__group" role="group" aria-label="View">
+                  <button type="button" class="btn btn--ghost btn--icon" id="recordsListBtn" title="List view" aria-label="List view" aria-pressed="true">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
+                  </button>
+                  <button type="button" class="btn btn--ghost btn--icon" id="recordsGridBtn" title="Grid view" aria-label="Grid view" aria-pressed="false">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/></svg>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -314,7 +308,7 @@
           </div>
 
           <!-- Table -->
-          <div class="card__content card__content--flush">
+          <div class="card__content card__content--flush" id="recordsListView">
             <div class="table__wrapper table__wrapper--borderless">
               <table class="table table--hoverable table--card">
               <thead class="table__header">
@@ -335,7 +329,7 @@
                   <th class="table__head table__head--sortable">Status</th>
                   <th class="table__head table__head--sortable">Created</th>
                   <th class="table__head table__head--sortable">Modified</th>
-                  <th class="table__head table__actions">Actions</th>
+                  <th class="table__head table__actions"><span class="sr-only">Actions</span></th>
                 </tr>
               </thead>
               <tbody class="table__body" id="recordsTable">
@@ -355,20 +349,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Products</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
                   <td class="table__cell text--muted">Jan 15, 2024</td>
                   <td class="table__cell text--muted">2 hours ago</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=1" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=1" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 1" data-toggle data-toggle-target="#row-actions-1" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-1" role="menu" aria-label="Actions for record 1">
+                        <a href="record-form.html?id=1" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=1" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -387,20 +392,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Customers</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
                   <td class="table__cell text--muted">Jan 14, 2024</td>
                   <td class="table__cell text--muted">Yesterday</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=2" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=2" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 2" data-toggle data-toggle-target="#row-actions-2" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-2" role="menu" aria-label="Actions for record 2">
+                        <a href="record-form.html?id=2" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=2" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -419,20 +435,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Orders</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Orders</span></td>
                   <td class="table__cell"><span class="badge badge--warning-muted">Pending</span></td>
                   <td class="table__cell text--muted">Jan 13, 2024</td>
                   <td class="table__cell text--muted">3 days ago</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=3" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=3" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 3" data-toggle data-toggle-target="#row-actions-3" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-3" role="menu" aria-label="Actions for record 3">
+                        <a href="record-form.html?id=3" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=3" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -451,20 +478,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Invoices</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Invoices</span></td>
                   <td class="table__cell"><span class="badge badge--info-muted">Sent</span></td>
                   <td class="table__cell text--muted">Jan 12, 2024</td>
                   <td class="table__cell text--muted">4 days ago</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=4" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=4" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 4" data-toggle data-toggle-target="#row-actions-4" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-4" role="menu" aria-label="Actions for record 4">
+                        <a href="record-form.html?id=4" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=4" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -483,20 +521,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Products</span></td>
                   <td class="table__cell"><span class="badge badge--secondary">Draft</span></td>
                   <td class="table__cell text--muted">Jan 10, 2024</td>
                   <td class="table__cell text--muted">6 days ago</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=5" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=5" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 5" data-toggle data-toggle-target="#row-actions-5" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-5" role="menu" aria-label="Actions for record 5">
+                        <a href="record-form.html?id=5" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=5" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -515,20 +564,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Customers</span></td>
                   <td class="table__cell"><span class="badge badge--destructive-muted">Inactive</span></td>
                   <td class="table__cell text--muted">Jan 8, 2024</td>
                   <td class="table__cell text--muted">1 week ago</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=6" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=6" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 6" data-toggle data-toggle-target="#row-actions-6" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-6" role="menu" aria-label="Actions for record 6">
+                        <a href="record-form.html?id=6" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=6" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -547,20 +607,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Orders</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Orders</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Completed</span></td>
                   <td class="table__cell text--muted">Jan 5, 2024</td>
                   <td class="table__cell text--muted">Jan 7, 2024</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=7" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=7" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 7" data-toggle data-toggle-target="#row-actions-7" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-7" role="menu" aria-label="Actions for record 7">
+                        <a href="record-form.html?id=7" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=7" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -579,20 +650,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Products</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Products</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
                   <td class="table__cell text--muted">Jan 3, 2024</td>
                   <td class="table__cell text--muted">Jan 10, 2024</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=8" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=8" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 8" data-toggle data-toggle-target="#row-actions-8" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-8" role="menu" aria-label="Actions for record 8">
+                        <a href="record-form.html?id=8" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=8" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -611,20 +693,31 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Invoices</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Invoices</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Paid</span></td>
                   <td class="table__cell text--muted">Jan 1, 2024</td>
                   <td class="table__cell text--muted">Jan 5, 2024</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=9" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=9" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 9" data-toggle data-toggle-target="#row-actions-9" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-9" role="menu" aria-label="Actions for record 9">
+                        <a href="record-form.html?id=9" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=9" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr class="table__row">
@@ -643,24 +736,421 @@
                       </div>
                     </div>
                   </td>
-                  <td class="table__cell"><span class="badge">Customers</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Customers</span></td>
                   <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
                   <td class="table__cell text--muted">Dec 28, 2023</td>
                   <td class="table__cell text--muted">Jan 12, 2024</td>
                   <td class="table__cell table__actions">
-                    <a href="record-form.html?id=10" class="btn btn--ghost btn--icon btn--sm" title="Edit">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
-                    </a>
-                    <button class="btn btn--ghost btn--icon btn--sm" title="Duplicate">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                    </button>
-                    <a href="record-delete.html?id=10" class="btn btn--ghost btn--icon btn--sm" title="Delete">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                    </a>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 10" data-toggle data-toggle-target="#row-actions-10" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="row-actions-10" role="menu" aria-label="Actions for record 10">
+                        <a href="record-form.html?id=10" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=10" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- Grid view -->
+          <div class="card__content card__content--flush records__grid-wrapper" id="recordsGridView" hidden>
+            <div class="records__grid">
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Premium Widget</div>
+                        <div class="text--xs text--muted">SKU: WDG-2024-001</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 1" data-toggle data-toggle-target="#grid-actions-1" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-1" role="menu" aria-label="Actions for record 1">
+                        <a href="record-form.html?id=1" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=1" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Products</span>
+                    <span class="badge badge--success-muted">Active</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 15, 2024 &middot; Modified 2 hours ago</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">Acme Corporation</div>
+                        <div class="text--xs text--muted">contact@acme.com</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 2" data-toggle data-toggle-target="#grid-actions-2" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-2" role="menu" aria-label="Actions for record 2">
+                        <a href="record-form.html?id=2" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=2" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Customers</span>
+                    <span class="badge badge--success-muted">Active</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 14, 2024 &middot; Modified Yesterday</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
+                      <div>
+                        <div class="text--medium">Order #45231</div>
+                        <div class="text--xs text--muted">5 items - $1,249.00</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 3" data-toggle data-toggle-target="#grid-actions-3" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-3" role="menu" aria-label="Actions for record 3">
+                        <a href="record-form.html?id=3" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=3" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Orders</span>
+                    <span class="badge badge--warning-muted">Pending</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 13, 2024 &middot; Modified 3 days ago</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
+                      <div>
+                        <div class="text--medium">Invoice INV-2024-089</div>
+                        <div class="text--xs text--muted">$3,450.00 - Due Feb 1</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 4" data-toggle data-toggle-target="#grid-actions-4" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-4" role="menu" aria-label="Actions for record 4">
+                        <a href="record-form.html?id=4" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=4" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Invoices</span>
+                    <span class="badge badge--info-muted">Sent</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 12, 2024 &middot; Modified 4 days ago</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Basic Component Set</div>
+                        <div class="text--xs text--muted">SKU: CMP-2024-015</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 5" data-toggle data-toggle-target="#grid-actions-5" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-5" role="menu" aria-label="Actions for record 5">
+                        <a href="record-form.html?id=5" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=5" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Products</span>
+                    <span class="badge badge--secondary">Draft</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 10, 2024 &middot; Modified 6 days ago</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">TechStart Inc.</div>
+                        <div class="text--xs text--muted">hello@techstart.io</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 6" data-toggle data-toggle-target="#grid-actions-6" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-6" role="menu" aria-label="Actions for record 6">
+                        <a href="record-form.html?id=6" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=6" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Customers</span>
+                    <span class="badge badge--destructive-muted">Inactive</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 8, 2024 &middot; Modified 1 week ago</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
+                      <div>
+                        <div class="text--medium">Order #45198</div>
+                        <div class="text--xs text--muted">2 items - $499.00</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 7" data-toggle data-toggle-target="#grid-actions-7" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-7" role="menu" aria-label="Actions for record 7">
+                        <a href="record-form.html?id=7" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=7" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Orders</span>
+                    <span class="badge badge--success-muted">Completed</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 5, 2024 &middot; Modified Jan 7, 2024</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
+                      <div>
+                        <div class="text--medium">Enterprise Package</div>
+                        <div class="text--xs text--muted">SKU: ENT-2024-003</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 8" data-toggle data-toggle-target="#grid-actions-8" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-8" role="menu" aria-label="Actions for record 8">
+                        <a href="record-form.html?id=8" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=8" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Products</span>
+                    <span class="badge badge--success-muted">Active</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 3, 2024 &middot; Modified Jan 10, 2024</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
+                      <div>
+                        <div class="text--medium">Invoice INV-2024-076</div>
+                        <div class="text--xs text--muted">$890.00 - Paid</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 9" data-toggle data-toggle-target="#grid-actions-9" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-9" role="menu" aria-label="Actions for record 9">
+                        <a href="record-form.html?id=9" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=9" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Invoices</span>
+                    <span class="badge badge--success-muted">Paid</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Jan 1, 2024 &middot; Modified Jan 5, 2024</p>
+                </div>
+              </div>
+              <div class="card records__card">
+                <div class="card__content card__content--pt">
+                  <div class="cluster cluster--between">
+                    <div class="cluster cluster--sm">
+                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
+                      <div>
+                        <div class="text--medium">Global Solutions Ltd</div>
+                        <div class="text--xs text--muted">info@globalsolutions.com</div>
+                      </div>
+                    </div>
+                    <div class="dropdown dropdown--right">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 10" data-toggle data-toggle-target="#grid-actions-10" data-toggle-capture="true">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
+                      </button>
+                      <div class="dropdown__menu dropdown__menu--sm" id="grid-actions-10" role="menu" aria-label="Actions for record 10">
+                        <a href="record-form.html?id=10" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>
+                          <span class="dropdown__item-text">Edit</span>
+                        </a>
+                        <button type="button" class="dropdown__item" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
+                          <span class="dropdown__item-text">Duplicate</span>
+                        </button>
+                        <div class="dropdown__divider" role="separator"></div>
+                        <a href="record-delete.html?id=10" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                          <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+                          <span class="dropdown__item-text">Delete</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cluster cluster--between mt--sm">
+                    <span class="badge badge--outline">Customers</span>
+                    <span class="badge badge--success-muted">Active</span>
+                  </div>
+                  <p class="text--xs text--muted mt--sm">Dec 28, 2023 &middot; Modified Jan 12, 2024</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -795,7 +1285,32 @@
       document.getElementById('activeFilters').hidden = true;
       searchInput.value = '';
     }
+
+    // View toggle: switch between table and grid layouts for the same records
+    const recordsListBtn = document.getElementById('recordsListBtn');
+    const recordsGridBtn = document.getElementById('recordsGridBtn');
+    const recordsListView = document.getElementById('recordsListView');
+    const recordsGridView = document.getElementById('recordsGridView');
+
+    recordsListBtn.addEventListener('click', function() {
+      recordsListView.hidden = false;
+      recordsGridView.hidden = true;
+      recordsListBtn.setAttribute('aria-pressed', 'true');
+      recordsGridBtn.setAttribute('aria-pressed', 'false');
+    });
+
+    recordsGridBtn.addEventListener('click', function() {
+      recordsListView.hidden = true;
+      recordsGridView.hidden = false;
+      recordsListBtn.setAttribute('aria-pressed', 'false');
+      recordsGridBtn.setAttribute('aria-pressed', 'true');
+    });
   </script>
+  <style>
+    /* Grid view layout for records; mirrors the media grid pattern */
+    .records__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; }
+    .records__grid-wrapper { padding: 1rem; }
+  </style>
 
 </body>
 </html>
