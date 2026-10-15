@@ -1371,6 +1371,8 @@ class DemoNav {
     this.pages = [
       { name: 'Components', href: 'index.html', icon: 'grid' },
       { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },
+      { name: 'CMS Dashboard', href: 'cms-dashboard.html', icon: 'home' },
+      { name: 'CMS Dashboard (Admin)', href: 'cms-dashboard-admin.html', icon: 'settings' },
       { name: 'Pages', href: 'pages.html', icon: 'edit' },
       { name: 'Records List', href: 'records.html', icon: 'database' },
       { name: 'Media', href: 'media.html', icon: 'grid' },
