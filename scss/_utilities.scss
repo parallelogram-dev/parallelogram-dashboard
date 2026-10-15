@@ -2,6 +2,8 @@
 // Utilities - BEM-style utility blocks
 // ==========================================================================
 
+@use "mixins" as *;
+
 // -------------------------------------------------------------------------
 // Layout Block - Flex and grid layouts
 // -------------------------------------------------------------------------
@@ -124,6 +126,28 @@
 
   &--4 {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--2-1,
+  &--1-2 {
+    @include max-lg {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--3,
+  &--4 {
+    @include max-lg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &--2,
+  &--3,
+  &--4 {
+    @include max-md {
+      grid-template-columns: 1fr;
+    }
   }
 
   &--gap-sm { gap: 0.5rem; }

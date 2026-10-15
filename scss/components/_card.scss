@@ -5,6 +5,8 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+$card-inner-radius: calc(#{$radius} - 1px);
+
 // --------------------------------------------------------------------------
 // Base Card
 // --------------------------------------------------------------------------
@@ -16,7 +18,6 @@
   color: var(--card-fg);
   border: 1px solid var(--border);
   border-radius: $radius;
-  overflow: hidden;
 
   // --------------------------------------------------------------------------
   // Variants
@@ -97,6 +98,20 @@
     // No padding (flush content)
     &--flush {
       padding: 0;
+
+      &:first-child {
+        border-top-left-radius: $card-inner-radius;
+        border-top-right-radius: $card-inner-radius;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: $card-inner-radius;
+        border-bottom-right-radius: $card-inner-radius;
+      }
+
+      > .table__wrapper {
+        border-radius: inherit;
+      }
     }
 
     &:first-child {
@@ -129,6 +144,16 @@
     width: 100%;
     height: auto;
     object-fit: cover;
+
+    &:first-child {
+      border-top-left-radius: $card-inner-radius;
+      border-top-right-radius: $card-inner-radius;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $card-inner-radius;
+      border-bottom-right-radius: $card-inner-radius;
+    }
 
     &--top {
       border-bottom: 1px solid var(--border);
