@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Breadcrumb - Parallelogram Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
   <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body data-component="breadcrumb">
@@ -33,12 +34,12 @@
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
           <div class="demo-label">With Chevron</div>
-          <nav class="breadcrumb spacer--lg">
+          <nav class="breadcrumb spacer--lg" aria-label="Breadcrumb">
             <ol class="breadcrumb__list">
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Home</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
                 </span>
@@ -46,34 +47,34 @@
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Components</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
                 </span>
               </li>
               <li class="breadcrumb__item">
-                <span class="breadcrumb__page">Breadcrumb</span>
+                <span class="breadcrumb__page" aria-current="page">Breadcrumb</span>
               </li>
             </ol>
           </nav>
 
           <div class="demo-label">With Slash</div>
-          <nav class="breadcrumb breadcrumb--slash">
+          <nav class="breadcrumb breadcrumb--slash" aria-label="Breadcrumb (slash separators)">
             <ol class="breadcrumb__list">
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Home</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator"></span>
               </li>
               <li class="breadcrumb__item">
                 <a href="#" class="breadcrumb__link">Settings</a>
               </li>
-              <li class="breadcrumb__item">
+              <li class="breadcrumb__item" aria-hidden="true">
                 <span class="breadcrumb__separator"></span>
               </li>
               <li class="breadcrumb__item">
-                <span class="breadcrumb__page">Profile</span>
+                <span class="breadcrumb__page" aria-current="page">Profile</span>
               </li>
             </ol>
           </nav>

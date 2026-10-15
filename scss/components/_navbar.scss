@@ -286,7 +286,27 @@
 .navbar--with-sidebar {
   margin-left: $sidebar-width;
 
-  @include max-lg {
+  // Next to a .sidebar--collapsed rail
+  &.navbar--sidebar-collapsed {
+    margin-left: $sidebar-width-collapsed;
+  }
+
+  // Next to a .sidebar--right
+  &.navbar--sidebar-right {
     margin-left: 0;
+    margin-right: $sidebar-width;
+
+    &.navbar--sidebar-collapsed {
+      margin-right: $sidebar-width-collapsed;
+    }
+  }
+
+  @include max-lg {
+    &,
+    &.navbar--sidebar-collapsed,
+    &.navbar--sidebar-right {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

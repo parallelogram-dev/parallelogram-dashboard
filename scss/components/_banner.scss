@@ -213,6 +213,8 @@
 // --------------------------------------------------------------------------
 
 .announcement {
+  // Anchors the absolutely positioned dismiss button
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,6 +223,11 @@
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: var(--primary-fg);
   text-align: center;
+
+  // Keep centred text clear of the dismiss button
+  &:has(> .announcement__dismiss) {
+    padding-inline: calc(#{$spacing-sm} * 2 + 1.5rem);
+  }
 
   &__badge {
     display: inline-flex;

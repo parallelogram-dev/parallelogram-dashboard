@@ -8,7 +8,7 @@ A BEM-style CSS dashboard component library inspired by shadcn/ui. Built with SC
 # Install dependencies
 npm install
 
-# Build CSS
+# Build the library (expanded and minified) and the demo stylesheet
 npm run build
 
 # Watch for changes during development
@@ -60,12 +60,14 @@ load `<p-modal>`, `<p-datetime>` and the modal trigger from there. Pages must be
 ```
 parallelogram-dashboard/
 ├── scss/                       # SCSS source files
-│   ├── _variables.scss         # Design tokens (colors, spacing, etc.)
+│   ├── _variables.scss         # Sass values (palette, spacing, type, breakpoints); emits no CSS
+│   ├── _tokens.scss            # Theme custom properties and the @parallelogram-js/core tokens they feed
 │   ├── _mixins.scss            # Reusable SCSS mixins
 │   ├── _base.scss              # Reset & base styles
 │   ├── _utilities.scss         # Utility classes
 │   ├── _icon.scss              # Icon styles
-│   ├── _demo.scss              # Demo-specific styles
+│   ├── _datetime.scss          # <p-datetime> web component theming
+│   ├── _demo.scss              # Demo page styles (not part of the library)
 │   ├── components/             # Component styles
 │   │   ├── _accordion.scss
 │   │   ├── _alert.scss
@@ -84,6 +86,7 @@ parallelogram-dashboard/
 │   │   ├── _input.scss
 │   │   ├── _modal.scss
 │   │   ├── _navbar.scss
+│   │   ├── _pageheader.scss
 │   │   ├── _pagination.scss
 │   │   ├── _progress.scss
 │   │   ├── _separator.scss
@@ -97,7 +100,8 @@ parallelogram-dashboard/
 │   │   ├── _toast.scss
 │   │   ├── _toolbar.scss
 │   │   └── _tooltip.scss
-│   └── main.scss               # Main entry point
+│   ├── main.scss               # Library entry point → dist/parallelogram-dashboard.css
+│   └── demo-pages.scss         # Demo entry point → demo/css/demo.css
 ├── demo/                       # Demo pages & assets
 │   ├── css/                    # Built CSS (auto-copied on build)
 │   ├── js/
@@ -113,7 +117,8 @@ parallelogram-dashboard/
 
 ### Colors
 
-Colors are defined as CSS custom properties for easy theming. Edit `scss/_variables.scss` to customize.
+Colors are defined as CSS custom properties for easy theming. Edit the `$theme-tokens` map in
+`scss/_tokens.scss` to customize; each entry holds its light and dark value.
 
 #### Semantic Colors
 
@@ -287,7 +292,7 @@ ever flip attributes.
 | Pressed | `aria-pressed="true"` | `.btn` (toggle buttons), `.segmented-control__item`, `.filter__label` |
 | Checked | `role="menuitemcheckbox" aria-checked="true"` | `.dropdown__item` (shows its `.dropdown__item-check`) |
 | Invalid | `aria-invalid="true"`, or automatically via `:user-invalid` once the user has interacted | `.input`, `.select`, `.textarea`, `.checkbox__input`, `.radio__input` |
-| Required | `required` on the control, plus an explicit `.formfield__required` marker in the label (not added automatically, so existing forms keep their look) | `.formfield` |
+| Required | `required` on the control, plus an explicit `.form__required` marker in the label (not added automatically, so existing forms keep their look) | `.form__field` |
 | Read-only | `readonly` | `.input`, `.textarea` |
 | Busy | `aria-busy="true"` | `.btn` (pair with `disabled` and a `.btn__spinner`) |
 | Sorted | `aria-sort="ascending"` / `"descending"` on the `<th>` | `.table__head`, `.table__sort-icon` |
@@ -317,8 +322,8 @@ document.querySelector('.dashboard').inert = true;
 
 **Still classes.** States with no native or ARIA equivalent remain modifiers for now:
 `.sidebar--collapsed`, `.subnav--collapsed`, `.sidebar--open` / `.subnav--open` (mobile
-off-canvas), `.sidebaroverlay--visible`, `.dashboard__overlay--visible`,
-`.tooltip__content--visible`, `.steps__item--completed`, `.formfield__counter--warning` /
+off-canvas; the Toggle script adds them, see below), `.sidebaroverlay--visible`, `.dashboard__overlay--visible`,
+`.tooltip__content--visible`, `.steps__item--completed`, `.form__counter--warning` /
 `--error`, and `.filter__label--active` (an applied-filter chip, not a toggle).
 
 ### Deprecated state classes
@@ -334,7 +339,7 @@ warns when a playground spec or demo page renders one. The list lives in
 | `.input--error` | aria-invalid="true" (or rely on :user-invalid) |
 | `.checkbox--disabled` | disabled on the inner .checkbox__input |
 | `.radio--disabled` | disabled on the inner .radio__input |
-| `.formfield--error` | aria-invalid="true" on the control |
+| `.form__field--error` | aria-invalid="true" on the control |
 | `.accordion__item--open` | aria-expanded="true" on .accordion__trigger, or <details open> |
 | `.collapsible--open` | aria-expanded="true" on .collapsible__trigger, or <details open> |
 | `.dropdown--open` | aria-expanded="true" on .dropdown__trigger |
@@ -693,11 +698,11 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 ```html
 <div class="accordion" data-accordion>
   <div class="accordion__item">
-    <button class="accordion__trigger" aria-expanded="false">
+    <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="faq-1">
       <span>Section Title</span>
       <svg class="icon accordion__icon">...</svg>
     </button>
-    <div class="accordion__content">
+    <div class="accordion__content" id="faq-1">
       <div class="accordion__body">
         Content goes here
       </div>
@@ -711,12 +716,26 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 <!-- Pre-opened item: the trigger's aria-expanded drives the open state -->
 <button class="accordion__trigger" aria-expanded="true">...</button>
 
-<!-- No-JS alternative: native <details> -->
-<details class="accordion__item" open>
-  <summary class="accordion__trigger">Section Title <svg class="icon accordion__icon">...</svg></summary>
-  <div class="accordion__content"><div class="accordion__body">Content goes here</div></div>
-</details>
+<!-- No-JS alternative: native <details>; a shared name keeps one open at a time -->
+<div class="accordion">
+  <details class="accordion__item" name="faq" open>
+    <summary class="accordion__trigger">Section Title <svg class="icon accordion__icon">...</svg></summary>
+    <div class="accordion__content"><div class="accordion__body">Content goes here</div></div>
+  </details>
+  <details class="accordion__item" name="faq">...</details>
+</div>
+
+<!-- Single item: <details class="collapsible">, or a button trigger (wired automatically) -->
+<div class="collapsible">
+  <button type="button" class="collapsible__trigger" aria-expanded="false">
+    <span>Advanced options</span>
+    <svg class="icon collapsible__icon">...</svg>
+  </button>
+  <div class="collapsible__content"><div class="collapsible__body">Content goes here</div></div>
+</div>
 ```
+
+Content animates to its natural height, so there is no maximum to tune.
 
 ### Dropdown `.dropdown`
 
@@ -750,31 +769,40 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 
 ### Modal `.modal`
 
+The interactive modal is the `<p-modal>` web component from `@parallelogram-js/core`; the
+stylesheet themes it. For a modal without the component, use a native `<dialog>`:
+
 ```html
-<div class="modal__backdrop">
-  <div class="modal">
+<button type="button" class="btn btn--primary" commandfor="edit-profile" command="show-modal">Edit profile</button>
+
+<dialog class="modal" id="edit-profile" aria-labelledby="edit-profile-title">
+  <div class="modal__dialog">
     <div class="modal__header">
-      <h2 class="modal__title">Modal Title</h2>
-      <p class="modal__description">Optional description</p>
-      <button class="modal__close">
+      <div>
+        <h2 class="modal__title" id="edit-profile-title">Edit profile</h2>
+        <p class="modal__description">Make changes to your profile here.</p>
+      </div>
+      <button type="button" class="modal__close" commandfor="edit-profile" command="close" aria-label="Close">
         <svg class="icon">...</svg>
       </button>
     </div>
-    <div class="modal__body">
-      Content
-    </div>
+    <div class="modal__content">Content</div>
     <div class="modal__footer">
-      <button class="btn btn--outline">Cancel</button>
-      <button class="btn btn--primary">Confirm</button>
+      <button type="button" class="btn btn--outline" commandfor="edit-profile" command="close">Cancel</button>
+      <button type="button" class="btn btn--primary">Save changes</button>
     </div>
   </div>
-</div>
+</dialog>
 
-<!-- Sizes -->
-<div class="modal modal--sm">...</div>
-<div class="modal modal--lg">...</div>
-<div class="modal modal--full">...</div>
+<!-- Sizes go on the dialog box -->
+<div class="modal__dialog modal__dialog--sm">...</div>   <!-- --xs, --sm, --lg, --xl, --fullscreen -->
+
+<!-- Confirmations: <dialog class="alertdialog" role="alertdialog"> with alertdialog__* parts -->
 ```
+
+Opened with `command="show-modal"` (or `showModal()`), the dialog draws its own dimmed
+backdrop. A `<dialog class="modaloverlay" open>` sibling is only needed when the modal is
+shown non-modally with the `open` attribute.
 
 ### Pagination `.pagination`
 
@@ -820,7 +848,7 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
     </div>
     <div class="navmenu__content">
       <div class="navmenu__section">
-        <a href="#" class="navmenu__item navmenu__item--active">
+        <a href="#" class="navmenu__item" aria-current="page">
           <svg class="icon">...</svg>
           <span class="navmenu__tooltip">Dashboard</span>
         </a>
@@ -844,7 +872,7 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
           <span class="subnav__section-title">Category</span>
         </div>
         <div class="subnav__list">
-          <a href="#" class="subnav__item subnav__item--active">
+          <a href="#" class="subnav__item" aria-current="page">
             <svg class="icon subnav__item-icon">...</svg>
             <span class="subnav__item-text">Item</span>
             <span class="subnav__item-badge">12</span>
@@ -999,6 +1027,10 @@ The `demo/js/main.js` file provides interactive behavior for:
 <div class="accordion" data-accordion data-accordion-multiple="true">
 ```
 
+Button triggers get `type="button"` and `aria-controls` pointing at their `.accordion__content`
+(an id is generated when the content has none). A `.collapsible` with a `<button>` trigger is
+wired the same way without any data attribute.
+
 ### Tabs
 
 ```html
@@ -1021,17 +1053,42 @@ Toggle sets `aria-expanded` on the trigger (and `open` when the target is a `<di
 outside click close it again. `data-toggle-class="…"` additionally toggles that class on the
 target, for markup that isn't styled from `aria-expanded`.
 
-None of the scripts add state classes: Accordion flips `aria-expanded`, Tabs flips
+Off-canvas navigation below the `lg` breakpoint uses the class and an overlay together;
+`data-toggle-overlay` adds `--visible` to the overlay's first class and closes on a click on it:
+
+```html
+<button class="btn btn--ghost btn--icon" aria-label="Menu"
+        data-toggle data-toggle-target="#sidebar" data-toggle-class="sidebar--open"
+        data-toggle-overlay="#sidebar-overlay">…</button>
+<aside class="sidebar" id="sidebar">…</aside>
+<div class="sidebaroverlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+<!-- Dashboard section nav: data-toggle-class="subnav--open" with a .dashboard__overlay -->
+```
+
+A `.sidebar--right` offsets `.sidebarlayout__main` on the right; beside a navbar use
+`.navbar--with-sidebar` plus `.navbar--sidebar-collapsed` and/or `.navbar--sidebar-right`.
+
+Dropdown submenus (`.dropdown__submenu`) open on hover in CSS; the script lets keyboard and
+touch users open them with a click or ArrowRight and close them with ArrowLeft or Escape.
+`.segmented-control` items are kept mutually exclusive through `aria-pressed` (or
+`aria-checked` when the items are `role="radio"`). Tabs skip disabled tabs with the arrow keys,
+link each tab and panel with `aria-controls`/`aria-labelledby`, and slide the
+`.tabs__indicator` of a `.tabs--animated` list under the selected tab.
+
+Apart from `data-toggle-class`, none of the scripts add state classes: Accordion and Collapsible flip `aria-expanded`, Tabs flips
 `aria-selected` and the panels' `hidden` attribute.
 
 ### Dark Mode Toggle
 
+The page follows the OS until a toggle pins it, so the toggle writes an explicit theme:
+
 ```javascript
-// Toggle theme
 function toggleTheme() {
   const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+  const theme = html.getAttribute('data-theme');
+  const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
 }
 ```
 
@@ -1045,34 +1102,68 @@ A floating navigation button is automatically added to all demo pages, allowing 
 
 ### Light/Dark Mode
 
-Dark mode is activated by adding `data-theme="dark"` to the `<html>` element:
+The theme follows the operating system's light or dark setting. Each colour token is a
+`light-dark()` pair and `:root` sets `color-scheme: light dark`, so no second block of overrides
+is needed. Set `data-theme` to pin a theme, on `<html>` or on any element to pin just that subtree:
 
 ```html
 <html data-theme="dark">
+<section data-theme="light">
 ```
 
 ### Customizing Colors
 
-Edit the CSS custom properties in `scss/_variables.scss`:
+Edit the `$theme-tokens` map in `scss/_tokens.scss`. Each entry is a light and a dark value, and
+an entry whose two values match is emitted as a plain colour:
 
 ```scss
+$theme-tokens: (
+  primary: (#your-light-primary, #your-dark-primary),
+  primary-fg: (#text-on-light-primary, #text-on-dark-primary),
+  success: (#22c55e, #22c55e),
+  // ...
+);
+```
+
+At runtime, override a token for both themes with a plain value or keep the pair:
+
+```css
 :root {
-  // Change primary color
-  --primary: #your-color;
-  --primary-fg: #text-color;
-  --primary-hover: #hover-color;
-
-  // Change accent colors
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --destructive: #ef4444;
-}
-
-[data-theme="dark"] {
-  // Dark mode overrides
-  --primary: #your-dark-primary;
+  --primary: light-dark(#4f46e5, #818cf8);
 }
 ```
+
+### Typography
+
+`html` keeps the reader's browser font size (`100%`), so every `rem` scales with it. Element
+styles for headings, `code`, `kbd`, `pre`, `blockquote` and `hr` sit inside `:where()` and carry
+no specificity, so any component class overrides them.
+
+Headings use a compact fluid scale, set in `$heading-sizes` in `scss/_variables.scss` and
+exposed as `--heading-1` to `--heading-6`. h1 runs from 24px on a phone to 30px on desktop, h3
+from 18px to 20px, and h4 to h6 are fixed at 18, 16 and 14px. Fonts and leading are
+`--font-sans`, `--font-mono`, `--leading-tight`, `--leading-normal` and `--leading-relaxed`.
+
+| Class | Use |
+|-------|-----|
+| `.heading .heading--1` … `--6` | Heading sizes on any element, for when the look and the outline level differ |
+| `.text--lead` | Introductory paragraph under a page or section title |
+| `.text--overline` | Small uppercase label above a title |
+| `.text--tabular` | Tabular figures; tables and `.stat__value` already use them |
+| `.text--mono` | Monospace text |
+
+### @parallelogram-js/core
+
+`scss/_tokens.scss` also sets core's role and surface tokens (`--color-*`, `--surface-*`,
+`--button-*`, `--form-control-*`, `--framework-focus-*`, `--framework-transition-*`) from the
+dashboard theme. Core's web components (`<p-modal>`, `<p-datetime>`, `<p-select>`, `<p-uploader>`,
+toasts) and its per-component stylesheets (`styles/components/*.css`) therefore match the
+dashboard in both themes with no further theming. Load this stylesheet instead of core's
+`styles/index.css`, whose own `:root` palette would compete with it.
+
+The dashboard's transitions and focus rings read the same `--framework-transition-duration`,
+`--framework-transition-easing` and `--framework-focus-*` tokens, and transitions drop to `0s`
+under `prefers-reduced-motion: reduce`.
 
 ---
 
@@ -1136,13 +1227,6 @@ Use these as starting templates:
   </div>
 
   <script type="module" src="js/main.js"></script>
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
-    }
-  </script>
 </body>
 </html>
 ```

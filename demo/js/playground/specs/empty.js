@@ -2,7 +2,7 @@ import { bem, cx, escape, icon, ICONS } from '../lib.js';
 
 const FOLDER = '<path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/>';
 
-const CONTEXT_ICONS = { '': FOLDER, search: ICONS.search, error: ICONS.error, success: ICONS.success };
+const CONTEXT_ICONS = { '': FOLDER, search: ICONS.search, info: ICONS.info, warning: ICONS.warning, error: ICONS.error, success: ICONS.success };
 
 const ILLUSTRATION = '<svg viewBox="0 0 240 140" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'
   + '<rect x="40" y="30" width="160" height="96" rx="10" opacity=".35"/>'
@@ -56,7 +56,7 @@ export default {
       type: 'select',
       options: [{ value: 'empty', label: 'Empty state' }, { value: 'noresults', label: 'No results (.noresults)' }],
     },
-    { key: 'context', label: 'Context', type: 'select', options: ['', 'search', 'error', 'success'], when: s => s.type === 'empty' },
+    { key: 'context', label: 'Context', type: 'select', options: ['', 'search', 'info', 'warning', 'error', 'success'], when: s => s.type === 'empty' },
     { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'] },
     {
       key: 'media',

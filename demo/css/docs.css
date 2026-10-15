@@ -155,41 +155,35 @@ body {
   border-top: 1px solid var(--border);
 }
 
-/* Example code disclosure */
+/* Example code: an "HTML" button on each example's label (or after it) opens the code sheet */
 
-.docs__code {
-  margin: 0.5rem 0 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 0.375rem;
+.docs__examplelabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.docs__codesummary {
-  padding: 0.375rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--fg-muted);
-  cursor: pointer;
+.docs__examplelabel .btn {
+  text-transform: none;
+  letter-spacing: normal;
 }
 
-.docs__code[open] .docs__codesummary {
-  border-bottom: 1px solid var(--border);
+.docs__examplebar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.25rem 0 1rem;
 }
 
-.docs__codebody {
-  position: relative;
-}
-
-.docs__codecopy {
-  position: absolute;
-  top: 0.375rem;
-  right: 0.375rem;
+.docs__codesheet {
+  padding: 0;
 }
 
 .docs__pre {
   margin: 0;
-  max-height: 24rem;
-  overflow: auto;
-  padding: 0.75rem;
+  min-height: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 0;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.75rem;
   line-height: 1.6;
@@ -241,6 +235,10 @@ body {
   gap: 0.5rem 1rem;
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--border);
+}
+
+.pw__baraction {
+  margin-left: auto;
 }
 
 .pw__body {
@@ -356,37 +354,13 @@ body {
   gap: 0.375rem;
 }
 
-.pw__field[hidden],
-.pw__code[hidden] {
+.pw__field[hidden] {
   display: none;
 }
 
 .pw__label {
   font-size: 0.8125rem;
   font-weight: 500;
-}
-
-.pw__code {
-  border-top: 1px solid var(--border);
-}
-
-.pw__codebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.375rem 0.5rem 0.375rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.pw__pre {
-  margin: 0;
-  max-height: 16rem;
-  overflow: auto;
-  padding: 0.75rem;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.75rem;
-  line-height: 1.6;
-  white-space: pre;
 }
 
 @media (max-width: 1100px) {

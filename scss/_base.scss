@@ -43,17 +43,20 @@
   }
 }
 
+// 100% keeps the reader's browser font size, so every rem in the library scales with it
 html {
-  font-size: 16px;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: $font-sans;
+  font-family: var(--font-sans);
   font-size: $font-size-base;
-  line-height: $line-height-normal;
+  line-height: var(--leading-normal);
   color: var(--fg);
   background-color: var(--bg);
   min-height: 100vh;
@@ -95,6 +98,7 @@ ol {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 // Remove default focus outline (we use custom focus rings)
@@ -106,106 +110,128 @@ table {
 // Typography
 // --------------------------------------------------------------------------
 
-h1, h2, h3, h4, h5, h6 {
+// Element styles sit inside :where() so they carry no specificity: any component class
+// overrides them without needing a more specific selector.
+
+:where(h1, h2, h3, h4, h5, h6) {
   font-weight: $font-weight-semibold;
-  line-height: $line-height-tight;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   text-wrap: balance;
-  letter-spacing: $letter-spacing-tight;
   color: var(--fg);
 }
 
-h1 {
-  font-size: type-step(5, $type-scale-ratio-sm);
-
-  @include md {
-    font-size: type-step(5);
+@each $level, $sizes in $heading-sizes {
+  :where(h#{$level}) {
+    font-size: var(--heading-#{$level});
   }
 }
 
-h2 {
-  font-size: type-step(4, $type-scale-ratio-sm);
-
-  @include md {
-    font-size: type-step(4);
-  }
+:where(p, li, dd, figcaption, blockquote) {
+  text-wrap: pretty;
 }
 
-h3 {
-  font-size: type-step(3, $type-scale-ratio-sm);
-
-  @include md {
-    font-size: type-step(3);
-  }
-}
-
-h4 {
-  font-size: type-step(2, $type-scale-ratio-sm);
-
-  @include md {
-    font-size: type-step(2);
-  }
-}
-
-h5 {
-  font-size: type-step(1, $type-scale-ratio-sm);
-
-  @include md {
-    font-size: type-step(1);
-  }
-}
-
-h6 {
-  font-size: $font-size-base;
-}
-
-p {
-  line-height: $line-height-relaxed;
-}
-
-small {
+:where(small) {
   font-size: $font-size-sm;
 }
 
-strong, b {
+:where(strong, b) {
   font-weight: $font-weight-semibold;
 }
 
-code, kbd, samp, pre {
-  font-family: $font-mono;
+:where(abbr[title]) {
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
+}
+
+// Keep superscripts and subscripts from opening up the line they sit on
+:where(sub, sup) {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+:where(sup) {
+  top: -0.5em;
+}
+
+:where(sub) {
+  bottom: -0.25em;
+}
+
+:where(code, kbd, samp, pre) {
+  font-family: var(--font-mono);
   font-size: 0.875em;
 }
 
-code {
+:where(code) {
   background-color: var(--bg-muted);
   padding: 0.125rem 0.25rem;
   border-radius: $radius-sm;
 }
 
-pre {
+:where(kbd) {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.0625rem 0.375rem;
+  font-size: 0.75em;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  text-align: center;
+  color: var(--fg-muted);
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: $radius-sm;
+}
+
+:where(pre) {
   background-color: var(--bg-muted);
   padding: $spacing-sm;
   border-radius: $radius;
   overflow-x: auto;
   @include scrollbar-thin;
-
-  code {
-    background: none;
-    padding: 0;
-    border-radius: 0;
-  }
 }
 
-blockquote {
+:where(pre) :where(code) {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+:where(blockquote) {
   border-left: 4px solid var(--border);
   padding-left: $spacing-sm;
   color: var(--fg-muted);
   font-style: italic;
 }
 
-hr {
+:where(hr) {
   border: none;
   border-top: 1px solid var(--border);
   margin: $spacing-lg 0;
+}
+
+// --------------------------------------------------------------------------
+// Headings by class, for when the look and the document outline differ
+// (e.g. a card title that is an h3 but should read as a small heading)
+// --------------------------------------------------------------------------
+
+.heading {
+  font-weight: $font-weight-semibold;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+  color: var(--fg);
+
+  @each $level, $sizes in $heading-sizes {
+    &--#{$level} {
+      font-size: var(--heading-#{$level});
+    }
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -258,6 +284,27 @@ hr {
   &--right { text-align: right; }
 
   &--truncate { @include text-truncate; }
+
+  // Introductory paragraph under a page or section title
+  &--lead {
+    font-size: $font-size-lg;
+    line-height: var(--leading-relaxed);
+    color: var(--fg-muted);
+  }
+
+  // Small uppercase label above a title or group
+  &--overline {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    line-height: var(--leading-normal);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  // Figures that line up in columns and don't shift as they update
+  &--tabular { font-variant-numeric: tabular-nums; }
+  &--mono { font-family: var(--font-mono); }
 }
 
 // --------------------------------------------------------------------------
@@ -266,6 +313,7 @@ hr {
 
 .prose {
   max-width: 65ch;
+  line-height: var(--leading-relaxed);
 
   > * + * {
     margin-top: $spacing-sm;

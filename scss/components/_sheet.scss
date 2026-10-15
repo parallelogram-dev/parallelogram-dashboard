@@ -12,6 +12,7 @@
 .sheet {
   // Where the panel sits while closed; each edge modifier sets its own
   --sheet-from: translateX(100%);
+  --sheet-duration: calc(var(--framework-transition-duration) * 2);
 
   position: fixed;
   inset: 0;
@@ -19,7 +20,13 @@
   display: flex;
   opacity: 0;
   visibility: hidden;
-  @include transition-opacity;
+  // Closing a <dialog> applies display: none and drops it from the top layer at once; easing
+  // display and overlay as discrete values keeps it on screen until the slide out has finished
+  transition:
+    opacity var(--sheet-duration) var(--framework-transition-easing),
+    visibility var(--sheet-duration) allow-discrete,
+    display var(--sheet-duration) allow-discrete,
+    overlay var(--sheet-duration) allow-discrete;
 
   &[open],
   &--open {
@@ -63,7 +70,7 @@
     background-color: var(--bg);
     box-shadow: $shadow-xl;
     transform: var(--sheet-from);
-    @include transition-default;
+    transition: transform var(--sheet-duration) var(--framework-transition-easing);
   }
 
   &:is([open], .sheet--open) &__panel {
@@ -96,6 +103,24 @@
     --sheet-from: translateY(100%);
   }
 
+  &--sm &__panel {
+    max-width: 20rem;
+  }
+
+  &--lg &__panel {
+    max-width: 32rem;
+  }
+
+  &--xl &__panel {
+    max-width: 40rem;
+  }
+
+  &--full &__panel {
+    max-width: none;
+    width: 100%;
+  }
+
+  // After the widths so a size modifier never caps a full-width top or bottom panel
   &--top &__panel,
   &--bottom &__panel {
     left: 0;
@@ -112,23 +137,6 @@
 
   &--bottom &__panel {
     top: auto;
-  }
-
-  &--sm &__panel {
-    max-width: 20rem;
-  }
-
-  &--lg &__panel {
-    max-width: 32rem;
-  }
-
-  &--xl &__panel {
-    max-width: 40rem;
-  }
-
-  &--full &__panel {
-    max-width: none;
-    width: 100%;
   }
 
   // --------------------------------------------------------------------------
@@ -199,11 +207,26 @@
 }
 
 // --------------------------------------------------------------------------
-// Drawer (alias with different defaults)
+// Drawer: a sheet whose panel has a border on its inner edge
+//
+// Usable on its own with drawer__* elements and drawer--* modifiers, or added alongside
+// .sheet classes on the same markup.
 // --------------------------------------------------------------------------
 
 .drawer {
   @extend .sheet;
+
+  @each $modifier in (right, left, top, bottom, sm, lg, xl, full) {
+    &--#{$modifier} {
+      @extend .sheet--#{$modifier};
+    }
+  }
+
+  @each $element in (backdrop, panel, header, title, description, close, content, footer, handle) {
+    &__#{$element} {
+      @extend .sheet__#{$element};
+    }
+  }
 
   &__panel {
     border-left: 1px solid var(--border);

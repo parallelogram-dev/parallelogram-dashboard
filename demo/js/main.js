@@ -32,8 +32,8 @@ class Accordion {
       multiple: multiple,
     };
 
-    // Set up click handlers
     triggers.forEach(trigger => {
+      linkTrigger(trigger, trigger.closest('.accordion__item')?.querySelector('.accordion__content'));
       trigger.addEventListener('click', (e) => this._handleTriggerClick(e, element, state));
     });
 
@@ -60,6 +60,137 @@ class Accordion {
 
   static enhanceAll(selector = '[data-accordion]', root = document) {
     const instance = new Accordion();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+// ============================================================================
+// Collapsible Component
+// ============================================================================
+
+/**
+ * Wires a .collapsible whose trigger is a <button>; <details class="collapsible"> needs no JS.
+ */
+class Collapsible {
+  constructor() {
+    this.elements = new WeakSet();
+  }
+
+  mount(element) {
+    if (this.elements.has(element)) return;
+
+    const trigger = element.querySelector(':scope > button.collapsible__trigger');
+    if (!trigger) return;
+
+    linkTrigger(trigger, element.querySelector(':scope > .collapsible__content'));
+    trigger.addEventListener('click', () => {
+      trigger.setAttribute('aria-expanded', String(trigger.getAttribute('aria-expanded') !== 'true'));
+    });
+
+    this.elements.add(element);
+  }
+
+  static enhanceAll(selector = '.collapsible', root = document) {
+    const instance = new Collapsible();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+let generatedId = 0;
+
+/**
+ * Give an element an id if it has none, so ARIA relationships can point at it.
+ */
+function ensureId(element, prefix) {
+  if (!element.id) {
+    generatedId += 1;
+    element.id = `${prefix}-${generatedId}`;
+  }
+  return element.id;
+}
+
+function isDisabled(element) {
+  return element.disabled || element.getAttribute('aria-disabled') === 'true';
+}
+
+/**
+ * Point a disclosure button at the region it controls and make sure it never submits a form.
+ */
+function linkTrigger(trigger, region) {
+  if (!trigger.hasAttribute('type')) trigger.type = 'button';
+  if (!trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
+  if (region) trigger.setAttribute('aria-controls', ensureId(region, 'disclosure'));
+}
+
+// ============================================================================
+// Dropdown Submenu
+// ============================================================================
+
+/**
+ * Lets keyboard and touch users open a .dropdown__submenu; pointer hover is handled in CSS.
+ *
+ * Click or ArrowRight on the trigger opens it and focuses the first item; ArrowLeft or Escape
+ * inside it closes it and returns focus to the trigger.
+ */
+class Submenu {
+  constructor() {
+    this.elements = new WeakSet();
+  }
+
+  mount(element) {
+    if (this.elements.has(element)) return;
+
+    const trigger = element.querySelector(':scope > .dropdown__submenu-trigger');
+    const content = element.querySelector(':scope > .dropdown__submenu-content');
+    if (!trigger || !content) return;
+
+    trigger.setAttribute('aria-haspopup', 'menu');
+    trigger.setAttribute('aria-controls', ensureId(content, 'submenu'));
+    if (!trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
+
+    const firstItem = () => content.querySelector('[role^="menuitem"]:not(:disabled), button:not(:disabled), a[href]');
+    const open = (focus) => {
+      trigger.setAttribute('aria-expanded', 'true');
+      if (focus) firstItem()?.focus();
+    };
+    const close = () => {
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    };
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (trigger.getAttribute('aria-expanded') === 'true') {
+        trigger.setAttribute('aria-expanded', 'false');
+      } else {
+        open(e.detail === 0);
+      }
+    });
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        open(true);
+      }
+    });
+    content.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        close();
+      }
+    });
+    element.addEventListener('focusout', (e) => {
+      if (!element.contains(e.relatedTarget)) trigger.setAttribute('aria-expanded', 'false');
+    });
+
+    this.elements.add(element);
+  }
+
+  static enhanceAll(selector = '.dropdown__submenu', root = document) {
+    const instance = new Submenu();
     root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
@@ -100,11 +231,28 @@ class Tabs {
     tabs.forEach(tab => {
       tab.setAttribute('role', 'tab');
       tab.setAttribute('tabindex', tab.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+      const panel = panels.find(p => p.id === tab.dataset.tab);
+      if (panel) {
+        tab.setAttribute('aria-controls', panel.id);
+        panel.setAttribute('aria-labelledby', ensureId(tab, 'tab'));
+      }
     });
     panels.forEach(panel => {
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('tabindex', '0');
     });
+
+    // The animated variant slides one indicator under the selected tab
+    if (element.classList.contains('tabs--animated')) {
+      state.indicator = tabsList.querySelector('.tabs__indicator');
+      if (!state.indicator) {
+        state.indicator = document.createElement('span');
+        state.indicator.className = 'tabs__indicator';
+        state.indicator.setAttribute('aria-hidden', 'true');
+        tabsList.append(state.indicator);
+      }
+      new ResizeObserver(() => this._moveIndicator(state)).observe(tabsList);
+    }
 
     // Set up click handlers
     tabs.forEach(tab => {
@@ -113,7 +261,7 @@ class Tabs {
     });
 
     // Find and activate initial tab
-    const activeTab = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    const activeTab = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs.find(t => !isDisabled(t));
     if (activeTab) {
       this._activateTab(element, activeTab.dataset.tab, state, false);
     }
@@ -126,25 +274,27 @@ class Tabs {
     event.preventDefault();
     const tab = event.currentTarget;
     const panelId = tab.dataset.tab;
-    if (panelId) {
+    if (panelId && !isDisabled(tab)) {
       this._activateTab(element, panelId, state, true);
     }
   }
 
   _handleKeyDown(event, element, state) {
-    const currentIndex = state.tabs.findIndex(tab => tab === event.currentTarget);
+    // Disabled tabs are skipped rather than focused
+    const enabled = state.tabs.filter(tab => !isDisabled(tab));
+    const currentIndex = enabled.indexOf(event.currentTarget);
     let targetIndex = -1;
 
     switch (event.key) {
       case 'ArrowRight':
       case 'ArrowDown':
         event.preventDefault();
-        targetIndex = (currentIndex + 1) % state.tabs.length;
+        targetIndex = (currentIndex + 1) % enabled.length;
         break;
       case 'ArrowLeft':
       case 'ArrowUp':
         event.preventDefault();
-        targetIndex = (currentIndex - 1 + state.tabs.length) % state.tabs.length;
+        targetIndex = (currentIndex - 1 + enabled.length) % enabled.length;
         break;
       case 'Home':
         event.preventDefault();
@@ -152,19 +302,18 @@ class Tabs {
         break;
       case 'End':
         event.preventDefault();
-        targetIndex = state.tabs.length - 1;
+        targetIndex = enabled.length - 1;
         break;
     }
 
-    if (targetIndex >= 0) {
-      const targetTab = state.tabs[targetIndex];
+    if (targetIndex >= 0 && enabled[targetIndex]) {
+      const targetTab = enabled[targetIndex];
       targetTab.focus();
       this._activateTab(element, targetTab.dataset.tab, state, true);
     }
   }
 
   _activateTab(element, panelId, state, animate = true) {
-    // Update tab states
     state.tabs.forEach(tab => {
       const isActive = tab.dataset.tab === panelId;
       tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
@@ -176,10 +325,61 @@ class Tabs {
     });
 
     state.activeTab = panelId;
+    this._moveIndicator(state);
+  }
+
+  _moveIndicator(state) {
+    if (!state.indicator) return;
+    const tab = state.tabs.find(t => t.dataset.tab === state.activeTab);
+    if (!tab) return;
+    state.tabsList.style.setProperty('--tabs-indicator-left', `${tab.offsetLeft}px`);
+    state.tabsList.style.setProperty('--tabs-indicator-width', `${tab.offsetWidth}px`);
   }
 
   static enhanceAll(selector = '[data-tabs]', root = document) {
     const instance = new Tabs();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+// ============================================================================
+// Segmented Control
+// ============================================================================
+
+/**
+ * Keeps exactly one .segmented-control__item pressed: aria-pressed on toggle buttons, or
+ * aria-checked when the items are role="radio".
+ */
+class SegmentedControl {
+  constructor() {
+    this.elements = new WeakSet();
+  }
+
+  mount(element) {
+    if (this.elements.has(element)) return;
+
+    const items = [...element.querySelectorAll('.segmented-control__item')];
+    if (!items.length) return;
+
+    const attribute = items[0].getAttribute('role') === 'radio' ? 'aria-checked' : 'aria-pressed';
+    const select = (selected) => {
+      items.forEach(item => item.setAttribute(attribute, String(item === selected)));
+      element.dispatchEvent(new CustomEvent('segmented-control:change', { bubbles: true, detail: { item: selected } }));
+    };
+
+    items.forEach(item => {
+      if (!item.hasAttribute(attribute)) item.setAttribute(attribute, 'false');
+      item.addEventListener('click', () => {
+        if (!isDisabled(item) && item.getAttribute(attribute) !== 'true') select(item);
+      });
+    });
+
+    this.elements.add(element);
+  }
+
+  static enhanceAll(selector = '.segmented-control', root = document) {
+    const instance = new SegmentedControl();
     root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
@@ -208,14 +408,23 @@ class Toggle {
     // Optional extra class on the target for markup that is not styled from aria-expanded
     const targetClass = element.dataset.toggleClass || '';
 
+    // Optional backdrop shown with the target (e.g. .sidebaroverlay); clicking it closes
+    const overlay = element.dataset.toggleOverlay ? document.querySelector(element.dataset.toggleOverlay) : null;
+
     const state = {
       target,
       targetSelector,
       capture,
       manual,
       targetClass,
-      isOpen: element.getAttribute('aria-expanded') === 'true' || target.hasAttribute('open'),
+      overlay,
+      overlayClass: overlay ? `${overlay.classList[0]}--visible` : '',
+      isOpen: element.getAttribute('aria-expanded') === 'true'
+        || target.hasAttribute('open')
+        || (targetClass !== '' && target.classList.contains(targetClass)),
     };
+
+    overlay?.addEventListener('click', () => this.hide(element));
 
     // Click handler
     element.addEventListener('click', (e) => {
@@ -276,6 +485,9 @@ class Toggle {
 
     if (state.targetClass) {
       state.target.classList.toggle(state.targetClass, open);
+    }
+    if (state.overlay) {
+      state.overlay.classList.toggle(state.overlayClass, open);
     }
 
     // <dialog> and <details> targets carry their own native open state
@@ -1078,13 +1290,19 @@ class ToastManager {
     if (!this.container) {
       this.container = document.createElement('div');
       this.container.className = `toast__container toast__container--${this.position}`;
+      this.container.setAttribute('aria-label', 'Notifications');
       document.body.appendChild(this.container);
     }
+    // Announce toasts as they are added; error toasts interrupt via role="alert"
+    this.container.setAttribute('aria-live', 'polite');
+    this.container.setAttribute('aria-relevant', 'additions');
   }
 
-  show({ message, title, type = 'info', duration = this.defaultDuration, actions = [] }) {
+  show({ message, title, type = 'info', duration = this.defaultDuration, progress = false }) {
     const toast = document.createElement('div');
     toast.className = `toast toast--${type}`;
+    if (type === 'error') toast.setAttribute('role', 'alert');
+    if (duration > 0) toast.style.setProperty('--toast-duration', `${duration}ms`);
 
     const icons = {
       info: '<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/>',
@@ -1099,9 +1317,10 @@ class ToastManager {
         ${title ? `<h4 class="toast__title">${title}</h4>` : ''}
         <p class="toast__description">${message}</p>
       </div>
-      <button class="toast__close">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+      <button type="button" class="toast__close" aria-label="Dismiss notification">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
       </button>
+      ${progress && duration > 0 ? '<div class="toast__progress" aria-hidden="true"></div>' : ''}
     `;
 
     // Add close handler
@@ -1120,6 +1339,7 @@ class ToastManager {
 
   dismiss(toast) {
     if (!toast || !toast.parentNode) return;
+    // Plays toast-slide-in's offsets in reverse, so it leaves the way it came in
     toast.style.animation = 'toast-slide-out 0.3s ease-in forwards';
     setTimeout(() => toast.remove(), 300);
   }
@@ -1304,13 +1524,16 @@ function init(root = document) {
     actionbar: ActionBar.enhanceAll('.actionbar', root),
     actionbarList: ActionBarList.enhanceAll('.actionbar__list', root),
     accordion: Accordion.enhanceAll('[data-accordion]', root),
+    collapsible: Collapsible.enhanceAll('.collapsible', root),
+    submenu: Submenu.enhanceAll('.dropdown__submenu', root),
     tabs: Tabs.enhanceAll('[data-tabs]', root),
+    segmentedControl: SegmentedControl.enhanceAll('.segmented-control', root),
     toggle: Toggle.enhanceAll('[data-toggle]', root),
     chart: Chart.enhanceAll('[data-chart]', root),
   };
 }
 
-window.Parallelogram = { init, ActionBar, ActionBarList, Accordion, Tabs, Toggle, Chart, ToastManager };
+window.Parallelogram = { init, ActionBar, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager };
 
 /**
  * Fallback for the Invoker Commands API (button commandfor/command) in browsers without it,
@@ -1348,10 +1571,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Theme toggle
   window.toggleTheme = () => {
     const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    html.setAttribute('data-theme', current === 'dark' ? '' : 'dark');
+    const theme = html.getAttribute('data-theme');
+    const dark = !(theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches));
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
 
-    window.toast.info(current === 'dark' ? 'Light mode enabled' : 'Dark mode enabled', {
+    window.toast.info(dark ? 'Dark mode enabled' : 'Light mode enabled', {
       duration: 2000,
     });
   };

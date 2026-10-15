@@ -8,7 +8,7 @@ export default [
   {
     group: 'Foundations',
     pages: [
-      { slug: 'typography', name: 'Typography', description: 'Text styles and hierarchy.', scss: '_base.scss' },
+      { slug: 'typography', name: 'Typography', description: 'Compact type scale, heading classes and text styles.', scss: '_base.scss' },
     ],
   },
   {
@@ -24,7 +24,7 @@ export default [
     group: 'Forms',
     pages: [
       { slug: 'input', name: 'Input', description: 'Text inputs, textareas, selects, checkboxes, radios and switches.', scss: 'components/_input.scss', spec: 'input' },
-      { slug: 'datetime', name: 'Datetime Picker', description: 'Date and time selection using the <p-datetime> web component from parallelogram-js.' },
+      { slug: 'datetime', name: 'Datetime Picker', description: 'Date and time selection using the <p-datetime> web component from parallelogram-js.', scss: '_datetime.scss' },
       { slug: 'form-layout', name: 'Form Layout', description: 'Form sections, rows, and enhanced fields.', scss: 'components/_form-layout.scss', spec: 'form-layout' },
       { slug: 'toolbar', name: 'Toolbar', description: 'Search input with filters and actions.', scss: 'components/_toolbar.scss', spec: 'toolbar' },
     ],
@@ -67,6 +67,7 @@ export default [
     group: 'Navigation & layout',
     pages: [
       { slug: 'breadcrumb', name: 'Breadcrumb', description: 'Navigation path indicator.', scss: 'components/_breadcrumb.scss', spec: 'breadcrumb' },
+      { slug: 'pageheader', name: 'Page Header', description: 'Page title with breadcrumb, description and actions.', scss: 'components/_pageheader.scss', spec: 'pageheader' },
       { slug: 'pagination', name: 'Pagination', description: 'Page navigation controls.', scss: 'components/_pagination.scss', spec: 'pagination' },
       { slug: 'tabs', name: 'Tabs', description: 'Tabbed navigation for content sections.', scss: 'components/_tabs.scss', spec: 'tabs' },
       { slug: 'navbar', name: 'Navbar', description: 'Top navigation bar with brand, search and actions.', scss: 'components/_navbar.scss', spec: 'navbar' },

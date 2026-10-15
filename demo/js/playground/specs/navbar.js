@@ -87,7 +87,17 @@ export default {
     },
     { key: 'disabled', label: 'Disabled item', type: 'toggle' },
     { key: 'actions', label: 'Actions', type: 'toggle', default: true },
-    { key: 'withSidebar', label: 'Offset for sidebar', type: 'toggle' },
+    {
+      key: 'withSidebar',
+      label: 'Offset for sidebar',
+      type: 'select',
+      options: [
+        { value: '', label: 'None' },
+        { value: 'left', label: 'Sidebar (--with-sidebar)' },
+        { value: 'collapsed', label: 'Collapsed sidebar' },
+        { value: 'right', label: 'Right sidebar' },
+      ],
+    },
     { key: 'mobileOpen', label: 'Mobile menu open', type: 'toggle' },
   ],
   presets: [
@@ -95,11 +105,16 @@ export default {
     { name: 'Sticky, elevated', state: { variant: 'elevated', position: 'sticky' } },
     { name: 'Marketing (transparent)', state: { variant: 'transparent', search: '', actions: false, current: 'Pages' } },
     { name: 'Restricted section', state: { current: 'Records', disabled: true } },
-    { name: 'Beside a sidebar', state: { withSidebar: true, logo: false, search: 'input' } },
+    { name: 'Beside a sidebar', state: { withSidebar: 'left', logo: false, search: 'input' } },
     { name: 'Mobile menu open', state: { mobileOpen: true } },
   ],
   render(s) {
-    const className = cx(bem('navbar', s.position, s.variant), s.withSidebar && 'navbar--with-sidebar');
+    const className = cx(
+      bem('navbar', s.position, s.variant),
+      s.withSidebar && 'navbar--with-sidebar',
+      s.withSidebar === 'collapsed' && 'navbar--sidebar-collapsed',
+      s.withSidebar === 'right' && 'navbar--sidebar-right'
+    );
     return `<header class="${className}">${brand(s)}`
       + `<nav class="navbar__nav" aria-label="Main">${links(s, 'navbar__item')}</nav>`
       + `${actions(s)}</header>${mobileMenu(s)}`;

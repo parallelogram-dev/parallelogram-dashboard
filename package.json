@@ -5,8 +5,8 @@
   "main": "dist/parallelogram-dashboard.css",
   "type": "module",
   "scripts": {
-    "build": "sass scss/main.scss dist/parallelogram-dashboard.css && cp dist/parallelogram-dashboard.css demo/css/parallelogram-dashboard.css && npm run vendor && npm run llms",
-    "build:min": "sass scss/main.scss dist/parallelogram-dashboard.min.css --style=compressed",
+    "build": "sass scss/main.scss dist/parallelogram-dashboard.css && sass scss/demo-pages.scss demo/css/demo.css --no-source-map && cp dist/parallelogram-dashboard.css demo/css/parallelogram-dashboard.css && npm run build:min && npm run vendor && npm run llms",
+    "build:min": "sass scss/main.scss dist/parallelogram-dashboard.min.css --style=compressed --no-source-map && lightningcss --minify dist/parallelogram-dashboard.min.css -o dist/parallelogram-dashboard.min.css",
     "watch": "sass --watch scss/main.scss dist/parallelogram-dashboard.css",
     "dev": "sass --watch scss/main.scss dist/parallelogram-dashboard.css",
     "serve": "python3 scripts/serve.py 8080",
@@ -25,6 +25,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "lightningcss-cli": "^1.33.0",
     "sass": "^1.69.0"
   },
   "dependencies": {

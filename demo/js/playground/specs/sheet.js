@@ -1,4 +1,4 @@
-import { bem, cx, escape, icon } from '../lib.js';
+import { bem, escape, icon } from '../lib.js';
 
 const ID = 'pg-sheet';
 const EDGE = { '': 'right', right: 'right', left: 'left', top: 'top', bottom: 'bottom' };
@@ -24,7 +24,7 @@ export default {
   name: 'Sheet',
   description: 'Slide-out panels from screen edges.',
   sources: ['components/_sheet.scss'],
-  target: '.sheet',
+  target: '.sheet, .drawer',
   layout: 'block',
   controls: [
     {
@@ -68,7 +68,7 @@ export default {
     { key: 'close', label: 'Close button', type: 'toggle', default: true },
     { key: 'backdrop', label: 'Backdrop', type: 'toggle', default: true },
     { key: 'handle', label: 'Drag handle', type: 'toggle', default: true, when: s => ['top', 'bottom'].includes(s.side) },
-    { key: 'drawer', label: 'Bordered (.drawer)', type: 'toggle' },
+    { key: 'drawer', label: 'Bordered (.drawer block)', type: 'toggle' },
     { key: 'open', label: 'Open', type: 'toggle', default: true },
   ],
   presets: [
@@ -83,27 +83,25 @@ export default {
   render(s) {
     const edge = EDGE[s.side];
     const vertical = edge === 'top' || edge === 'bottom';
-    const className = cx(
-      bem('sheet', s.side, !vertical && s.size),
-      s.drawer && bem('drawer', edge !== 'right' && edge)
-    );
+    // .drawer is a standalone block with the same elements and modifiers as .sheet
+    const b = s.drawer ? 'drawer' : 'sheet';
     const command = `commandfor="${ID}" command="close"`;
-    const backdrop = s.backdrop ? `<button type="button" class="sheet__backdrop" ${command} aria-label="Close" tabindex="-1"></button>` : '';
-    const handle = vertical && s.handle ? '<div class="sheet__handle"></div>' : '';
-    const text = `<h2 class="sheet__title" id="${ID}-title">${escape(s.title)}</h2>`
-      + (s.description ? `<p class="sheet__description">${escape(s.description)}</p>` : '');
-    const close = s.close ? `<button type="button" class="sheet__close" ${command} aria-label="Close">${icon('x')}</button>` : '';
+    const backdrop = s.backdrop ? `<button type="button" class="${b}__backdrop" ${command} aria-label="Close" tabindex="-1"></button>` : '';
+    const handle = vertical && s.handle ? `<div class="${b}__handle"></div>` : '';
+    const text = `<h2 class="${b}__title" id="${ID}-title">${escape(s.title)}</h2>`
+      + (s.description ? `<p class="${b}__description">${escape(s.description)}</p>` : '');
+    const close = s.close ? `<button type="button" class="${b}__close" ${command} aria-label="Close">${icon('x')}</button>` : '';
     const footer = s.footer
-      ? `<div class="sheet__footer"><button type="button" class="btn btn--outline" ${command}>Cancel</button>`
+      ? `<div class="${b}__footer"><button type="button" class="btn btn--outline" ${command}>Cancel</button>`
         + `<button type="button" class="btn btn--primary" ${command}>Save changes</button></div>`
       : '';
-    const panel = `<div class="${cx('sheet__panel', s.drawer && 'drawer__panel')}">`
+    const panel = `<div class="${b}__panel">`
       + (edge === 'bottom' ? handle : '')
-      + `<div class="sheet__header"><div>${text}</div>${close}</div>`
-      + `<div class="sheet__content">${body(s)}</div>${footer}`
+      + `<div class="${b}__header"><div>${text}</div>${close}</div>`
+      + `<div class="${b}__content">${body(s)}</div>${footer}`
       + (edge === 'top' ? handle : '')
       + '</div>';
-    const trigger = `<button type="button" class="btn btn--outline" commandfor="${ID}" command="show-modal">Open ${edge} sheet</button>`;
-    return `${trigger}<dialog class="${className}" id="${ID}" aria-labelledby="${ID}-title"${s.open ? ' open' : ''}>${backdrop}${panel}</dialog>`;
+    const trigger = `<button type="button" class="btn btn--outline" commandfor="${ID}" command="show-modal">Open ${edge} ${b}</button>`;
+    return `${trigger}<dialog class="${bem(b, s.side, !vertical && s.size)}" id="${ID}" aria-labelledby="${ID}-title"${s.open ? ' open' : ''}>${backdrop}${panel}</dialog>`;
   },
 };
