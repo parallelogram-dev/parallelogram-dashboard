@@ -5,7 +5,7 @@
 
 @use "../variables" as *;
 
-.notif {
+.notify {
   &__item {
     align-items: flex-start;
     gap: $spacing-xs;
