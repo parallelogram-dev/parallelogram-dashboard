@@ -1,0 +1,130 @@
+/**
+ * List Component
+ *
+ * Rows with an optional leading status, a title and description, and trailing actions.
+ * An empty .list__status renders as a dot; put an icon inside it to show that instead.
+ * --segment divides rows with rules, --boxed puts each row in its own bordered box.
+ * The status and actions line up with the title's first line, like a bullet; --center centres them on the whole row.
+ * --disc and --spaced cover plain text lists.
+ */
+
+@use "../variables" as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+
+  &--spaced {
+    gap: $spacing-2xs;
+  }
+
+  &--disc {
+    display: block;
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  &--segment > .list__item {
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid var(--border);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  &--center {
+    > .list__item {
+      align-items: center;
+    }
+
+    .list__status {
+      height: auto;
+    }
+  }
+
+  &--boxed {
+    gap: $spacing-2xs;
+
+    > .list__item {
+      padding: $spacing-xs $spacing-sm;
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: $radius;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+
+  &__status {
+    display: inline-flex;
+    flex-shrink: 0;
+    height: 1lh;
+    font-size: $font-size-sm;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-muted);
+
+    &:empty::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: $radius-full;
+      background-color: currentColor;
+    }
+
+    svg {
+      width: $icon-size-md;
+      height: $icon-size-md;
+    }
+
+    &--success {
+      color: var(--success);
+    }
+
+    &--warning {
+      color: var(--warning);
+    }
+
+    &--error {
+      color: var(--destructive);
+    }
+
+    &--info {
+      color: var(--info);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+  }
+
+  &__description {
+    margin-top: $spacing-3xs;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
+  &__actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: $spacing-2xs;
+  }
+}
