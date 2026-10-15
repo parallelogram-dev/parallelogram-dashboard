@@ -3,190 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Server Error - Parallelogram Dashboard</title>
+  <title>Something Went Wrong - Parallelogram Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/parallelogram-dashboard.css">
   <link rel="stylesheet" href="css/demo.css">
-  <style>
-    .debug { max-width: 72rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-    .debug__split { display: grid; grid-template-columns: 18rem 1fr; gap: 1rem; align-items: start; }
-    @media (max-width: 860px) {
-      .debug__split { grid-template-columns: 1fr; }
-    }
-
-    .trace__frame {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 0.625rem 0.875rem;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-    }
-    .trace__frame:last-child { border-bottom: none; }
-    .trace__frame:hover { background-color: var(--accent); }
-    .trace__frame--active { background-color: var(--destructive-muted); }
-    .trace__frame--vendor { opacity: 0.55; }
-    .trace__fn { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; }
-    .trace__loc { font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted); margin-top: 0.125rem; }
-
-    .codeview { margin: 0; overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.6; }
-    .codeview__line { display: flex; }
-    .codeview__line--error { background-color: var(--destructive-muted); }
-    .codeview__ln { flex-shrink: 0; width: 2.5rem; padding: 0 0.75rem; text-align: right; color: var(--fg-subtle); user-select: none; }
-    .codeview__line--error .codeview__ln { color: var(--destructive); font-weight: 600; }
-    .codeview__code { white-space: pre; padding-right: 1rem; }
-  </style>
 </head>
 <body class="bg--muted">
 
-  <div class="debug">
-
-    <!-- Top bar -->
-    <div class="cluster cluster--between" style="margin-bottom: 1.25rem;">
-      <a href="dashboard.html" class="auth__logo" style="margin: 0;">
-        <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
-      </a>
-      <span class="badge badge--destructive-muted">Debug mode &middot; not shown in production</span>
-    </div>
-
-    <!-- Error banner -->
-    <div class="card" style="border-left: 4px solid var(--destructive); margin-bottom: 1.25rem;">
-      <div class="card__content card__content--pt">
-        <div class="cluster cluster--between">
-          <div>
-            <span class="badge badge--destructive">500 Internal Server Error</span>
-            <h1 class="text--xl text--semibold" style="margin-top: 0.625rem;">TypeError: Cannot read properties of undefined (reading 'total')</h1>
-            <p class="text--sm text--muted" style="margin-top: 0.375rem;">
-              <code class="code--sm">src/services/invoiceCalculator.js</code> &middot; line 42
-            </p>
-          </div>
-          <button type="button" class="btn btn--outline btn--sm">Copy error</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stack trace + code viewer -->
-    <div class="debug__split" style="margin-bottom: 1.25rem;">
+  <div class="auth">
+    <div class="auth__container">
 
       <div class="card">
-        <div class="card__header">
-          <h3 class="card__title text--sm">Stack trace</h3>
-        </div>
-        <div class="card__content card__content--flush">
-          <button type="button" class="trace__frame trace__frame--active">
-            <div class="trace__fn">calculateTotal()</div>
-            <div class="trace__loc">invoiceCalculator.js:42</div>
-          </button>
-          <button type="button" class="trace__frame">
-            <div class="trace__fn">show()</div>
-            <div class="trace__loc">invoiceController.js:28</div>
-          </button>
-          <button type="button" class="trace__frame">
-            <div class="trace__fn">handle()</div>
-            <div class="trace__loc">router.js:118</div>
-          </button>
-          <button type="button" class="trace__frame trace__frame--vendor">
-            <div class="trace__fn">Layer.handle_request()</div>
-            <div class="trace__loc">node_modules/express/lib/router/layer.js:95</div>
-          </button>
-          <button type="button" class="trace__frame trace__frame--vendor">
-            <div class="trace__fn">next()</div>
-            <div class="trace__loc">node_modules/express/lib/router/route.js:144</div>
-          </button>
-          <button type="button" class="trace__frame trace__frame--vendor">
-            <div class="trace__fn">Route.dispatch()</div>
-            <div class="trace__loc">node_modules/express/lib/router/route.js:114</div>
-          </button>
-          <button type="button" class="trace__frame trace__frame--vendor">
-            <div class="trace__fn">&lt;anonymous&gt;</div>
-            <div class="trace__loc">src/server.js:21</div>
-          </button>
-        </div>
-      </div>
+        <div class="card__content card__content--pt">
 
-      <div class="card">
-        <div class="card__header">
-          <span class="code--sm text--muted">src/services/invoiceCalculator.js</span>
-        </div>
-        <div class="card__content card__content--flush">
-          <pre class="codeview"><code
-            ><span class="codeview__line"><span class="codeview__ln">36</span><span class="codeview__code">  calculateTotal(invoice) {</span></span
-            ><span class="codeview__line"><span class="codeview__ln">37</span><span class="codeview__code">    const subtotal = invoice.items.reduce((sum, i) =&gt; sum + i.price, 0);</span></span
-            ><span class="codeview__line"><span class="codeview__ln">38</span><span class="codeview__code">    const discount = invoice.discount ?? 0;</span></span
-            ><span class="codeview__line"><span class="codeview__ln">39</span><span class="codeview__code">    const tax = subtotal * this.taxRate;</span></span
-            ><span class="codeview__line"><span class="codeview__ln">40</span><span class="codeview__code"></span></span
-            ><span class="codeview__line"><span class="codeview__ln">41</span><span class="codeview__code">    // customer is only populated when the invoice has been assigned</span></span
-            ><span class="codeview__line codeview__line--error"><span class="codeview__ln">42</span><span class="codeview__code">    return invoice.customer.total + subtotal + tax - discount;</span></span
-            ><span class="codeview__line"><span class="codeview__ln">43</span><span class="codeview__code">  }</span></span
-            ><span class="codeview__line"><span class="codeview__ln">44</span><span class="codeview__code"></span></span
-            ><span class="codeview__line"><span class="codeview__ln">45</span><span class="codeview__code">  applyTax(amount) {</span></span
-          ></code></pre>
+          <div class="auth__header">
+            <a href="dashboard.html" class="auth__logo">
+              <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+            </a>
+            <h1 class="auth__title">Something went wrong</h1>
+            <p class="auth__description">We couldn't load this page because of a problem on our side. Our team has been notified &mdash; please try again in a moment.</p>
+          </div>
+
+          <div class="cluster cluster--center">
+            <button type="button" class="btn btn--primary" onclick="location.reload()">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>
+              Try again
+            </button>
+          </div>
+
+          <p class="auth__footer">
+            Still not working? <a href="#" class="link">Contact support</a> and quote reference <code class="code--sm">7F3A-92C1</code>
+          </p>
+
         </div>
       </div>
 
     </div>
-
-    <!-- Request details -->
-    <div class="tabs tabs--underline" data-tabs>
-      <div class="tabs__list" data-tabs-list aria-label="Request details">
-        <button type="button" class="tabs__trigger" id="debug-tab-0" data-tab="debug-panel-0" aria-controls="debug-panel-0" aria-selected="true">Request</button>
-        <button type="button" class="tabs__trigger" id="debug-tab-1" data-tab="debug-panel-1" aria-controls="debug-panel-1" aria-selected="false">Headers</button>
-        <button type="button" class="tabs__trigger" id="debug-tab-2" data-tab="debug-panel-2" aria-controls="debug-panel-2" aria-selected="false">Session</button>
-        <button type="button" class="tabs__trigger" id="debug-tab-3" data-tab="debug-panel-3" aria-controls="debug-panel-3" aria-selected="false">Environment</button>
-      </div>
-      <div class="tabs__content" data-tabs-panels>
-
-        <div class="card" id="debug-panel-0" data-tab-panel aria-labelledby="debug-tab-0">
-          <div class="card__content card__content--pt">
-            <div class="datalist">
-              <div class="datalist__item"><span class="datalist__label">Method</span><span class="datalist__value">GET</span></div>
-              <div class="datalist__item"><span class="datalist__label">URL</span><span class="datalist__value">/api/invoices/INV-2024-089</span></div>
-              <div class="datalist__item"><span class="datalist__label">IP address</span><span class="datalist__value">10.0.4.22</span></div>
-              <div class="datalist__item"><span class="datalist__label">User</span><span class="datalist__value">john@example.com (ID: 1248)</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="debug-panel-1" data-tab-panel aria-labelledby="debug-tab-1" hidden>
-          <div class="card__content card__content--pt">
-            <div class="datalist">
-              <div class="datalist__item"><span class="datalist__label">Accept</span><span class="datalist__value">application/json</span></div>
-              <div class="datalist__item"><span class="datalist__label">Authorization</span><span class="datalist__value">Bearer &bull;&bull;&bull;&bull;&bull;&bull;f3a1</span></div>
-              <div class="datalist__item"><span class="datalist__label">User-Agent</span><span class="datalist__value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)</span></div>
-              <div class="datalist__item"><span class="datalist__label">X-Request-Id</span><span class="datalist__value">a1f9c3e0-7b2d-4e5f-9c1a-2d8e6f0b4c3a</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="debug-panel-2" data-tab-panel aria-labelledby="debug-tab-2" hidden>
-          <div class="card__content card__content--pt">
-            <div class="datalist">
-              <div class="datalist__item"><span class="datalist__label">Session ID</span><span class="datalist__value">sess_8f2a1c4e9b</span></div>
-              <div class="datalist__item"><span class="datalist__label">Workspace</span><span class="datalist__value">Acme Corporation</span></div>
-              <div class="datalist__item"><span class="datalist__label">Role</span><span class="datalist__value">Admin</span></div>
-              <div class="datalist__item"><span class="datalist__label">Last activity</span><span class="datalist__value">2 minutes ago</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="debug-panel-3" data-tab-panel aria-labelledby="debug-tab-3" hidden>
-          <div class="card__content card__content--pt">
-            <div class="datalist">
-              <div class="datalist__item"><span class="datalist__label">Environment</span><span class="datalist__value">staging</span></div>
-              <div class="datalist__item"><span class="datalist__label">Node version</span><span class="datalist__value">20.14.0</span></div>
-              <div class="datalist__item"><span class="datalist__label">App version</span><span class="datalist__value">2.4.1 (a3f91cd)</span></div>
-              <div class="datalist__item"><span class="datalist__label">Region</span><span class="datalist__value">us-east-1</span></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <p class="text--sm text--muted" style="text-align: center; margin-top: 1.5rem;">
-      This detailed error page is only shown when debug mode is enabled. <a href="dashboard.html" class="link">Back to dashboard</a>
-    </p>
-
   </div>
 
   <script type="module" src="js/main.js"></script>
