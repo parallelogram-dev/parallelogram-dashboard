@@ -52,6 +52,7 @@ export default [
     pages: [
       { slug: 'alert', name: 'Alert', description: 'Inline notification messages. Use the banner form for full-bleed page messages.', scss: 'components/_alert.scss', spec: 'alert' },
       { slug: 'banner', name: 'Banner', description: 'Full-width notification banners.', scss: 'components/_banner.scss', spec: 'banner' },
+      { slug: 'notification', name: 'Notification Item', description: 'Rows for a notifications dropdown panel, with an unread dot and read/unread state.', scss: 'components/_notification.scss', spec: 'notification' },
       { slug: 'toast', name: 'Toast', description: 'Temporary notification messages.', scss: 'components/_toast.scss', spec: 'toast' },
       { slug: 'tooltip', name: 'Tooltip', description: 'Hover hints and contextual information.', scss: 'components/_tooltip.scss', spec: 'tooltip' },
     ],

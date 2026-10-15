@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Item - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="notification">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Feedback</p>
+        <h1 class="docs__title">Notification Item</h1>
+        <p class="docs__lead">Rows for a notifications dropdown panel, with an unread dot and read/unread state. Compose several inside a <code>.dropdown__menu</code>.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="playground-heading">
+        <h2 id="playground-heading" class="docs__h2">Playground</h2>
+        <div data-playground></div>
+      </section>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="constrain constrain--sm">
+            <div class="demo-label">In a dropdown panel</div>
+            <div class="demo-box spacer--lg">
+              <div class="dropdown layout--relative">
+                <button type="button" class="btn btn--secondary dropdown__trigger" aria-haspopup="dialog" aria-expanded="true">
+                  Notifications
+                  <svg class="icon btn__icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></svg>
+                </button>
+                <div class="dropdown__menu demo-preview--dropdown dropdown__menu--lg" role="dialog" aria-label="Notifications">
+                  <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                    <span class="text--sm text--semibold">Notifications</span>
+                    <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+                  </div>
+                  <div class="dropdown__divider" role="separator"></div>
+                  <a href="#" class="dropdown__item notif__item">
+                    <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
+                    <span class="notif__body">
+                      <span class="notif__text">Bob Wilson commented on Mobile App</span>
+                      <span class="notif__time">5 minutes ago</span>
+                    </span>
+                  </a>
+                  <a href="#" class="dropdown__item notif__item notif__item--read">
+                    <span class="notif__dot notif__dot--success" aria-hidden="true"></span>
+                    <span class="notif__body">
+                      <span class="notif__text">Deploy succeeded for Website Redesign</span>
+                      <span class="notif__time">1 hour ago</span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+</body>
+</html>

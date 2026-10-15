@@ -124,9 +124,58 @@
           <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
           </button>
-          <button class="btn btn--ghost btn--icon">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
-          </button>
+          <div class="dropdown dropdown--right">
+            <button type="button" class="btn btn--ghost btn--icon dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Notifications" data-toggle data-toggle-target="#notificationsPanel" data-toggle-capture="true" style="position: relative;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="badge badge--destructive badge--dot" aria-hidden="true" style="position: absolute; top: 0.375rem; right: 0.375rem;"></span>
+            </button>
+            <div id="notificationsPanel" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Notifications">
+              <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                <span class="text--sm text--semibold">Notifications</span>
+                <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notif__time">5 minutes ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--success" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notif__time">1 hour ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item">
+                <span class="notif__dot notif__dot--warning" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notif__time">3 hours ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item notif__item--read">
+                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notif__time">Yesterday</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notif__item notif__item--read">
+                <span class="notif__dot notif__dot--error" aria-hidden="true"></span>
+                <span class="notif__body">
+                  <span class="notif__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notif__time">2 days ago</span>
+                </span>
+              </a>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item" style="justify-content: center;">
+                <span class="dropdown__item-text">View all notifications</span>
+              </a>
+            </div>
+          </div>
           <a href="settings-account.html" class="avatar" aria-label="Your account">
             <span class="avatar__fallback">JD</span>
             <span class="avatar__status avatar__status--online"></span>
