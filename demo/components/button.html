@@ -51,10 +51,15 @@
           </div>
 
           <div class="demo-label">With Icons</div>
+          <p class="text--sm text--muted spacer--md">An icon beside a label is pulled slightly towards the button's edge, because icons are drawn with space inside their box and would otherwise make that side look wider. When the icon comes after the label, wrap the label in a <code>&lt;span&gt;</code> so the button can tell the icon is trailing.</p>
           <div class="demo-row spacer--lg">
             <button class="btn btn--primary">
               <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
               Add Item
+            </button>
+            <button class="btn btn--outline">
+              <span>Next</span>
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
             </button>
             <button class="btn btn--outline btn--icon">
               <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3"/></svg>

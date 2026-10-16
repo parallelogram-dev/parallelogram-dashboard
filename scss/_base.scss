@@ -206,7 +206,16 @@ table {
   border-left: 4px solid var(--border);
   padding-left: $spacing-sm;
   color: var(--fg-muted);
-  font-style: italic;
+}
+
+// The system never sets type in italics: emphasis is shown with weight, and the elements
+// browsers italicise by default stay upright
+:where(em, i, cite, dfn, var, address) {
+  font-style: normal;
+}
+
+:where(em, i) {
+  font-weight: $font-weight-medium;
 }
 
 :where(hr) {

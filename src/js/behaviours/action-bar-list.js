@@ -1,3 +1,5 @@
+import { leadingEdge } from '../util/dom.js';
+
 /**
  * Behaviour for an .actionbar__list: expand and collapse, and optional reordering.
  *
@@ -201,7 +203,9 @@ export class ActionBarList {
 
     const move = (e) => {
       pointerY = e.clientY;
-      const next = this._dropTarget(state, item, pointerY);
+      // The item (not the bar inside it) carries the drag transform, so its box gives the slot
+      const edge = leadingEdge(this._layoutRect(item).top, pointerY - grabOffset, bar.offsetHeight);
+      const next = this._dropTarget(state, item, pointerY, edge);
       if (next && !this._isAt(item, next)) {
         this._animate(state, item, () => this._place(item, next.target, next.where, state));
       }
@@ -292,30 +296,39 @@ export class ActionBarList {
     return { top: rect.top - shift, bottom: rect.bottom - shift, height: rect.height };
   }
 
-  /** Where the dragged item would land for a pointer at clientY. */
-  _dropTarget(state, item, y) {
-    let best = null;
-    for (const candidate of this._candidates(state, item)) {
-      const rect = this._layoutRect(this._bar(candidate));
-      const distance = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
-      if (!best || distance < best.distance) best = { target: candidate, rect, distance };
-    }
-    if (!best) return null;
+  /**
+   * Where the dragged item would land. Before and after follow its leading edge, so a
+   * neighbour gives way once half covered; in a tree, the pointer (y) over the middle of a bar
+   * still means "drop inside as a child".
+   */
+  _dropTarget(state, item, y, edge = y) {
+    const nearest = (at) => {
+      let best = null;
+      for (const candidate of this._candidates(state, item)) {
+        const rect = this._layoutRect(this._bar(candidate));
+        const distance = at < rect.top ? rect.top - at : at > rect.bottom ? at - rect.bottom : 0;
+        if (!best || distance < best.distance) best = { target: candidate, rect, distance };
+      }
+      return best;
+    };
+    const ratio = (at, { rect }) => (at - rect.top) / rect.height;
 
-    const { target, rect } = best;
-    const ratio = (y - rect.top) / rect.height;
-    if (!state.tree) {
-      return { target, where: ratio < 0.5 ? 'before' : 'after' };
+    if (state.tree) {
+      const under = nearest(y);
+      if (!under) return null;
+      const middle = ratio(y, under);
+      if (middle >= 0.25 && middle <= 0.75 && under.distance === 0) return { target: under.target, where: 'inside' };
     }
-    if (ratio < 0.25) return { target, where: 'before' };
-    if (ratio > 0.75) {
-      // Below an open parent, the next visible slot is its first child
-      const children = this._childList(target);
-      return children && !children.hidden && children.children.length
-        ? { target, where: 'first-inside' }
-        : { target, where: 'after' };
-    }
-    return { target, where: 'inside' };
+
+    const best = nearest(edge);
+    if (!best) return null;
+    const { target } = best;
+    if (ratio(edge, best) < 0.5) return { target, where: 'before' };
+    // Below an open parent, the next visible slot is its first child
+    const children = state.tree && this._childList(target);
+    return children && !children.hidden && children.children.length
+      ? { target, where: 'first-inside' }
+      : { target, where: 'after' };
   }
 
   // ---------------------------------------------------------------------------

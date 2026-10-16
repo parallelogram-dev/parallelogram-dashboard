@@ -28,3 +28,12 @@ export function linkTrigger(trigger, region) {
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 }
+
+/**
+ * The point a dragged item compares with its neighbours' midpoints: its bottom edge while it sits
+ * below its slot (moving down) and its top edge while above (moving up). A neighbour therefore
+ * gives way once the dragged item covers half of it, rather than all of it.
+ */
+export function leadingEdge(slotTop, top, height) {
+  return top > slotTop ? top + height : top;
+}

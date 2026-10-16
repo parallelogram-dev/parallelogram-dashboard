@@ -1,4 +1,5 @@
 import { TableSort } from './table-sort.js';
+import { leadingEdge } from '../util/dom.js';
 
 /**
  * Drag-to-reorder rows in a table with data-table-reorder.
@@ -97,6 +98,7 @@ export class TableReorder {
       .finished.then(done, done);
   }
 
+  /** Where the row lands for its leading edge at y: a neighbour gives way once half covered. */
   _dropTarget(state, row, y) {
     let best = null;
     for (const candidate of this._rows(state, row)) {
@@ -136,7 +138,7 @@ export class TableReorder {
     };
 
     const update = () => {
-      const next = this._dropTarget(state, row, pointerY);
+      const next = this._dropTarget(state, row, leadingEdge(this._layoutRect(row).top, pointerY - grabOffset, row.offsetHeight));
       const at = next && (next.where === 'before' ? row.nextElementSibling === next.target : next.target.nextElementSibling === row);
       if (next && !at) {
         this._animate(state, row, () => state.body.insertBefore(row, next.where === 'before' ? next.target : next.target.nextElementSibling));
