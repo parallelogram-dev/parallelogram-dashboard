@@ -364,9 +364,12 @@
   function recordView(frame) {
     const d = frame.draft;
     const depth = stack.length;
-    const shared = frame.kind === 'project'
-      ? `Shown on ${d.usedOn} ${d.usedOn === 1 ? 'page' : 'pages'}. Saving changes the project everywhere it appears.`
-      : frame.kind === 'studio' ? `Credited on ${projects.filter(p => p.studio === d.id).length} projects. Saving changes the studio everywhere it appears.` : '';
+    // Only worth saying when the record also appears somewhere other than where you came from
+    const others = frame.kind === 'project' ? d.usedOn - 1 : projects.filter(p => p.studio === d.id).length - 1;
+    const plural = (n, word) => `${n} other ${word}${n === 1 ? '' : 's'}`;
+    const shared = others < 1 ? '' : frame.kind === 'project'
+      ? `Also shown on ${plural(others, 'page')}. Saving changes it there too.`
+      : `Also credited on ${plural(others, 'project')}. Saving changes it there too.`;
     const banner = shared ? `
       <div class="alert alert--info">${ICONS.share}<div class="alert__content"><p class="alert__description">${escape(shared)}</p></div></div>` : '';
 
@@ -545,7 +548,8 @@
     Object.assign(record, frame.draft);
     frame.initial = JSON.stringify(record);
     const name = KINDS[frame.kind].name(record);
-    const where = frame.kind === 'project' ? ` Shown on ${record.usedOn} ${record.usedOn === 1 ? 'page' : 'pages'}.` : '';
+    const others = frame.kind === 'project' ? record.usedOn - 1 : 0;
+    const where = others > 0 ? ` Updated on ${others} other ${others === 1 ? 'page' : 'pages'} too.` : '';
     window.toast?.success(`${name} saved.${where}`);
     stack.pop();
     stack.forEach((f) => {
