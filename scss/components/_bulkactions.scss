@@ -1,0 +1,129 @@
+/**
+ * Bulk actions bar
+ *
+ * Acts on the records selected in a table or record grid: a count of the selection
+ * (.bulkactions__count), then buttons and dropdowns (.bulkactions__actions), and optionally a
+ * button to clear the selection (.bulkactions__clear).
+ *
+ * The bar is markup on the page from the start, kept out of sight with the hidden attribute. The
+ * page's script updates the count and removes hidden once something is selected, and puts it back
+ * when the selection empties; the bar slides in each time it appears.
+ *
+ * By default it floats over the bottom of the viewport, so dropdowns inside it should open
+ * upwards (dropdown--top). .bulkactions--inline sits in the flow instead, such as above the table in
+ * place of its toolbar.
+ */
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.bulkactions {
+  position: fixed;
+  bottom: $spacing-lg;
+  left: 50%;
+  z-index: $z-fixed;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-2xs $spacing-xs;
+  width: max-content;
+  max-width: calc(100vw - #{$spacing-sm * 2});
+  padding: $spacing-2xs $spacing-xs;
+  color: var(--card-fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  box-shadow: $shadow-xl;
+  transform: translateX(-50%);
+  animation: bulkactions-float-in $transition-base $transition-easing;
+
+  // Full width on a phone, with the count and clear button on top and the actions below
+  @include max-sm {
+    right: $spacing-sm;
+    left: $spacing-sm;
+    width: auto;
+    max-width: none;
+    transform: none;
+    animation-name: bulkactions-in;
+
+    .bulkactions__count {
+      border-right: 0;
+    }
+
+    .bulkactions__actions {
+      order: 1;
+      flex-basis: 100%;
+    }
+  }
+
+  // The dashboard's navigation becomes a bar along the bottom of the screen at this width
+  .dashboard & {
+    @include max-md {
+      bottom: calc(4rem + #{$spacing-2xs});
+    }
+  }
+
+  &--inline {
+    position: static;
+    width: auto;
+    max-width: none;
+    background-color: color-mix(in srgb, var(--primary) 6%, var(--card));
+    box-shadow: none;
+    transform: none;
+    animation-name: bulkactions-in;
+  }
+
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch;
+    padding-right: $spacing-xs;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+
+    strong {
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-3xs;
+  }
+
+  &__clear {
+    margin-left: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes bulkactions-float-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(#{$spacing-sm});
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// The narrow and inline bars aren't centred with a transform, so they slide without one
+@keyframes bulkactions-in {
+  from {
+    opacity: 0;
+    translate: 0 #{$spacing-2xs};
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

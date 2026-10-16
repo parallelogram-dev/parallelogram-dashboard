@@ -15,6 +15,7 @@ export default [
     group: 'Actions',
     pages: [
       { slug: 'actionbar', name: 'Action Bar', description: 'A segmented bar standing for one record, with a reorder handle, title, switches, dropdowns and actions.', scss: 'components/_actionbar.scss', spec: 'actionbar' },
+      { slug: 'bulkactions', name: 'Bulk Actions', description: 'Bar of actions for the records selected in a table or record grid, shown while anything is selected.', scss: 'components/_bulkactions.scss' },
       { slug: 'button', name: 'Button', description: 'Triggers an action. Works on <button> and <a> elements.', scss: 'components/_button.scss', spec: 'button' },
       { slug: 'dropdown', name: 'Dropdown', description: 'Contextual menus and actions.', scss: 'components/_dropdown.scss', spec: 'dropdown' },
       { slug: 'command', name: 'Command', description: 'Command palette (⌘K style) for quick actions.', scss: 'components/_command.scss', spec: 'command' },
@@ -43,6 +44,7 @@ export default [
       { slug: 'list', name: 'List', description: 'Rows with an optional status, title and description, and trailing actions. Divided, boxed or plain.', scss: 'components/_list.scss', spec: 'list' },
       { slug: 'empty', name: 'Empty State', description: 'Placeholder content for empty views.', scss: 'components/_empty.scss', spec: 'empty' },
       { slug: 'progress', name: 'Progress', description: 'Progress indicators and loading states.', scss: 'components/_progress.scss', spec: 'progress' },
+      { slug: 'recordgrid', name: 'Record Grid', description: 'Picture view of a record list: image-led tiles with a title, status badges, an action menu and a selection checkbox.', scss: 'components/_recordgrid.scss' },
       { slug: 'separator', name: 'Separator', description: 'Visual dividers for content sections.', scss: 'components/_separator.scss', spec: 'separator' },
       { slug: 'skeleton', name: 'Skeleton', description: 'Loading placeholder states.', scss: 'components/_skeleton.scss', spec: 'skeleton' },
       { slug: 'stat', name: 'Stat', description: 'Statistics and metric cards.', scss: 'components/_stat.scss', spec: 'stat' },

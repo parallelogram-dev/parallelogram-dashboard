@@ -135,6 +135,17 @@
     border-radius: $radius;
   }
 
+  // The floating bar, shown in place rather than over the bottom of the window
+  &--bulkactions {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-inline: auto;
+    transform: none;
+    animation: none;
+  }
+
   &--dropdown {
     position: relative;
     margin-top: 0.5rem;
@@ -149,37 +160,6 @@
 
   &--overflow-visible {
     overflow: visible;
-  }
-}
-
-// -------------------------------------------------------------------------
-// Bulk Actions Block - Fixed action bar
-// -------------------------------------------------------------------------
-.bulkactions {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  box-shadow: $shadow-xl;
-  animation: bulkactions-in $transition-base $transition-easing;
-
-  &__content {
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-}
-
-@keyframes bulkactions-in {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
   }
 }
 

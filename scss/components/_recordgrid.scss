@@ -1,0 +1,181 @@
+/**
+ * Record grid
+ *
+ * The picture view of a record list: a responsive grid of tiles, each led by a thumbnail
+ * (.recordgrid__thumb, an image or a placeholder icon), with a title, a meta line and a footer
+ * holding the status badges and the record's action menu.
+ *
+ * A tile can carry a selection checkbox (.recordgrid__select) over its thumbnail, so the same
+ * bulk actions work as in the table view. It shows while the tile is hovered or focused, and on
+ * every tile once anything in the grid is selected. A checked tile is outlined; a tile with
+ * aria-disabled="true" (unpublished, locked) is dimmed but its controls stay usable.
+ *
+ * Tiles never clip their contents, so the action menu can open past the tile's edge.
+ */
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.recordgrid {
+  --recordgrid-min: 14rem;
+  --recordgrid-ratio: 4 / 3;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--recordgrid-min), 100%), 1fr));
+  gap: $spacing-sm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &--sm {
+    --recordgrid-min: 10rem;
+
+    gap: $spacing-xs;
+  }
+
+  &--square {
+    --recordgrid-ratio: 1;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: var(--card-fg);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    @include transition-colors;
+
+    &:hover {
+      border-color: var(--fg-subtle);
+    }
+
+    &:has(.recordgrid__select :checked) {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    &[aria-disabled="true"] :is(.recordgrid__thumb, .recordgrid__title) {
+      opacity: 0.55;
+    }
+  }
+
+  &__thumb {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: var(--recordgrid-ratio);
+    margin: 0;
+    overflow: hidden;
+    color: var(--fg-subtle);
+    background-color: var(--bg-muted);
+    border-bottom: 1px solid var(--border);
+    border-radius: calc(#{$radius} - 1px) calc(#{$radius} - 1px) 0 0;
+
+    img,
+    picture {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    img {
+      object-fit: cover;
+    }
+
+    // A record with no image shows an icon in its place
+    > .icon {
+      width: $icon-size-lg;
+      height: $icon-size-lg;
+    }
+
+    &:is(a):focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: -2px;
+    }
+
+    // Logos and product shots sit whole on the muted ground instead of filling the frame
+    &--contain img {
+      padding: $spacing-xs;
+      object-fit: contain;
+    }
+  }
+
+  // Lies on a chip over the thumbnail so it reads against any image
+  &__select {
+    position: absolute;
+    top: $spacing-2xs;
+    left: $spacing-2xs;
+    z-index: 1;
+    display: inline-flex;
+    padding: $spacing-3xs;
+    background-color: var(--card);
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    opacity: 0;
+    @include transition-opacity;
+
+    @media (hover: none) {
+      opacity: 1;
+    }
+  }
+
+  &__item:is(:hover, :focus-within) &__select,
+  &:has(.recordgrid__select :checked) &__select {
+    opacity: 1;
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: $spacing-3xs;
+    min-width: 0;
+    padding: $spacing-xs;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-snug;
+    color: inherit;
+    text-decoration: none;
+    @include text-clamp(2);
+
+    &:is(a):hover {
+      text-decoration: underline;
+    }
+
+    &:is(a):focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  &__meta {
+    margin: 0;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    @include text-truncate;
+  }
+
+  // Pushed to the bottom so footers line up across a row of tiles with different titles
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2xs;
+    margin-top: auto;
+    padding-top: $spacing-2xs;
+  }
+
+  &__status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-3xs;
+    min-width: 0;
+  }
+}

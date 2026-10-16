@@ -16,6 +16,18 @@ section can be taken with a version bump and a rebuild.
 - `btn--warning`, `btn--success` and `btn--info`, coloured buttons beside `btn--destructive` for
   an action that matches a status, such as a Fix button next to a Warning badge. They read the
   new `--warning-hover`, `--success-hover` and `--info-hover` tokens.
+- Record Grid, the picture view of a record list: a `.recordgrid` of `recordgrid__item` tiles
+  (`recordgrid--sm`, `recordgrid--square`), each led by a `recordgrid__thumb` (`--contain` for
+  logos and product shots, or an icon when there is no image), with `recordgrid__title`,
+  `recordgrid__meta` and a `recordgrid__footer` holding `recordgrid__status` badges and the action
+  menu. A `recordgrid__select` checkbox lets the grid share the table's bulk actions; checked tiles
+  are outlined and `aria-disabled="true"` dims a tile.
+- Bulk Actions, the bar for acting on selected rows: `.bulkactions` (`--inline` to sit in the flow
+  rather than float over the bottom of the viewport) with `bulkactions__count`,
+  `bulkactions__actions` and `bulkactions__clear`. The page toggles it with `hidden` and it slides
+  in when shown. It was in the demo stylesheet, so a site had to copy it; it now ships in the
+  library. Both have a component page, and the Records demo uses them for its grid view and
+  selection bar.
 
 ### Changed
 
