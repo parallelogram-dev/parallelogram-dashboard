@@ -56,6 +56,16 @@
     &:last-child {
       border-bottom: none;
     }
+
+    // Edited but not saved, in an editable table
+    &--changed > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--warning);
+    }
+
+    // Added but not saved, in an editable table
+    &--new > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--success);
+    }
   }
 
   &__head {
@@ -156,6 +166,98 @@
       padding: $spacing-xs $spacing-sm;
     }
   }
+
+  // Cells hold .table__control inputs, so rows edit like a spreadsheet
+  &--editable {
+    .table__head,
+    .table__cell {
+      padding-left: $spacing-3xs;
+      padding-right: $spacing-3xs;
+    }
+
+    .table__cell {
+      padding-top: $spacing-3xs;
+      padding-bottom: $spacing-3xs;
+    }
+
+    // Line header text up with the text inside .table__control (cell padding + border + control padding)
+    .table__head:not(.table__checkbox, .table__actions) {
+      padding-left: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+      padding-right: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+    }
+  }
+
+  // An input or select that sits flush in its cell until hovered or focused
+  &__control {
+    width: 100%;
+    min-width: 5.5rem;
+    height: 2rem;
+    padding: 0 $spacing-2xs;
+    font: inherit;
+    color: var(--fg);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-md;
+    @include transition-colors;
+
+    &:hover {
+      border-color: var(--border);
+    }
+
+    &:focus {
+      @include focus-ring;
+      border-color: var(--ring);
+      background-color: var(--bg);
+    }
+
+    &--number {
+      min-width: 4.5rem;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    // For longer values such as codes and SKUs; the table scrolls rather than squeezing them
+    &--wide {
+      min-width: 8rem;
+    }
+  }
+
+  // While rows are selected, row actions step aside for the bulk actions; they keep their space
+  &:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
+    visibility: hidden;
+  }
+
+  // The actions column stays pinned to the right edge while the table scrolls sideways
+  &--sticky-actions {
+    .table__actions {
+      position: sticky;
+      right: 0;
+      z-index: 1;
+      background-color: var(--card);
+    }
+
+    // A shadow shows only while columns are scrolled underneath the pinned actions
+    @supports (animation-timeline: scroll()) {
+      .table__actions {
+        animation: table-sticky-edge linear both;
+        animation-timeline: --table-scroll;
+      }
+    }
+  }
+}
+
+.table__wrapper:has(> .table--sticky-actions) {
+  scroll-timeline: --table-scroll inline;
+}
+
+@keyframes table-sticky-edge {
+  from {
+    box-shadow: -8px 0 8px -8px rgb(0 0 0 / 0.2);
+  }
+
+  to {
+    box-shadow: none;
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -185,6 +287,12 @@
 .table__checkbox {
   width: $spacing-xl;
   text-align: center;
+
+  // A label with no text sits on the baseline and rides high; centre it in the cell instead
+  .checkbox {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 // --------------------------------------------------------------------------

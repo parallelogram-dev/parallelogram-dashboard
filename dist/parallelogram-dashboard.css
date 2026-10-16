@@ -177,7 +177,7 @@
   --tracking-tight: -0.025em;
 }
 
-.chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -896,6 +896,9 @@ p-datetime.input:focus-within {
   display: grid;
   gap: 1.5rem;
 }
+.grid > * {
+  min-width: 0;
+}
 .grid--2-1 {
   grid-template-columns: 2fr 1fr;
 }
@@ -1196,6 +1199,22 @@ code.code--sm {
 
 .text--primary {
   color: var(--primary);
+}
+
+/**
+ * Overflow actions
+ *
+ * main.js sets data-overflow-level on the boundary (a .table__wrapper, or the container itself):
+ * 1 folds [data-priority="low"] actions into the "more" menu, 2 folds "medium" ones as well.
+ * Every container in the boundary folds together, so table rows stay aligned.
+ */
+:is([data-overflow-level="1"], [data-overflow-level="2"]) [data-overflow-actions] > [data-priority=low],
+:is([data-overflow-level="1"], [data-overflow-level="2"])[data-overflow-actions] > [data-priority=low],
+[data-overflow-level="2"] [data-overflow-actions] > [data-priority=medium],
+[data-overflow-level="2"][data-overflow-actions] > [data-priority=medium],
+[data-overflow-level="0"] [data-overflow-actions] > [data-overflow-more],
+[data-overflow-level="0"][data-overflow-actions] > [data-overflow-more] {
+  display: none !important;
 }
 
 .btn {
@@ -1773,6 +1792,7 @@ code.code--sm {
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
+  letter-spacing: normal;
   border-radius: 0.375rem;
   white-space: nowrap;
   transition: var(--transition-colors);
@@ -2026,6 +2046,12 @@ code.code--sm {
 .table__row:last-child {
   border-bottom: none;
 }
+.table__row--changed > .table__cell:first-child {
+  box-shadow: inset 3px 0 0 var(--warning);
+}
+.table__row--new > .table__cell:first-child {
+  box-shadow: inset 3px 0 0 var(--success);
+}
 .table__head {
   height: 3rem;
   padding: 0 1rem;
@@ -2085,7 +2111,74 @@ code.code--sm {
 .table--card .table__cell {
   padding: 0.75rem 1rem;
 }
+.table--editable .table__head,
+.table--editable .table__cell {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+.table--editable .table__cell {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.table--editable .table__head:not(.table__checkbox, .table__actions) {
+  padding-left: calc(0.25rem + 1px + 0.5rem);
+  padding-right: calc(0.25rem + 1px + 0.5rem);
+}
+.table__control {
+  width: 100%;
+  min-width: 5.5rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  font: inherit;
+  color: var(--fg);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  transition: var(--transition-colors);
+}
+.table__control:hover {
+  border-color: var(--border);
+}
+.table__control:focus {
+  border-color: var(--ring);
+  background-color: var(--bg);
+}
+.table__control--number {
+  min-width: 4.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.table__control--wide {
+  min-width: 8rem;
+}
+.table:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
+  visibility: hidden;
+}
+.table--sticky-actions .table__actions {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background-color: var(--card);
+}
+@supports (animation-timeline: scroll()) {
+  .table--sticky-actions .table__actions {
+    animation: table-sticky-edge linear both;
+    animation-timeline: --table-scroll;
+  }
+}
 
+.table__wrapper:has(> .table--sticky-actions) {
+  scroll-timeline: --table-scroll inline;
+}
+
+@keyframes table-sticky-edge {
+  from {
+    box-shadow: -8px 0 8px -8px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    box-shadow: none;
+  }
+}
 .table__sort-icon {
   display: inline-flex;
   align-items: center;
@@ -2101,6 +2194,10 @@ code.code--sm {
 .table__checkbox {
   width: 2rem;
   text-align: center;
+}
+.table__checkbox .checkbox {
+  display: flex;
+  justify-content: center;
 }
 
 .table__actions {
@@ -2674,6 +2771,12 @@ code.code--sm {
   opacity: 1;
   visibility: visible;
   transform: translateY(0.25rem);
+}
+.dropdown__menu[popover] {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  overflow: visible;
 }
 .dropdown--right > .dropdown__menu, .dropdown__menu--right {
   left: auto;
