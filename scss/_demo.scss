@@ -347,6 +347,21 @@
     flex-direction: column;
   }
 
+  // A section heading in the list; the first sits right under the menu's title
+  &__group {
+    margin: $spacing-xs 0 $spacing-3xs;
+    padding: 0 $spacing-xs;
+    font-size: 0.6875rem;
+    font-weight: $font-weight-semibold;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
   &__menu {
     position: absolute;
     bottom: calc(100% + 0.5rem);
