@@ -1,13 +1,16 @@
 {
   "name": "@parallelogram-js/dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A BEM-style CSS dashboard library inspired by shadcn/ui",
   "main": "dist/parallelogram-dashboard.css",
   "type": "module",
   "files": [
     "dist",
     "scss",
-    "src"
+    "src",
+    "CHANGELOG.md",
+    "!scss/_demo.scss",
+    "!scss/demo-pages.scss"
   ],
   "sideEffects": [
     "*.css",
@@ -47,6 +50,14 @@
     "components"
   ],
   "license": "MIT",
+  "author": "PeptoLab",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parallelogram-dev/parallelogram-dashboard.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@parallelogram-js/core": "^0.7.19",
     "lightningcss-cli": "^1.33.0",
