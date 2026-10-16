@@ -202,6 +202,20 @@
   }
 }
 
+// On phones a row of tabs that doesn't fit scrolls sideways in place, as .tabs--scrollable does
+@include max-sm {
+  .tabs__list {
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    @include scrollbar-hidden;
+  }
+
+  .tabs__trigger {
+    flex-shrink: 0;
+  }
+}
+
 // --------------------------------------------------------------------------
 // Scrollable Tabs (for many tabs)
 // --------------------------------------------------------------------------

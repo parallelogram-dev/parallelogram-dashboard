@@ -10,6 +10,9 @@
 // --------------------------------------------------------------------------
 
 .table__wrapper {
+  // Contains anything absolutely positioned inside the table (such as .sr-only labels), so it
+  // scrolls with the table instead of stretching the page
+  position: relative;
   width: 100%;
   overflow-x: auto;
   border: 1px solid var(--border);

@@ -314,3 +314,20 @@
     }
   }
 }
+
+// On phones, even with every foldable segment folded, a full-size title, indent and detail leave
+// no room for the label
+@include max-sm {
+  .actionbar__title {
+    min-width: 6rem;
+  }
+
+  .actionbar__list .actionbar__list {
+    padding-left: $spacing-sm;
+  }
+
+  // The label matters more than its secondary detail (such as a page's path)
+  .actionbar__meta {
+    display: none;
+  }
+}
