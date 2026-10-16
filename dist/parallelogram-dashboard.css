@@ -4217,6 +4217,12 @@ p-modal {
   padding: 1.5rem;
 }
 
+@media (min-width: 1024px) {
+  .dashboard__subnav-toggle {
+    display: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .navmenu {
     position: fixed;
@@ -4285,7 +4291,7 @@ p-modal {
   }
   .subnav {
     left: 0;
-    width: 100%;
+    width: min(20rem, 100% - 3rem);
   }
   .dashboard__main {
     margin-left: 0;
@@ -4304,6 +4310,11 @@ p-modal {
 .dashboard__overlay--visible {
   display: block;
   opacity: 1;
+}
+@media (min-width: 1024px) {
+  .dashboard__overlay {
+    display: none;
+  }
 }
 
 .avatar {
