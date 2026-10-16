@@ -11,7 +11,10 @@
   ],
   "sideEffects": [
     "*.css",
-    "*.scss"
+    "*.scss",
+    "./src/js/behaviours/toggle.js",
+    "./src/js/behaviours/unsaved-guard.js",
+    "./src/js/behaviours/search-clear.js"
   ],
   "exports": {
     ".": "./src/js/index.js",
@@ -29,7 +32,7 @@
     "dev": "sass --watch scss/main.scss dist/parallelogram-dashboard.css",
     "serve": "python3 scripts/serve.py 8080",
     "playground:check": "node scripts/playground-check.mjs",
-    "vendor": "rm -rf demo/vendor && mkdir -p demo/vendor && rsync -a --exclude dev --exclude types --exclude '*.map' node_modules/@parallelogram-js/core/dist/ demo/vendor/parallelogram-js/",
+    "vendor": "rm -rf demo/vendor && mkdir -p demo/vendor && rsync -a --exclude dev --exclude types --exclude '*.map' node_modules/@parallelogram-js/core/dist/ demo/vendor/parallelogram-js/ && rsync -a src/js/ demo/vendor/parallelogram-dashboard/",
     "llms": "node scripts/build-llms.mjs",
     "playground:register": "node scripts/register-specs.mjs"
   },
