@@ -106,7 +106,7 @@ $theme-tokens: (
   chart-grid: ($zinc-100, $zinc-800),
   chart-axis: ($zinc-300, $zinc-700),
   chart-muted: ($zinc-500, $zinc-400),
-);
+) !default;
 
 :root {
   color-scheme: light dark;
