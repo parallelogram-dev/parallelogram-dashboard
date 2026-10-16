@@ -508,6 +508,25 @@
   }
 }
 
+/**
+ * Paste preview
+ *
+ * In the dialog TablePaste opens, a pasted value its column can't take (no matching option, or
+ * text in a number column) is marked data-paste-invalid and skipped, and values in a column set
+ * to "Skip" are marked data-paste-skipped.
+ */
+.table__cell[data-paste-invalid] {
+  color: var(--destructive);
+  text-decoration: line-through wavy;
+  text-decoration-thickness: 1px;
+  cursor: help;
+}
+
+.table__cell[data-paste-skipped] {
+  color: var(--fg-subtle);
+  text-decoration: line-through;
+}
+
 // --------------------------------------------------------------------------
 // Actions Column
 // --------------------------------------------------------------------------
