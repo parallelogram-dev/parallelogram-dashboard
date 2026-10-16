@@ -50,6 +50,7 @@ class DemoNav {
       { title: 'Start', pages: [
         { name: 'Components', href: 'index.html', icon: 'grid' },
         { name: 'Playground', href: 'playground.html', icon: 'play' },
+        { name: 'Compare Styles', href: 'compare.html', icon: 'layers' },
       ] },
       { title: 'Dashboards', pages: [
         { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },

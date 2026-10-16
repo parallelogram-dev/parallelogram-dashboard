@@ -18,6 +18,39 @@ npm run watch
 npm run serve
 ```
 
+## Using the Package
+
+The library is consumed as `@parallelogram-js/dashboard` from another project's build. There is no
+CDN copy and no prebuilt `<script>` bundle. The repository is private and not yet on npm, so
+install a tagged release straight from GitHub (this needs git access to the repository):
+
+```bash
+npm install git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0
+```
+
+That records the tag in `package.json`, so the project stays on that release until you change it:
+
+```json
+"@parallelogram-js/dashboard": "git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0"
+```
+
+To upgrade, read the [changelog](CHANGELOG.md) entries since the current tag, make any listed
+markup changes in the project's templates, change the tag and run `npm install`. The compiled CSS
+in `dist/` is committed, so nothing needs building after install.
+
+```js
+import { init } from '@parallelogram-js/dashboard';
+import { TableSort } from '@parallelogram-js/dashboard/behaviours/table-sort';
+```
+
+```scss
+@use "@parallelogram-js/dashboard/scss" with ($control-border-width: 2px);
+```
+
+Keep the project's own look in a theme file of token values (see [Theme files](#theme-files)) and
+write each component's markup once in the project's templates, so a markup change in a release is
+one edit.
+
 ## Component Pages and Playground
 
 `demo/index.html` links to one page per component in `demo/components/`, each with examples and,
@@ -1133,6 +1166,28 @@ At runtime, override a token for both themes with a plain value or keep the pair
 }
 ```
 
+### Theme files
+
+A theme is a stylesheet of token values loaded after the library, so it survives upgrades as long
+as the token names stay the same. `demo/css/brand-contenir.css` is a worked example. Besides the
+colour tokens it can set:
+
+| Tokens | What they colour or shape |
+|--------|---------------------------|
+| `--navmenu-*` | The icon rail: `bg`, `fg`, `fg-muted`, `fg-subtle`, `bg-muted`, `bg-subtle`, `accent`, `accent-fg`, `border`, `input`, `input-placeholder`, `icon-stroke-width`, plus `indicator` for the current-page marker |
+| `--subnav-*` | The section menu, with the same names |
+| `--header-*` | The page header, with the same names |
+| `--navmenu-head-*`, `--subnav-head-*` | The rail's logo cell and the section menu's title bar: `bg`, `fg`, `fg-muted`, `accent`, `accent-fg`, `border` |
+| `--radius-sm` … `--radius-2xl` | Corner radius scale |
+| `--control-border-width` | Borders of inputs, selects, add-ons and outline buttons |
+| `--icon-stroke-width` | Line icon strokes |
+| `--avatar-bg`, `--avatar-fg` | Avatar initials |
+
+Inside the rail, section menu and header the general tokens (`--fg`, `--accent`, `--border` and
+so on) are pointed at the region's own, so everything in a region follows its tokens; menus and
+tooltips that open there keep the page's colours. Every region token defaults to the general
+token, so a theme sets only what differs.
+
 ### Typography
 
 `html` keeps the reader's browser font size (`100%`), so every `rem` scales with it. Element
@@ -1281,6 +1336,43 @@ Use these as starting templates:
   <div class="card">...</div>
 </div>
 ```
+
+## Versioning
+
+Releases follow semantic versioning, read for markup as well as code. While the version is below
+1.0, the minor number stands in for the major one:
+
+| Change | Below 1.0 | From 1.0 |
+|--------|-----------|----------|
+| A class renamed or removed, required markup added or moved, a token renamed or removed, a behaviour's options or events changed | Minor (0.2.0) | Major (2.0.0) |
+| A new component, modifier, token or behaviour that leaves existing markup working | Patch (0.1.1) | Minor (1.1.0) |
+| A fix to CSS or JavaScript that keeps markup and tokens as they are | Patch | Patch |
+
+Every change that needs a site to edit its templates goes under **Markup changes** in the
+[changelog](CHANGELOG.md), with the markup before and after.
+
+## Releasing
+
+1. While working, add entries under `## [Unreleased]` in `CHANGELOG.md`, with a **Markup changes**
+   section whenever templates need editing.
+2. On a clean `main`, run `npm run release -- <patch|minor|major|x.y.z>`. It builds, runs the
+   playground check, sets the version in `package.json` and `package-lock.json`, moves the
+   Unreleased entries under the new version and date, commits, and creates the tag `vX.Y.Z`.
+3. Check the commit, then push it with its tag: `git push --follow-tags`.
+
+## Comparing Styles Between Releases
+
+To see what a release changes on screen, compare the current build with an earlier tag:
+
+```bash
+npm run compare -- v0.1.0
+npm run serve
+```
+
+`npm run compare` copies that tag's compiled CSS into `demo/compare/` (git-ignored). Open
+`http://localhost:8080/compare.html`, choose pages and a width, and run it: each page loads with
+the current CSS and then the tag's, and every element whose computed styles differ is listed with
+the before and after values.
 
 ---
 
