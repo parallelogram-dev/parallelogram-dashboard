@@ -109,6 +109,11 @@
   display: grid;
   gap: 1.5rem;
 
+  // Let wide content (e.g. a scrolling table) scroll inside a column instead of widening it
+  > * {
+    min-width: 0;
+  }
+
   &--2-1 {
     grid-template-columns: 2fr 1fr;
   }
