@@ -4,7 +4,7 @@
  * Each block shows as a card led by a wireframe of its layout, sized to its rough proportions, with
  * its type and heading, an eye to show or hide it and a menu (duplicate, move, delete). Clicking a card
  * opens the block in a stacked sheet with Content and Layout tabs; layout options are visual
- * controls rather than long selects. A + between cards opens a block-type picker in the same
+ * controls (button groups and swatches) rather than long selects. A + between cards opens a block-type picker in the same
  * sheet. Blocks belong to the page, so the sheet ends in Done and "Save page" keeps everything;
  * a block's own lookups (images, a carousel's projects) open one level deeper. Escape and Back go
  * up a level and ask before discarding changes. All data is in memory and resets on reload.
@@ -529,13 +529,15 @@
       return `<div class="form__field"><label class="form__label" for="${id}">${f.label}${required}</label><textarea class="textarea form__control" id="${id}" rows="4" data-field="${f.key}">${escape(value)}</textarea>${hint}</div>`;
     }
     if (f.type === 'segment') {
+      // A few short choices read best as a button group; longer lists fall back to a dropdown
+      if (f.options.length > 4) {
+        return `<div class="form__field"><label class="form__label" for="${id}">${f.label}</label><select class="select form__control" id="${id}" data-field="${f.key}">${f.options.map(([v, label]) => `<option value="${v}"${v === value ? ' selected' : ''}>${label}</option>`).join('')}</select>${hint}</div>`;
+      }
       return `
         <div class="form__field">
           <span class="form__label" id="${id}">${f.label}</span>
-          <div class="segmented-control" data-segment="${f.key}">
-            <div class="segmented-control__list" role="radiogroup" aria-labelledby="${id}">
-              ${f.options.map(([v, label, ic]) => `<button type="button" class="segmented-control__item" role="radio" aria-checked="${v === value}" data-value="${v}">${ic || ''}${label}</button>`).join('')}
-            </div>
+          <div class="btn__group blk-options" role="radiogroup" aria-labelledby="${id}" data-segment="${f.key}">
+            ${f.options.map(([v, label, ic]) => `<button type="button" class="btn btn--outline btn--sm" role="radio" aria-checked="${v === value}" data-value="${v}">${ic || ''}${label}</button>`).join('')}
           </div>
           ${hint}
         </div>`;
@@ -642,6 +644,13 @@
       renderFooter();
       return undefined;
     }
+    const option = t.closest('[data-segment] [data-value]');
+    if (option) {
+      frame.draft[option.closest('[data-segment]').dataset.segment] = option.dataset.value;
+      option.parentElement.querySelectorAll('[data-value]').forEach((el) => { el.setAttribute('aria-checked', String(el === option)); });
+      renderFooter();
+      return undefined;
+    }
     const swatch = t.closest('[data-swatch] [data-value]');
     if (swatch) {
       const key = swatch.closest('[data-swatch]').dataset.swatch;
@@ -650,14 +659,6 @@
       renderFooter();
     }
     return undefined;
-  });
-
-  // Segmented controls report their choice through the library's event
-  sheet.addEventListener('segmented-control:change', (e) => {
-    const control = e.target.closest('[data-segment]');
-    if (!control) return;
-    top().draft[control.dataset.segment] = e.detail.item.dataset.value;
-    renderFooter();
   });
 
   sheet.addEventListener('input', (e) => {

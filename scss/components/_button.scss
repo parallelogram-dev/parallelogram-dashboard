@@ -32,9 +32,10 @@
     cursor: progress;
   }
 
-  // Toggle buttons: only the neutral variants have a distinct "on" look
-  &--outline[aria-pressed="true"],
-  &--ghost[aria-pressed="true"] {
+  // Toggle buttons, and radio buttons in a group (role="radio"): only the neutral variants have
+  // a distinct "on" look
+  &--outline:is([aria-pressed="true"], [aria-checked="true"]),
+  &--ghost:is([aria-pressed="true"], [aria-checked="true"]) {
     background-color: var(--accent);
     color: var(--accent-fg);
   }
@@ -207,6 +208,15 @@
 
   > :not(:first-child) {
     margin-left: -1px;
+  }
+
+  // A group of mutually exclusive choices (role="radiogroup") fills the chosen one, so it reads
+  // at a glance
+  &[role="radiogroup"] > .btn[aria-checked="true"] {
+    z-index: 1;
+    color: var(--primary-fg);
+    background-color: var(--primary);
+    border-color: var(--primary);
   }
 
   > .btn:first-child,

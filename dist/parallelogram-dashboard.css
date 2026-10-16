@@ -1331,7 +1331,7 @@ code.code--sm {
 .btn[aria-busy=true] {
   cursor: progress;
 }
-.btn--outline[aria-pressed=true], .btn--ghost[aria-pressed=true] {
+.btn--outline:is([aria-pressed=true], [aria-checked=true]), .btn--ghost:is([aria-pressed=true], [aria-checked=true]) {
   background-color: var(--accent);
   color: var(--accent-fg);
 }
@@ -1450,6 +1450,12 @@ code.code--sm {
 }
 .btn__group > :not(:first-child) {
   margin-left: -1px;
+}
+.btn__group[role=radiogroup] > .btn[aria-checked=true] {
+  z-index: 1;
+  color: var(--primary-fg);
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 .btn__group > .btn:first-child,
 .btn__group > :first-child > .btn {
