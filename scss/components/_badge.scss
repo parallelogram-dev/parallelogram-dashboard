@@ -17,6 +17,8 @@
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
   line-height: $line-height-tight;
+  // Don't inherit a heading's tight tracking when a badge sits in a title
+  letter-spacing: normal;
   border-radius: $radius-md;
   white-space: nowrap;
   @include transition-colors;
