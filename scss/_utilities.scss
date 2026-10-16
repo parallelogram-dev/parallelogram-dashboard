@@ -2,6 +2,7 @@
 // Utilities - BEM-style utility blocks
 // ==========================================================================
 
+@use "variables" as *;
 @use "mixins" as *;
 
 // -------------------------------------------------------------------------
@@ -394,4 +395,58 @@ code.code--sm {
  */
 [data-unsaved-guard]:not([data-dirty]) [data-unsaved-indicator] {
   display: none !important;
+}
+
+/**
+ * Expandable
+ *
+ * main.js moves a [data-expandable] element into dialog.expandable to show it full-screen. The
+ * element fills the window; a card's flush content (such as a table) takes the remaining height
+ * and scrolls inside it. Anything marked data-column-expanded only shows while expanded.
+ */
+.expandable {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: $spacing-sm;
+  background-color: var(--bg);
+  border: 0;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background-color: var(--bg);
+  }
+
+  > [data-expanded] {
+    flex: 1;
+    min-height: 0;
+  }
+
+  [data-expanded] .card__content--flush {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    > .table__wrapper {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+    }
+  }
+}
+
+[data-expandable]:not([data-expanded]) [data-column-expanded] {
+  display: none;
+}
+
+// An expand button can carry both icons; the one for the current state shows
+[data-expandable]:not([data-expanded]) [data-expand-icon="collapse"],
+[data-expanded] [data-expand-icon="expand"] {
+  display: none;
 }

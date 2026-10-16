@@ -177,7 +177,7 @@
   --tracking-tight: -0.025em;
 }
 
-.chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -1228,6 +1228,54 @@ code.code--sm {
   display: none !important;
 }
 
+/**
+ * Expandable
+ *
+ * main.js moves a [data-expandable] element into dialog.expandable to show it full-screen. The
+ * element fills the window; a card's flush content (such as a table) takes the remaining height
+ * and scrolls inside it. Anything marked data-column-expanded only shows while expanded.
+ */
+.expandable {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--bg);
+  border: 0;
+}
+.expandable[open] {
+  display: flex;
+  flex-direction: column;
+}
+.expandable::backdrop {
+  background-color: var(--bg);
+}
+.expandable > [data-expanded] {
+  flex: 1;
+  min-height: 0;
+}
+.expandable [data-expanded] .card__content--flush {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.expandable [data-expanded] .card__content--flush > .table__wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+[data-expandable]:not([data-expanded]) [data-column-expanded] {
+  display: none;
+}
+
+[data-expandable]:not([data-expanded]) [data-expand-icon=collapse],
+[data-expanded] [data-expand-icon=expand] {
+  display: none;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1666,6 +1714,10 @@ code.code--sm {
 .card__header--row > .btn--icon {
   align-self: center;
 }
+.card__header--row > .cluster {
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
 .card__header--center {
   text-align: center;
   align-items: center;
@@ -2078,6 +2130,9 @@ code.code--sm {
 .table__head--sortable:hover {
   color: var(--fg);
 }
+.table__head--sortable:focus-visible {
+  outline-offset: -2px;
+}
 .table__head[aria-sort=ascending], .table__head[aria-sort=descending], .table__head--sorted {
   color: var(--fg);
 }
@@ -2178,10 +2233,56 @@ code.code--sm {
   }
 }
 
-.table__wrapper:has(> .table--sticky-actions) {
+.table__wrapper:has(> .table--sticky-actions, > .table--sticky-start) {
   scroll-timeline: --table-scroll inline;
 }
 
+/**
+ * Sticky header and leading columns
+ *
+ * .table--sticky-header keeps the header row in view while the table's wrapper scrolls (such as in a
+ * full-screen card). .table--sticky-start pins the selection column and the first column after it
+ * (or just the first column) while the table scrolls sideways, with a shadow once columns are
+ * scrolled under them.
+ */
+.table--sticky-header .table__header .table__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--card);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+.table--sticky-start .table__checkbox,
+.table--sticky-start .table__checkbox + :is(.table__head, .table__cell),
+.table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--card);
+}
+.table--sticky-start .table__checkbox + :is(.table__head, .table__cell) {
+  left: 2rem;
+}
+.table--sticky-start .table__header :is(.table__checkbox, .table__checkbox + .table__head, .table__head:first-child) {
+  z-index: 3;
+}
+@supports (animation-timeline: scroll()) {
+  .table--sticky-start .table__checkbox + :is(.table__head, .table__cell),
+  .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+    animation: table-sticky-start-edge linear both;
+    animation-timeline: --table-scroll;
+  }
+}
+
+@keyframes table-sticky-start-edge {
+  from {
+    box-shadow: none;
+  }
+  2%, to {
+    box-shadow: 8px 0 8px -8px rgba(0, 0, 0, 0.2);
+  }
+}
 @keyframes table-sticky-edge {
   from {
     box-shadow: -8px 0 8px -8px rgba(0, 0, 0, 0.2);
@@ -2196,10 +2297,18 @@ code.code--sm {
   margin-left: 0.25rem;
   width: 1rem;
   height: 1rem;
+  vertical-align: -0.2em;
   color: var(--fg-subtle);
 }
 [aria-sort=ascending] .table__sort-icon, [aria-sort=descending] .table__sort-icon, .table__sort-icon--asc, .table__sort-icon--desc {
   color: var(--fg);
+}
+.table__sort-icon--start {
+  margin-left: 0;
+  margin-right: 0.25rem;
+}
+[aria-sort=ascending] .table__sort-icon [data-sort=descending], [aria-sort=descending] .table__sort-icon [data-sort=ascending] {
+  opacity: 0.3;
 }
 
 .table__checkbox {

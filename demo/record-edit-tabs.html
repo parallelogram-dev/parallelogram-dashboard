@@ -301,29 +301,35 @@
               </div>
 
               <!-- Variants: common fields edit in place; the sheet holds the full record -->
-              <div id="tab-variants" data-tab-panel hidden class="card" data-unsaved-ignore>
+              <div id="tab-variants" data-tab-panel hidden class="card" data-unsaved-ignore data-expandable data-expandable-label="Variants">
                 <div class="card__header card__header--row">
                   <div>
                     <h3 class="card__title">Variants</h3>
                     <p class="card__description" id="variantHint">Edit common fields in the table, or open a variant for everything else.</p>
                   </div>
-                  <button type="button" class="btn btn--outline btn--sm" id="addVariant">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
-                    Add variant
-                  </button>
+                  <div class="cluster cluster--sm">
+                    <button type="button" class="btn btn--outline btn--sm btn--icon" data-expand data-expand-label="Full screen" data-collapse-label="Exit full screen" aria-label="Full screen" aria-pressed="false" data-tooltip="Full screen">
+                      <svg class="icon" viewBox="0 0 24 24" data-expand-icon="expand"><path d="M16 4l4 0l0 4"/><path d="M14 10l6 -6"/><path d="M8 20l-4 0l0 -4"/><path d="M4 20l6 -6"/></svg>
+                      <svg class="icon" viewBox="0 0 24 24" data-expand-icon="collapse"><path d="M5 9l4 0l0 -4"/><path d="M3 3l6 6"/><path d="M5 15l4 0l0 4"/><path d="M3 21l6 -6"/><path d="M19 9l-4 0l0 -4"/><path d="M15 9l6 -6"/><path d="M19 15l-4 0l0 4"/><path d="M15 15l6 6"/></svg>
+                    </button>
+                  </div>
                 </div>
                 <div class="card__content card__content--flush">
                   <div class="table__wrapper table__wrapper--borderless">
-                    <table class="table table--editable table--sticky-actions">
+                    <table class="table table--editable table--sticky-actions table--sticky-header table--sticky-start" id="variantsTable" data-table-sort>
                       <thead class="table__header">
                         <tr class="table__row">
                           <th class="table__head table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" id="variantSelectAll" aria-label="Select all variants"></label></th>
-                          <th class="table__head">SKU</th>
-                          <th class="table__head">Size</th>
-                          <th class="table__head">Finish</th>
-                          <th class="table__head text--right">Price</th>
-                          <th class="table__head text--right">Stock</th>
-                          <th class="table__head">Status</th>
+                          <th class="table__head table__head--sortable">SKU<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable" data-column="size">Size<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable" data-column="finish">Finish<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable text--right" data-column="price"><svg class="icon table__sort-icon table__sort-icon--start" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg>Price</th>
+                          <th class="table__head table__head--sortable text--right" data-column="sale" data-column-expanded><svg class="icon table__sort-icon table__sort-icon--start" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg>Sale price</th>
+                          <th class="table__head table__head--sortable text--right" data-column="stock"><svg class="icon table__sort-icon table__sort-icon--start" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg>Stock</th>
+                          <th class="table__head table__head--sortable" data-column="weight" data-column-expanded>Weight<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable" data-column="power" data-column-expanded>Power<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable" data-column="temp" data-column-expanded>Colour temp.<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                          <th class="table__head table__head--sortable" data-column="status">Status<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
                           <th class="table__head table__actions">
                             <span class="sr-only">Actions</span>
                             <span data-overflow-actions id="variantBulk" hidden>
@@ -337,11 +343,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-SM-BLK"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-SM-BLK" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="89.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="24" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="89.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="24" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.1 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="6 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -351,11 +361,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-SM-WHT"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-SM-WHT" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option selected>White</option><option>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="89.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="12" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option selected>White</option><option>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="89.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="12" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.1 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="6 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -365,11 +379,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-SM-BRS"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-SM-BRS" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option>White</option><option selected>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="109.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="0" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option>Active</option><option selected>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option>White</option><option selected>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="109.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="0" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.1 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="6 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option>Active</option><option selected>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -379,11 +397,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-LG-BLK"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-LG-BLK" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="129.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="8" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="129.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="8" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.4 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="8 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -393,11 +415,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-LG-WHT"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-LG-WHT" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option selected>White</option><option>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="129.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="5" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option selected>White</option><option>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="129.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="5" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.4 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="8 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -407,11 +433,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select DL-LG-BRS"></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="DL-LG-BRS" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option>White</option><option selected>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="149.00" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="3" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option>Small</option><option selected>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option>Black</option><option>White</option><option selected>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="149.00" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="3" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.4 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="8 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
@@ -419,6 +449,35 @@
                         </td>
                       </tr>
                       </tbody>
+                      <tfoot class="table__footer">
+                        <tr class="table__row">
+                          <td class="table__cell" data-column-span>
+                            <button type="button" class="btn btn--ghost btn--sm" id="addVariant">
+                              <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                              Add variant
+                            </button>
+                          </td>
+                          <td class="table__cell table__actions">
+                            <div class="dropdown dropdown--right">
+                              <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-label="Columns" data-tooltip="Columns" data-tooltip-position="left" data-toggle data-toggle-target="#variantColumns" data-toggle-capture="true">
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"/><path d="M12 4l0 16"/></svg>
+                              </button>
+                              <div class="dropdown__menu" id="variantColumns" role="menu" popover="manual" data-table-columns="#variantsTable">
+                              <div class="dropdown__label">Show columns</div>
+                              <button type="button" class="dropdown__item" data-column-toggle="size"><span class="dropdown__item-text">Size</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="finish"><span class="dropdown__item-text">Finish</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="price"><span class="dropdown__item-text">Price</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="sale" data-column-expanded><span class="dropdown__item-text">Sale price</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="stock"><span class="dropdown__item-text">Stock</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="weight" data-column-expanded><span class="dropdown__item-text">Weight</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="power" data-column-expanded><span class="dropdown__item-text">Power</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="temp" data-column-expanded><span class="dropdown__item-text">Colour temperature</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              <button type="button" class="dropdown__item" data-column-toggle="status"><span class="dropdown__item-text">Status</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -643,11 +702,11 @@
             <div class="form__row form__row--2">
               <div class="form__field">
                 <label class="form__label" for="vPower">Power</label>
-                <input type="text" class="input form__control" id="vPower" value="8 W">
+                <input type="text" class="input form__control" id="vPower" data-field="power">
               </div>
               <div class="form__field">
                 <label class="form__label" for="vColourTemp">Colour temperature</label>
-                <input type="text" class="input form__control" id="vColourTemp" value="2700 K">
+                <input type="text" class="input form__control" id="vColourTemp" data-field="temp">
               </div>
             </div>
             <div class="form__row form__row--2">
@@ -657,7 +716,7 @@
               </div>
               <div class="form__field">
                 <label class="form__label" for="vWeight">Weight</label>
-                <input type="text" class="input form__control" id="vWeight" placeholder="Same as product (1.2 kg)">
+                <input type="text" class="input form__control" id="vWeight" data-field="weight" placeholder="Same as product (1.2 kg)">
               </div>
             </div>
           </div>
@@ -670,7 +729,7 @@
               </div>
               <div class="form__field">
                 <label class="form__label" for="vSalePrice">Sale price</label>
-                <input type="text" inputmode="decimal" class="input form__control" id="vSalePrice">
+                <input type="text" inputmode="decimal" class="input form__control" id="vSalePrice" data-field="sale">
               </div>
               <div class="form__field">
                 <label class="form__label" for="vStock">Stock</label>
@@ -713,11 +772,15 @@
                       <tr class="table__row" data-variant>
                         <td class="table__cell table__checkbox"><label class="checkbox"><input type="checkbox" class="checkbox__input" data-variant-select aria-label="Select "></label></td>
                         <td class="table__cell"><input type="text" class="table__control table__control--wide" name="sku" value="" aria-label="SKU"></td>
-                        <td class="table__cell"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
-                        <td class="table__cell"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
-                        <td class="table__cell"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="" aria-label="Price"></td>
-                        <td class="table__cell"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="0" aria-label="Stock"></td>
-                        <td class="table__cell"><select class="table__control" name="status" aria-label="Status"><option>Active</option><option selected>Draft</option><option>Archived</option></select></td>
+                        <td class="table__cell" data-column="size"><select class="table__control" name="size" aria-label="Size"><option selected>Small</option><option>Large</option></select></td>
+                        <td class="table__cell" data-column="finish"><select class="table__control" name="finish" aria-label="Finish"><option selected>Black</option><option>White</option><option>Brass</option></select></td>
+                        <td class="table__cell" data-column="price"><input type="text" inputmode="decimal" class="table__control table__control--number" name="price" value="" aria-label="Price"></td>
+                        <td class="table__cell" data-column="sale" data-column-expanded><input type="text" inputmode="decimal" class="table__control table__control--number" name="sale" value="" aria-label="Sale price"></td>
+                        <td class="table__cell" data-column="stock"><input type="text" inputmode="numeric" class="table__control table__control--number" name="stock" value="0" aria-label="Stock"></td>
+                        <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" name="weight" value="1.1 kg" aria-label="Weight"></td>
+                        <td class="table__cell" data-column="power" data-column-expanded><input type="text" class="table__control" name="power" value="6 W" aria-label="Power"></td>
+                        <td class="table__cell" data-column="temp" data-column-expanded><input type="text" class="table__control" name="temp" value="2700 K" aria-label="Colour temperature"></td>
+                        <td class="table__cell" data-column="status"><select class="table__control" name="status" aria-label="Status"><option>Active</option><option selected>Draft</option><option>Archived</option></select></td>
                         <td class="table__cell table__actions" data-overflow-actions>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-edit aria-label="Edit all fields" data-tooltip="Edit all fields" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
                           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-variant-duplicate data-priority="low" aria-label="Duplicate" data-tooltip="Duplicate" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
