@@ -177,8 +177,26 @@
     @include transition-opacity;
   }
 
+  // The arrow: a border triangle in the gap between the tooltip and its trigger
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + #{$spacing-2xs} - 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--primary);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: $z-tooltip;
+    @include transition-opacity;
+  }
+
   &:hover::after,
-  &:focus-visible::after {
+  &:hover::before,
+  &:focus-visible::after,
+  &:focus-visible::before {
     opacity: 1;
     visibility: visible;
   }
@@ -189,6 +207,13 @@
     top: calc(100% + $spacing-2xs);
   }
 
+  &[data-tooltip-position="bottom"]::before {
+    bottom: auto;
+    top: calc(100% + #{$spacing-2xs} - 10px);
+    border-top-color: transparent;
+    border-bottom-color: var(--primary);
+  }
+
   &[data-tooltip-position="left"]::after {
     bottom: auto;
     left: auto;
@@ -197,10 +222,29 @@
     transform: translateY(-50%);
   }
 
+  &[data-tooltip-position="left"]::before {
+    bottom: auto;
+    left: auto;
+    right: calc(100% + #{$spacing-2xs} - 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    border-top-color: transparent;
+    border-left-color: var(--primary);
+  }
+
   &[data-tooltip-position="right"]::after {
     bottom: auto;
     left: calc(100% + $spacing-2xs);
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  &[data-tooltip-position="right"]::before {
+    bottom: auto;
+    left: calc(100% + #{$spacing-2xs} - 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    border-top-color: transparent;
+    border-right-color: var(--primary);
   }
 }
