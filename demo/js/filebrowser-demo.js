@@ -7,6 +7,11 @@
  * the footer status summarises them, and its Details button slides out the upload panel. Files
  * can also be dropped straight onto the field, where each becomes a tile with progress. Real
  * image files show their own previews; a file with "fail" in its name shows the error state.
+ *
+ * Each image's alt text is "missing", "suggested", "set" or "decorative" (data-alt on its card
+ * and tile). "Edit details" in a card's menu, or the toolbar's "Needs alt text" button (which
+ * steps through every image still to do), opens the details panel, where Suggest fills in a
+ * suggestion to check. New uploads get a suggestion in the background. Suggestions are canned.
  */
 (() => {
   const field = document.querySelector('[data-filebrowser]');
@@ -28,25 +33,62 @@
     trash: icon('<path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>'),
     remove: icon('<path d="M18 6l-12 12"/><path d="M6 6l12 12"/>'),
     upload: icon('<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/>'),
+    photo: icon('<path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>'),
+    sparkles: icon('<path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/>'),
+    alert: icon('<path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/>'),
+    prev: icon('<path d="M15 6l-6 6l6 6"/>'),
+    next: icon('<path d="M9 6l6 6l-6 6"/>'),
   };
 
   // Generated gradient "photos" so the demo needs no image files
   const gradient = (a, b) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#${a}"/><stop offset="1" stop-color="#${b}"/></linearGradient></defs><rect width="400" height="400" fill="url(#g)"/><circle cx="200" cy="200" r="80" fill="white" fill-opacity=".22"/></svg>`)}`;
   const palette = [['6366f1', '22c55e'], ['f97316', 'ec4899'], ['0ea5e9', '6366f1'], ['a855f7', '6366f1'], ['eab308', 'f97316'], ['22c55e', '0ea5e9'], ['ef4444', 'f97316'], ['64748b', '0f172a']];
   const names = ['Front', 'Side', 'Detail', 'Lit', 'Black finish', 'White finish', 'Brass finish', 'Dimensions', 'Lifestyle desk', 'Lifestyle shelf', 'Packaging', 'Base detail', 'Shade detail', 'Switch', 'Cable', 'Scale'];
+  // Canned stand-ins for what an image-description service would suggest
+  const SUGGESTIONS = {
+    Front: 'Black desk lamp with a weighted round base and an angled shade, seen from the front',
+    Side: 'Side view of a black desk lamp showing its jointed arm and tilted shade',
+    Detail: 'Close-up of the desk lamp’s hinge where the arm meets the shade',
+    Lit: 'Desk lamp switched on, casting a warm pool of light onto a wooden desk',
+    'Brass finish': 'Desk lamp in a brushed brass finish against a plain background',
+    Dimensions: 'Line drawing of the desk lamp marked with its height, arm reach and base width',
+    'Lifestyle desk': 'Desk lamp on a tidy home-office desk beside a laptop and notebook',
+    'Lifestyle shelf': 'Desk lamp lighting a bookshelf of paperbacks and a small plant',
+    Packaging: 'The desk lamp’s recycled cardboard box with the brand name printed on the side',
+    'Base detail': 'Underside of the lamp’s round base showing its non-slip ring',
+    'Shade detail': 'Inside of the lamp shade with its frosted diffuser',
+    Switch: 'Close-up of the dimmer switch on the lamp’s cable',
+    Scale: 'Desk lamp beside a coffee mug to show its size',
+  };
+  const suggestionFor = asset => SUGGESTIONS[asset.name.replace(/^Desk lamp — /, '')] || `Photo of ${asset.name.toLowerCase()}`;
+
+  // A spread of alt text states: some done, one decorative, one suggestion waiting, the rest missing
+  const DONE = ['Front', 'Side', 'Detail', 'Lit', 'Black finish', 'White finish'];
   let nextId = 900;
-  const assets = names.map((name, i) => ({
-    id: nextId++,
-    name: `Desk lamp — ${name}`,
-    type: i % 5 === 4 ? 'JPG' : 'PNG',
-    size: `${(120 + i * 37) % 900 + 80} KB`,
-    time: `${(i % 9) + 1} Oct 2026`,
-    src: gradient(...palette[i % palette.length]),
-  }));
+  const assets = names.map((name, i) => {
+    const asset = {
+      id: nextId++,
+      name: `Desk lamp — ${name}`,
+      type: i % 5 === 4 ? 'JPG' : 'PNG',
+      size: `${(120 + i * 37) % 900 + 80} KB`,
+      time: `${(i % 9) + 1} Oct 2026`,
+      src: gradient(...palette[i % palette.length]),
+      alt: '',
+      altState: 'missing',
+      suggestion: '',
+    };
+    if (DONE.includes(name)) Object.assign(asset, { alt: SUGGESTIONS[name] || `Desk lamp in a ${name.toLowerCase()}`, altState: 'set' });
+    else if (name === 'Cable') asset.altState = 'decorative';
+    else if (name === 'Brass finish') Object.assign(asset, { altState: 'suggested', suggestion: suggestionFor(asset) });
+    return asset;
+  });
+  const needsAlt = asset => asset.altState === 'missing' || asset.altState === 'suggested';
 
   let dialog;
   let state = { view: 'grid', sort: 'time', query: '' };
   const uploads = [];
+
+  const escape = value => String(value).replace(/[&<>"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char]);
 
   // ---------------------------------------------------------------------------
   // Field
@@ -58,7 +100,8 @@
     li.setAttribute('data-handle', '');
     li.setAttribute('data-filebrowser-item', '');
     li.dataset.assetId = asset.id;
-    li.innerHTML = `<figure class="media__image"><picture><img src="${asset.src}" alt=""></picture>`
+    li.dataset.alt = asset.altState;
+    li.innerHTML = `<figure class="media__image"><picture><img src="${asset.src}" alt="${escape(asset.alt)}"></picture>`
       + `<button type="button" class="media__remove" data-filebrowser-remove data-tooltip="Remove" aria-label="Remove ${asset.name}">${ICONS.remove}</button></figure>`;
     return li;
   }
@@ -141,6 +184,9 @@
       size: `${Math.max(1, Math.round(file.size / 1024))} KB`,
       time: 'Just now',
       src: file.type.startsWith('image/') ? URL.createObjectURL(file) : gradient(...palette[i % palette.length]),
+      alt: '',
+      altState: 'missing',
+      suggestion: '',
     };
   }
 
@@ -157,6 +203,7 @@
             <input type="search" class="form__control form__control--sm" placeholder="Search ${scope}" aria-label="Search ${scope}" data-filebrowser-search>
           </form>
           <div class="filebrowser__toolbar">
+            <button type="button" class="btn btn--outline btn--sm" data-alt-review hidden>${ICONS.alert}<span data-alt-review-label></span></button>
             <div class="filebrowser__sort btn__group" aria-label="Sort by">
               ${sorts.map(([key, label]) => `<button type="button" class="btn btn--sm${key === state.sort ? ' active' : ''}" data-sort="${key}">${label}</button>`).join('')}
             </div>
@@ -222,20 +269,64 @@
       </form>`;
   }
 
+  function detailsPanel() {
+    return `
+      <form class="overlay__form filebrowser__details" data-details>
+        <div class="overlay__header">
+          <h2 class="overlay__title">${ICONS.photo}<span>Image details</span></h2>
+          <div class="cluster cluster--xs filebrowser__details-steps" data-details-steps>
+            <span class="text--sm text--muted" data-details-position></span>
+            <div class="btn__group">
+              <button type="button" class="btn btn--outline btn--icon btn--sm" data-details-prev aria-label="Previous image" data-tooltip="Previous">${ICONS.prev}</button>
+              <button type="button" class="btn btn--outline btn--icon btn--sm" data-details-next aria-label="Next image" data-tooltip="Next">${ICONS.next}</button>
+            </div>
+          </div>
+        </div>
+        <div class="overlay__body stack stack--md">
+          <figure class="filebrowser__details-preview"><img src="" alt="" data-details-image></figure>
+          <div>
+            <p class="text--medium" data-details-name></p>
+            <p class="text--xs text--muted" data-details-info></p>
+          </div>
+          <div class="form__field">
+            <div class="cluster cluster--between">
+              <div class="cluster cluster--xs">
+                <label class="form__label" for="filebrowser-alt">Alt text</label>
+                <span class="text--xs text--muted" data-details-count></span>
+              </div>
+              <button type="button" class="btn btn--ghost btn--sm" data-details-suggest>${ICONS.sparkles}<span>Suggest</span></button>
+            </div>
+            <textarea class="textarea form__control" id="filebrowser-alt" rows="3" data-details-alt aria-describedby="filebrowser-alt-hint"></textarea>
+            <p class="form__description" id="filebrowser-alt-hint" data-details-hint></p>
+          </div>
+          <label class="checkbox"><input type="checkbox" class="checkbox__input" data-details-decorative><span class="checkbox__label">Decorative image, no alt text needed</span></label>
+        </div>
+        <footer class="overlay__footer">
+          <div class="overlay__action">
+            <div class="cluster cluster--sm">
+              <button type="button" class="btn btn--ghost" data-details-close>${ICONS.remove}<span>Cancel</span></button>
+              <button type="submit" class="btn btn--primary" data-details-save>${ICONS.check}<span data-details-save-label>Save</span></button>
+            </div>
+          </div>
+        </footer>
+      </form>`;
+  }
+
   function item(asset) {
     const menu = `filebrowser-menu-${asset.id}`;
     const li = document.createElement('li');
     li.className = 'filebrowser__item';
     li.dataset.id = `asset-${asset.id}`;
     li.dataset.title = asset.name;
+    li.dataset.alt = asset.altState;
     li.innerHTML = `
       <input class="filebrowser__checkbox" type="checkbox" id="filebrowser-input-${asset.id}" value="asset-${asset.id}">
       <label class="filebrowser__label" for="filebrowser-input-${asset.id}">
         <span class="filebrowser__label--select"></span>
         <span class="filebrowser__label--preview">
-          <figure class="filebrowser__asset"><picture class="filebrowser__media"><img class="filebrowser__image" src="${asset.src}" alt=""></picture></figure>
+          <figure class="filebrowser__asset"><picture class="filebrowser__media"><img class="filebrowser__image" src="${asset.src}" alt="${escape(asset.alt)}"></picture></figure>
         </span>
-        <h2 class="filebrowser__label--name">${asset.name}</h2>
+        <h2 class="filebrowser__label--name">${asset.name}<span class="sr-only">${{ missing: ', no alt text', suggested: ', alt text suggested' }[asset.altState] || ''}</span></h2>
         <p class="filebrowser__label--mime">${asset.type}</p>
         <span class="filebrowser__label--type">${asset.type}</span>
         <span class="filebrowser__label--size">${asset.size}</span>
@@ -244,6 +335,7 @@
           <span class="dropdown dropdown--right">
             <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-label="Actions for ${asset.name}" aria-haspopup="menu" data-toggle data-toggle-target="#${menu}" data-toggle-capture="true">${ICONS.dots}</button>
             <span class="dropdown__menu" id="${menu}" role="menu" popover="manual">
+              <button type="button" class="dropdown__item" role="menuitem" data-details-open="${asset.id}">${ICONS.photo.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Edit details</span></button>
               <button type="button" class="dropdown__item" role="menuitem">${ICONS.edit.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Rename</span></button>
               <button type="button" class="dropdown__item" role="menuitem">${ICONS.download.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Download</span></button>
               <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">${ICONS.trash.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Delete</span></button>
@@ -272,6 +364,14 @@
     });
     window.Parallelogram?.init(listEl);
     updateSelect();
+    updateReview();
+  }
+
+  function updateReview() {
+    const count = assets.filter(needsAlt).length;
+    const button = dialog.querySelector('[data-alt-review]');
+    button.hidden = count === 0;
+    dialog.querySelector('[data-alt-review-label]').textContent = `Needs alt text (${count})`;
   }
 
   function updateSelect() {
@@ -303,11 +403,11 @@
     dialog.className = 'overlay';
     dialog.setAttribute('aria-label', `File browser: ${scope}`);
     dialog.style.setProperty('--filebrowser-drop-label', `"Drop files to upload to ${scope}"`);
-    dialog.innerHTML = `<div class="overlay__wrap"><div class="overlay__inner show">${chrome()}</div><div class="overlay__inner">${uploadPanel()}</div></div>`;
+    dialog.innerHTML = `<div class="overlay__wrap"><div class="overlay__inner show">${chrome()}</div><div class="overlay__inner">${uploadPanel()}</div><div class="overlay__inner">${detailsPanel()}</div></div>`;
     document.body.append(dialog);
     window.Parallelogram?.init(dialog);
 
-    const [browsePanel, panel] = dialog.querySelectorAll('.overlay__inner');
+    const [browsePanel, panel, detailsInner] = dialog.querySelectorAll('.overlay__inner');
     const body = dialog.querySelector('[data-filebrowser-body]');
     const listEl = dialog.querySelector('[data-filebrowser-list]');
     const banner = dialog.querySelector('.filebrowser__banner');
@@ -321,9 +421,12 @@
     dialog.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
       e.preventDefault();
-      if (panel.classList.contains('show')) panel.classList.remove('show');
+      if (detailsInner.classList.contains('show')) closeDetails();
+      else if (panel.classList.contains('show')) panel.classList.remove('show');
       else close();
     });
+
+    setupDetails(detailsInner, listEl);
 
     dialog.querySelector('[data-filebrowser-search]').addEventListener('input', (e) => {
       state.query = e.target.value.trim().toLowerCase();
@@ -394,6 +497,182 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Image details and alt text
+  // ---------------------------------------------------------------------------
+
+  const ALT_LIMIT = 125;
+  const HINT = 'Describe what matters in this image for someone who can’t see it.';
+  const details = { panel: null, run: null, index: 0, drafts: new Map(), returnFocus: null };
+
+  /** Open the details panel for one asset, or step through a list of them (a review run). */
+  function openDetails(asset, run = null) {
+    details.run = run;
+    details.index = run ? run.indexOf(asset) : 0;
+    details.returnFocus = document.activeElement;
+    details.drafts.clear();
+    show(asset);
+    details.panel.classList.add('show');
+    details.panel.querySelector('[data-details-alt]').focus();
+  }
+
+  function current() {
+    return details.run ? details.run[details.index] : details.asset;
+  }
+
+  /** Fill the panel for an asset, from an unsaved draft if this run has one. */
+  function show(asset) {
+    details.asset = asset;
+    const form = details.panel.querySelector('[data-details]');
+    const draft = details.drafts.get(asset.id);
+    const value = draft ? draft.value : asset.altState === 'suggested' ? asset.suggestion : asset.alt;
+    const decorative = draft ? draft.decorative : asset.altState === 'decorative';
+    const suggested = draft ? draft.suggested : asset.altState === 'suggested';
+    form.querySelector('[data-details-image]').src = asset.src;
+    form.querySelector('[data-details-name]').textContent = asset.name;
+    form.querySelector('[data-details-info]').textContent = `${asset.type} · ${asset.size} · ${asset.time}`;
+    form.querySelector('[data-details-alt]').value = value;
+    form.querySelector('[data-details-decorative]').checked = decorative;
+    form.querySelector('[data-details-position]').textContent = details.run ? `${details.index + 1} of ${details.run.length}` : '';
+    form.querySelector('[data-details-steps]').hidden = !details.run;
+    form.querySelector('[data-details-prev]').disabled = !details.run || details.index === 0;
+    form.querySelector('[data-details-next]').disabled = !details.run || details.index === details.run.length - 1;
+    form.querySelector('[data-details-save-label]').textContent = details.run && details.index < details.run.length - 1 ? 'Save and next' : 'Save';
+    setSuggested(suggested);
+    sync();
+  }
+
+  function setSuggested(on) {
+    const form = details.panel.querySelector('[data-details]');
+    if (on) form.dataset.alt = 'suggested';
+    else delete form.dataset.alt;
+  }
+
+  /** Keep the hint, count and decorative switch in step with the fields. */
+  function sync() {
+    const form = details.panel.querySelector('[data-details]');
+    const field = form.querySelector('[data-details-alt]');
+    const decorative = form.querySelector('[data-details-decorative]').checked;
+    field.disabled = decorative;
+    form.querySelector('[data-details-suggest]').disabled = decorative;
+    const length = field.value.trim().length;
+    const count = form.querySelector('[data-details-count]');
+    count.textContent = decorative ? '' : `${length}/${ALT_LIMIT}`;
+    count.classList.toggle('text--warning', length > ALT_LIMIT);
+    form.querySelector('[data-details-hint]').textContent = decorative
+      ? 'Screen readers will skip this image.'
+      : form.dataset.alt === 'suggested' ? 'Suggested. Check it describes the image before saving.' : length > ALT_LIMIT ? 'Long alt text is tiring to listen to; keep it to what matters.' : HINT;
+  }
+
+  function remember() {
+    const form = details.panel.querySelector('[data-details]');
+    details.drafts.set(details.asset.id, {
+      value: form.querySelector('[data-details-alt]').value,
+      decorative: form.querySelector('[data-details-decorative]').checked,
+      suggested: form.dataset.alt === 'suggested',
+    });
+  }
+
+  function step(by) {
+    remember();
+    details.index = Math.max(0, Math.min(details.run.length - 1, details.index + by));
+    show(details.run[details.index]);
+    details.panel.querySelector('[data-details-alt]').focus();
+  }
+
+  function closeDetails() {
+    details.panel.classList.remove('show');
+    details.run = null;
+    details.returnFocus?.focus?.();
+  }
+
+  /** Apply an asset's alt text to its card and any tile in the field. */
+  function refreshAsset(asset) {
+    dialog.querySelectorAll(`.filebrowser__item[data-id="asset-${asset.id}"]`).forEach((card) => {
+      card.dataset.alt = asset.altState;
+      card.querySelector('.filebrowser__image').alt = asset.alt;
+      card.querySelector('.filebrowser__label--name .sr-only').textContent = { missing: ', no alt text', suggested: ', alt text suggested' }[asset.altState] || '';
+    });
+    list.querySelectorAll(`.media[data-asset-id="${asset.id}"]`).forEach((tileEl) => {
+      tileEl.dataset.alt = asset.altState;
+      tileEl.querySelector('img').alt = asset.alt;
+    });
+    updateReview();
+  }
+
+  function save() {
+    const asset = details.asset;
+    const form = details.panel.querySelector('[data-details]');
+    const value = form.querySelector('[data-details-alt]').value.trim();
+    const decorative = form.querySelector('[data-details-decorative]').checked;
+    asset.alt = decorative ? '' : value;
+    asset.altState = decorative ? 'decorative' : value ? 'set' : 'missing';
+    asset.suggestion = '';
+    details.drafts.delete(asset.id);
+    refreshAsset(asset);
+
+    if (details.run && details.index < details.run.length - 1) {
+      details.index++;
+      show(details.run[details.index]);
+      details.panel.querySelector('[data-details-alt]').focus();
+      return;
+    }
+    const left = assets.filter(needsAlt).length;
+    closeDetails();
+    window.toast?.success(left ? `Alt text saved. ${left} ${left === 1 ? 'image still needs' : 'images still need'} it.` : 'Every image has alt text');
+  }
+
+  function setupDetails(inner, listEl) {
+    details.panel = inner;
+    const form = inner.querySelector('[data-details]');
+    const field = form.querySelector('[data-details-alt]');
+
+    listEl.addEventListener('click', (e) => {
+      const open = e.target.closest('[data-details-open]');
+      if (!open) return;
+      e.preventDefault();
+      window.Parallelogram?.Toggle?.closeAll?.();
+      openDetails(assets.find(a => a.id === Number(open.dataset.detailsOpen)));
+    });
+
+    dialog.querySelector('[data-alt-review]').addEventListener('click', () => {
+      const visible = [...listEl.querySelectorAll('.filebrowser__item:not(.filebrowser__item--busy)')]
+        .map(card => assets.find(a => `asset-${a.id}` === card.dataset.id))
+        .filter(asset => asset && needsAlt(asset));
+      const run = visible.length ? visible : assets.filter(needsAlt);
+      if (run.length) openDetails(run[0], run);
+    });
+
+    field.addEventListener('input', () => {
+      setSuggested(false);
+      sync();
+    });
+    form.querySelector('[data-details-decorative]').addEventListener('change', sync);
+    form.querySelector('[data-details-prev]').addEventListener('click', () => step(-1));
+    form.querySelector('[data-details-next]').addEventListener('click', () => step(1));
+    form.querySelector('[data-details-close]').addEventListener('click', closeDetails);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      save();
+    });
+
+    const suggest = form.querySelector('[data-details-suggest]');
+    suggest.addEventListener('click', () => {
+      const asset = details.asset;
+      suggest.setAttribute('aria-busy', 'true');
+      suggest.disabled = true;
+      setTimeout(() => {
+        suggest.removeAttribute('aria-busy');
+        suggest.disabled = false;
+        if (details.asset !== asset) return;
+        field.value = suggestionFor(asset);
+        setSuggested(true);
+        sync();
+        field.focus();
+      }, 900);
+    });
+  }
+
+  // ---------------------------------------------------------------------------
   // Uploads (simulated)
   // ---------------------------------------------------------------------------
 
@@ -405,6 +684,7 @@
       const asset = fileAsset(file, i);
       const card = item(asset);
       card.classList.add('filebrowser__item--busy');
+      updateReview();
       card.querySelector('.filebrowser__asset').insertAdjacentHTML('beforeend',
         '<div class="filebrowser__upload-progress"><div class="filebrowser__upload-progress-bar"><div class="filebrowser__upload-progress-fill"></div></div></div>');
       listEl.prepend(card);
@@ -461,6 +741,13 @@
       job.row.querySelector('.asset__info').textContent = `${job.asset.type} · ${job.asset.size} · added to ${scope}`;
       updateSelect();
       status();
+      // New images get a suggested alt text in the background, waiting for someone to check it
+      setTimeout(() => {
+        if (job.asset.altState !== 'missing') return;
+        job.asset.suggestion = suggestionFor(job.asset);
+        job.asset.altState = 'suggested';
+        refreshAsset(job.asset);
+      }, 1500);
     };
     setTimeout(tick, 300);
   }

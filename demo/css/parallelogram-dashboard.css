@@ -8600,6 +8600,94 @@ dl.descriptionlist dd {
   color: var(--destructive);
 }
 
+/**
+ * Alt text state
+ *
+ * data-alt on a .filebrowser__item (or a .media tile in a field) is "missing", "suggested" (a
+ * suggestion waiting to be checked), "set" or "decorative" (deliberately empty). Missing and
+ * suggested images carry a marker on their preview; the others show nothing.
+ */
+.filebrowser__item[data-alt=suggested] .filebrowser__asset::after,
+.media[data-alt=suggested] .media__image::after, .filebrowser__item[data-alt=missing] .filebrowser__asset::after,
+.media[data-alt=missing] .media__image::after {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  z-index: 1;
+  padding: 0 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  border-radius: 0.25rem;
+  pointer-events: none;
+}
+
+.filebrowser__item[data-alt=missing] .filebrowser__asset::after,
+.media[data-alt=missing] .media__image::after {
+  content: "No alt";
+  color: var(--warning-fg);
+  background-color: var(--warning);
+}
+
+.filebrowser__item[data-alt=suggested] .filebrowser__asset::after,
+.media[data-alt=suggested] .media__image::after {
+  content: "Check alt";
+  color: var(--info-fg);
+  background-color: var(--info);
+}
+
+.filebrowser__list:not(.filebrowser__list--image) .filebrowser__item:is([data-alt=missing], [data-alt=suggested]) .filebrowser__asset::after {
+  content: "";
+  top: auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 1.5px solid var(--card);
+  border-radius: 9999px;
+}
+
+/**
+ * Image details panel
+ *
+ * .filebrowser__details is the slide-out panel for one image: its preview and alt text. While
+ * the alt text holds a suggestion nobody has checked yet, the panel carries data-alt="suggested"
+ * and the field is tinted until it is edited or saved.
+ */
+.filebrowser__details-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14rem;
+  margin: 0;
+  background-color: var(--bg-muted);
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+.filebrowser__details-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.filebrowser__details-steps {
+  margin-left: auto;
+}
+.filebrowser__details-steps[hidden] {
+  display: none;
+}
+.filebrowser__details-steps .btn__group > [data-tooltip]:last-child::after {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.filebrowser__details[data-alt=suggested] .textarea {
+  border-color: var(--info);
+  background-color: var(--info-muted);
+}
+.filebrowser__details[data-alt=suggested] [data-details-hint] {
+  color: var(--info);
+}
+
 .asset {
   display: flex;
   flex-direction: column;

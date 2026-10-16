@@ -637,6 +637,108 @@
 }
 
 // --------------------------------------------------------------------------
+// Alt text
+// --------------------------------------------------------------------------
+
+/**
+ * Alt text state
+ *
+ * data-alt on a .filebrowser__item (or a .media tile in a field) is "missing", "suggested" (a
+ * suggestion waiting to be checked), "set" or "decorative" (deliberately empty). Missing and
+ * suggested images carry a marker on their preview; the others show nothing.
+ */
+%alt-marker {
+  position: absolute;
+  bottom: $spacing-3xs;
+  left: $spacing-3xs;
+  z-index: 1;
+  padding: 0 $spacing-3xs;
+  font-size: 0.625rem;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  border-radius: $radius-sm;
+  pointer-events: none;
+}
+
+.filebrowser__item[data-alt="missing"] .filebrowser__asset::after,
+.media[data-alt="missing"] .media__image::after {
+  @extend %alt-marker;
+  content: "No alt";
+  color: var(--warning-fg);
+  background-color: var(--warning);
+}
+
+.filebrowser__item[data-alt="suggested"] .filebrowser__asset::after,
+.media[data-alt="suggested"] .media__image::after {
+  @extend %alt-marker;
+  content: "Check alt";
+  color: var(--info-fg);
+  background-color: var(--info);
+}
+
+// Rows have a small preview, so the marker shrinks to a dot
+.filebrowser__list:not(.filebrowser__list--image) .filebrowser__item:is([data-alt="missing"], [data-alt="suggested"]) .filebrowser__asset::after {
+  content: "";
+  top: auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 1.5px solid var(--card);
+  border-radius: $radius-full;
+}
+
+/**
+ * Image details panel
+ *
+ * .filebrowser__details is the slide-out panel for one image: its preview and alt text. While
+ * the alt text holds a suggestion nobody has checked yet, the panel carries data-alt="suggested"
+ * and the field is tinted until it is edited or saved.
+ */
+.filebrowser__details {
+  &-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 14rem;
+    margin: 0;
+    background-color: var(--bg-muted);
+    border-radius: $radius-md;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  // Position and previous/next while stepping through images, at the header's far end
+  &-steps {
+    margin-left: auto;
+
+    &[hidden] {
+      display: none;
+    }
+
+    .btn__group > [data-tooltip]:last-child::after {
+      left: auto;
+      right: 0;
+      transform: none;
+    }
+  }
+
+  &[data-alt="suggested"] .textarea {
+    border-color: var(--info);
+    background-color: var(--info-muted);
+  }
+
+  &[data-alt="suggested"] [data-details-hint] {
+    color: var(--info);
+  }
+}
+
+// --------------------------------------------------------------------------
 // Upload list (Contenir's AssetUploader), shown in the slide-out panel
 // --------------------------------------------------------------------------
 
