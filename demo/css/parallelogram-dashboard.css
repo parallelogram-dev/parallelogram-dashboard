@@ -4218,7 +4218,8 @@ p-modal {
 }
 
 @media (min-width: 1024px) {
-  .dashboard__subnav-toggle {
+  .dashboard__subnav-toggle,
+  .subnav__close {
     display: none;
   }
 }

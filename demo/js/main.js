@@ -429,6 +429,14 @@ class Toggle {
 
     overlay?.addEventListener('click', () => this.hide(element));
 
+    // A [data-toggle-close] button inside the target closes it and hands focus back to the trigger
+    target.querySelectorAll('[data-toggle-close]').forEach((close) => {
+      close.addEventListener('click', () => {
+        this.hide(element);
+        element.focus();
+      });
+    });
+
     // Click handler
     element.addEventListener('click', (e) => {
       e.preventDefault();
