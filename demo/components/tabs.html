@@ -63,6 +63,32 @@
               </div>
             </div>
 
+            <div class="demo-label">With unsaved-changes tracking</div>
+            <div class="spacer--xl" data-unsaved-guard>
+              <p class="text--sm text--muted">Edit a field: its tab gets a dot and the badge appears. Put it back and both clear. <span class="badge badge--warning-muted" data-unsaved-indicator>Unsaved changes</span></p>
+              <div class="tabs tabs--underline spacer--md" data-tabs>
+                <div class="tabs__list" data-tabs-list>
+                  <button class="tabs__trigger" data-tab="guard-details" aria-selected="true">Details</button>
+                  <button class="tabs__trigger" data-tab="guard-seo">SEO</button>
+                </div>
+                <div class="tabs__content" data-tabs-panels>
+                  <div id="guard-details" data-tab-panel>
+                    <div class="form__field">
+                      <label class="form__label" for="guard-title">Title</label>
+                      <input type="text" class="input form__control" id="guard-title" value="Desk Lamp">
+                    </div>
+                  </div>
+                  <div id="guard-seo" data-tab-panel hidden>
+                    <div class="form__field">
+                      <label class="form__label" for="guard-meta">Meta title</label>
+                      <input type="text" class="input form__control" id="guard-meta" value="Desk Lamp | Studio Collection">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text--sm text--muted spacer--md">Add <code>data-unsaved-guard</code> to a form or editing area. While any field differs from its saved value the area has <code>data-dirty</code>, so does the <code>.tabs__trigger</code> of any panel holding a change (drawn as a dot), anything marked <code>data-unsaved-indicator</code> shows, and leaving the page asks first. Fields inside <code>data-unsaved-ignore</code> don't count. After saving, dispatch <code>unsaved:reset</code> on the area; it fires <code>unsaved:change</code> with <code>{ dirty }</code> when its state flips.</p>
+            </div>
+
             <div class="demo-label">Underline Tabs</div>
             <div class="tabs tabs--underline spacer--xl" data-tabs>
               <div class="tabs__list" data-tabs-list>

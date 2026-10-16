@@ -77,9 +77,10 @@
           <div class="demo-label spacer--xl">Editable rows with folding actions</div>
           <p class="text--sm text--muted spacer--md">In a <code>.table--editable</code>, cells hold <code>.table__control</code> inputs and selects that sit flush until hovered or focused (<code>--number</code> right-aligns figures). Mark rows with unsaved edits <code>.table__row--changed</code> and added rows <code>.table__row--new</code>. Give the actions cell <code>data-overflow-actions</code> and mark foldable buttons <code>data-priority="low"</code> (folds first) or <code>"medium"</code>. Rows in the same <code>.table__wrapper</code> fold together, before the table would scroll sideways or a text input could no longer show its value; anything marked <code>data-overflow-protect</code> counts too. The script only sets <code>data-overflow-level</code> on the wrapper and the stylesheet hides what that level folds. The "⋯" menu is built when it opens, from each action's icon and <code>aria-label</code> or <code>data-label</code>, and floats in the top layer so the table can't clip it. Give longer values such as SKUs <code>.table__control--wide</code> so the table scrolls rather than squeezing them, and add <code>.table--sticky-actions</code> to keep the actions column pinned while it scrolls, with a shadow while columns sit underneath. While any row's checkbox is ticked, row actions are hidden (keeping their space) so the bulk actions take over. This example is narrow, so its actions fold.</p>
           <p class="text--sm text--muted spacer--md">Set <code>data-row-state="saving"</code>, <code>"saved"</code> or <code>"error"</code> on a row to show a spinner, a tick or a warning in its <code>.table__checkbox</code> cell while the row saves itself. In any <code>.table--editable</code>, the keyboard moves like a spreadsheet: arrow keys move between cells (left and right once a value is fully selected or the caret reaches its edge), Enter and Shift+Enter move down and up, Escape restores the value the cell had when it was focused, and Ctrl or Cmd+D copies the value from the cell above.</p>
+          <p class="text--sm text--muted spacer--md">Give the table <code>data-table-paste</code> and pasting a block copied from a spreadsheet into one of its cells opens a dialog rather than filling one field. It previews the block with a column picker above each pasted column (matched by heading when the first row looks like headings, otherwise by position across the visible columns), and asks whether to update rows from the one pasted into or add new rows; lines past the last row can become new rows too. Values a select has no option for, or text in a number column, are struck through and skipped. Point the attribute at a row <code>&lt;template&gt;</code> (<code>data-table-paste="#rowTemplate"</code>) to allow adding rows. Applying fires <code>input</code> and <code>change</code> on each control, then <code>table:paste</code> with <code>{ updated, added, undo }</code> for an Undo toast. Try copying a few cells from a spreadsheet into this example.</p>
           <div class="constrain constrain--sm spacer--lg">
             <div class="table__wrapper">
-              <table class="table table--editable table--sticky-actions">
+              <table class="table table--editable table--sticky-actions" data-table-paste>
                 <thead class="table__header">
                   <tr class="table__row">
                     <th class="table__head">SKU</th>
@@ -119,6 +120,130 @@
                     <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="medium" aria-label="Remove"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button>
                   </td>
                 </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="demo-label spacer--xl">Full-screen editing</div>
+          <p class="text--sm text--muted spacer--md">Give a card <code>data-expandable</code> and a button inside it <code>data-expand</code>, and the button moves the card into a full-screen <code>&lt;dialog class="expandable"&gt;</code> and back (Escape also returns it). The card keeps its place on the page, carries <code>data-expanded</code> while it is full screen and dispatches <code>expandable:change</code>. Swap the button's label with <code>data-expand-label</code> and <code>data-collapse-label</code>, and give it both a <code>data-expand-icon="expand"</code> and a <code>"collapse"</code> icon. Columns marked <code>data-column-expanded</code> show only while expanded. In a full-screen card, <code>.table--sticky-header</code> keeps the header row in view and <code>.table--sticky-start</code> pins the first column (and the checkbox column before it), with a shadow once columns scroll underneath.</p>
+          <p class="text--sm text--muted spacer--md">A column picker is a dropdown menu with <code>data-table-columns="#tableId"</code> whose items carry <code>data-column-toggle="key"</code>; each hides or shows every cell marked <code>data-column="key"</code>, the choice is remembered per table, and the spreadsheet keys skip hidden columns. It fits in a footer row under the actions column, beside an add-row button; give that row's first cell <code>data-column-span</code> and it spans whatever columns are showing.</p>
+          <p class="text--sm text--muted spacer--md">Give the table <code>data-table-sort</code> and its <code>.table__head--sortable</code> headers sort the view by clicking or Enter: ascending, descending, then back to the natural order. Use a sort icon with <code>data-sort="ascending"</code> and <code>"descending"</code> paths and the one not in use fades; put it first with <code>.table__sort-icon--start</code> in right-aligned columns. Cells sort by their control's value, a <code>data-sort-value</code> or their text, numbers as numbers and blanks last. The table carries <code>data-sorted</code> while sorted. Sorting never changes the saved order: rows added, duplicated or put back while sorted keep their natural place, and edited values don't move rows until the next sort.</p>
+          <div class="card spacer--lg" data-expandable>
+            <div class="card__header card__header--row">
+              <h3 class="card__title">Variants</h3>
+              <button type="button" class="btn btn--outline btn--sm btn--icon" data-expand data-expand-label="Full screen" data-collapse-label="Exit full screen" aria-label="Full screen" aria-pressed="false" data-tooltip="Full screen">
+                <svg class="icon" viewBox="0 0 24 24" data-expand-icon="expand"><path d="M16 4l4 0l0 4"/><path d="M14 10l6 -6"/><path d="M8 20l-4 0l0 -4"/><path d="M4 20l6 -6"/></svg>
+                <svg class="icon" viewBox="0 0 24 24" data-expand-icon="collapse"><path d="M5 9l4 0l0 -4"/><path d="M3 3l6 6"/><path d="M5 15l4 0l0 4"/><path d="M3 21l6 -6"/><path d="M19 9l-4 0l0 -4"/><path d="M15 9l6 -6"/><path d="M19 15l-4 0l0 4"/><path d="M15 15l6 6"/></svg>
+              </button>
+            </div>
+            <div class="card__content card__content--flush">
+              <div class="table__wrapper table__wrapper--borderless">
+                <table class="table table--editable table--sticky-actions table--sticky-header table--sticky-start" id="docsVariants" data-table-sort>
+                  <thead class="table__header">
+                    <tr class="table__row">
+                      <th class="table__head table__head--sortable">SKU<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                      <th class="table__head table__head--sortable" data-column="size">Size<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                      <th class="table__head table__head--sortable text--right" data-column="price"><svg class="icon table__sort-icon table__sort-icon--start" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg>Price</th>
+                      <th class="table__head table__head--sortable" data-column="weight" data-column-expanded>Weight<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                      <th class="table__head table__head--sortable" data-column="status">Status<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/></svg></th>
+                      <th class="table__head table__actions"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody class="table__body">
+                    <tr class="table__row">
+                      <td class="table__cell"><input type="text" class="table__control table__control--wide" value="DL-SM-BLK" aria-label="SKU"></td>
+                      <td class="table__cell" data-column="size"><input type="text" class="table__control" value="Small" aria-label="Size"></td>
+                      <td class="table__cell" data-column="price"><input type="text" class="table__control table__control--number" value="89.00" aria-label="Price"></td>
+                      <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" value="1.1 kg" aria-label="Weight"></td>
+                      <td class="table__cell" data-column="status"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option></select></td>
+                      <td class="table__cell table__actions"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Remove" data-tooltip="Remove" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell"><input type="text" class="table__control table__control--wide" value="DL-SM-WHT" aria-label="SKU"></td>
+                      <td class="table__cell" data-column="size"><input type="text" class="table__control" value="Small" aria-label="Size"></td>
+                      <td class="table__cell" data-column="price"><input type="text" class="table__control table__control--number" value="89.00" aria-label="Price"></td>
+                      <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" value="1.1 kg" aria-label="Weight"></td>
+                      <td class="table__cell" data-column="status"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option></select></td>
+                      <td class="table__cell table__actions"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Remove" data-tooltip="Remove" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell"><input type="text" class="table__control table__control--wide" value="DL-LG-BLK" aria-label="SKU"></td>
+                      <td class="table__cell" data-column="size"><input type="text" class="table__control" value="Large" aria-label="Size"></td>
+                      <td class="table__cell" data-column="price"><input type="text" class="table__control table__control--number" value="129.00" aria-label="Price"></td>
+                      <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" value="1.4 kg" aria-label="Weight"></td>
+                      <td class="table__cell" data-column="status"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option></select></td>
+                      <td class="table__cell table__actions"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Remove" data-tooltip="Remove" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
+                    </tr>
+                    <tr class="table__row">
+                      <td class="table__cell"><input type="text" class="table__control table__control--wide" value="DL-LG-WHT" aria-label="SKU"></td>
+                      <td class="table__cell" data-column="size"><input type="text" class="table__control" value="Large" aria-label="Size"></td>
+                      <td class="table__cell" data-column="price"><input type="text" class="table__control table__control--number" value="129.00" aria-label="Price"></td>
+                      <td class="table__cell" data-column="weight" data-column-expanded><input type="text" class="table__control" value="1.4 kg" aria-label="Weight"></td>
+                      <td class="table__cell" data-column="status"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option></select></td>
+                      <td class="table__cell table__actions"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Remove" data-tooltip="Remove" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="table__footer">
+                    <tr class="table__row">
+                      <td class="table__cell" data-column-span>
+                        <button type="button" class="btn btn--ghost btn--sm">
+                          <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                          Add variant
+                        </button>
+                      </td>
+                      <td class="table__cell table__actions">
+                            <div class="dropdown dropdown--right">
+                              <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-label="Columns" data-tooltip="Columns" data-tooltip-position="left" data-toggle data-toggle-target="#docsColumns" data-toggle-capture="true">
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"/><path d="M12 4l0 16"/></svg>
+                              </button>
+                              <div class="dropdown__menu" id="docsColumns" role="menu" popover="manual" data-table-columns="#docsVariants">
+                                <div class="dropdown__label">Show columns</div>
+                                    <button type="button" class="dropdown__item" data-column-toggle="size"><span class="dropdown__item-text">Size</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                                    <button type="button" class="dropdown__item" data-column-toggle="price"><span class="dropdown__item-text">Price</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                                    <button type="button" class="dropdown__item" data-column-toggle="weight" data-column-expanded><span class="dropdown__item-text">Weight</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                                    <button type="button" class="dropdown__item" data-column-toggle="status"><span class="dropdown__item-text">Status</span><svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg></button>
+                              </div>
+                            </div>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label spacer--xl">Reordering rows</div>
+          <p class="text--sm text--muted spacer--md">Give a table <code>data-table-reorder</code> and a first <code>.table__handle</code> column holding a handle button in each row. Drag a handle and the row moves into place as you go, with the other rows sliding aside and the table scrolling near its edges; Escape puts it back. With the keyboard, focus a handle and press Space to pick the row up, the arrow keys to move it and Space to drop it. The row being moved carries <code>data-dragging</code>, moves are announced, and the table fires <code>table:reorder</code> with <code>{ row, from, to }</code>. A reorderable table can't also sort by column, so leave its headers plain. With <code>.table--sticky-start</code>, the handle, checkbox and first column stay pinned together.</p>
+          <div class="constrain constrain--sm spacer--lg">
+            <div class="table__wrapper">
+              <table class="table table--editable" data-table-reorder>
+                <thead class="table__header">
+                  <tr class="table__row">
+                    <th class="table__head table__handle"><span class="sr-only">Order</span></th>
+                    <th class="table__head">Block</th>
+                    <th class="table__head">Type</th>
+                  </tr>
+                </thead>
+                <tbody class="table__body">
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Hero banner"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Hero banner" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option selected>Image</option><option>Text</option><option>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Introduction"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Introduction" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option selected>Text</option><option>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Product gallery"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Product gallery" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option>Text</option><option selected>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Call to action"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Call to action" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option>Text</option><option>Gallery</option><option selected>Button</option></select></td>
+                  </tr>
                 </tbody>
               </table>
             </div>

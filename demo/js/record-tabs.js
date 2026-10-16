@@ -4,14 +4,15 @@
  *
  * Variant rows save themselves: a row saves shortly after an edit, or when focus leaves it,
  * showing data-row-state ("saving", "saved", "error") in its checkbox cell. Removing rows is
- * immediate with an Undo toast. The product's own fields still use "Save changes". Nothing is
+ * immediate with an Undo toast. The product's own fields use "Save changes", with the library's
+ * unsaved-changes guard showing what's unsaved. Nothing is
  * persisted; saves are simulated, and a variant without a SKU fails to show the error state.
  */
 (() => {
   const rows = document.getElementById('variantRows');
   const template = document.getElementById('variantTemplate');
   const count = document.getElementById('variantCount');
-  const unsaved = document.getElementById('unsavedBadge');
+  const editor = document.getElementById('productEditor');
   const selectAll = document.getElementById('variantSelectAll');
   const bulk = document.getElementById('variantBulk');
   const hint = document.getElementById('variantHint');
@@ -127,6 +128,29 @@
     });
   }
 
+  // A new order saves like an edit, shown on the row that moved
+  rows.closest('table').addEventListener('table:reorder', e => save(e.detail.row));
+
+  rows.closest('table').addEventListener('table:paste', (e) => {
+    const { updated, added, undo } = e.detail;
+    refresh();
+    const parts = [updated.length && `${updated.length} updated`, added.length && `${added.length} added`].filter(Boolean);
+    window.toast?.show({
+      type: 'success',
+      message: `Pasted: ${parts.join(', ')}`,
+      duration: 6000,
+      actions: [{
+        label: 'Undo',
+        icon: UNDO_ICON,
+        onClick: () => {
+          undo();
+          refresh();
+          status.textContent = 'Paste undone';
+        },
+      }],
+    });
+  });
+
   rows.addEventListener('input', (e) => {
     const row = e.target.closest('[data-variant]');
     if (row && e.target.matches('.table__control')) markChanged(row);
@@ -181,7 +205,7 @@
   // ---------------------------------------------------------------------------
 
   const sheetField = name => sheet.querySelector(`[data-field="${name}"]`);
-  const shared = ['sku', 'size', 'finish', 'price', 'stock', 'status'];
+  const shared = ['sku', 'size', 'finish', 'price', 'sale', 'stock', 'weight', 'power', 'temp', 'status'];
 
   function fillSheet(row) {
     editing = row;
@@ -236,13 +260,21 @@
   // Save and the SEO preview
   // ---------------------------------------------------------------------------
 
+  // The unsaved-changes guard tracks the product's own fields; saving makes their values the saved ones
+  // The toast says what saving did to the product's visibility, not just that it saved
+  // main.js is a module, so it (and window.Parallelogram) only runs once the page has parsed
+  const schedule = () => window.Parallelogram.PublishSchedule;
+  let savedState = null;
+  document.addEventListener('DOMContentLoaded', () => { savedState = schedule().state(editor).state; });
   document.getElementById('saveProduct').addEventListener('click', () => {
-    unsaved.hidden = true;
-    toast('Desk Lamp saved');
-  });
-
-  document.querySelectorAll('#tab-details, #tab-media, #tab-seo').forEach((panel) => {
-    panel.addEventListener('input', () => { unsaved.hidden = false; });
+    editor.dispatchEvent(new CustomEvent('unsaved:reset'));
+    const Schedule = schedule();
+    const { state, publishAt } = Schedule.state(editor);
+    if (state === 'scheduled') toast(`Desk Lamp scheduled for ${Schedule.format.format(publishAt)}`);
+    else if (state === 'live' && savedState !== 'live') toast('Desk Lamp published');
+    else if (state === 'expired' && savedState !== 'expired') toast('Desk Lamp saved; it has been taken down');
+    else toast('Desk Lamp saved');
+    savedState = state;
   });
 
   const metaTitle = document.getElementById('metaTitle');
