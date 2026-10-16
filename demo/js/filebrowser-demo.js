@@ -12,6 +12,8 @@
  * and tile). "Edit details" in a card's menu, or the toolbar's "Needs alt text" button (which
  * steps through every image still to do), opens the details panel, where Suggest fills in a
  * suggestion to check. New uploads get a suggestion in the background. Suggestions are canned.
+ * The menu and panel can also replace an image's file in place (keeping the asset, and flagging
+ * its alt text to check) or copy its URL.
  */
 (() => {
   const field = document.querySelector('[data-filebrowser]');
@@ -37,6 +39,8 @@
     sparkles: icon('<path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/>'),
     alert: icon('<path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/>'),
     prev: icon('<path d="M15 6l-6 6l6 6"/>'),
+    link: icon('<path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/>'),
+    replace: icon('<path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>'),
     next: icon('<path d="M9 6l6 6l-6 6"/>'),
   };
 
@@ -73,6 +77,8 @@
       size: `${(120 + i * 37) % 900 + 80} KB`,
       time: `${(i % 9) + 1} Oct 2026`,
       src: gradient(...palette[i % palette.length]),
+      width: [1600, 1200, 2400, 1080][i % 4],
+      height: [1200, 1200, 1600, 1350][i % 4],
       alt: '',
       altState: 'missing',
       suggestion: '',
@@ -83,6 +89,21 @@
     return asset;
   });
   const needsAlt = asset => asset.altState === 'missing' || asset.altState === 'suggested';
+  const dimensions = asset => (asset.width ? `${asset.width} × ${asset.height}` : '');
+  // Where the site serves each file; the demo makes one up from the name
+  const urlFor = asset => `https://example.com/assets/${scope.toLowerCase().replace(/\s*›\s*/g, '/').replace(/\s+/g, '-')}/${asset.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.${asset.type.toLowerCase()}`;
+
+  async function copyUrl(asset) {
+    const url = urlFor(asset);
+    try {
+      await navigator.clipboard.writeText(url);
+      window.toast?.success('Image URL copied');
+    } catch (err) {
+      window.toast?.error(`Couldn’t copy the URL: ${url}`);
+    }
+  }
+
+  const ALT_LABELS = { missing: 'No alt text', suggested: 'Check alt text', set: 'Has alt text', decorative: 'Decorative' };
 
   let dialog;
   let state = { view: 'grid', sort: 'time', query: '' };
@@ -177,7 +198,7 @@
 
   /** An asset record for an uploaded file, previewing the file itself when it's an image. */
   function fileAsset(file, i) {
-    return {
+    return measure({
       id: nextId++,
       name: file.name.replace(/\.[^.]+$/, ''),
       type: (file.name.split('.').pop() || 'file').toUpperCase(),
@@ -187,7 +208,20 @@
       alt: '',
       altState: 'missing',
       suggestion: '',
+    }, file);
+  }
+
+  /** Read an image file's real dimensions once it loads, and show them wherever the asset is. */
+  function measure(asset, file) {
+    if (!file.type.startsWith('image/')) return asset;
+    const image = new Image();
+    image.onload = () => {
+      asset.width = image.naturalWidth;
+      asset.height = image.naturalHeight;
+      if (dialog) refreshAsset(asset);
     };
+    image.src = asset.src;
+    return asset;
   }
 
   // ---------------------------------------------------------------------------
@@ -220,7 +254,9 @@
           <div class="filebrowser__banner--select"></div>
           <div class="filebrowser__banner--preview"></div>
           <div class="filebrowser__banner--name">Filename</div>
+          <div class="filebrowser__banner--alt">Alt text</div>
           <div class="filebrowser__banner--type">Type</div>
+          <div class="filebrowser__banner--dimensions">Dimensions</div>
           <div class="filebrowser__banner--size">File size</div>
           <div class="filebrowser__banner--time">Modified</div>
           <div class="filebrowser__banner--options"></div>
@@ -284,9 +320,15 @@
         </div>
         <div class="overlay__body stack stack--md">
           <figure class="filebrowser__details-preview"><img src="" alt="" data-details-image></figure>
-          <div>
-            <p class="text--medium" data-details-name></p>
-            <p class="text--xs text--muted" data-details-info></p>
+          <div class="cluster cluster--between">
+            <div>
+              <p class="text--medium" data-details-name></p>
+              <p class="text--xs text--muted" data-details-info></p>
+            </div>
+            <div class="cluster cluster--xs">
+              <button type="button" class="btn btn--outline btn--icon btn--sm" data-details-copy aria-label="Copy URL" data-tooltip="Copy URL">${ICONS.link}</button>
+              <button type="button" class="btn btn--outline btn--sm" data-details-replace>${ICONS.replace}<span>Replace</span></button>
+            </div>
           </div>
           <div class="form__field">
             <div class="cluster cluster--between">
@@ -326,9 +368,11 @@
         <span class="filebrowser__label--preview">
           <figure class="filebrowser__asset"><picture class="filebrowser__media"><img class="filebrowser__image" src="${asset.src}" alt="${escape(asset.alt)}"></picture></figure>
         </span>
-        <h2 class="filebrowser__label--name">${asset.name}<span class="sr-only">${{ missing: ', no alt text', suggested: ', alt text suggested' }[asset.altState] || ''}</span></h2>
-        <p class="filebrowser__label--mime">${asset.type}</p>
+        <h2 class="filebrowser__label--name">${asset.name}</h2>
+        <p class="filebrowser__label--mime">${[asset.type, dimensions(asset)].filter(Boolean).join(' · ')}</p>
+        <span class="filebrowser__label--alt">${ALT_LABELS[asset.altState]}</span>
         <span class="filebrowser__label--type">${asset.type}</span>
+        <span class="filebrowser__label--dimensions">${dimensions(asset)}</span>
         <span class="filebrowser__label--size">${asset.size}</span>
         <span class="filebrowser__label--time">${asset.time}</span>
         <span class="filebrowser__label--options">
@@ -336,6 +380,8 @@
             <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-label="Actions for ${asset.name}" aria-haspopup="menu" data-toggle data-toggle-target="#${menu}" data-toggle-capture="true">${ICONS.dots}</button>
             <span class="dropdown__menu" id="${menu}" role="menu" popover="manual">
               <button type="button" class="dropdown__item" role="menuitem" data-details-open="${asset.id}">${ICONS.photo.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Edit details</span></button>
+              <button type="button" class="dropdown__item" role="menuitem" data-replace="${asset.id}">${ICONS.replace.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Replace image</span></button>
+              <button type="button" class="dropdown__item" role="menuitem" data-copy-url="${asset.id}">${ICONS.link.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Copy URL</span></button>
               <button type="button" class="dropdown__item" role="menuitem">${ICONS.edit.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Rename</span></button>
               <button type="button" class="dropdown__item" role="menuitem">${ICONS.download.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Download</span></button>
               <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">${ICONS.trash.replace('class="icon"', 'class="icon dropdown__item-icon"')}<span class="dropdown__item-text">Delete</span></button>
@@ -529,7 +575,7 @@
     const suggested = draft ? draft.suggested : asset.altState === 'suggested';
     form.querySelector('[data-details-image]').src = asset.src;
     form.querySelector('[data-details-name]').textContent = asset.name;
-    form.querySelector('[data-details-info]').textContent = `${asset.type} · ${asset.size} · ${asset.time}`;
+    form.querySelector('[data-details-info]').textContent = [asset.type, dimensions(asset), asset.size, asset.time].filter(Boolean).join(' · ');
     form.querySelector('[data-details-alt]').value = value;
     form.querySelector('[data-details-decorative]').checked = decorative;
     form.querySelector('[data-details-position]').textContent = details.run ? `${details.index + 1} of ${details.run.length}` : '';
@@ -590,11 +636,18 @@
     dialog.querySelectorAll(`.filebrowser__item[data-id="asset-${asset.id}"]`).forEach((card) => {
       card.dataset.alt = asset.altState;
       card.querySelector('.filebrowser__image').alt = asset.alt;
-      card.querySelector('.filebrowser__label--name .sr-only').textContent = { missing: ', no alt text', suggested: ', alt text suggested' }[asset.altState] || '';
+      card.querySelector('.filebrowser__image').src = asset.src;
+      card.querySelector('.filebrowser__label--alt').textContent = ALT_LABELS[asset.altState];
+      card.querySelector('.filebrowser__label--mime').textContent = [asset.type, dimensions(asset)].filter(Boolean).join(' · ');
+      card.querySelector('.filebrowser__label--type').textContent = asset.type;
+      card.querySelector('.filebrowser__label--dimensions').textContent = dimensions(asset);
+      card.querySelector('.filebrowser__label--size').textContent = asset.size;
+      card.querySelector('.filebrowser__label--time').textContent = asset.time;
     });
     list.querySelectorAll(`.media[data-asset-id="${asset.id}"]`).forEach((tileEl) => {
       tileEl.dataset.alt = asset.altState;
       tileEl.querySelector('img').alt = asset.alt;
+      tileEl.querySelector('img').src = asset.src;
     });
     updateReview();
   }
@@ -626,7 +679,35 @@
     const form = inner.querySelector('[data-details]');
     const field = form.querySelector('[data-details-alt]');
 
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.hidden = true;
+    input.dataset.replaceInput = '';
+    dialog.append(input);
+    input.addEventListener('change', () => {
+      if (input.files[0] && replacing) replace(replacing, input.files[0]);
+      input.value = '';
+      replacing = null;
+    });
+    form.querySelector('[data-details-replace]').addEventListener('click', () => startReplace(details.asset));
+    form.querySelector('[data-details-copy]').addEventListener('click', () => copyUrl(details.asset));
+
     listEl.addEventListener('click', (e) => {
+      const copy = e.target.closest('[data-copy-url]');
+      if (copy) {
+        e.preventDefault();
+        window.Parallelogram?.Toggle?.closeAll?.();
+        copyUrl(assets.find(a => a.id === Number(copy.dataset.copyUrl)));
+        return;
+      }
+      const swap = e.target.closest('[data-replace]');
+      if (swap) {
+        e.preventDefault();
+        window.Parallelogram?.Toggle?.closeAll?.();
+        startReplace(assets.find(a => a.id === Number(swap.dataset.replace)));
+        return;
+      }
       const open = e.target.closest('[data-details-open]');
       if (!open) return;
       e.preventDefault();
@@ -670,6 +751,73 @@
         field.focus();
       }, 900);
     });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Replace an image in place
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Swap an asset's file but keep the asset, so every field using it shows the new file. Existing
+   * alt text is kept but flagged to check, since it described the old picture.
+   */
+  let replacing = null;
+
+  function startReplace(asset) {
+    replacing = asset;
+    dialog.querySelector('[data-replace-input]').click();
+  }
+
+  function replace(asset, file) {
+    const card = dialog.querySelector(`.filebrowser__item[data-id="asset-${asset.id}"]`);
+    card?.classList.add('filebrowser__item--busy');
+    card?.querySelector('.filebrowser__asset').insertAdjacentHTML('beforeend',
+      '<div class="filebrowser__upload-progress"><div class="filebrowser__upload-progress-bar"><div class="filebrowser__upload-progress-fill"></div></div></div>');
+    const fails = /fail/i.test(file.name);
+    let value = 0;
+    const tick = () => {
+      value = Math.min(100, value + 12 + Math.random() * 20);
+      card?.style.setProperty('--progress', `${value}%`);
+      if (value < 100 && !(fails && value > 55)) {
+        setTimeout(tick, 200 + Math.random() * 200);
+        return;
+      }
+      card?.classList.remove('filebrowser__item--busy');
+      card?.querySelector('.filebrowser__upload-progress')?.remove();
+      if (fails) {
+        window.toast?.error(`${asset.name} could not be replaced: the file type is not allowed`);
+        return;
+      }
+      const before = { ...asset };
+      const next = fileAsset(file, 0);
+      Object.assign(asset, {
+        src: next.src,
+        type: next.type,
+        size: next.size,
+        time: 'Just now',
+        width: null,
+        height: null,
+      });
+      measure(asset, file);
+      if (asset.altState === 'set') Object.assign(asset, { altState: 'suggested', suggestion: asset.alt });
+      refreshAsset(asset);
+      if (details.panel.classList.contains('show') && details.asset === asset) show(asset);
+      window.toast?.show({
+        type: 'success',
+        message: `${asset.name} replaced wherever it’s used`,
+        duration: 6000,
+        actions: [{
+          label: 'Undo',
+          icon: ICONS.back,
+          onClick: () => {
+            Object.assign(asset, before);
+            refreshAsset(asset);
+            if (details.panel.classList.contains('show') && details.asset === asset) show(asset);
+          },
+        }],
+      });
+    };
+    setTimeout(tick, 200);
   }
 
   // ---------------------------------------------------------------------------

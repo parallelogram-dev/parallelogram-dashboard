@@ -307,7 +307,7 @@
 
   &__list,
   &__banner {
-    --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 4rem 5rem 8rem 1.75rem;
+    --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 7rem 3.5rem 6.5rem 4.5rem 7rem 1.75rem;
   }
 
   &__list {
@@ -393,7 +393,9 @@
       display: none;
     }
 
+    &--alt,
     &--type,
+    &--dimensions,
     &--size,
     &--time {
       font-size: $font-size-xs;
@@ -502,9 +504,22 @@
     }
 
     .filebrowser__label--type,
+    .filebrowser__label--dimensions,
     .filebrowser__label--size,
     .filebrowser__label--time {
       display: none;
+    }
+
+    // A line under the file type for the alt text state, kept on every card so they line up;
+    // it only shows when something needs doing
+    .filebrowser__label--alt {
+      min-height: calc(#{$font-size-xs} * #{$line-height-normal});
+      margin-top: $spacing-3xs;
+      line-height: $line-height-normal;
+    }
+
+    .filebrowser__item:is([data-alt="set"], [data-alt="decorative"]) .filebrowser__label--alt {
+      visibility: hidden;
     }
 
     .filebrowser__label--options {
@@ -644,48 +659,31 @@
  * Alt text state
  *
  * data-alt on a .filebrowser__item (or a .media tile in a field) is "missing", "suggested" (a
- * suggestion waiting to be checked), "set" or "decorative" (deliberately empty). Missing and
- * suggested images carry a marker on their preview; the others show nothing.
+ * suggestion waiting to be checked), "set" or "decorative" (deliberately empty). Nothing is
+ * drawn over the image: cards say so in their .filebrowser__label--alt line under the file type
+ * (grid cards only flag missing and suggested), and field tiles take the state's colour as
+ * their border.
  */
-%alt-marker {
-  position: absolute;
-  bottom: $spacing-3xs;
-  left: $spacing-3xs;
-  z-index: 1;
-  padding: 0 $spacing-3xs;
-  font-size: 0.625rem;
-  font-weight: $font-weight-semibold;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  border-radius: $radius-sm;
-  pointer-events: none;
+.filebrowser__item[data-alt="missing"] .filebrowser__label--alt {
+  color: var(--warning);
 }
 
-.filebrowser__item[data-alt="missing"] .filebrowser__asset::after,
-.media[data-alt="missing"] .media__image::after {
-  @extend %alt-marker;
-  content: "No alt";
-  color: var(--warning-fg);
-  background-color: var(--warning);
+.filebrowser__item[data-alt="suggested"] .filebrowser__label--alt {
+  color: var(--info);
 }
 
-.filebrowser__item[data-alt="suggested"] .filebrowser__asset::after,
-.media[data-alt="suggested"] .media__image::after {
-  @extend %alt-marker;
-  content: "Check alt";
-  color: var(--info-fg);
-  background-color: var(--info);
+.filebrowser__item:is([data-alt="missing"], [data-alt="suggested"]) .filebrowser__label--alt {
+  font-weight: $font-weight-medium;
 }
 
-// Rows have a small preview, so the marker shrinks to a dot
-.filebrowser__list:not(.filebrowser__list--image) .filebrowser__item:is([data-alt="missing"], [data-alt="suggested"]) .filebrowser__asset::after {
-  content: "";
-  top: auto;
-  width: 0.5rem;
-  height: 0.5rem;
-  padding: 0;
-  border: 1.5px solid var(--card);
-  border-radius: $radius-full;
+.media[data-alt="missing"] {
+  border-color: var(--warning);
+  box-shadow: inset 0 0 0 1px var(--warning);
+}
+
+.media[data-alt="suggested"] {
+  border-color: var(--info);
+  box-shadow: inset 0 0 0 1px var(--info);
 }
 
 /**
