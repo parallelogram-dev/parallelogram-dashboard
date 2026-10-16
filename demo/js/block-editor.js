@@ -35,6 +35,8 @@
     carousel: icon('<path d="M7 5m0 1a1 1 0 0 1 1 -1h8a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1z"/><path d="M22 17h-1a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h1"/><path d="M2 17h1a1 1 0 0 0 1 -1v-8a1 1 0 0 0 -1 -1h-1"/>'),
     left: icon('<path d="M4 5h6v14h-6z"/><path d="M14 8h6"/><path d="M14 12h6"/><path d="M14 16h4"/>'),
     right: icon('<path d="M14 5h6v14h-6z"/><path d="M4 8h6"/><path d="M4 12h6"/><path d="M4 16h4"/>'),
+    eye: icon('<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>'),
+    eyeOff: icon('<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/><path d="M3 3l18 18"/>'),
     center: icon('<path d="M7 5h10v10h-10z"/><path d="M6 19h12"/>'),
   };
 
@@ -159,9 +161,37 @@
   ];
   let saved = JSON.stringify(blocks);
 
+  /**
+   * A small wireframe of how the block lays out: the image on its side at its width, text lines
+   * beside it, dark when the theme is dark. It redraws whenever the block's layout changes.
+   */
+  function wireframe(block) {
+    const d = block.data;
+    const img = id => (id ? `<span class="blk-wire__img" style="background-image: url('${find(IMAGES, id)?.src}');"></span>` : '<span class="blk-wire__img"></span>');
+    const lines = (n = 3) => `<span class="blk-wire__text"><span class="blk-wire__line blk-wire__line--head"></span>${'<span class="blk-wire__line"></span>'.repeat(n)}</span>`;
+    let inner = '';
+    let mod = '';
+    if (block.type === 'textImage') {
+      mod = d.width === '12' ? 'stack' : d.align === 'right' ? 'row-reverse' : 'row';
+      inner = `<span class="blk-wire__media" style="--span: ${Number(d.width) / 12};">${img(d.image)}</span>${lines()}`;
+    } else if (block.type === 'image') {
+      mod = `align-${d.align}`;
+      inner = `<span class="blk-wire__media" style="--span: ${{ regular: 0.5, medium: 0.65, large: 0.8, full: 1 }[d.size]};">${img(d.image)}</span>`;
+    } else if (block.type === 'text') {
+      mod = `measure-${d.width}`;
+      inner = lines(4);
+    } else if (block.type === 'quote') {
+      mod = 'quote';
+      inner = `<span class="blk-wire__mark">“</span>${lines(1)}`;
+    } else if (block.type === 'projects') {
+      mod = 'tiles';
+      inner = d.projects.slice(0, 3).map(id => `<span class="blk-wire__img" style="background-image: url('${find(PROJECTS, id)?.image}');"></span>`).join('') || '<span class="blk-wire__img"></span><span class="blk-wire__img"></span><span class="blk-wire__img"></span>';
+    }
+    return `<span class="blk-wire blk-wire--${mod}" data-theme-preview="${d.theme || 'default'}" aria-hidden="true">${inner}</span>`;
+  }
+
   function card(block, index) {
     const type = TYPES[block.type];
-    const image = block.data.image ? find(IMAGES, block.data.image)?.src : block.type === 'projects' ? find(PROJECTS, block.data.projects[0])?.image : null;
     const title = (type.title ? type.title(block.data) : block.data.heading) || '';
     const missing = required(block);
     const chips = type.chips(block.data).filter(Boolean).map(chip => `<span class="badge badge--sm badge--outline">${escape(chip)}</span>`).join('');
@@ -170,14 +200,14 @@
       <li class="blk-insert"><button type="button" data-insert="${index}" aria-label="Add a block here" data-tooltip="Add a block" data-tooltip-position="right">${ICONS.plus}</button></li>
       <li class="blk-card" data-block="${block.id}" tabindex="0" role="button" aria-label="Edit ${escape(type.name)} block${title ? `: ${escape(title)}` : ''}"${block.hidden ? ' data-hidden' : ''}>
         <button type="button" class="blk-card__handle" data-reorder aria-label="Reorder block" tabindex="-1">${ICONS.grip}</button>
-        <span class="blk-card__preview">${image ? `<img src="${image}" alt="">` : type.icon}</span>
+        ${wireframe(block)}
         <span class="blk-card__body">
-          <span class="blk-card__type">${type.icon}${escape(type.name)}${block.hidden ? ' &middot; Hidden' : ''}</span>
+          <span class="blk-card__type">${type.icon}${escape(type.name)}${block.hidden ? '<span class="badge badge--sm badge--secondary">Hidden</span>' : ''}</span>
           <span class="blk-card__title">${escape(title)}</span>
           <span class="blk-card__chips">${chips}${missing.length ? `<span class="badge badge--sm badge--warning-muted">${ICONS.alert.replace('class="icon"', 'class="icon badge__icon"')}${escape(missing.join(', '))} needed</span>` : ''}</span>
         </span>
         <span class="blk-card__actions">
-          <label class="switch switch--sm" data-stop data-tooltip="${block.hidden ? 'Show on the page' : 'Hide from the page'}" data-tooltip-position="left"><input type="checkbox" class="switch__input" role="switch" data-visible="${block.id}"${block.hidden ? '' : ' checked'} aria-label="Show on the page"></label>
+          <button type="button" class="btn btn--ghost btn--icon btn--sm" data-stop data-visible="${block.id}" aria-pressed="${!block.hidden}" aria-label="${block.hidden ? 'Hidden from the page. Show it' : 'Visible on the page. Hide it'}" data-tooltip="${block.hidden ? 'Hidden · click to show' : 'Visible · click to hide'}" data-tooltip-position="left">${block.hidden ? ICONS.eyeOff : ICONS.eye}</button>
           <span class="dropdown dropdown--right" data-stop>
             <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-label="Block actions" aria-haspopup="menu" data-toggle data-toggle-target="#${menu}" data-toggle-capture="true">${ICONS.dots}</button>
             <span class="dropdown__menu" id="${menu}" role="menu" popover="manual">
@@ -196,8 +226,6 @@
     list.innerHTML = blocks.map(card).join('')
       + `<li class="blk-insert" style="height: auto; margin-top: 0.5rem;"><button type="button" class="btn btn--outline btn--sm" data-insert="${blocks.length}" style="opacity: 1; transform: none; width: auto; height: auto; padding: 0.25rem 0.75rem; color: inherit; background: var(--card); border: 1px solid var(--border);">${ICONS.plus}Add block</button></li>`;
     if (editing) list.querySelector(`[data-block="${editing}"]`)?.setAttribute('data-editing', '');
-    const shown = blocks.filter(b => !b.hidden).length;
-    document.getElementById('blockCount').textContent = `${blocks.length} blocks${shown < blocks.length ? ` · ${blocks.length - shown} hidden` : ''}`;
     document.getElementById('pageUnsaved').hidden = JSON.stringify(blocks) === saved;
     window.Parallelogram?.init(list);
   }
@@ -244,12 +272,13 @@
     }
   });
 
-  list.addEventListener('change', (e) => {
+  list.addEventListener('click', (e) => {
     const toggle = e.target.closest('[data-visible]');
     if (!toggle) return;
     const block = find(blocks, toggle.dataset.visible);
-    block.hidden = !toggle.checked;
+    block.hidden = !block.hidden;
     renderList();
+    list.querySelector(`[data-visible="${block.id}"]`)?.focus();
   });
 
   // Drag a card's handle to reorder; cards swap as the pointer passes their middle

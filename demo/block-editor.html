@@ -10,15 +10,37 @@
   <!-- Prototype only: these styles stay with this page until the block editor pattern is agreed -->
   <style>
     .blk-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
-    .blk-card { display: grid; grid-template-columns: 1.5rem 4.5rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: center; padding: 0.5rem 0.5rem 0.5rem 0.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.5rem; cursor: pointer; transition: border-color 150ms, box-shadow 150ms; }
+    .blk-card { display: grid; grid-template-columns: 1.5rem 6.5rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: center; padding: 0.5rem 0.5rem 0.5rem 0.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.5rem; cursor: pointer; transition: border-color 150ms, box-shadow 150ms; }
     .blk-card:hover { border-color: var(--fg-subtle); }
     .blk-card:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
     .blk-card[data-editing] { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
-    .blk-card[data-hidden] .blk-card__preview, .blk-card[data-hidden] .blk-card__body { opacity: 0.45; }
+    .blk-card[data-hidden] .blk-wire, .blk-card[data-hidden] .blk-card__title, .blk-card[data-hidden] .blk-card__chips { opacity: 0.4; }
+    .blk-card[data-hidden] [data-visible] { color: var(--fg-muted); }
+    .blk-canvas { padding: 0.75rem; background: var(--bg-muted); border-radius: 0.5rem; }
+    /* Wireframe of a block's layout */
+    .blk-wire { --wire-bg: var(--card); --wire-ink: color-mix(in srgb, var(--fg) 22%, transparent); --wire-media: color-mix(in srgb, var(--fg) 10%, transparent); display: flex; gap: 0.3rem; width: 6.5rem; aspect-ratio: 16 / 10; padding: 0.35rem; overflow: hidden; background: var(--wire-bg); border: 1px solid var(--border); border-radius: 0.375rem; }
+    .blk-wire[data-theme-preview="dark"] { --wire-bg: #0f172a; --wire-ink: rgb(255 255 255 / 0.45); --wire-media: rgb(255 255 255 / 0.12); }
+    .blk-wire[data-theme-preview="light"] { --wire-bg: #f1f5f9; }
+    .blk-wire__media { display: flex; flex: 0 0 calc(var(--span, 0.5) * 100% - 0.15rem); }
+    .blk-wire__img { flex: 1; min-width: 0; background: var(--wire-media) center / cover no-repeat; border-radius: 0.2rem; }
+    .blk-wire__text { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 0.2rem; min-width: 0; }
+    .blk-wire__line { height: 0.18rem; background: var(--wire-ink); border-radius: 999px; }
+    .blk-wire__line:last-child { width: 70%; }
+    .blk-wire__line--head { height: 0.3rem; width: 80%; margin-bottom: 0.1rem; }
+    .blk-wire--row-reverse { flex-direction: row-reverse; }
+    .blk-wire--stack { flex-direction: column; }
+    .blk-wire--stack .blk-wire__media { flex: 1 1 60%; }
+    .blk-wire--stack .blk-wire__text { flex: 0 0 auto; }
+    .blk-wire--align-left { justify-content: flex-start; }
+    .blk-wire--align-center { justify-content: center; }
+    .blk-wire--align-right { justify-content: flex-end; }
+    .blk-wire--measure-narrow { padding-inline: 1.6rem; }
+    .blk-wire--measure-regular { padding-inline: 0.9rem; }
+    .blk-wire--quote { align-items: center; padding-inline: 0.7rem; }
+    .blk-wire__mark { font: 700 1.5rem/1 Georgia, serif; color: var(--wire-ink); }
+    .blk-wire--tiles .blk-wire__img { aspect-ratio: 3 / 4; flex: 1; align-self: center; }
     .blk-card[data-dragging] { position: relative; z-index: 2; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.12); }
     .blk-card__handle { display: inline-flex; justify-content: center; padding: 0; color: var(--fg-subtle); background: none; border: 0; cursor: grab; touch-action: none; }
-    .blk-card__preview { display: flex; align-items: center; justify-content: center; width: 4.5rem; aspect-ratio: 4 / 3; overflow: hidden; color: var(--fg-muted); background: var(--bg-muted); border-radius: 0.375rem; }
-    .blk-card__preview img { width: 100%; height: 100%; object-fit: cover; }
     .blk-card__body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
     .blk-card__type { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 500; color: var(--fg-muted); }
     .blk-card__type .icon { width: 0.875rem; height: 0.875rem; }
@@ -68,7 +90,7 @@
     .blk-confirm span { margin-right: auto; }
     @media (max-width: 639px) {
       .blk-card { grid-template-columns: 1.25rem minmax(0, 1fr) auto; }
-      .blk-card__preview { display: none; }
+      .blk-wire { display: none; }
     }
   </style>
 </head>
@@ -291,11 +313,10 @@
               <div class="card__header card__header--row">
                 <div>
                   <h3 class="card__title">Content</h3>
-                  <p class="card__description" id="blockCount"></p>
                 </div>
               </div>
               <div class="card__content">
-                <ol class="blk-list" id="blocks" aria-label="Blocks"></ol>
+                <div class="blk-canvas"><ol class="blk-list" id="blocks" aria-label="Blocks"></ol></div>
               </div>
             </div>
           </div>
