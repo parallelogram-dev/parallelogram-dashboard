@@ -35,6 +35,11 @@
     carousel: icon('<path d="M7 5m0 1a1 1 0 0 1 1 -1h8a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1z"/><path d="M22 17h-1a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h1"/><path d="M2 17h1a1 1 0 0 0 1 -1v-8a1 1 0 0 0 -1 -1h-1"/>'),
     left: icon('<path d="M4 5h6v14h-6z"/><path d="M14 8h6"/><path d="M14 12h6"/><path d="M14 16h4"/>'),
     right: icon('<path d="M14 5h6v14h-6z"/><path d="M4 8h6"/><path d="M4 12h6"/><path d="M4 16h4"/>'),
+    page: icon('<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>'),
+    box: icon('<path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/>'),
+    external: icon('<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/>'),
+    search: icon('<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/>'),
+    swap: icon('<path d="M7 10h14l-4 -4"/><path d="M17 14h-14l4 4"/>'),
     eye: icon('<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>'),
     eyeOff: icon('<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/><path d="M3 3l18 18"/>'),
     center: icon('<path d="M7 5h10v10h-10z"/><path d="M6 19h12"/>'),
@@ -47,6 +52,19 @@
   const PROJECTS = ['Harbour View House', 'Laneway Studio', 'Hillside Cabin', 'Corner Cafe', 'Riverside Library', 'Garden Pavilion']
     .map((title, i) => ({ id: `p${i + 1}`, title, meta: ['Residential', 'Workplace', 'Residential', 'Hospitality', 'Public', 'Public'][i], image: IMAGES[(i + 2) % IMAGES.length].src }));
   const find = (items, id) => items.find(item => item.id === id);
+
+  // Everything a link can point at: pages, projects and products, each with its path
+  const slug = text => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const ENTRIES = [
+    ...[['Home', '/'], ['About', '/about'], ['Projects', '/projects'], ['Team', '/team'], ['Contact', '/contact'], ['Journal', '/journal', 'Draft']]
+      .map(([title, path, status], i) => ({ id: `page${i}`, kind: 'Page', title, path, status })),
+    ...PROJECTS.map(p => ({ id: `entry-${p.id}`, kind: 'Project', title: p.title, path: `/projects/${slug(p.title)}`, image: p.image })),
+    ...['Desk lamp', 'Pendant light', 'Wall sconce'].map((title, i) => ({ id: `product${i}`, kind: 'Product', title, path: `/products/${slug(title)}` })),
+  ];
+  const KIND_ICON = { Page: ICONS.page, Project: ICONS.carousel, Product: ICONS.box };
+  const entryByPath = path => ENTRIES.find(e => e.path === path);
+  // Paths, web addresses and mailto/tel links count as typed links; anything else is a search
+  const looksLikeUrl = text => /^(https?:\/\/|www\.|mailto:|tel:|\/|#)/i.test(text) || /^[^\s/]+\.[a-z]{2,}(\/\S*)?$/i.test(text);
 
   // ---------------------------------------------------------------------------
   // Block types: their fields, layout options and how a card summarises them
@@ -64,7 +82,7 @@
         { key: 'image', label: 'Image', type: 'image' },
         { key: 'heading', label: 'Heading', type: 'text', required: true },
         { key: 'body', label: 'Description', type: 'textarea', hint: 'Use the column splitter (COL) to split the copy into columns.' },
-        { key: 'link', label: 'Linked URL', type: 'text', placeholder: '/projects' },
+        { key: 'link', label: 'Link', type: 'link' },
         { key: 'cta', label: 'Call to action', type: 'text', placeholder: 'See our work' },
       ],
       layout: [
@@ -76,7 +94,7 @@
         { key: 'headingStyle', label: 'Heading style', type: 'segment', options: [['medium', 'Medium'], ['large', 'Large'], ['offset', 'Large & offset']] },
         { key: 'theme', label: 'Theme', type: 'swatch', options: THEMES },
       ],
-      defaults: { image: null, heading: '', body: '', link: '', cta: '', align: 'left', width: '6', shape: 'original', position: 'top', headingTag: 'h2', headingStyle: 'medium', theme: 'default' },
+      defaults: { image: null, heading: '', body: '', link: null, cta: '', align: 'left', width: '6', shape: 'original', position: 'top', headingTag: 'h2', headingStyle: 'medium', theme: 'default' },
     },
     image: {
       name: 'Image',
@@ -128,16 +146,28 @@
       content: [
         { key: 'heading', label: 'Heading', type: 'text' },
         { key: 'projects', label: 'Projects', type: 'lookup' },
-        { key: 'viewAll', label: '“View all” link', type: 'text', placeholder: '/projects' },
+        { key: 'viewAll', label: '“View all” link', type: 'link' },
       ],
       layout: [{ key: 'theme', label: 'Theme', type: 'swatch', options: THEMES }],
-      defaults: { heading: '', projects: [], viewAll: '', theme: 'default' },
+      defaults: { heading: '', projects: [], viewAll: null, theme: 'default' },
     },
   };
 
-  const required = (block) => {
+  /** What a block still needs: empty required fields, and links to drafts or to nothing usable. */
+  const warnings = (block) => {
     const type = TYPES[block.type];
-    return type.content.filter(f => f.required && !String(block.data[f.key] ?? '').trim()).map(f => f.label);
+    const found = type.content.filter(f => f.required && !String(block.data[f.key] ?? '').trim()).map(f => `${f.label} needed`);
+    type.content.filter(f => f.type === 'link').forEach((f) => {
+      const link = block.data[f.key];
+      if (link?.type === 'entry') {
+        const entry = find(ENTRIES, link.id);
+        if (!entry) found.push('Linked page no longer exists');
+        else if (entry.status === 'Draft') found.push(`Links to a draft (${entry.title})`);
+      } else if (link?.type === 'url' && !looksLikeUrl(link.url)) {
+        found.push('Link isn\u2019t a page or web address');
+      }
+    });
+    return found;
   };
 
   // ---------------------------------------------------------------------------
@@ -147,11 +177,11 @@
   let nextId = 1;
   const make = (type, data = {}, hidden = false) => ({ id: `b${nextId++}`, type, hidden, data: { ...structuredClone(TYPES[type].defaults), ...data } });
   let blocks = [
-    make('textImage', { image: 'img1', heading: 'Made to last', body: 'Every piece starts as a sketch on the workshop bench.', align: 'left', width: '6', theme: 'default' }),
+    make('textImage', { image: 'img1', heading: 'Made to last', body: 'Every piece starts as a sketch on the workshop bench.', align: 'left', width: '6', theme: 'default', cta: 'See our work', link: { type: 'url', url: 'https://example.com/portfolio' } }),
     make('image', { image: 'img3', caption: 'The workshop floor, early morning', size: 'full' }),
-    make('textImage', { image: 'img5', heading: 'Small batches, careful hands', body: 'We make a few of each design at a time.', align: 'right', width: '8', theme: 'dark', cta: 'Meet the team', link: '/team' }),
+    make('textImage', { image: 'img5', heading: 'Small batches, careful hands', body: 'We make a few of each design at a time.', align: 'right', width: '8', theme: 'dark', cta: 'Read the journal', link: { type: 'entry', id: 'page5' } }),
     make('quote', { quote: 'Good design is as little design as possible.', cite: 'A designer we admire' }, true),
-    make('projects', { heading: 'Recent projects', projects: ['p1', 'p3', 'p5'], viewAll: '/projects' }),
+    make('projects', { heading: 'Recent projects', projects: ['p1', 'p3', 'p5'], viewAll: { type: 'entry', id: 'page2' } }),
     make('textImage', { image: 'img7', heading: '', body: 'Visit the showroom any weekday.', align: 'left', width: '4' }),
   ];
   let saved = JSON.stringify(blocks);
@@ -196,7 +226,7 @@
   function card(block, index) {
     const type = TYPES[block.type];
     const title = (type.title ? type.title(block.data) : block.data.heading) || '';
-    const missing = required(block);
+    const missing = warnings(block);
     const menu = `block-menu-${block.id}`;
     return `
       <li class="blk-insert"><button type="button" data-insert="${index}" aria-label="Add a block here" data-tooltip="Add a block" data-tooltip-position="right">${ICONS.plus}</button></li>
@@ -205,7 +235,7 @@
         ${wireframe(block)}
         <span class="blk-card__body">
           <span class="blk-card__type">${type.icon}${escape(type.name)}</span>
-          <span class="blk-card__heading"><span class="blk-card__title">${escape(title)}</span>${missing.length ? `<span class="blk-card__warn" role="img" aria-label="${escape(missing.join(', '))} needed" data-tooltip="${escape(missing.join(', '))} needed" data-tooltip-position="right">${ICONS.alert}</span>` : ''}</span>
+          <span class="blk-card__heading"><span class="blk-card__title">${escape(title)}</span>${missing.length ? `<span class="blk-card__warn" role="img" aria-label="${escape(missing.join('. '))}" data-tooltip="${escape(missing.join(' \u00b7 '))}" data-tooltip-position="right">${ICONS.alert}</span>` : ''}</span>
         </span>
         <span class="blk-card__actions">
           <button type="button" class="btn btn--ghost btn--icon btn--sm" data-stop data-visible="${block.id}" aria-pressed="${!block.hidden}" aria-label="${block.hidden ? 'Show block' : 'Hide block'}" data-tooltip="${block.hidden ? 'Show' : 'Hide'}" data-tooltip-position="left">${block.hidden ? ICONS.eyeOff : ICONS.eye}</button>
@@ -389,6 +419,12 @@
   }
 
   function lookupFrame(key, owner) {
+    if (key.startsWith('link:')) {
+      const field = key.slice(5);
+      const current = owner.draft[field];
+      const selected = current?.type === 'entry' ? [current.id] : [];
+      return { kind: 'entries', label: 'Choose a page', multiple: false, selected, initial: JSON.stringify(selected), owner, key: field, query: '' };
+    }
     const multiple = key === 'projects';
     const selected = multiple ? [...owner.draft.projects] : [owner.draft.image].filter(Boolean);
     return { kind: key === 'projects' ? 'projects' : 'images', label: multiple ? 'Choose projects' : 'Choose an image', multiple, selected, initial: JSON.stringify(selected), owner, key };
@@ -481,7 +517,7 @@
     }
     const note = frame.kind === 'block'
       ? (dirty(frame) ? '<span class="badge badge--warning-muted">Unsaved changes</span>' : '')
-      : `<span class="text--sm text--muted">${frame.selected.length} selected</span>`;
+      : frame.multiple ? `<span class="text--sm text--muted">${frame.selected.length} selected</span>` : '';
     const primary = frame.kind === 'block' && frame.isNew ? 'Add block' : 'Done';
     footer.innerHTML = `
       ${note}
@@ -513,6 +549,7 @@
           </div>
         </div>`;
     }
+    if (f.type === 'link') return linkField(f, value);
     if (f.type === 'lookup') {
       const rows = frame.draft.projects.map((id) => {
         const p = find(PROJECTS, id);
@@ -554,6 +591,83 @@
     return `<div class="form__field"><label class="form__label" for="${id}">${f.label}${required}</label><input type="text" class="input form__control" id="${id}" data-field="${f.key}" value="${escape(value)}" placeholder="${escape(f.placeholder || '')}">${hint}</div>`;
   }
 
+  /**
+   * One field for both kinds of link. Typing searches entries and, when the text looks like a web
+   * address or path, offers to link to it as typed; Browse opens the entry picker one level deeper.
+   * A chosen entry shows as a compact card, so renames and moves never break it.
+   */
+  function linkField(f, link) {
+    const label = `<span class="form__label" id="lbl-${f.key}">${f.label}</span>`;
+    if (link?.type === 'entry') {
+      const e = find(ENTRIES, link.id);
+      return `
+        <div class="form__field">
+          ${label}
+          <div class="blk-link-card">
+            <span class="blk-entry__icon">${e?.image ? `<img src="${e.image}" alt="">` : KIND_ICON[e?.kind] || ICONS.alert}</span>
+            <span class="blk-entry__text"><span class="blk-entry__title">${escape(e?.title || 'Missing page')}</span><span class="blk-entry__path">${escape(e?.path || '')}</span></span>
+            ${e?.status ? `<span class="badge badge--sm badge--warning-muted">${escape(e.status)}</span>` : ''}
+            <button type="button" class="btn btn--ghost btn--icon btn--sm" data-link-change="${f.key}" aria-label="Change link" data-tooltip="Change" data-tooltip-position="left">${ICONS.swap}</button>
+            <button type="button" class="btn btn--ghost btn--icon btn--sm" data-link-clear="${f.key}" aria-label="Remove link" data-tooltip="Remove" data-tooltip-position="left">${ICONS.remove}</button>
+          </div>
+        </div>`;
+    }
+    const text = link?.type === 'url' ? link.url : '';
+    const typed = text && looksLikeUrl(text);
+    return `
+      <div class="form__field">
+        ${label}
+        <div class="blk-link" data-link="${f.key}">
+          <div class="toolbar__group blk-link__input" style="max-width: none;">
+            ${(typed ? ICONS.external : ICONS.search).replace('class="icon"', 'class="icon toolbar__icon"')}
+            <input type="text" class="toolbar__input" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="sug-${f.key}" aria-labelledby="lbl-${f.key}" placeholder="Search pages or paste a link" value="${escape(text)}" data-link-input="${f.key}" autocomplete="off">
+          </div>
+          <button type="button" class="btn btn--outline btn--sm" data-lookup="link:${f.key}">${ICONS.page}Browse</button>
+          <ul class="blk-suggest" id="sug-${f.key}" role="listbox" hidden></ul>
+        </div>
+      </div>`;
+  }
+
+  /** Suggestions for what's typed: the typed link first when it looks like one, then entries. */
+  function suggestions(text) {
+    const q = text.trim().toLowerCase();
+    if (!q) return [];
+    const items = [];
+    const exact = q.startsWith('/') && entryByPath(q);
+    if (looksLikeUrl(q) && !exact) items.push({ type: 'url', url: text.trim() });
+    ENTRIES.filter(e => `${e.title} ${e.path}`.toLowerCase().includes(q)).slice(0, 6).forEach(e => items.push({ type: 'entry', id: e.id }));
+    return items;
+  }
+
+  function showSuggestions(input) {
+    const key = input.dataset.linkInput;
+    const list = input.closest('.blk-link').querySelector('.blk-suggest');
+    const items = suggestions(input.value);
+    list.innerHTML = items.map((item, i) => {
+      if (item.type === 'url') {
+        return `<li class="blk-suggest__item" role="option" id="sug-${key}-${i}" data-suggest='${escape(JSON.stringify(item))}'>${ICONS.external}<span class="blk-entry__text"><span class="blk-entry__title">Link to ${escape(item.url)}</span><span class="blk-entry__path">Web address</span></span></li>`;
+      }
+      const e = find(ENTRIES, item.id);
+      return `<li class="blk-suggest__item" role="option" id="sug-${key}-${i}" data-suggest='${escape(JSON.stringify(item))}'>${KIND_ICON[e.kind]}<span class="blk-entry__text"><span class="blk-entry__title">${escape(e.title)}</span><span class="blk-entry__path">${escape(e.kind)} \u00b7 ${escape(e.path)}</span></span>${e.status ? `<span class="badge badge--sm badge--secondary">${escape(e.status)}</span>` : ''}</li>`;
+    }).join('');
+    list.hidden = !items.length;
+    input.setAttribute('aria-expanded', String(!!items.length));
+    setActive(input, items.length ? 0 : -1);
+  }
+
+  function setActive(input, index) {
+    const options = [...input.closest('.blk-link').querySelectorAll('[role="option"]')];
+    options.forEach((o, i) => o.setAttribute('aria-selected', String(i === index)));
+    if (options[index]) input.setAttribute('aria-activedescendant', options[index].id);
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  function chooseLink(key, item) {
+    top().draft[key] = item;
+    render('same');
+    body.querySelector(`[data-link-change="${key}"], [data-link-input="${key}"]`)?.focus();
+  }
+
   function blockView(frame) {
     const type = TYPES[frame.type];
     const tab = (name, label) => `<button type="button" class="tabs__trigger" data-tab="blk-${name}" aria-selected="${frame.tab === name}">${label}</button>`;
@@ -578,6 +692,30 @@
   }
 
   function lookupView(frame) {
+    if (frame.kind === 'entries') {
+      const query = frame.query.toLowerCase();
+      const groups = ['Page', 'Project', 'Product'].map((kind) => {
+        const items = ENTRIES.filter(e => e.kind === kind && `${e.title} ${e.path}`.toLowerCase().includes(query));
+        if (!items.length) return '';
+        return `<div class="stack stack--xs"><span class="form__label">${kind}s</span><div class="blk-entries" role="radiogroup" aria-label="${kind}s">${items.map(e => `
+          <button type="button" class="blk-entry" role="radio" aria-checked="${frame.selected.includes(e.id)}" data-pick="${e.id}">
+            <span class="blk-entry__icon">${e.image ? `<img src="${e.image}" alt="">` : KIND_ICON[e.kind]}</span>
+            <span class="blk-entry__text"><span class="blk-entry__title">${escape(e.title)}</span><span class="blk-entry__path">${escape(e.path)}</span></span>
+            ${e.status ? `<span class="badge badge--sm badge--secondary">${escape(e.status)}</span>` : ''}
+          </button>`).join('')}</div></div>`;
+      }).join('');
+      return `
+        <div class="stack stack--md">
+          <div class="toolbar">
+            <div class="toolbar__group" style="max-width: none;">
+              ${ICONS.search.replace('class="icon"', 'class="icon toolbar__icon"')}
+              <input type="search" class="toolbar__input" placeholder="Search pages, projects and products" aria-label="Search" data-entry-search value="${escape(frame.query)}" data-autofocus>
+              <button type="button" class="toolbar__clear" aria-label="Clear search">${ICONS.remove}</button>
+            </div>
+          </div>
+          <div data-entry-results class="stack stack--md">${groups || '<p class="blk-field-hint">Nothing matches.</p>'}</div>
+        </div>`;
+    }
     if (frame.kind === 'images') {
       return `<div class="blk-images" role="radiogroup" aria-label="Images">${IMAGES.map(img => `<button type="button" role="radio" aria-checked="${frame.selected.includes(img.id)}" data-pick="${img.id}" aria-label="${escape(img.name)}"><img src="${img.src}" alt=""></button>`).join('')}</div>`;
     }
@@ -624,6 +762,20 @@
       stack.pop();
       return push(newBlockFrame(type.dataset.type, at));
     }
+    const suggest = t.closest('[data-suggest]');
+    if (suggest) return chooseLink(suggest.closest('.blk-link').dataset.link, JSON.parse(suggest.dataset.suggest));
+    const change = t.closest('[data-link-change]');
+    if (change) {
+      frame.draft[change.dataset.linkChange] = null;
+      render('same');
+      body.querySelector(`[data-link-input="${change.dataset.linkChange}"]`)?.focus();
+      return undefined;
+    }
+    const clearLink = t.closest('[data-link-clear]');
+    if (clearLink) {
+      frame.draft[clearLink.dataset.linkClear] = null;
+      return render('same');
+    }
     const lookup = t.closest('[data-lookup]');
     if (lookup) return push(lookupFrame(lookup.dataset.lookup, frame));
     const clear = t.closest('[data-clear]');
@@ -662,14 +814,74 @@
   });
 
   sheet.addEventListener('input', (e) => {
+    const linkInput = e.target.closest('[data-link-input]');
+    if (linkInput) {
+      // Whatever is typed is kept as a typed link until an entry is chosen
+      const text = linkInput.value;
+      top().draft[linkInput.dataset.linkInput] = text.trim() ? { type: 'url', url: text.trim() } : null;
+      // The icon says what the text is: a web address, or a search
+      linkInput.parentElement.querySelector('.toolbar__icon').outerHTML = (looksLikeUrl(text.trim()) ? ICONS.external : ICONS.search).replace('class="icon"', 'class="icon toolbar__icon"');
+      showSuggestions(linkInput);
+      renderFooter();
+      return;
+    }
+    const entrySearch = e.target.closest('[data-entry-search]');
+    if (entrySearch) {
+      top().query = entrySearch.value;
+      const fresh = document.createElement('div');
+      fresh.innerHTML = lookupView(top());
+      body.querySelector('[data-entry-results]').replaceWith(fresh.querySelector('[data-entry-results]'));
+      return;
+    }
     const key = e.target.dataset.field;
     if (!key) return;
     top().draft[key] = e.target.value;
     renderFooter();
   });
 
+  sheet.addEventListener('keydown', (e) => {
+    const input = e.target.closest('[data-link-input]');
+    if (!input) return;
+    const list = input.closest('.blk-link').querySelector('.blk-suggest');
+    const options = [...list.querySelectorAll('[role="option"]')];
+    const active = options.findIndex(o => o.getAttribute('aria-selected') === 'true');
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (list.hidden) showSuggestions(input);
+      e.preventDefault();
+      const count = input.closest('.blk-link').querySelectorAll('[role="option"]').length;
+      const next = e.key === 'ArrowDown' ? Math.min(count - 1, active + 1) : Math.max(0, active - 1);
+      setActive(input, next);
+    } else if (e.key === 'Enter' && !list.hidden && options[active]) {
+      e.preventDefault();
+      chooseLink(input.dataset.linkInput, JSON.parse(options[active].dataset.suggest));
+    } else if (e.key === 'Escape' && !list.hidden) {
+      // Close the suggestions without leaving the block
+      e.preventDefault();
+      e.stopPropagation();
+      list.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Pressing a suggestion mustn't take focus from the input, or the list closes before the click
+  sheet.addEventListener('mousedown', (e) => {
+    if (e.target.closest('[data-suggest]')) e.preventDefault();
+  });
+
+  sheet.addEventListener('focusout', (e) => {
+    const link = e.target.closest('.blk-link');
+    if (!link || link.contains(e.relatedTarget)) return;
+    link.querySelector('.blk-suggest').hidden = true;
+    link.querySelector('[data-link-input]').setAttribute('aria-expanded', 'false');
+  });
+
   /** Done hands a picker's choice back to the block, or a block's changes back to the page. */
   function done(frame) {
+    if (frame.kind === 'entries') {
+      if (frame.selected[0]) frame.owner.draft[frame.key] = { type: 'entry', id: frame.selected[0] };
+      stack.pop();
+      return render('back');
+    }
     if (frame.kind === 'images' || frame.kind === 'projects') {
       if (frame.key === 'image') frame.owner.draft.image = frame.selected[0] || null;
       else frame.owner.draft.projects = frame.selected;
