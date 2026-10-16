@@ -266,6 +266,14 @@
                       <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
                     </button>
                     <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Scheduled</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
+                      <span class="dropdown__item-text">Expired</span>
+                      <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                    </button>
+                    <button type="button" class="dropdown__item" role="menuitemcheckbox" aria-checked="false">
                       <span class="dropdown__item-text">Pending</span>
                       <svg class="icon dropdown__item-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
                     </button>
@@ -397,7 +405,7 @@
                     </div>
                   </td>
                   <td class="table__cell"><span class="badge badge--outline">Products</span></td>
-                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell"><span class="badge badge--info-muted"><svg class="icon badge__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>Scheduled</span><div class="text--xs text--muted mt--xs">Goes live 24 Oct, 9:00am</div></td>
                   <td class="table__cell text--muted">Jan 15, 2024</td>
                   <td class="table__cell text--muted">2 hours ago</td>
                   <td class="table__cell table__actions">
@@ -698,7 +706,7 @@
                     </div>
                   </td>
                   <td class="table__cell"><span class="badge badge--outline">Products</span></td>
-                  <td class="table__cell"><span class="badge badge--success-muted">Active</span></td>
+                  <td class="table__cell"><span class="badge badge--outline">Expired</span><div class="text--xs text--muted mt--xs">Taken down 30 Sep</div></td>
                   <td class="table__cell text--muted">Jan 3, 2024</td>
                   <td class="table__cell text--muted">Jan 10, 2024</td>
                   <td class="table__cell table__actions">
@@ -851,7 +859,7 @@
                   </div>
                   <div class="cluster cluster--between mt--sm">
                     <span class="badge badge--outline">Products</span>
-                    <span class="badge badge--success-muted">Active</span>
+                    <span class="badge badge--info-muted"><svg class="icon badge__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>Scheduled &middot; 24 Oct, 9:00am</span>
                   </div>
                   <p class="text--xs text--muted mt--sm">Jan 15, 2024 &middot; Modified 2 hours ago</p>
                 </div>
@@ -1117,7 +1125,7 @@
                   </div>
                   <div class="cluster cluster--between mt--sm">
                     <span class="badge badge--outline">Products</span>
-                    <span class="badge badge--success-muted">Active</span>
+                    <span class="badge badge--outline">Expired &middot; 30 Sep</span>
                   </div>
                   <p class="text--xs text--muted mt--sm">Jan 3, 2024 &middot; Modified Jan 10, 2024</p>
                 </div>
