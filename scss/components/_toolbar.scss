@@ -107,6 +107,7 @@
 
   &__filters {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: $spacing-2xs;
   }
@@ -175,6 +176,7 @@
   height: $btn-height-sm;
   padding: 0 $spacing-xs;
   font-size: $font-size-xs;
+  white-space: nowrap;
   font-weight: $font-weight-medium;
   background-color: var(--bg-muted);
   border: 1px solid var(--border);
@@ -184,6 +186,11 @@
 
   &:hover {
     background-color: var(--bg-subtle);
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    @include disabled;
   }
 
   &[aria-pressed="true"],
@@ -267,7 +274,6 @@
 
     &__filters {
       order: 2;
-      flex-wrap: wrap;
     }
 
     &__actions {
