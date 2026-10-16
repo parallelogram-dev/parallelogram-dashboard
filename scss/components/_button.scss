@@ -80,7 +80,7 @@
   // Outline
   &--outline {
     background-color: transparent;
-    border: 1px solid var(--border);
+    border: var(--control-border-width) solid var(--border);
     color: var(--fg);
 
     &:hover:not(:disabled) {
@@ -218,7 +218,7 @@
   }
 
   > :not(:first-child) {
-    margin-left: -1px;
+    margin-left: calc(var(--control-border-width) * -1);
   }
 
   // A group of mutually exclusive choices (role="radiogroup") fills the chosen one, so it reads
@@ -248,7 +248,7 @@
 
     > :not(:first-child) {
       margin-left: 0;
-      margin-top: -1px;
+      margin-top: calc(var(--control-border-width) * -1);
     }
 
     > .btn:first-child,

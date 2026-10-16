@@ -42,7 +42,7 @@
     padding: 0 $spacing-xs 0 $spacing-2xl;
     font-size: $font-size-sm;
     background-color: var(--bg);
-    border: 1px solid var(--input);
+    border: var(--control-border-width) solid var(--input);
     border-radius: $radius-md;
     color: var(--fg);
     @include transition-colors;

@@ -121,16 +121,35 @@ $spacing-4xl: 4rem !default;      // 64px
 // Border Radius
 // --------------------------------------------------------------------------
 
+// Sizes behind the --radius-* tokens (emitted in _tokens.scss). Components read the tokens through
+// the $radius-* names below, so a theme can reshape every corner at run time by setting the tokens
+$radius-sizes: (
+  sm: 0.25rem,    // 4px
+  md: 0.375rem,   // 6px (shadcn default for smaller elements)
+  lg: 0.5rem,     // 8px (shadcn default)
+  xl: 0.75rem,    // 12px
+  2xl: 1rem,      // 16px
+) !default;
+
 $radius-none: 0 !default;
-$radius-sm: 0.25rem !default;    // 4px
-$radius-md: 0.375rem !default;   // 6px (shadcn default for smaller elements)
-$radius-lg: 0.5rem !default;     // 8px (shadcn default)
-$radius-xl: 0.75rem !default;    // 12px
-$radius-2xl: 1rem !default;      // 16px
+$radius-sm: var(--radius-sm) !default;
+$radius-md: var(--radius-md) !default;
+$radius-lg: var(--radius-lg) !default;
+$radius-xl: var(--radius-xl) !default;
+$radius-2xl: var(--radius-2xl) !default;
 $radius-full: 9999px !default;
 
-// Default radius (matches shadcn)
 $radius: $radius-lg !default;
+
+// The general tokens a chrome region (rail, section menu, page header) points at its own; see
+// $chrome-tokens in _tokens.scss
+$chrome-remapped: (bg, fg, fg-muted, fg-subtle, bg-muted, bg-subtle, accent, accent-fg, border, input, input-placeholder, icon-stroke-width) !default;
+
+// Border width of form controls and outline buttons, emitted as --control-border-width
+$control-border-width: 1px !default;
+
+// Stroke width of line icons, emitted as --icon-stroke-width
+$icon-stroke-width: 2 !default;
 
 // --------------------------------------------------------------------------
 // Shadows

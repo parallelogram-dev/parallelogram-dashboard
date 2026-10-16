@@ -187,6 +187,35 @@
   }
 }
 
+// --------------------------------------------------------------------------
+// Chrome Regions
+// --------------------------------------------------------------------------
+
+/// Points the general tokens at a chrome region's own ($chrome-tokens), so everything inside the
+/// region follows them; popovers that open inside it go back to the page's values.
+@mixin chrome-region($region) {
+  @each $name in $chrome-remapped {
+    --#{$name}: var(--#{$region}-#{$name});
+  }
+  color: var(--fg);
+  background-color: var(--bg);
+
+  :where(.dropdown__menu, .tooltip__content, .navmenu__tooltip) {
+    @each $name in $chrome-remapped {
+      --#{$name}: var(--page-#{$name});
+    }
+  }
+}
+
+/// A region's head (logo cell, title bar), coloured by the region's head-* tokens.
+@mixin chrome-head($region) {
+  @each $name in (bg, fg, fg-muted, accent, accent-fg, border) {
+    --#{$name}: var(--#{$region}-head-#{$name});
+  }
+  color: var(--fg);
+  background-color: var(--bg);
+}
+
 @mixin scrollbar-thin {
   @extend %scrollbar-thin;
 }
