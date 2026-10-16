@@ -25,7 +25,7 @@ CDN copy and no prebuilt `<script>` bundle. The repository is private and not ye
 install a tagged release straight from GitHub (this needs git access to the repository):
 
 ```bash
-npm install git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0
+npm install "git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0"
 ```
 
 That records the tag in `package.json`, so the project stays on that release until you change it:
