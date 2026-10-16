@@ -2695,6 +2695,7 @@ class DemoNav {
         { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
         { name: 'Record with Tabs', href: 'record-edit-tabs.html', icon: 'edit' },
         { name: 'Nested Editing', href: 'nested-edit.html', icon: 'layers' },
+        { name: 'Block Editor', href: 'block-editor.html', icon: 'layers' },
         { name: 'Record Delete', href: 'record-delete.html', icon: 'trash' },
       ] },
       { title: 'Media', pages: [
