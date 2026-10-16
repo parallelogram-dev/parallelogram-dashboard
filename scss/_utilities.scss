@@ -384,3 +384,14 @@ code.code--sm {
 [data-overflow-level="0"][data-overflow-actions] > [data-overflow-more] {
   display: none !important;
 }
+
+/**
+ * Unsaved changes
+ *
+ * main.js sets data-dirty on a [data-unsaved-guard] area while any of its fields differ from
+ * their saved values. Mark an "Unsaved changes" badge or similar with data-unsaved-indicator and
+ * it only shows while the area is dirty.
+ */
+[data-unsaved-guard]:not([data-dirty]) [data-unsaved-indicator] {
+  display: none !important;
+}

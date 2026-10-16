@@ -203,11 +203,11 @@
         </div>
       </header>
 
-      <div class="dashboard__content">
+      <div class="dashboard__content" data-unsaved-guard id="productEditor">
         <!-- Page Header -->
         <div class="pageheader pageheader--row">
           <div class="pageheader__content">
-            <h1 class="pageheader__title">Desk Lamp <span class="badge badge--warning-muted" id="unsavedBadge" hidden>Unsaved changes</span></h1>
+            <h1 class="pageheader__title">Desk Lamp <span class="badge badge--warning-muted" data-unsaved-indicator>Unsaved changes</span></h1>
             <p class="pageheader__description">Product &middot; last saved 2 hours ago by Alice Smith</p>
           </div>
           <div class="pageheader__actions">
@@ -301,7 +301,7 @@
               </div>
 
               <!-- Variants: common fields edit in place; the sheet holds the full record -->
-              <div id="tab-variants" data-tab-panel hidden class="card">
+              <div id="tab-variants" data-tab-panel hidden class="card" data-unsaved-ignore>
                 <div class="card__header card__header--row">
                   <div>
                     <h3 class="card__title">Variants</h3>

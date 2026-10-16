@@ -4,14 +4,15 @@
  *
  * Variant rows save themselves: a row saves shortly after an edit, or when focus leaves it,
  * showing data-row-state ("saving", "saved", "error") in its checkbox cell. Removing rows is
- * immediate with an Undo toast. The product's own fields still use "Save changes". Nothing is
+ * immediate with an Undo toast. The product's own fields use "Save changes", with the library's
+ * unsaved-changes guard showing what's unsaved. Nothing is
  * persisted; saves are simulated, and a variant without a SKU fails to show the error state.
  */
 (() => {
   const rows = document.getElementById('variantRows');
   const template = document.getElementById('variantTemplate');
   const count = document.getElementById('variantCount');
-  const unsaved = document.getElementById('unsavedBadge');
+  const editor = document.getElementById('productEditor');
   const selectAll = document.getElementById('variantSelectAll');
   const bulk = document.getElementById('variantBulk');
   const hint = document.getElementById('variantHint');
@@ -236,13 +237,10 @@
   // Save and the SEO preview
   // ---------------------------------------------------------------------------
 
+  // The unsaved-changes guard tracks the product's own fields; saving makes their values the saved ones
   document.getElementById('saveProduct').addEventListener('click', () => {
-    unsaved.hidden = true;
+    editor.dispatchEvent(new CustomEvent('unsaved:reset'));
     toast('Desk Lamp saved');
-  });
-
-  document.querySelectorAll('#tab-details, #tab-media, #tab-seo').forEach((panel) => {
-    panel.addEventListener('input', () => { unsaved.hidden = false; });
   });
 
   const metaTitle = document.getElementById('metaTitle');
