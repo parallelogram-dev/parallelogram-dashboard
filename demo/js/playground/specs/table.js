@@ -1,10 +1,8 @@
 import { bem, cx, escape } from '../lib.js';
 
-const SORT_ICONS = {
-  '': '<path d="M8 9l4 -4l4 4"/><path d="M16 15l-4 4l-4 -4"/>',
-  ascending: '<path d="M6 15l6 -6l6 6"/>',
-  descending: '<path d="M6 9l6 6l6 -6"/>',
-};
+const SORT_ICON = '<path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/>';
+
+const GRIP = '<path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>';
 
 const STATUS = { Active: 'badge--success-muted', Pending: 'badge--warning-muted', Inactive: 'badge--destructive-muted' };
 
@@ -19,7 +17,7 @@ const COLUMNS = [
   { key: 'name', label: 'Name' },
   { key: 'email', label: 'Email' },
   { key: 'status', label: 'Status' },
-  { key: 'spend', label: 'Spend' },
+  { key: 'spend', label: 'Spend', right: true },
 ];
 
 function checkbox(label) {
@@ -27,13 +25,15 @@ function checkbox(label) {
 }
 
 function head(s, column) {
-  if (!s.sortable) {
-    return `<th class="table__head" scope="col">${column.label}</th>`;
+  const align = column.right ? ' text--right' : '';
+  if (!s.sortable || s.reorder) {
+    return `<th class="table__head${align}" scope="col">${column.label}</th>`;
   }
   const sorted = column.key === 'name' && s.sort;
   const aria = sorted ? ` aria-sort="${s.sort}"` : '';
-  return `<th class="table__head table__head--sortable" scope="col"${aria}>${column.label}`
-    + `<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true">${SORT_ICONS[sorted || '']}</svg></th>`;
+  const icon = `<svg class="${cx('icon table__sort-icon', column.right && 'table__sort-icon--start')}" viewBox="0 0 24 24" aria-hidden="true">${SORT_ICON}</svg>`;
+  return `<th class="table__head table__head--sortable${align}" scope="col"${aria}>`
+    + (column.right ? `${icon}${column.label}` : `${column.label}${icon}`) + '</th>';
 }
 
 function control(column, row) {
@@ -51,7 +51,7 @@ function cell(s, column, row) {
   let value = escape(row[column.key]);
   if (s.editable) value = control(column, row);
   else if (column.key === 'status') value = `<span class="badge ${STATUS[row.status]}">${row.status}</span>`;
-  return `<td class="table__cell"${label}>${value}</td>`;
+  return `<td class="${cx('table__cell', column.right && 'text--right')}"${label}>${value}</td>`;
 }
 
 // In the editable table, one row shows unsaved edits and one is newly added
@@ -88,14 +88,15 @@ export default {
         { value: 'borderless', label: 'Borderless scroll wrapper' },
       ],
     },
-    { key: 'sortable', label: 'Sortable headers', type: 'toggle', default: true },
+    { key: 'sortable', label: 'Sortable headers', type: 'toggle', default: true, when: s => !s.reorder },
+    { key: 'reorder', label: 'Drag to reorder', type: 'toggle' },
     {
       key: 'sort',
       label: 'Sort by name',
       type: 'select',
       default: 'ascending',
       options: [{ value: '', label: 'Unsorted' }, { value: 'ascending', label: 'Ascending' }, { value: 'descending', label: 'Descending' }],
-      when: s => s.sortable,
+      when: s => s.sortable && !s.reorder,
     },
     { key: 'selectable', label: 'Checkbox column', type: 'toggle' },
     { key: 'actions', label: 'Actions column', type: 'toggle', default: true },
@@ -106,6 +107,8 @@ export default {
     { key: 'responsive', label: 'Stack on mobile', type: 'toggle' },
     { key: 'editable', label: 'Editable cells', type: 'toggle' },
     { key: 'stickyActions', label: 'Pin actions column', type: 'toggle', when: s => s.actions },
+    { key: 'stickyStart', label: 'Pin first column', type: 'toggle' },
+    { key: 'stickyHeader', label: 'Pin header row', type: 'toggle' },
   ],
   presets: [
     { name: 'Users', state: {} },
@@ -115,11 +118,12 @@ export default {
     { name: 'Inside a card', state: { density: 'card', wrapper: 'borderless', sortable: false } },
     { name: 'Responsive', state: { responsive: true, actions: false } },
     { name: 'Empty', state: { empty: true, sortable: false } },
-    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true } },
+    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true, stickyStart: true, stickyHeader: true, reorder: true } },
   ],
   render(s) {
-    const span = COLUMNS.length + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
+    const span = COLUMNS.length + (s.reorder ? 1 : 0) + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
     const headCells = [
+      s.reorder ? '<th class="table__head table__handle" scope="col"><span class="sr-only">Order</span></th>' : '',
       s.selectable ? `<th class="table__head table__checkbox" scope="col">${checkbox('Select all')}</th>` : '',
       ...COLUMNS.map(c => head(s, c)),
       s.actions ? '<th class="table__head table__actions" scope="col">Actions</th>' : '',
@@ -128,6 +132,7 @@ export default {
     const rows = s.empty
       ? [`<tr class="table__row"><td class="table__empty" colspan="${span}">No customers match your filters.</td></tr>`]
       : ROWS.map(row => `<tr class="${bem('table__row', s.editable && ROW_STATE[row.name])}">`
+        + (s.reorder ? `<td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder ${escape(row.name)}"><svg class="icon" viewBox="0 0 24 24">${GRIP}</svg></button></td>` : '')
         + (s.selectable ? `<td class="table__cell table__checkbox">${checkbox(`Select ${row.name}`)}</td>` : '')
         + COLUMNS.map(c => cell(s, c, row)).join('')
         + (s.actions
@@ -140,14 +145,14 @@ export default {
     const footer = s.footer && !s.empty
       ? '<tfoot class="table__footer"><tr class="table__row">'
         + `<td class="table__cell" colspan="${span - 1 - (s.actions ? 1 : 0)}">Total</td>`
-        + '<td class="table__cell">$4,491.25</td>'
+        + '<td class="table__cell text--right">$4,491.25</td>'
         + (s.actions ? '<td class="table__cell"></td>' : '')
         + '</tr></tfoot>'
       : '';
 
     const caption = s.caption ? `<caption class="table__caption">${escape(s.caption)}</caption>` : '';
-    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions');
-    const table = `<table class="${className}">${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
+    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions', s.stickyHeader && 'sticky-header', s.stickyStart && 'sticky-start');
+    const table = `<table class="${className}"${s.reorder ? ' data-table-reorder' : ''}>${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
       + `<tbody class="table__body">${rows.join('')}</tbody>${footer}</table>`;
 
     if (!s.wrapper) {

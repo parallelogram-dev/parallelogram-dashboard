@@ -70,6 +70,12 @@ $card-inner-radius: calc(#{$radius} - 1px);
       > .btn--icon {
         align-self: center;
       }
+
+      // Header actions hold their line; the title and description wrap instead
+      > .cluster {
+        flex-shrink: 0;
+        margin-left: $spacing-sm;
+      }
     }
 
     &--center {

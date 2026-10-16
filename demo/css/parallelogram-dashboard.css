@@ -177,7 +177,7 @@
   --tracking-tight: -0.025em;
 }
 
-.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -1217,6 +1217,91 @@ code.code--sm {
   display: none !important;
 }
 
+/**
+ * Unsaved changes
+ *
+ * main.js sets data-dirty on a [data-unsaved-guard] area while any of its fields differ from
+ * their saved values. Mark an "Unsaved changes" badge or similar with data-unsaved-indicator and
+ * it only shows while the area is dirty.
+ */
+[data-unsaved-guard]:not([data-dirty]) [data-unsaved-indicator] {
+  display: none !important;
+}
+
+/**
+ * Expandable
+ *
+ * main.js moves a [data-expandable] element into dialog.expandable to show it full-screen. The
+ * element fills the window; a card's flush content (such as a table) takes the remaining height
+ * and scrolls inside it. Anything marked data-column-expanded only shows while expanded.
+ */
+.expandable {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--bg);
+  border: 0;
+}
+.expandable[open] {
+  display: flex;
+  flex-direction: column;
+}
+.expandable::backdrop {
+  background-color: var(--bg);
+}
+.expandable > [data-expanded] {
+  flex: 1;
+  min-height: 0;
+}
+.expandable [data-expanded] .card__content--flush {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.expandable [data-expanded] .card__content--flush > .table__wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+[data-expandable]:not([data-expanded]) [data-column-expanded] {
+  display: none;
+}
+
+[data-expandable]:not([data-expanded]) [data-expand-icon=collapse],
+[data-expanded] [data-expand-icon=expand] {
+  display: none;
+}
+
+/**
+ * Publish state
+ *
+ * PublishSchedule sets data-publish-state on a [data-publish-schedule] area; anything inside it
+ * marked data-publish-show="…" (a list of states) only shows in those states.
+ */
+[data-publish-state=draft] [data-publish-show]:not([data-publish-show~=draft]) {
+  display: none !important;
+}
+
+[data-publish-state=scheduled] [data-publish-show]:not([data-publish-show~=scheduled]) {
+  display: none !important;
+}
+
+[data-publish-state=live] [data-publish-show]:not([data-publish-show~=live]) {
+  display: none !important;
+}
+
+[data-publish-state=expired] [data-publish-show]:not([data-publish-show~=expired]) {
+  display: none !important;
+}
+
+[data-publish-state=archived] [data-publish-show]:not([data-publish-show~=archived]) {
+  display: none !important;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1655,6 +1740,10 @@ code.code--sm {
 .card__header--row > .btn--icon {
   align-self: center;
 }
+.card__header--row > .cluster {
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
 .card__header--center {
   text-align: center;
   align-items: center;
@@ -2067,6 +2156,9 @@ code.code--sm {
 .table__head--sortable:hover {
   color: var(--fg);
 }
+.table__head--sortable:focus-visible {
+  outline-offset: -2px;
+}
 .table__head[aria-sort=ascending], .table__head[aria-sort=descending], .table__head--sorted {
   color: var(--fg);
 }
@@ -2176,10 +2268,64 @@ select.table__control {
   }
 }
 
-.table__wrapper:has(> .table--sticky-actions) {
+.table__wrapper:has(> .table--sticky-actions, > .table--sticky-start) {
   scroll-timeline: --table-scroll inline;
 }
 
+/**
+ * Sticky header and leading columns
+ *
+ * .table--sticky-header keeps the header row in view while the table's wrapper scrolls (such as in a
+ * full-screen card). .table--sticky-start pins the selection column and the first column after it
+ * (or just the first column) while the table scrolls sideways, with a shadow once columns are
+ * scrolled under them.
+ */
+.table--sticky-header .table__header .table__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--card);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+.table--sticky-start .table__handle, .table--sticky-start .table__checkbox, .table--sticky-start .table__handle + :is(.table__head, .table__cell), .table--sticky-start .table__checkbox + :is(.table__head, .table__cell), .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--card);
+}
+.table--sticky-start .table__checkbox:is(.table__head, .table__cell) {
+  padding-left: 0;
+  padding-right: 0;
+}
+.table--sticky-start .table__checkbox:is(.table__head, .table__cell) .checkbox {
+  min-width: 2rem;
+}
+.table--sticky-start .table__handle + :is(.table__head, .table__cell),
+.table--sticky-start .table__checkbox + :is(.table__head, .table__cell) {
+  left: 2rem;
+}
+.table--sticky-start .table__handle + .table__checkbox + :is(.table__head, .table__cell) {
+  left: 4rem;
+}
+.table--sticky-start .table__header :is(.table__handle, .table__checkbox, .table__handle + :is(.table__head, .table__cell), .table__checkbox + :is(.table__head, .table__cell), .table__row > :is(.table__head, .table__cell):first-child) {
+  z-index: 3;
+}
+@supports (animation-timeline: scroll()) {
+  .table--sticky-start .table__handle + :is(.table__head, .table__cell):not(.table__checkbox), .table--sticky-start .table__checkbox + :is(.table__head, .table__cell), .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__handle, .table__checkbox) {
+    animation: table-sticky-start-edge linear both;
+    animation-timeline: --table-scroll;
+  }
+}
+
+@keyframes table-sticky-start-edge {
+  from {
+    box-shadow: none;
+  }
+  2%, to {
+    box-shadow: 8px 0 8px -8px rgba(0, 0, 0, 0.2);
+  }
+}
 @keyframes table-sticky-edge {
   from {
     box-shadow: -8px 0 8px -8px rgba(0, 0, 0, 0.2);
@@ -2194,10 +2340,18 @@ select.table__control {
   margin-left: 0.25rem;
   width: 1rem;
   height: 1rem;
+  vertical-align: -0.2em;
   color: var(--fg-subtle);
 }
 [aria-sort=ascending] .table__sort-icon, [aria-sort=descending] .table__sort-icon, .table__sort-icon--asc, .table__sort-icon--desc {
   color: var(--fg);
+}
+.table__sort-icon--start {
+  margin-left: 0;
+  margin-right: 0.25rem;
+}
+[aria-sort=ascending] .table__sort-icon [data-sort=descending], [aria-sort=descending] .table__sort-icon [data-sort=ascending] {
+  opacity: 0.3;
 }
 
 .table__checkbox {
@@ -2256,6 +2410,74 @@ select.table__control {
     animation-duration: 2s;
   }
 }
+/**
+ * Reorder handle column
+ *
+ * In a table with data-table-reorder, the first cell of each row holds a handle button for
+ * dragging the row (see TableReorder). The handle stays faint until its row is hovered or the
+ * handle is focused; the row being moved carries data-dragging and lifts above the others.
+ */
+.table__handle {
+  width: 2rem;
+  text-align: center;
+}
+.table__handle.table__head, .table__handle.table__cell {
+  padding-left: 0;
+  padding-right: 0;
+}
+.table__handle .btn {
+  color: var(--fg-subtle);
+  cursor: grab;
+  touch-action: none;
+  opacity: 0.4;
+  transition: var(--transition-colors);
+}
+.table__handle .btn:active, .table__handle .btn[aria-pressed=true] {
+  color: var(--primary);
+  cursor: grabbing;
+}
+.table__handle .btn:focus-visible {
+  outline-offset: calc(var(--framework-focus-width) * -1);
+}
+
+.table__row:hover > .table__handle .btn,
+.table__handle .btn:focus-visible,
+.table__handle .btn[aria-pressed=true] {
+  opacity: 1;
+}
+
+.table__row[data-dragging] {
+  position: relative;
+  z-index: 4;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.12)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
+  cursor: grabbing;
+}
+.table__row[data-dragging] > .table__cell {
+  background-color: var(--card);
+}
+.table__row[data-dragging] > .table__handle .btn {
+  opacity: 1;
+}
+
+/**
+ * Paste preview
+ *
+ * In the dialog TablePaste opens, a pasted value its column can't take (no matching option, or
+ * text in a number column) is marked data-paste-invalid and skipped, and values in a column set
+ * to "Skip" are marked data-paste-skipped.
+ */
+.table__cell[data-paste-invalid] {
+  color: var(--destructive);
+  text-decoration: line-through wavy;
+  text-decoration-thickness: 1px;
+  cursor: help;
+}
+
+.table__cell[data-paste-skipped] {
+  color: var(--fg-subtle);
+  text-decoration: line-through;
+}
+
 .table__actions {
   width: auto;
   text-align: right;
@@ -2983,6 +3205,10 @@ select.table__control {
   min-width: 100%;
 }
 
+p-modal:not(:defined) {
+  display: none;
+}
+
 p-modal > [slot=title] {
   font-size: 1.125rem;
   font-weight: 600;
@@ -3222,6 +3448,14 @@ p-modal {
 .tabs__trigger:disabled, .segmented-control__item:disabled, .tabs__trigger[aria-disabled=true], [aria-disabled=true].segmented-control__item, .tabs__trigger--disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+.tabs__trigger[data-dirty]::after, [data-dirty].segmented-control__item::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.375rem;
+  height: 0.375rem;
+  background-color: var(--warning);
+  border-radius: 9999px;
 }
 .tabs__trigger-icon {
   width: 1.25rem;
@@ -5495,6 +5729,16 @@ p-modal {
 .toolbar__input:focus {
   border-color: var(--ring);
 }
+.toolbar__input[type=search] {
+  appearance: none;
+}
+.toolbar__input[type=search]::-webkit-search-cancel-button, .toolbar__input[type=search]::-webkit-search-decoration {
+  appearance: none;
+  display: none;
+}
+.toolbar__group:has(.toolbar__clear) .toolbar__input {
+  padding-right: 2.5rem;
+}
 .toolbar__clear {
   position: absolute;
   right: 0.5rem;
@@ -5525,6 +5769,7 @@ p-modal {
 }
 .toolbar__filters {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
 }
@@ -5569,6 +5814,7 @@ p-modal {
   height: 2rem;
   padding: 0 0.75rem;
   font-size: 0.75rem;
+  white-space: nowrap;
   font-weight: 500;
   background-color: var(--bg-muted);
   border: 1px solid var(--border);
@@ -5580,6 +5826,10 @@ p-modal {
 }
 .filter__label:hover {
   background-color: var(--bg-subtle);
+}
+.filter__label:disabled, .filter__label[aria-disabled=true] {
+  pointer-events: none;
+  opacity: 0.5;
 }
 .filter__label[aria-pressed=true], .filter__label--active {
   background-color: var(--primary);
@@ -5647,7 +5897,6 @@ p-modal {
   }
   .toolbar__filters {
     order: 2;
-    flex-wrap: wrap;
   }
   .toolbar__actions {
     order: 3;
@@ -7933,8 +8182,12 @@ dl.descriptionlist dd {
  * Media field
  *
  * Contenir's gallery field: a grid of asset tiles that reorder by drag ([data-handle]), each with
- * a remove button, and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
+ * a remove button and a copy-URL button (.media__copy), and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
  * Class names match Contenir's markup so these styles drop onto it unchanged.
+ *
+ * Files can also be dropped straight onto the field: .media__list--dragover marks it while files
+ * are dragged over, and each dropped file becomes a tile with .media--busy and a .media__progress
+ * bar (width from --progress) until it uploads, or .media--error if it fails.
  */
 .media {
   position: relative;
@@ -7974,6 +8227,46 @@ dl.descriptionlist dd {
 .media__list--small {
   grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
 }
+.media__list--dragover {
+  border-radius: 0.375rem;
+  outline: 2px dashed var(--primary);
+  outline-offset: 0.25rem;
+}
+.media__list--dragover .media[data-filebrowser-add] {
+  color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+  border-color: var(--primary);
+}
+.media--busy {
+  pointer-events: none;
+}
+.media--busy .media__image img {
+  opacity: 0.5;
+}
+.media--error .media__image img {
+  opacity: 0.4;
+}
+.media--error .media__progress-fill {
+  background-color: var(--destructive);
+}
+.media__progress {
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  height: 4px;
+  background-color: var(--bg);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.media__progress-fill {
+  display: block;
+  width: var(--progress, 0%);
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: inherit;
+  transition: width 200ms linear;
+}
 .media__image {
   width: 100%;
   height: 100%;
@@ -7989,10 +8282,10 @@ dl.descriptionlist dd {
   padding: 0.25rem;
   object-fit: contain;
 }
-.media__remove {
+.media__remove, .media__copy {
   position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
+  top: 0.5rem;
+  right: 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -8007,24 +8300,49 @@ dl.descriptionlist dd {
   opacity: 0;
   transition: var(--transition-default);
 }
-.media__remove svg {
+.media__remove svg, .media__copy svg {
   width: 1rem;
   height: 1rem;
+}
+.media__remove:focus-visible, .media__copy:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .media__remove, .media__copy {
+    opacity: 1;
+  }
 }
 .media__remove:hover {
   color: var(--destructive);
   border-color: var(--destructive);
 }
-.media__remove:focus-visible {
+.media__copy {
+  right: auto;
+  left: 0.5rem;
+}
+.media__copy:hover {
+  color: var(--primary);
+  border-color: var(--fg-subtle);
+}
+.media:hover :is(.media__remove, .media__copy), .media:focus-within :is(.media__remove, .media__copy) {
   opacity: 1;
 }
-@media (hover: none) {
-  .media__remove {
-    opacity: 1;
-  }
+.media [data-tooltip]::after {
+  top: calc(100% + 0.5rem);
+  right: 0;
+  bottom: auto;
+  left: auto;
+  transform: none;
 }
-.media:hover .media__remove, .media:focus-within .media__remove {
-  opacity: 1;
+.media__copy[data-tooltip]::after {
+  right: auto;
+  left: 0;
+}
+.media [data-tooltip]::before {
+  top: calc(100% + 0.5rem - 10px);
+  bottom: auto;
+  border-color: transparent;
+  border-bottom-color: var(--primary);
 }
 .media__btn {
   display: flex;
@@ -8292,7 +8610,7 @@ dl.descriptionlist dd {
   gap: 0.25rem;
 }
 .filebrowser__list, .filebrowser__banner {
-  --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 4rem 5rem 8rem 1.75rem;
+  --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 7rem 3.5rem 6.5rem 4.5rem 7rem 1.75rem;
 }
 .filebrowser__list {
   display: flex;
@@ -8372,7 +8690,7 @@ dl.descriptionlist dd {
 .filebrowser__label--mime {
   display: none;
 }
-.filebrowser__label--type, .filebrowser__label--size, .filebrowser__label--time {
+.filebrowser__label--alt, .filebrowser__label--type, .filebrowser__label--dimensions, .filebrowser__label--size, .filebrowser__label--time {
   font-size: 0.75rem;
   color: var(--fg-muted);
   overflow: hidden;
@@ -8455,9 +8773,18 @@ dl.descriptionlist dd {
   color: var(--fg-muted);
 }
 .filebrowser__list--image .filebrowser__label--type,
+.filebrowser__list--image .filebrowser__label--dimensions,
 .filebrowser__list--image .filebrowser__label--size,
 .filebrowser__list--image .filebrowser__label--time {
   display: none;
+}
+.filebrowser__list--image .filebrowser__label--alt {
+  min-height: calc(0.75rem * 1.5);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+.filebrowser__list--image .filebrowser__item:is([data-alt=set], [data-alt=decorative]) .filebrowser__label--alt {
+  visibility: hidden;
 }
 .filebrowser__list--image .filebrowser__label--options {
   position: absolute;
@@ -8554,6 +8881,78 @@ dl.descriptionlist dd {
 }
 .filebrowser__status[data-state=error] {
   color: var(--destructive);
+}
+
+/**
+ * Alt text state
+ *
+ * data-alt on a .filebrowser__item (or a .media tile in a field) is "missing", "suggested" (a
+ * suggestion waiting to be checked), "set" or "decorative" (deliberately empty). Nothing is
+ * drawn over the image: cards say so in their .filebrowser__label--alt line under the file type
+ * (grid cards only flag missing and suggested), and field tiles take the state's colour as
+ * their border.
+ */
+.filebrowser__item[data-alt=missing] .filebrowser__label--alt {
+  color: var(--warning);
+}
+
+.filebrowser__item[data-alt=suggested] .filebrowser__label--alt {
+  color: var(--info);
+}
+
+.filebrowser__item:is([data-alt=missing], [data-alt=suggested]) .filebrowser__label--alt {
+  font-weight: 500;
+}
+
+.media[data-alt=missing] {
+  border-color: var(--warning);
+  box-shadow: inset 0 0 0 1px var(--warning);
+}
+
+.media[data-alt=suggested] {
+  border-color: var(--info);
+  box-shadow: inset 0 0 0 1px var(--info);
+}
+
+/**
+ * Image details panel
+ *
+ * .filebrowser__details is the slide-out panel for one image: its preview and alt text. While
+ * the alt text holds a suggestion nobody has checked yet, the panel carries data-alt="suggested"
+ * and the field is tinted until it is edited or saved.
+ */
+.filebrowser__details-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14rem;
+  margin: 0;
+  background-color: var(--bg-muted);
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+.filebrowser__details-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.filebrowser__details-steps {
+  margin-left: auto;
+}
+.filebrowser__details-steps[hidden] {
+  display: none;
+}
+.filebrowser__details-steps .btn__group > [data-tooltip]:last-child::after {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.filebrowser__details[data-alt=suggested] .textarea {
+  border-color: var(--info);
+  background-color: var(--info-muted);
+}
+.filebrowser__details[data-alt=suggested] [data-details-hint] {
+  color: var(--info);
 }
 
 .asset {

@@ -55,6 +55,23 @@
       @include focus-ring;
       border-color: var(--ring);
     }
+
+    // A search input keeps its semantics (and Escape to clear) but not the browser's own
+    // clear button, which differs in every browser; .toolbar__clear takes its place
+    &[type="search"] {
+      appearance: none;
+
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-decoration {
+        appearance: none;
+        display: none;
+      }
+    }
+  }
+
+  // Leave room for the clear button so a long query never runs under it
+  &__group:has(.toolbar__clear) &__input {
+    padding-right: $spacing-2xl;
   }
 
   &__clear {
@@ -90,6 +107,7 @@
 
   &__filters {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: $spacing-2xs;
   }
@@ -158,6 +176,7 @@
   height: $btn-height-sm;
   padding: 0 $spacing-xs;
   font-size: $font-size-xs;
+  white-space: nowrap;
   font-weight: $font-weight-medium;
   background-color: var(--bg-muted);
   border: 1px solid var(--border);
@@ -167,6 +186,11 @@
 
   &:hover {
     background-color: var(--bg-subtle);
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    @include disabled;
   }
 
   &[aria-pressed="true"],
@@ -250,7 +274,6 @@
 
     &__filters {
       order: 2;
-      flex-wrap: wrap;
     }
 
     &__actions {
