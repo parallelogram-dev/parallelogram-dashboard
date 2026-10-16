@@ -24,6 +24,8 @@
     swap: icon('<path d="M7 10h14l-4 -4"/><path d="M17 14h-14l4 4"/>'),
     external: icon('<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/>'),
     chevron: icon('<path d="M9 6l6 6l-6 6"/>'),
+    search: icon('<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/>'),
+    trash: icon('<path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>'),
     share: icon('<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/>'),
   };
 
@@ -207,10 +209,31 @@
     return { type: 'picker', kind, label, multiple, selected: [...selected], initial: [...selected], apply, query: '' };
   }
 
+  /** A record's form, or a blank one for a new record when there's no id. */
   function recordFrame(kind, id) {
-    const record = find(KINDS[kind].list, id);
-    return { type: 'record', kind, id, label: KINDS[kind].name(record), draft: structuredClone(record), initial: JSON.stringify(record) };
+    const record = id ? find(KINDS[kind].list, id) : blank(kind);
+    return {
+      type: 'record',
+      kind,
+      id: record.id,
+      isNew: !id,
+      label: id ? KINDS[kind].name(record) : `New ${KINDS[kind].noun}`,
+      draft: structuredClone(record),
+      initial: JSON.stringify(record),
+    };
   }
+
+  let created = 0;
+  function blank(kind) {
+    created++;
+    if (kind === 'project') {
+      return { id: `new-r${created}`, title: '', type: 'Residential', year: 2026, studio: null, products: [], summary: '', status: 'Draft', usedOn: 0, image: gradient(...palette[created % palette.length]) };
+    }
+    return { id: `new-s${created}`, name: '', city: '', website: '', people: [] };
+  }
+
+  /** How many projects credit a studio. */
+  const credits = id => projects.filter(p => p.studio === id).length;
 
   const dirty = frame => (frame.type === 'picker'
     ? JSON.stringify(frame.selected) !== JSON.stringify(frame.initial)
@@ -288,6 +311,15 @@
 
   function renderFooter() {
     const frame = top();
+    if (confirming?.type === 'delete') {
+      footer.innerHTML = `
+        <div class="nest-confirm" role="alert">
+          <span>${escape(confirming.message)}</span>
+          <button type="button" class="btn btn--ghost btn--sm" data-confirm-keep>Keep it</button>
+          <button type="button" class="btn btn--destructive btn--sm" data-confirm-delete>${ICONS.trash}Delete</button>
+        </div>`;
+      return;
+    }
     if (confirming) {
       const names = confirming.names.join(' and ');
       footer.innerHTML = `
@@ -301,8 +333,16 @@
     const count = frame.type === 'picker' ? `<span class="nest-note">${frame.selected.length} selected</span>` : (dirty(frame) ? '<span class="badge badge--warning-muted">Unsaved changes</span>' : '');
     const primary = frame.type === 'picker'
       ? `<button type="button" class="btn btn--primary" data-done>${ICONS.check}Done</button>`
-      : `<button type="button" class="btn btn--primary" data-save>${ICONS.check}Save ${KINDS[frame.kind].noun}</button>`;
+      : `<button type="button" class="btn btn--primary" data-save>${ICONS.check}${frame.isNew ? 'Create' : 'Save'} ${KINDS[frame.kind].noun}</button>`;
+    let remove = '';
+    if (frame.type === 'record' && !frame.isNew && frame.kind !== 'product') {
+      const inUse = frame.kind === 'studio' ? credits(frame.id) : 0;
+      remove = inUse
+        ? `<button type="button" class="btn btn--ghost btn--sm" aria-disabled="true" data-delete-blocked="${inUse}" data-tooltip="Credited on ${inUse} ${inUse === 1 ? 'project' : 'projects'}" data-tooltip-position="right">${ICONS.trash}Delete</button>`
+        : `<button type="button" class="btn btn--ghost btn--sm text--destructive" data-delete>${ICONS.trash}Delete</button>`;
+    }
     footer.innerHTML = `
+      ${remove}
       ${count}
       <div class="cluster cluster--sm" style="margin-left: auto;">
         <button type="button" class="btn btn--outline" data-cancel>${ICONS.remove}Cancel</button>
@@ -321,7 +361,16 @@
     const canEdit = stack.length < MAX_DEPTH;
     return `
       <div class="stack stack--md">
-        <input type="search" class="input form__control" placeholder="Search ${kind.noun}s" aria-label="Search ${kind.noun}s" data-picker-search value="${escape(frame.query)}" data-autofocus>
+        <div class="toolbar">
+          <div class="toolbar__group" style="max-width: none;">
+            ${ICONS.search.replace('class="icon"', 'class="icon toolbar__icon"')}
+            <input type="search" class="toolbar__input" placeholder="Search ${kind.noun}s" aria-label="Search ${kind.noun}s" data-picker-search value="${escape(frame.query)}" data-autofocus>
+            <button type="button" class="toolbar__clear" aria-label="Clear search">${ICONS.remove}</button>
+          </div>
+          ${canEdit
+            ? `<button type="button" class="btn btn--outline" data-new="${frame.kind}">${ICONS.plus}New ${kind.noun}</button>`
+            : `<a href="#" class="btn btn--outline" data-open-elsewhere="A new ${kind.noun}">${ICONS.external}New ${kind.noun}</a>`}
+        </div>
         <div class="nest-picker" role="${frame.multiple ? 'group' : 'radiogroup'}" aria-label="${escape(frame.label)}">
           ${options.map((r) => {
             const on = frame.selected.includes(r.id);
@@ -451,6 +500,7 @@
       return undefined;
     }
     if (t.closest('[data-confirm-discard]')) return back(confirming.toDepth, true);
+    if (t.closest('[data-confirm-delete]')) return destroy(top());
 
     const frame = top();
     if (t.closest('[data-done]')) {
@@ -464,6 +514,14 @@
       return undefined;
     }
     if (t.closest('[data-save]')) return save(frame);
+    if (t.closest('[data-delete]')) return askDelete(frame);
+    const blocked = t.closest('[data-delete-blocked]');
+    if (blocked) {
+      window.toast?.info(`${frame.label} can't be deleted while ${blocked.dataset.deleteBlocked === '1' ? 'a project credits it' : `${blocked.dataset.deleteBlocked} projects credit it`}. Change their architect first.`);
+      return undefined;
+    }
+    const create = t.closest('[data-new]');
+    if (create) return push(recordFrame(create.dataset.new, null));
 
     const editRecord = t.closest('[data-edit-record]');
     if (editRecord) {
@@ -550,15 +608,82 @@
     }));
   }
 
-  function save(frame) {
+  function askDelete(frame) {
     const record = find(KINDS[frame.kind].list, frame.id);
-    Object.assign(record, frame.draft);
+    const others = frame.kind === 'project' ? record.usedOn - 1 : 0;
+    const onPage = page.items.some(item => item.id === record.id);
+    const consequences = [onPage && 'it will come off this block', others > 0 && `it will also come off the ${others} other ${others === 1 ? 'page' : 'pages'} that show it`].filter(Boolean);
+    confirming = { type: 'delete', message: `Delete ${KINDS[frame.kind].name(record)}?${consequences.length ? ` ${consequences.join(', and ')}.`.replace(/^ i/, ' I') : ''}` };
+    renderFooter();
+    footer.querySelector('[data-confirm-keep]')?.focus();
+  }
+
+  /** Delete a record, take it out of everything that points at it, and offer Undo. */
+  function destroy(frame) {
+    const meta = KINDS[frame.kind];
+    const index = meta.list.findIndex(r => r.id === frame.id);
+    const [record] = meta.list.splice(index, 1);
+    const removedItems = page.items.map((item, i) => ({ item, i })).filter(({ item }) => item.id === record.id);
+    page.items = page.items.filter(item => item.id !== record.id);
+    const touched = [];
+    projects.forEach((p) => {
+      if (p.products.includes(record.id)) {
+        touched.push([p, 'products', [...p.products]]);
+        p.products = p.products.filter(id => id !== record.id);
+      }
+    });
+    confirming = null;
+    stack.pop();
+    stack.forEach((f) => {
+      if (f.type === 'picker') f.selected = f.selected.filter(id => id !== record.id);
+      if (f.type === 'record' && f.kind === 'project') f.draft.products = f.draft.products.filter(id => id !== record.id);
+    });
+    renderField();
+    if (stack.length) render('back');
+    else sheet.close();
+    window.toast?.show({
+      type: 'success',
+      message: `${meta.name(record)} deleted`,
+      duration: 8000,
+      actions: [{
+        label: 'Undo',
+        icon: ICONS.back,
+        onClick: () => {
+          meta.list.splice(index, 0, record);
+          removedItems.forEach(({ item, i }) => page.items.splice(i, 0, item));
+          touched.forEach(([p, key, value]) => { p[key] = value; });
+          renderField();
+          if (sheet.open && stack.length) render('same');
+        },
+      }],
+    });
+  }
+
+  function save(frame) {
+    const meta = KINDS[frame.kind];
+    if (!meta.name(frame.draft).trim()) {
+      body.querySelector('[data-autofocus]')?.focus();
+      window.toast?.error(`Give the ${meta.noun} a ${frame.kind === 'project' ? 'title' : 'name'} first`);
+      return;
+    }
+    let record = find(meta.list, frame.id);
+    if (!record) {
+      record = structuredClone(frame.draft);
+      meta.list.push(record);
+    } else {
+      Object.assign(record, frame.draft);
+    }
     frame.initial = JSON.stringify(record);
-    const name = KINDS[frame.kind].name(record);
+    const name = meta.name(record);
     const others = frame.kind === 'project' ? record.usedOn - 1 : 0;
     const where = others > 0 ? ` Updated on ${others} other ${others === 1 ? 'page' : 'pages'} too.` : '';
-    window.toast?.success(`${name} saved.${where}`);
+    window.toast?.success(frame.isNew ? `${name} created` : `${name} saved.${where}`);
     stack.pop();
+    // A record created from a picker comes back already chosen
+    const beneath = top();
+    if (frame.isNew && beneath?.type === 'picker' && beneath.kind === frame.kind) {
+      beneath.selected = beneath.multiple ? [...beneath.selected, record.id] : [record.id];
+    }
     stack.forEach((f) => {
       if (f.type === 'record' && f.kind === frame.kind && f.id === frame.id) f.label = name;
     });

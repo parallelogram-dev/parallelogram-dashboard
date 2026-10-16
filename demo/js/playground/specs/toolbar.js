@@ -98,7 +98,7 @@ export default {
       ? `<button type="button" class="toolbar__clear" aria-label="Clear search">${icon('x')}</button>`
       : '';
     const search = `<div class="toolbar__group">${icon('search', 'toolbar__icon')}`
-      + `<input type="text" class="toolbar__input" aria-label="Search" placeholder="${escape(s.placeholder || ' ')}" value="${escape(s.query)}">${clear}</div>`;
+      + `<input type="search" class="toolbar__input" aria-label="Search" placeholder="${escape(s.placeholder || ' ')}" value="${escape(s.query)}">${clear}</div>`;
     const bar = `<div class="${bem('toolbar', s.variant, s.variant !== 'compact' && s.size)}" role="search">${search}${filters(s, compact)}${actions(s, compact)}</div>`;
     return s.applied ? `<div>${bar}${activeFilters(s)}</div>` : bar;
   },

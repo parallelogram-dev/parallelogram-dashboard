@@ -5495,6 +5495,16 @@ p-modal {
 .toolbar__input:focus {
   border-color: var(--ring);
 }
+.toolbar__input[type=search] {
+  appearance: none;
+}
+.toolbar__input[type=search]::-webkit-search-cancel-button, .toolbar__input[type=search]::-webkit-search-decoration {
+  appearance: none;
+  display: none;
+}
+.toolbar__group:has(.toolbar__clear) .toolbar__input {
+  padding-right: 2.5rem;
+}
 .toolbar__clear {
   position: absolute;
   right: 0.5rem;
