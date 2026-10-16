@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Browser - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
+  <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body data-component="filebrowser">
+  <div class="docs">
+    <header class="docs__header">
+      <a href="../index.html" class="docs__brand">Parallelogram <span class="text--muted">Dashboard</span></a>
+      <button type="button" class="btn btn--outline btn--sm" data-theme-toggle>Dark mode</button>
+    </header>
+
+    <nav class="docs__nav" aria-label="Components" data-component-nav></nav>
+
+    <main class="docs__main">
+      <div class="docs__intro">
+        <p class="docs__eyebrow">Forms</p>
+        <h1 class="docs__title">File Browser</h1>
+        <p class="docs__lead">Contenir’s browser for one set of site assets, with its dialog shell and upload panel: search, sort, grid and list views, selection, and drag-and-drop uploads with per-file progress.</p>
+      </div>
+
+      <section class="docs__section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading" class="docs__h2">Examples</h2>
+          <div class="constrain constrain--md">
+            <div class="demo-label">Open the browser from a field</div>
+            <div data-filebrowser="image" data-type="image" data-filebrowser-mode="asset" data-filebrowser-max="0" data-filebrowser-name="image[]" data-filebrowser-scope="Products › Images">
+              <ul class="media__list">
+                <li class="media editable" data-handle data-filebrowser-item data-url="https://example.com/assets/products/images/image-1.png" data-asset-id="700" data-alt="set"><figure class="media__image"><picture><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%2322c55e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture><button type="button" class="media__copy" data-filebrowser-copy data-tooltip="Copy URL" aria-label="Copy URL of image 1"><svg class="icon" viewBox="0 0 24 24"><path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/></svg></button><button type="button" class="media__remove" data-filebrowser-remove data-tooltip="Remove" aria-label="Remove image 1"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button></figure></li>
+                <li class="media editable" data-handle data-filebrowser-item data-url="https://example.com/assets/products/images/image-2.png" data-asset-id="701" data-alt="set"><figure class="media__image"><picture><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture><button type="button" class="media__copy" data-filebrowser-copy data-tooltip="Copy URL" aria-label="Copy URL of image 2"><svg class="icon" viewBox="0 0 24 24"><path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/></svg></button><button type="button" class="media__remove" data-filebrowser-remove data-tooltip="Remove" aria-label="Remove image 2"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button></figure></li>
+                <li class="media editable" data-handle data-filebrowser-item data-url="https://example.com/assets/products/images/image-3.png" data-asset-id="702" data-alt="missing"><figure class="media__image"><picture><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture><button type="button" class="media__copy" data-filebrowser-copy data-tooltip="Copy URL" aria-label="Copy URL of image 3"><svg class="icon" viewBox="0 0 24 24"><path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/></svg></button><button type="button" class="media__remove" data-filebrowser-remove data-tooltip="Remove" aria-label="Remove image 3"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button></figure></li>
+                <li class="media editable" data-filebrowser-add><button type="button" class="media__btn" data-filebrowser-browse aria-label="Choose or upload images"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg></button></li>
+              </ul>
+            </div>
+            <p class="text--sm text--muted spacer--md">Press + to open the browser for <em>Products › Images</em>. Search, sort, switch between grid and list, and select several assets. Drop image files onto the browser (or use Upload) to see the upload flow: a drop overlay while dragging, cards with progress at the top of the grid, and a footer status whose <strong>Details</strong> slides out the upload panel. A file with “fail” in its name shows the error state.</p>
+
+            <h3 class="docs__h2 spacer--xl">Structure</h3>
+            <p class="text--sm text--muted spacer--md"><code>dialog.overlay</code> holds <code>.overlay__wrap</code> with two <code>.overlay__inner</code> panels: the browser (header, body, footer) and the upload panel, which slides over the browser’s right side when it has <code>.show</code>. The browser list is <code>.filebrowser__list</code>; add <code>--image</code> for the grid, otherwise rows show under <code>.filebrowser__banner</code> headings, and <code>--single</code> makes the choice single. Items are <code>.filebrowser__item</code> with a visually hidden <code>.filebrowser__checkbox</code> and a <code>.filebrowser__label</code> holding <code>--select</code>, <code>--preview</code>, <code>--name</code>, <code>--mime</code>, <code>--type</code>, <code>--size</code>, <code>--time</code> and <code>--options</code>.</p>
+            <p class="text--sm text--muted spacer--md">States: <code>.overlay__body--dragover</code> shows the drop target (its text comes from <code>--filebrowser-drop-label</code>), <code>.filebrowser__item--busy</code> with <code>.filebrowser__upload-progress</code> is an upload in progress (width from <code>--progress</code>), <code>--error</code> a failed upload and <code>--leaving</code> an item being removed. <code>.filebrowser__status</code> in the footer summarises uploads; <code>data-state="uploading"</code> adds a spinner and <code>"error"</code> turns it red.</p>
+            <p class="text--sm text--muted spacer--md">Alt text: set <code>data-alt</code> on a <code>.filebrowser__item</code> (or a <code>.media</code> tile in a field) to <code>"missing"</code>, <code>"suggested"</code>, <code>"set"</code> or <code>"decorative"</code>. Nothing covers the image: a card's <code>.filebrowser__label--alt</code> line under its type and dimensions says "No alt text" or "Check alt text" (grid cards keep the line empty otherwise, so they line up; list view shows it as a column beside <code>--dimensions</code>), and a field tile takes the state's colour as its border. The details panel is a third <code>.overlay__inner</code> holding a <code>.filebrowser__details</code> form: a <code>.filebrowser__details-preview</code>, the alt text field with a Suggest button, and a "decorative" checkbox. Its <code>.filebrowser__details-steps</code> (position and previous/next) sit at the header's end while stepping through images, and <code>data-alt="suggested"</code> on the form tints the field until the suggestion is edited or saved. The card menu and the panel can also replace an image's file in place (the asset stays, so fields using it update, and its alt text is flagged to check) and copy its URL. In this demo, "Edit details" in a card's menu opens one image and the toolbar's "Needs alt text" steps through every image still to do, keeping unsaved drafts as you move; new uploads get a suggestion in the background.</p>
+
+            <div class="demo-label spacer--xl">Upload list (the slide-out panel’s contents)</div>
+            <div class="spacer--lg constrain--sm">
+              <div class="asset">
+                <div class="asset__file show">
+                  <progress class="asset__progress show" max="100" value="64"></progress>
+                  <figure class="asset__preview show"><picture class="asset__preview--media"><img class="asset__preview--image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture></figure>
+                  <div data-panel="info" class="asset__panel show"><div class="asset__body"><p class="asset__title">desk-lamp-night</p><p class="asset__info">Uploading…</p></div></div>
+                </div>
+                <div class="asset__file show">
+                  <figure class="asset__preview show"><picture class="asset__preview--media"><img class="asset__preview--image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture></figure>
+                  <div data-panel="info" class="asset__panel show">
+                    <div class="asset__body"><p class="asset__title">desk-lamp-box</p><p class="asset__info">PNG · 240 KB · added to Products › Images</p></div>
+                    <button class="asset__btn asset__btn--update" type="button">Update</button>
+                    <button class="asset__btn asset__btn--delete" type="button">Delete</button>
+                  </div>
+                </div>
+                <div class="asset__file show">
+                  <figure class="asset__preview show"><picture class="asset__preview--media"><img class="asset__preview--image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='200' r='80' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></picture></figure>
+                  <div data-panel="error" class="asset__panel show"><div class="asset__body"><p class="asset__title">broken-file</p><p class="asset__info">Upload failed: the file type is not allowed</p></div><button class="asset__btn asset__btn--cancel" type="button">Cancel</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+
+      <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>
+    </main>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/components/page.js"></script>
+  <script src="../js/filebrowser-demo.js"></script>
+</body>
+</html>
