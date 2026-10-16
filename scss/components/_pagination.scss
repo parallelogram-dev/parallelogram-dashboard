@@ -115,6 +115,8 @@
 
 .pagination__info {
   display: flex;
+  // Wraps whenever the count, page size and page links don't fit on one line
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: $spacing-sm;
@@ -158,7 +160,6 @@
   }
 
   .pagination__info {
-    flex-wrap: wrap;
     gap: $spacing-xs;
   }
 }

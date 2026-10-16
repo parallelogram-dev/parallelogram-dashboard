@@ -69,10 +69,17 @@ $card-inner-radius: calc(#{$radius} - 1px);
       > svg,
       > .btn--icon {
         align-self: center;
+        flex-shrink: 0;
       }
 
-      // Header actions hold their line; the title and description wrap instead
-      > .cluster {
+      // The title side shrinks and wraps rather than pushing what follows out of the card
+      > :first-child {
+        min-width: 0;
+      }
+
+      // Header actions hold their line; the title and description wrap instead. Only a trailing
+      // cluster is actions: a leading one is the title side (an icon beside the title)
+      > .cluster:last-child:not(:first-child) {
         flex-shrink: 0;
         margin-left: $spacing-sm;
       }

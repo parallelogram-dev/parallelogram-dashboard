@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="css/demo.css">
   <style>
     .debug { max-width: 72rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-    .debug__split { display: grid; grid-template-columns: 18rem 1fr; gap: 1rem; align-items: start; }
+    .debug__split { display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 1rem; align-items: start; }
     @media (max-width: 860px) {
-      .debug__split { grid-template-columns: 1fr; }
+      .debug__split { grid-template-columns: minmax(0, 1fr); }
     }
 
     .trace__frame {
@@ -27,6 +27,7 @@
     .trace__frame--active { background-color: var(--destructive-muted); }
     .trace__frame--vendor { opacity: 0.55; }
     .trace__fn { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; }
+    .trace__fn, .trace__loc, .debug__split .card__title { overflow-wrap: anywhere; }
     .trace__loc { font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted); margin-top: 0.125rem; }
 
     .codeview { margin: 0; overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.6; }

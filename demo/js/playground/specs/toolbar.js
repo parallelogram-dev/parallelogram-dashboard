@@ -10,6 +10,11 @@ function filters(s, compact) {
     return `<div class="toolbar__filters"><select class="select select--auto${size}" aria-label="Status">${options}</select>`
       + `<select class="select select--auto${size}" aria-label="Author"><option>Any author</option><option>Jane Cooper</option><option>Wade Warren</option></select></div>`;
   }
+  if (s.filters === 'menus') {
+    // Joined filter menus, as on the Records page; on phones the buttons part and wrap
+    const menu = (label, iconName) => `<button type="button" class="btn btn--outline${compact ? ' btn--sm' : ''}">${icon(iconName, 'btn__icon')}${label}</button>`;
+    return `<div class="toolbar__filters"><div class="btn__group" role="group" aria-label="Filters">${menu('Status', 'filter')}${menu('Category', 'grid')}${menu('Date range', 'calendar')}</div></div>`;
+  }
   if (s.filters === 'chips') {
     const chips = STATUSES.map((label, i) => `<button type="button" class="filter__label" aria-pressed="${i === 1}">${label}</button>`).join('');
     return `<div class="toolbar__filters" role="group" aria-label="Status">${chips}</div>`;
@@ -64,6 +69,7 @@ export default {
       options: [
         { value: '', label: 'None' },
         { value: 'select', label: 'Selects' },
+        { value: 'menus', label: 'Joined filter menus' },
         { value: 'chips', label: 'Toggle chips (aria-pressed)' },
       ],
     },

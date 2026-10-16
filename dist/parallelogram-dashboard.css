@@ -1739,8 +1739,12 @@ code.code--sm {
 .card__header--row > svg,
 .card__header--row > .btn--icon {
   align-self: center;
+  flex-shrink: 0;
 }
-.card__header--row > .cluster {
+.card__header--row > :first-child {
+  min-width: 0;
+}
+.card__header--row > .cluster:last-child:not(:first-child) {
   flex-shrink: 0;
   margin-left: 1rem;
 }
@@ -2105,6 +2109,7 @@ code.code--sm {
 }
 
 .table__wrapper {
+  position: relative;
   width: 100%;
   overflow-x: auto;
   border: 1px solid var(--border);
@@ -3532,6 +3537,21 @@ p-modal {
   background-color: var(--accent);
 }
 
+@media (max-width: 639px) {
+  .tabs__list, .segmented-control__list {
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .tabs__list::-webkit-scrollbar, .segmented-control__list::-webkit-scrollbar {
+    display: none;
+  }
+  .tabs__trigger, .segmented-control__item {
+    flex-shrink: 0;
+  }
+}
 .tabs--scrollable .tabs__list, .tabs--scrollable .segmented-control__list {
   overflow-x: auto;
   flex-wrap: nowrap;
@@ -3747,6 +3767,7 @@ p-modal {
 }
 .pageheader__actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.5rem;
@@ -5665,6 +5686,7 @@ p-modal {
 
 .pagination__info {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -5699,7 +5721,6 @@ p-modal {
     display: none;
   }
   .pagination__info {
-    flex-wrap: wrap;
     gap: 0.75rem;
   }
 }
@@ -5912,6 +5933,19 @@ p-modal {
   }
   .toolbar__actions {
     order: 3;
+  }
+}
+@media (max-width: 639px) {
+  .toolbar__filters .btn__group {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .toolbar__filters .btn__group > :not(:first-child) {
+    margin-left: 0;
+  }
+  .toolbar__filters .btn__group > .btn,
+  .toolbar__filters .btn__group > * > .btn {
+    border-radius: 0.375rem;
   }
 }
 .empty, .noresults {
@@ -8043,6 +8077,17 @@ dl.descriptionlist dd {
   padding-left: 2rem;
 }
 
+@media (max-width: 639px) {
+  .actionbar__title {
+    min-width: 6rem;
+  }
+  .actionbar__list .actionbar__list {
+    padding-left: 1rem;
+  }
+  .actionbar__meta {
+    display: none;
+  }
+}
 .notify__item {
   align-items: flex-start;
   gap: 0.75rem;

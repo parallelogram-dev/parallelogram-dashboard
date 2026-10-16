@@ -281,3 +281,21 @@
     }
   }
 }
+
+// On phones a joined filter group can't fit or wrap, and scrolling it would clip the dropdown
+// menus that open beneath it, so its buttons part and wrap like any others
+@include max-sm {
+  .toolbar__filters .btn__group {
+    flex-wrap: wrap;
+    gap: $spacing-2xs;
+
+    > :not(:first-child) {
+      margin-left: 0;
+    }
+
+    > .btn,
+    > * > .btn {
+      border-radius: $radius-md;
+    }
+  }
+}
