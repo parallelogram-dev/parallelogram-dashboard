@@ -4,6 +4,10 @@
  * Contenir's gallery field: a grid of asset tiles that reorder by drag ([data-handle]), each with
  * a remove button, and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
  * Class names match Contenir's markup so these styles drop onto it unchanged.
+ *
+ * Files can also be dropped straight onto the field: .media__list--dragover marks it while files
+ * are dragged over, and each dropped file becomes a tile with .media--busy and a .media__progress
+ * bar (width from --progress) until it uploads, or .media--error if it fails.
  */
 
 @use "../variables" as *;
@@ -53,6 +57,58 @@
     &--small {
       grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
     }
+
+    // Files are being dragged over the field
+    &--dragover {
+      border-radius: $radius-md;
+      outline: 2px dashed var(--primary);
+      outline-offset: $spacing-3xs;
+
+      .media[data-filebrowser-add] {
+        color: var(--primary);
+        background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+        border-color: var(--primary);
+      }
+    }
+  }
+
+  // Uploading straight into the field
+  &--busy {
+    pointer-events: none;
+
+    .media__image img {
+      opacity: 0.5;
+    }
+  }
+
+  &--error {
+    .media__image img {
+      opacity: 0.4;
+    }
+
+    .media__progress-fill {
+      background-color: var(--destructive);
+    }
+  }
+
+  &__progress {
+    position: absolute;
+    left: $spacing-2xs;
+    right: $spacing-2xs;
+    bottom: $spacing-2xs;
+    height: 4px;
+    background-color: var(--bg);
+    border-radius: $radius-full;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    display: block;
+    width: var(--progress, 0%);
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: inherit;
+    transition: width $transition-base linear;
   }
 
   &__image {

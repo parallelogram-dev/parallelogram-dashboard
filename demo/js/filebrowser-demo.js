@@ -4,8 +4,9 @@
  * Builds the same markup Contenir's FileBrowser renders (dialog.overlay > .overlay__wrap >
  * browser panel + upload panel) so the library styles can be seen working against it. Uploads
  * are simulated: dropped or chosen files appear as cards with progress at the top of the grid,
- * the footer status summarises them, and its Details button slides out the upload panel. Real
- * image files show their own previews.
+ * the footer status summarises them, and its Details button slides out the upload panel. Files
+ * can also be dropped straight onto the field, where each becomes a tile with progress. Real
+ * image files show their own previews; a file with "fail" in its name shows the error state.
  */
 (() => {
   const field = document.querySelector('[data-filebrowser]');
@@ -78,6 +79,70 @@
       open();
     }
   });
+
+  // Files dropped straight onto the field upload into the same set of assets and become tiles
+  const hasFiles = event => event.dataTransfer?.types.includes('Files');
+  let fieldDepth = 0;
+  field.addEventListener('dragenter', (e) => {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    fieldDepth++;
+    list.classList.add('media__list--dragover');
+  });
+  field.addEventListener('dragover', (e) => {
+    if (hasFiles(e)) e.preventDefault();
+  });
+  field.addEventListener('dragleave', () => {
+    fieldDepth = Math.max(0, fieldDepth - 1);
+    if (!fieldDepth) list.classList.remove('media__list--dragover');
+  });
+  field.addEventListener('drop', (e) => {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    fieldDepth = 0;
+    list.classList.remove('media__list--dragover');
+    [...e.dataTransfer.files].forEach((file, i) => uploadToField(file, i));
+  });
+
+  function uploadToField(file, i) {
+    const asset = fileAsset(file, i);
+    const li = tile(asset);
+    li.classList.add('media--busy');
+    li.querySelector('.media__image').insertAdjacentHTML('beforeend', '<span class="media__progress"><span class="media__progress-fill"></span></span>');
+    list.insertBefore(li, addTile);
+    const fails = /fail/i.test(asset.name);
+    let value = 0;
+    const tick = () => {
+      value = Math.min(100, value + 10 + Math.random() * 20);
+      li.style.setProperty('--progress', `${value}%`);
+      if (fails && value > 55) {
+        li.classList.replace('media--busy', 'media--error');
+        li.title = 'Upload failed: the file type is not allowed';
+        window.toast?.error(`${asset.name} could not be uploaded`);
+        return;
+      }
+      if (value < 100) {
+        setTimeout(tick, 250 + Math.random() * 250);
+        return;
+      }
+      li.classList.remove('media--busy');
+      li.querySelector('.media__progress').remove();
+      assets.unshift(asset);
+    };
+    setTimeout(tick, 300);
+  }
+
+  /** An asset record for an uploaded file, previewing the file itself when it's an image. */
+  function fileAsset(file, i) {
+    return {
+      id: nextId++,
+      name: file.name.replace(/\.[^.]+$/, ''),
+      type: (file.name.split('.').pop() || 'file').toUpperCase(),
+      size: `${Math.max(1, Math.round(file.size / 1024))} KB`,
+      time: 'Just now',
+      src: file.type.startsWith('image/') ? URL.createObjectURL(file) : gradient(...palette[i % palette.length]),
+    };
+  }
 
   // ---------------------------------------------------------------------------
   // Browser
@@ -337,14 +402,7 @@
     const listEl = dialog.querySelector('[data-filebrowser-list]');
     const container = dialog.querySelector('[data-asset-container]');
     files.forEach((file, i) => {
-      const asset = {
-        id: nextId++,
-        name: file.name.replace(/\.[^.]+$/, ''),
-        type: (file.name.split('.').pop() || 'file').toUpperCase(),
-        size: `${Math.max(1, Math.round(file.size / 1024))} KB`,
-        time: 'Just now',
-        src: file.type.startsWith('image/') ? URL.createObjectURL(file) : gradient(...palette[i % palette.length]),
-      };
+      const asset = fileAsset(file, i);
       const card = item(asset);
       card.classList.add('filebrowser__item--busy');
       card.querySelector('.filebrowser__asset').insertAdjacentHTML('beforeend',
