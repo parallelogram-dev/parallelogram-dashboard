@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parallelogram Dashboard - Components</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
   <link rel="stylesheet" href="css/docs.css">
 </head>
 <body>
@@ -23,15 +24,27 @@
         <p class="text--sm text--muted">
           Page demos:
           <a href="dashboard.html" class="link">Dashboard</a> &bull;
+          <a href="cms-dashboard.html" class="link">CMS dashboard</a> &bull;
+          <a href="cms-dashboard-admin.html" class="link">CMS dashboard (admin)</a> &bull;
           <a href="pages.html" class="link">Pages</a> &bull;
           <a href="records.html" class="link">Records index</a> &bull;
           <a href="media.html" class="link">Media</a> &bull;
           <a href="analytics.html" class="link">Analytics</a> &bull;
           <a href="team.html" class="link">Team</a> &bull;
           <a href="record-form.html" class="link">Record form</a> &bull;
+          <a href="record-edit-tabs.html" class="link">Record with tabs</a> &bull;
+          <a href="nested-edit.html" class="link">Nested editing (mock-up)</a> &bull;
           <a href="record-delete.html" class="link">Delete confirmation</a> &bull;
           <a href="settings.html" class="link">Settings</a> &bull;
-          <a href="login.html" class="link">Login</a>
+          <a href="billing.html" class="link">Billing</a> &bull;
+          <a href="login.html" class="link">Login</a> &bull;
+          <a href="system-check.html" class="link">System check</a> &bull;
+          <a href="fixing.html" class="link">Fixing issues</a> &bull;
+          <a href="onboarding.html" class="link">Onboarding</a> &bull;
+          <a href="403.html" class="link">403</a> &bull;
+          <a href="404.html" class="link">404</a> &bull;
+          <a href="500.html" class="link">500</a> &bull;
+          <a href="500-debug.html" class="link">500 (debug)</a>
         </p>
         <p class="text--sm text--muted">
           For AI assistants: <a href="llms.txt" class="link">llms.txt</a> &bull;

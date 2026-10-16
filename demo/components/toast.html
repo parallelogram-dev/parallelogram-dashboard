@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toast - Parallelogram Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
   <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body data-component="toast">
@@ -22,7 +23,7 @@
       <div class="docs__intro">
         <p class="docs__eyebrow">Feedback</p>
         <h1 class="docs__title">Toast</h1>
-        <p class="docs__lead">Temporary notification messages.</p>
+        <p class="docs__lead">Temporary notification messages. <code>window.toast.show()</code> and its shortcuts take an optional <code>actions</code> list of <code>{ label, icon, onClick }</code>; clicking an action runs it and dismisses the toast, e.g. Undo after removing something.</p>
       </div>
 
       <section class="docs__section" aria-labelledby="playground-heading">
@@ -49,6 +50,10 @@
             <button class="btn btn--outline" onclick="window.toast?.error('Something went wrong. Please try again.', { title: 'Error' })">
               <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>
               Show Error
+            </button>
+            <button class="btn btn--outline" onclick="window.toast?.success('Desk Lamp removed', { duration: 6000, actions: [{ label: 'Undo', icon: '<svg class=&quot;icon&quot; viewBox=&quot;0 0 24 24&quot;><path d=&quot;M9 14l-4 -4l4 -4&quot;/><path d=&quot;M5 10h11a4 4 0 1 1 0 8h-1&quot;/></svg>', onClick: () => window.toast.info('Desk Lamp restored') }] })">
+              <svg class="icon btn__icon" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>
+              With Undo
             </button>
           </div>
 

@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Card - Parallelogram Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
   <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body data-component="card">
@@ -67,6 +68,8 @@
               </div>
             </div>
           </div>
+          <div class="demo-label spacer--xl">Full screen</div>
+          <p class="text--sm text--muted">Any card can open full screen: give it <code>data-expandable</code> and a button inside it <code>data-expand</code>. The card moves into a <code>&lt;dialog class="expandable"&gt;</code>, keeps its place on the page and comes back on the same button or Escape. Flush content such as a table fills the screen and scrolls inside the card. See the <a href="table.html">Table</a> page for a full-screen editor with a column picker.</p>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

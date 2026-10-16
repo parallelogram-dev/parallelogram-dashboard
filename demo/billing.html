@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing - Parallelogram Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu" aria-label="Main">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo" aria-label="Dashboard home">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="pages.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+            <span class="navmenu__tooltip">Pages</span>
+          </a>
+          <a href="records.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="media.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg>
+            <span class="navmenu__tooltip">Media</span>
+          </a>
+          <a href="analytics.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+          <a href="team.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Team</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item" aria-current="page" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav">
+      <div class="subnav__header">
+        <h2 class="subnav__title">My site</h2>
+        <div class="subnav__actions">
+          <a href="#" class="subnav__action" target="_blank" rel="noopener" aria-label="View site (opens in a new tab)" data-tooltip="View site">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__list">
+            <a href="settings.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M7 15v-6l4 3z"/></svg>
+              <span class="subnav__item-text">Overview</span>
+            </a>
+            <a href="settings-account.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="subnav__item-text">Account</span>
+            </a>
+            <a href="settings.html#security" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
+              <span class="subnav__item-text">Security</span>
+            </a>
+            <a href="settings.html#notifications" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="subnav__item-text">Notifications</span>
+            </a>
+            <a href="settings.html#integrations" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+              <span class="subnav__item-text">Integrations</span>
+            </a>
+            <a href="team.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+              <span class="subnav__item-text">Team</span>
+            </a>
+            <a href="billing.html" class="subnav__item" aria-current="page">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 21l18 0"/><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0m0 -1v1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"/><path d="M5 21l0 -10.15"/><path d="M19 21l0 -10.15"/><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"/></svg>
+              <span class="subnav__item-text">Billing</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">Billing</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <div class="dropdown dropdown--right">
+            <button type="button" class="btn btn--ghost btn--icon dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Notifications" data-toggle data-toggle-target="#notificationsPanel" data-toggle-capture="true" style="position: relative;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="badge badge--destructive badge--dot" aria-hidden="true" style="position: absolute; top: 0.375rem; right: 0.375rem;"></span>
+            </button>
+            <div id="notificationsPanel" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Notifications">
+              <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                <span class="text--sm text--semibold">Notifications</span>
+                <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notify__time">5 minutes ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--success" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notify__time">1 hour ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--warning" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notify__time">3 hours ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notify__time">Yesterday</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--error" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notify__time">2 days ago</span>
+                </span>
+              </a>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item" style="justify-content: center;">
+                <span class="dropdown__item-text">View all notifications</span>
+              </a>
+            </div>
+          </div>
+          <a href="settings-account.html" class="avatar" aria-label="Your account">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </a>
+        </div>
+      </header>
+      <div class="dashboard__content">
+        <div class="pageheader">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">Billing</h1>
+            <p class="pageheader__description">Manage your plan, payment method, and invoice history.</p>
+          </div>
+        </div>
+
+        <!-- Current plan -->
+        <div class="card mb--lg">
+          <div class="card__header">
+            <h3 class="card__title">Current plan</h3>
+          </div>
+          <div class="card__content card__content--pt">
+            <div class="cluster cluster--between">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--success">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
+                </div>
+                <div>
+                  <div class="cluster cluster--sm">
+                    <span class="text--medium">Pro plan</span>
+                    <span class="badge badge--success-muted">Active</span>
+                  </div>
+                  <div class="text--sm text--muted">$49/month &middot; renews Feb 1, 2024</div>
+                </div>
+              </div>
+              <div class="cluster cluster--sm">
+                <button type="button" class="btn btn--outline btn--sm">Cancel plan</button>
+                <button type="button" class="btn btn--primary btn--sm">Change plan</button>
+              </div>
+            </div>
+
+            <div class="separator separator--muted my--lg"></div>
+
+            <div class="cluster cluster--between" style="gap: 1.5rem; flex-wrap: wrap;">
+              <div style="flex: 1 1 14rem; min-width: 14rem;">
+                <div class="progress__labeled">
+                  <div class="progress__labeled-header">
+                    <span class="progress__labeled-label">Team members</span>
+                    <span class="progress__labeled-value">8 / 10</span>
+                  </div>
+                  <div class="progress" role="progressbar" aria-label="Team members used" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress__bar progress__bar--80"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="flex: 1 1 14rem; min-width: 14rem;">
+                <div class="progress__labeled">
+                  <div class="progress__labeled-header">
+                    <span class="progress__labeled-label">Storage</span>
+                    <span class="progress__labeled-value">42 GB / 100 GB</span>
+                  </div>
+                  <div class="progress" role="progressbar" aria-label="Storage used" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress__bar progress__bar--40"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="flex: 1 1 14rem; min-width: 14rem;">
+                <div class="progress__labeled">
+                  <div class="progress__labeled-header">
+                    <span class="progress__labeled-label">API calls</span>
+                    <span class="progress__labeled-value">12,400 / 50,000</span>
+                  </div>
+                  <div class="progress progress--warning" role="progressbar" aria-label="API calls used" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress__bar progress__bar--25"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment method -->
+        <div class="card mb--lg">
+          <div class="card__header">
+            <h3 class="card__title">Payment method</h3>
+          </div>
+          <div class="card__content card__content--pt">
+            <div class="cluster cluster--between">
+              <div class="cluster cluster--sm">
+                <div class="box box--icon box--secondary">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M3 10l18 0"/><path d="M7 15l.01 0"/><path d="M11 15l2 0"/></svg>
+                </div>
+                <div>
+                  <div class="text--medium">Visa ending in 4242</div>
+                  <div class="text--sm text--muted">Expires 08/2027</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn--outline btn--sm">Update</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invoice history -->
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Invoice history</h3>
+          </div>
+          <div class="card__content card__content--flush">
+            <div class="table__wrapper table__wrapper--borderless">
+              <table class="table table--hoverable table--card">
+                <thead class="table__header">
+                  <tr class="table__row">
+                    <th class="table__head">Date</th>
+                    <th class="table__head">Description</th>
+                    <th class="table__head">Amount</th>
+                    <th class="table__head">Status</th>
+                    <th class="table__head table__actions"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody class="table__body">
+                  <tr class="table__row">
+                    <td class="table__cell text--muted">Jan 1, 2024</td>
+                    <td class="table__cell">Pro plan &middot; Monthly</td>
+                    <td class="table__cell">$49.00</td>
+                    <td class="table__cell"><span class="badge badge--success-muted">Paid</span></td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Download invoice for Jan 1, 2024">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell text--muted">Dec 1, 2023</td>
+                    <td class="table__cell">Pro plan &middot; Monthly</td>
+                    <td class="table__cell">$49.00</td>
+                    <td class="table__cell"><span class="badge badge--success-muted">Paid</span></td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Download invoice for Dec 1, 2023">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell text--muted">Nov 1, 2023</td>
+                    <td class="table__cell">Pro plan &middot; Monthly</td>
+                    <td class="table__cell">$49.00</td>
+                    <td class="table__cell"><span class="badge badge--destructive-muted">Failed</span></td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Download invoice for Nov 1, 2023">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell text--muted">Oct 1, 2023</td>
+                    <td class="table__cell">Pro plan &middot; Monthly</td>
+                    <td class="table__cell">$49.00</td>
+                    <td class="table__cell"><span class="badge badge--success-muted">Paid</span></td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Download invoice for Oct 1, 2023">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

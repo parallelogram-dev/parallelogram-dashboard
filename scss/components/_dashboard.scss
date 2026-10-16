@@ -34,9 +34,12 @@
 // --------------------------------------------------------------------------
 
 .navmenu {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 4rem;
+  height: 100vh;
   background-color: var(--bg-muted);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
@@ -199,9 +202,12 @@
 // --------------------------------------------------------------------------
 
 .subnav {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 16rem;
+  height: 100vh;
   background-color: var(--bg);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
@@ -508,10 +514,13 @@
   display: flex;
   flex-direction: column;
   min-width: 0; // Prevent flex overflow
-  overflow-x: hidden;
+  overflow-x: clip; // Clip without creating a scroll container, so the sticky header works
 }
 
 .dashboard__header {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
   display: flex;
   align-items: center;
   justify-content: space-between;

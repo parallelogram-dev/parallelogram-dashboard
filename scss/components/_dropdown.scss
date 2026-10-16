@@ -52,6 +52,14 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     }
   }
 
+  // Shown in the top layer so a scroll container can't clip it; main.js pins it to the trigger
+  &__menu[popover] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    overflow: visible;
+  }
+
   // --------------------------------------------------------------------------
   // Position Variants
   // --------------------------------------------------------------------------

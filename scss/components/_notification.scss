@@ -1,0 +1,59 @@
+// ==========================================================================
+// Notification Item Component
+// Rows inside the header notifications dropdown panel
+// ==========================================================================
+
+@use "../variables" as *;
+
+.notify {
+  &__item {
+    align-items: flex-start;
+    gap: $spacing-xs;
+
+    &--read {
+      opacity: 0.6;
+    }
+  }
+
+  &__dot {
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: 0.375rem;
+    border-radius: $radius-full;
+    background-color: var(--fg-muted);
+
+    &--info {
+      background-color: var(--info);
+    }
+
+    &--success {
+      background-color: var(--success);
+    }
+
+    &--warning {
+      background-color: var(--warning);
+    }
+
+    &--error {
+      background-color: var(--destructive);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  &__text {
+    color: var(--popover-fg);
+  }
+
+  &__time {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+}

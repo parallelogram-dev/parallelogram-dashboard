@@ -56,6 +56,16 @@
     &:last-child {
       border-bottom: none;
     }
+
+    // Edited but not saved, in an editable table
+    &--changed > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--warning);
+    }
+
+    // Added but not saved, in an editable table
+    &--new > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--success);
+    }
   }
 
   &__head {
@@ -72,6 +82,11 @@
 
       &:hover {
         color: var(--fg);
+      }
+
+      &:focus-visible {
+        @include focus-ring;
+        outline-offset: -2px;
       }
     }
 
@@ -156,6 +171,180 @@
       padding: $spacing-xs $spacing-sm;
     }
   }
+
+  // Cells hold .table__control inputs, so rows edit like a spreadsheet
+  &--editable {
+    .table__head,
+    .table__cell {
+      padding-left: $spacing-3xs;
+      padding-right: $spacing-3xs;
+    }
+
+    .table__cell {
+      padding-top: $spacing-3xs;
+      padding-bottom: $spacing-3xs;
+    }
+
+    // Line header text up with the text inside .table__control (cell padding + border + control padding)
+    .table__head:not(.table__checkbox, .table__actions) {
+      padding-left: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+      padding-right: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+    }
+  }
+
+  // An input or select that sits flush in its cell until hovered or focused
+  &__control {
+    width: 100%;
+    min-width: 5.5rem;
+    height: 2rem;
+    padding: 0 $spacing-2xs;
+    font: inherit;
+    color: var(--fg);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-md;
+    @include transition-colors;
+
+    &:hover {
+      border-color: var(--border);
+    }
+
+    &:focus {
+      @include focus-ring;
+      border-color: var(--ring);
+      background-color: var(--bg);
+    }
+
+    &--number {
+      min-width: 4.5rem;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    // For longer values such as codes and SKUs; the table scrolls rather than squeezing them
+    &--wide {
+      min-width: 8rem;
+    }
+
+    // Safari and Firefox keep their native select styling unless it's switched off
+    @at-root select#{&} {
+      appearance: none;
+      padding-right: 1.75rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right $spacing-3xs center;
+      background-size: 1rem;
+    }
+  }
+
+  // While rows are selected, row actions step aside for the bulk actions; they keep their space
+  &:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
+    visibility: hidden;
+  }
+
+  // The actions column stays pinned to the right edge while the table scrolls sideways
+  &--sticky-actions {
+    .table__actions {
+      position: sticky;
+      right: 0;
+      z-index: 1;
+      background-color: var(--card);
+    }
+
+    // A shadow shows only while columns are scrolled underneath the pinned actions
+    @supports (animation-timeline: scroll()) {
+      .table__actions {
+        animation: table-sticky-edge linear both;
+        animation-timeline: --table-scroll;
+      }
+    }
+  }
+}
+
+.table__wrapper:has(> .table--sticky-actions, > .table--sticky-start) {
+  scroll-timeline: --table-scroll inline;
+}
+
+/**
+ * Sticky header and leading columns
+ *
+ * .table--sticky-header keeps the header row in view while the table's wrapper scrolls (such as in a
+ * full-screen card). .table--sticky-start pins the selection column and the first column after it
+ * (or just the first column) while the table scrolls sideways, with a shadow once columns are
+ * scrolled under them.
+ */
+.table--sticky-header .table__header .table__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--card);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+.table--sticky-start {
+  $pinned: ".table__handle, .table__checkbox, .table__handle + :is(.table__head, .table__cell), .table__checkbox + :is(.table__head, .table__cell), .table__row > :is(.table__head, .table__cell):first-child";
+  // The last pinned cell in each row: the one after the handle and checkbox columns, or the first
+  $edge: ".table__handle + :is(.table__head, .table__cell):not(.table__checkbox), .table__checkbox + :is(.table__head, .table__cell), .table__row > :is(.table__head, .table__cell):first-child:not(.table__handle, .table__checkbox)";
+
+  #{$pinned} {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--card);
+  }
+
+  // Offsets assume the handle and checkbox columns are exactly $spacing-xl wide, whatever the
+  // table's cell padding; a cell's width alone is only a hint, so the checkbox sets a minimum
+  .table__checkbox:is(.table__head, .table__cell) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .checkbox {
+      min-width: $spacing-xl;
+    }
+  }
+
+  .table__handle + :is(.table__head, .table__cell),
+  .table__checkbox + :is(.table__head, .table__cell) {
+    left: $spacing-xl;
+  }
+
+  .table__handle + .table__checkbox + :is(.table__head, .table__cell) {
+    left: $spacing-xl * 2;
+  }
+
+  // Corners where the sticky header meets the sticky columns sit above both
+  .table__header :is(#{$pinned}) {
+    z-index: 3;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    #{$edge} {
+      animation: table-sticky-start-edge linear both;
+      animation-timeline: --table-scroll;
+    }
+  }
+}
+
+@keyframes table-sticky-start-edge {
+  from {
+    box-shadow: none;
+  }
+
+  2%,
+  to {
+    box-shadow: 8px 0 8px -8px rgb(0 0 0 / 0.2);
+  }
+}
+
+@keyframes table-sticky-edge {
+  from {
+    box-shadow: -8px 0 8px -8px rgb(0 0 0 / 0.2);
+  }
+
+  to {
+    box-shadow: none;
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -168,6 +357,8 @@
   margin-left: $spacing-3xs;
   width: $icon-size-sm;
   height: $icon-size-sm;
+  // Sits on the baseline by default, which rides high; this centres the arrows on the capitals
+  vertical-align: -0.2em;
   color: var(--fg-subtle);
 
   [aria-sort="ascending"] &,
@@ -175,6 +366,18 @@
   &--asc,
   &--desc {
     color: var(--fg);
+  }
+
+  // Before the label, for right-aligned columns, so the label lines up with the figures
+  &--start {
+    margin-left: 0;
+    margin-right: $spacing-3xs;
+  }
+
+  // An icon holding both arrows (data-sort="ascending" and "descending" paths) fades the one not in use
+  [aria-sort="ascending"] & [data-sort="descending"],
+  [aria-sort="descending"] & [data-sort="ascending"] {
+    opacity: 0.3;
   }
 }
 
@@ -185,6 +388,143 @@
 .table__checkbox {
   width: $spacing-xl;
   text-align: center;
+
+  // A label with no text sits on the baseline and rides high; centre it in the cell instead
+  .checkbox {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/**
+ * Row save state
+ *
+ * Set data-row-state="saving", "saved" or "error" on a .table__row and its .table__checkbox
+ * cell shows a spinner, a tick or a warning in place of the checkbox, which keeps its space.
+ */
+.table__row[data-row-state] > .table__checkbox {
+  position: relative;
+
+  .checkbox {
+    visibility: hidden;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+  }
+}
+
+.table__row[data-row-state="saving"] > .table__checkbox::after {
+  border: 2px solid var(--border);
+  border-top-color: var(--fg-muted);
+  border-radius: $radius-full;
+  animation: spin 0.7s linear infinite;
+}
+
+.table__row[data-row-state="saved"] > .table__checkbox::after,
+.table__row[data-row-state="error"] > .table__checkbox::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E") center / contain no-repeat;
+  background-color: var(--success);
+}
+
+.table__row[data-row-state="error"] > .table__checkbox {
+  cursor: pointer;
+
+  &::after {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+    background-color: var(--destructive);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table__row[data-row-state="saving"] > .table__checkbox::after {
+    animation-duration: 2s;
+  }
+}
+
+/**
+ * Reorder handle column
+ *
+ * In a table with data-table-reorder, the first cell of each row holds a handle button for
+ * dragging the row (see TableReorder). The handle stays faint until its row is hovered or the
+ * handle is focused; the row being moved carries data-dragging and lifts above the others.
+ */
+.table__handle {
+  width: $spacing-xl;
+  text-align: center;
+
+  // Doubled up to outweigh the cell padding of .table--editable and friends
+  &.table__head,
+  &.table__cell {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .btn {
+    color: var(--fg-subtle);
+    cursor: grab;
+    touch-action: none;
+    opacity: 0.4;
+    @include transition-colors;
+
+    &:active,
+    &[aria-pressed="true"] {
+      color: var(--primary);
+      cursor: grabbing;
+    }
+
+    // The button fills its column, so a ring drawn outside it would be clipped by the
+    // table's scroll area and covered by the next cell
+    &:focus-visible {
+      outline-offset: calc(var(--framework-focus-width) * -1);
+    }
+  }
+}
+
+.table__row:hover > .table__handle .btn,
+.table__handle .btn:focus-visible,
+.table__handle .btn[aria-pressed="true"] {
+  opacity: 1;
+}
+
+.table__row[data-dragging] {
+  position: relative;
+  z-index: 4;
+  // Rows in a collapsed table don't paint box-shadow; a filter does
+  filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.12)) drop-shadow(0 2px 3px rgb(0 0 0 / 0.08));
+  cursor: grabbing;
+
+  > .table__cell {
+    background-color: var(--card);
+  }
+
+  > .table__handle .btn {
+    opacity: 1;
+  }
+}
+
+/**
+ * Paste preview
+ *
+ * In the dialog TablePaste opens, a pasted value its column can't take (no matching option, or
+ * text in a number column) is marked data-paste-invalid and skipped, and values in a column set
+ * to "Skip" are marked data-paste-skipped.
+ */
+.table__cell[data-paste-invalid] {
+  color: var(--destructive);
+  text-decoration: line-through wavy;
+  text-decoration-thickness: 1px;
+  cursor: help;
+}
+
+.table__cell[data-paste-skipped] {
+  color: var(--fg-subtle);
+  text-decoration: line-through;
 }
 
 // --------------------------------------------------------------------------

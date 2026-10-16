@@ -41,6 +41,7 @@
     font-weight: $font-weight-bold;
     letter-spacing: $letter-spacing-tight;
     line-height: $line-height-none;
+    font-variant-numeric: tabular-nums;
     color: var(--fg);
   }
 

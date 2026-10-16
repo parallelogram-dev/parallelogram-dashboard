@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Action Bar - Parallelogram Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
   <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body data-component="actionbar">
@@ -32,7 +33,7 @@
 
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
-          <p class="text--sm text--muted spacer--md">An action bar stands for one record. Segments are joined by keylines: <code>.actionbar__handle</code> to reorder, <code>.actionbar__select</code> for bulk selection, <code>.actionbar__title</code> (label, meta and badge), then switches, dropdowns and actions. Mark segments that may fold into the "⋯" menu on narrow widths with <code>data-priority="low"</code> or <code>"medium"</code>. Put bars in <code>&lt;ul class="actionbar__list" data-actionbar-sortable&gt;</code> to reorder them by dragging a handle, or focus a handle and press Space, then the up and down arrows. With <code>data-actionbar-sortable="tree"</code> the nested lists inside become one tree: drop onto the middle of a bar to nest an item under it, and use the right and left arrows to nest or un-nest. An <code>.actionbar__toggle</code> with <code>aria-controls</code> expands and collapses a child list. The root list fires <code>actionbar:reorder</code> with <code>{ item, from, to, fromParent, toParent }</code>.</p>
+          <p class="text--sm text--muted spacer--md">An action bar stands for one record. Segments are joined by keylines: <code>.actionbar__handle</code> to reorder, <code>.actionbar__select</code> for bulk selection, <code>.actionbar__title</code> (label, meta and badge), then switches, dropdowns and actions. Mark segments that may fold into the "⋯" menu with <code>data-priority="low"</code> (folds first) or <code>"medium"</code>: they fold before the bar's <code>.actionbar__label</code> would be cut off, and every bar in a list, nested lists included, folds together so the columns stay aligned. Folded segments become menu items (a switch becomes a tickable item kept in sync); <code>data-label</code> sets their menu text. This is the same <code>data-overflow-actions</code> behaviour tables use for row actions. Put bars in <code>&lt;ul class="actionbar__list" data-actionbar-sortable&gt;</code> to reorder them by dragging a handle, or focus a handle and press Space, then the up and down arrows. With <code>data-actionbar-sortable="tree"</code> the nested lists inside become one tree: drop onto the middle of a bar to nest an item under it, and use the right and left arrows to nest or un-nest. An <code>.actionbar__toggle</code> with <code>aria-controls</code> expands and collapses a child list. The root list fires <code>actionbar:reorder</code> with <code>{ item, from, to, fromParent, toParent }</code>.</p>
 
           <div class="demo-label">Page tree (data-actionbar-sortable="tree")</div>
             <ul class="actionbar__list" data-actionbar-sortable="tree" aria-label="Pages">

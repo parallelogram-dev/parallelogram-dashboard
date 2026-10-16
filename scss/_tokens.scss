@@ -1,0 +1,280 @@
+// ==========================================================================
+// Custom Properties
+// The theme tokens and the @parallelogram-js/core tokens they feed. Kept apart from
+// _variables.scss so stylesheets that only need the Sass values emit no CSS from it.
+// ==========================================================================
+
+@use "sass:list";
+@use "variables" as *;
+
+// --------------------------------------------------------------------------
+// Theme Tokens
+//
+// Each token holds its light and dark value in one light-dark() pair, so the theme follows the
+// operating system without a second block of declarations. data-theme="light" or "dark" on any
+// element pins that subtree to one theme.
+// --------------------------------------------------------------------------
+
+$theme-tokens: (
+  // Background
+  bg: ($zinc-50, $zinc-950),
+  bg-muted: ($zinc-100, $zinc-900),
+  bg-subtle: ($zinc-200, $zinc-800),
+
+  // Foreground
+  fg: ($zinc-950, $zinc-50),
+  fg-muted: ($zinc-500, $zinc-400),
+  fg-subtle: ($zinc-400, $zinc-500),
+
+  // Border
+  border: ($zinc-200, $zinc-800),
+  border-muted: ($zinc-100, $zinc-900),
+
+  // Primary (dark on light, light on dark)
+  primary: ($zinc-900, $zinc-50),
+  primary-fg: ($zinc-50, $zinc-900),
+  primary-hover: ($zinc-800, $zinc-200),
+
+  // Secondary
+  secondary: ($zinc-100, $zinc-800),
+  secondary-fg: ($zinc-900, $zinc-50),
+  secondary-hover: ($zinc-200, $zinc-700),
+
+  // Destructive
+  destructive: ($red-500, $red-600),
+  destructive-fg: ($zinc-50, $zinc-50),
+  destructive-hover: ($red-600, $red-500),
+  destructive-muted: ($red-50, $red-900),
+  destructive-muted-fg: ($red-900, $red-100),
+
+  // Success
+  success: ($green-500, $green-500),
+  success-fg: ($zinc-50, $zinc-950),
+  success-muted: ($green-50, $green-900),
+  success-muted-fg: ($green-900, $green-100),
+
+  // Warning
+  warning: ($amber-500, $amber-500),
+  warning-fg: ($zinc-950, $zinc-950),
+  warning-muted: ($amber-50, $amber-900),
+  warning-muted-fg: ($amber-900, $amber-100),
+
+  // Info
+  info: ($blue-500, $blue-500),
+  info-fg: ($zinc-50, $zinc-50),
+  info-muted: ($blue-50, $blue-900),
+  info-muted-fg: ($blue-900, $blue-100),
+
+  // Accent (used for highlights, selections)
+  accent: ($zinc-100, $zinc-800),
+  accent-fg: ($zinc-900, $zinc-50),
+
+  // Focus ring
+  ring: ($zinc-400, $zinc-500),
+  ring-offset: ($zinc-50, $zinc-950),
+
+  // Card
+  card: ($zinc-50, $zinc-900),
+  card-fg: ($zinc-950, $zinc-50),
+
+  // Popover/Dropdown
+  popover: ($zinc-50, $zinc-900),
+  popover-fg: ($zinc-950, $zinc-50),
+
+  // Input
+  input: ($zinc-200, $zinc-700),
+  input-placeholder: ($zinc-400, $zinc-500),
+
+  // Sidebar
+  sidebar: ($zinc-50, $zinc-950),
+  sidebar-fg: ($zinc-950, $zinc-50),
+  sidebar-muted: ($zinc-500, $zinc-400),
+  sidebar-border: ($zinc-200, $zinc-800),
+  sidebar-accent: ($zinc-100, $zinc-800),
+  sidebar-accent-fg: ($zinc-900, $zinc-50),
+
+  // Chart series, in fixed order (never cycled). Validated for colour-vision deficiency against
+  // each theme's card surface; light slots 3–5 sit below 3:1, so charts always offer a table view
+  chart-1: (#2a78d6, #3987e5),
+  chart-2: (#eb6834, #d95926),
+  chart-3: (#1baf7a, #199e70),
+  chart-4: (#eda100, #c98500),
+  chart-5: (#e87ba4, #d55181),
+  chart-6: (#008300, #008300),
+  chart-7: (#4a3aa7, #9085e9),
+  chart-8: (#e34948, #e66767),
+  chart-grid: ($zinc-100, $zinc-800),
+  chart-axis: ($zinc-300, $zinc-700),
+  chart-muted: ($zinc-500, $zinc-400),
+);
+
+:root {
+  color-scheme: light dark;
+
+  @each $name, $pair in $theme-tokens {
+    $light: list.nth($pair, 1);
+    $dark: list.nth($pair, 2);
+    @if $light == $dark {
+      --#{$name}: #{$light};
+    } @else {
+      --#{$name}: light-dark(#{$light}, #{$dark});
+    }
+  }
+
+  --ring-alpha: color-mix(in srgb, var(--ring) 25%, transparent);
+  --chart-surface: var(--card);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+
+@function _transition-list($properties, $timing) {
+  $list: ();
+  @each $property in $properties {
+    $list: list.append($list, $property $timing, $separator: comma);
+  }
+  @return $list;
+}
+
+// --------------------------------------------------------------------------
+// @parallelogram-js/core Tokens
+//
+// Feeds the dashboard theme into core's role and surface tokens, so core's web components and
+// per-component stylesheets match it in both themes. Every value is a reference to a theme
+// token, so one declaration serves light and dark. Load this instead of core's index.css, whose
+// own :root palette would compete with it.
+// --------------------------------------------------------------------------
+
+:root {
+  // Brand layer and the accent role every core component reads
+  --brand-primary: var(--primary);
+  --brand-primary-hover: var(--primary-hover);
+  --brand-primary-contrast: var(--primary-fg);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary-hover);
+  --color-accent-contrast: var(--primary-fg);
+
+  // Neutral roles
+  --color-text: var(--fg);
+  --color-text-muted: var(--fg-muted);
+  --color-surface: var(--bg);
+  --color-surface-muted: var(--bg-muted);
+  --color-hover: var(--accent);
+  --color-border: var(--border);
+  --color-border-strong: var(--input);
+  --color-control-border: var(--input);
+  --color-overlay: rgb(0 0 0 / 0.5);
+  --color-shadow: rgb(0 0 0 / 0.1);
+  --color-inverse-surface: var(--fg);
+  --color-inverse-text: var(--bg);
+
+  // Status roles
+  --color-danger: var(--destructive);
+  --color-danger-contrast: var(--destructive-fg);
+  --color-danger-tint: var(--destructive-muted);
+  --color-danger-text: var(--destructive-muted-fg);
+  --color-danger-strong: var(--destructive-muted-fg);
+  --color-success: var(--success);
+  --color-success-contrast: var(--success-fg);
+  --color-success-tint: var(--success-muted);
+  --color-success-text: var(--success-muted-fg);
+  --color-success-strong: var(--success-muted-fg);
+  --color-warning: var(--warning);
+  --color-warning-contrast: var(--warning-fg);
+  --color-warning-tint: var(--warning-muted);
+  --color-warning-text: var(--warning-muted-fg);
+  --color-warning-strong: var(--warning-muted-fg);
+
+  // Surfaces
+  --surface-control-radius: #{$radius-md};
+  --surface-control-border-color: var(--input);
+  --surface-button-radius: #{$radius-md};
+  --surface-panel-radius: #{$radius-md};
+  --surface-panel-color-bg: var(--popover);
+  --surface-panel-color-text: var(--popover-fg);
+  --surface-panel-shadow: #{$shadow-lg};
+  --surface-dropdown-radius: #{$radius-md};
+  --surface-dropdown-color-bg: var(--popover);
+  --surface-dropdown-shadow: #{$shadow-lg};
+  --surface-dropdown-item-hover-bg: var(--accent);
+  --surface-dropdown-item-selected-bg: var(--accent);
+  --surface-dialog-radius: #{$radius-md};
+  --surface-dialog-color-bg: var(--bg);
+  --surface-dialog-color-text: var(--fg);
+  --surface-dialog-shadow: #{$shadow-xl};
+  --panel-bg: var(--surface-panel-color-bg);
+  --panel-border-radius: var(--surface-panel-radius);
+  --panel-shadow: var(--surface-panel-shadow);
+  --surface-card-radius: #{$radius-lg};
+  --surface-card-color-bg: var(--card);
+  --surface-card-color-text: var(--card-fg);
+
+  // Buttons rendered inside core components
+  --button-primary-bg: var(--primary);
+  --button-primary-color: var(--primary-fg);
+  --button-primary-border: var(--primary);
+  --button-primary-hover-bg: var(--primary-hover);
+  --button-primary-hover-border: var(--primary-hover);
+  --button-secondary-bg: var(--secondary);
+  --button-secondary-color: var(--secondary-fg);
+  --button-secondary-border: var(--border);
+  --button-secondary-hover-bg: var(--secondary-hover);
+  --button-secondary-hover-border: var(--border);
+  --button-danger-bg: var(--destructive);
+  --button-danger-color: var(--destructive-fg);
+  --button-danger-border: var(--destructive);
+  --button-danger-hover-bg: var(--destructive-hover);
+  --button-danger-hover-border: var(--destructive-hover);
+
+  // Form controls rendered inside core components
+  --form-control-placeholder-color: var(--input-placeholder);
+  --form-control-focus-ring-color: var(--ring);
+  --form-control-focus-border-color: var(--ring);
+  --form-control-hover-border-color: var(--fg-subtle);
+
+  // Focus and motion, shared with the dashboard's own components
+  --framework-focus-color: var(--ring);
+  --framework-focus-width: 2px;
+  --framework-focus-offset: 2px;
+  --framework-transition-duration: #{$transition-fast};
+  --framework-transition-easing: #{$transition-easing};
+
+  $timing: var(--framework-transition-duration) var(--framework-transition-easing);
+  --transition-default: #{_transition-list((color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform), $timing)};
+  --transition-colors: #{_transition-list((color, background-color, border-color), $timing)};
+  --transition-transform: transform #{$timing};
+  --transition-opacity: opacity #{$timing};
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --framework-transition-duration: 0s;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Typography Tokens
+//
+// Read by the base element styles and the .heading and .text classes, so a page can change its
+// fonts or heading sizes at runtime without recompiling.
+// --------------------------------------------------------------------------
+
+:root {
+  --font-sans: #{$font-sans};
+  --font-mono: #{$font-mono};
+
+  @each $level, $sizes in $heading-sizes {
+    --heading-#{$level}: #{fluid(list.nth($sizes, 1), list.nth($sizes, 2))};
+  }
+
+  --leading-tight: #{$line-height-tight};
+  --leading-normal: #{$line-height-normal};
+  --leading-relaxed: #{$line-height-relaxed};
+  --tracking-tight: #{$letter-spacing-tight};
+}

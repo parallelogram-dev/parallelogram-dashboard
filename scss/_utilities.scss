@@ -2,6 +2,9 @@
 // Utilities - BEM-style utility blocks
 // ==========================================================================
 
+@use "variables" as *;
+@use "mixins" as *;
+
 // -------------------------------------------------------------------------
 // Layout Block - Flex and grid layouts
 // -------------------------------------------------------------------------
@@ -65,6 +68,7 @@
   &--xl { gap: 2rem; }
 
   &--start { align-items: flex-start; }
+  &--center { justify-content: center; }
   &--between { justify-content: space-between; }
 }
 
@@ -106,6 +110,11 @@
   display: grid;
   gap: 1.5rem;
 
+  // Let wide content (e.g. a scrolling table) scroll inside a column instead of widening it
+  > * {
+    min-width: 0;
+  }
+
   &--2-1 {
     grid-template-columns: 2fr 1fr;
   }
@@ -124,6 +133,28 @@
 
   &--4 {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--2-1,
+  &--1-2 {
+    @include max-lg {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--3,
+  &--4 {
+    @include max-lg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &--2,
+  &--3,
+  &--4 {
+    @include max-md {
+      grid-template-columns: 1fr;
+    }
   }
 
   &--gap-sm { gap: 0.5rem; }
@@ -249,22 +280,6 @@
 .w--full { width: 100%; }
 
 // -------------------------------------------------------------------------
-// List Block - Styled lists
-// -------------------------------------------------------------------------
-.list {
-  &--disc {
-    list-style: disc;
-    padding-left: 1.25rem;
-  }
-
-  &--spaced {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-// -------------------------------------------------------------------------
 // Box Block - Generic container with padding/background
 // -------------------------------------------------------------------------
 .box {
@@ -292,7 +307,7 @@
   }
 
   &--primary {
-    background-color: var(--primary-muted);
+    background-color: var(--accent);
     color: var(--primary);
   }
 
@@ -353,4 +368,97 @@ code.code--sm {
 
 .text--primary {
   color: var(--primary);
+}
+
+/**
+ * Overflow actions
+ *
+ * main.js sets data-overflow-level on the boundary (a .table__wrapper, or the container itself):
+ * 1 folds [data-priority="low"] actions into the "more" menu, 2 folds "medium" ones as well.
+ * Every container in the boundary folds together, so table rows stay aligned.
+ */
+:is([data-overflow-level="1"], [data-overflow-level="2"]) [data-overflow-actions] > [data-priority="low"],
+:is([data-overflow-level="1"], [data-overflow-level="2"])[data-overflow-actions] > [data-priority="low"],
+[data-overflow-level="2"] [data-overflow-actions] > [data-priority="medium"],
+[data-overflow-level="2"][data-overflow-actions] > [data-priority="medium"],
+[data-overflow-level="0"] [data-overflow-actions] > [data-overflow-more],
+[data-overflow-level="0"][data-overflow-actions] > [data-overflow-more] {
+  display: none !important;
+}
+
+/**
+ * Unsaved changes
+ *
+ * main.js sets data-dirty on a [data-unsaved-guard] area while any of its fields differ from
+ * their saved values. Mark an "Unsaved changes" badge or similar with data-unsaved-indicator and
+ * it only shows while the area is dirty.
+ */
+[data-unsaved-guard]:not([data-dirty]) [data-unsaved-indicator] {
+  display: none !important;
+}
+
+/**
+ * Expandable
+ *
+ * main.js moves a [data-expandable] element into dialog.expandable to show it full-screen. The
+ * element fills the window; a card's flush content (such as a table) takes the remaining height
+ * and scrolls inside it. Anything marked data-column-expanded only shows while expanded.
+ */
+.expandable {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: $spacing-sm;
+  background-color: var(--bg);
+  border: 0;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background-color: var(--bg);
+  }
+
+  > [data-expanded] {
+    flex: 1;
+    min-height: 0;
+  }
+
+  [data-expanded] .card__content--flush {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    > .table__wrapper {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+    }
+  }
+}
+
+[data-expandable]:not([data-expanded]) [data-column-expanded] {
+  display: none;
+}
+
+// An expand button can carry both icons; the one for the current state shows
+[data-expandable]:not([data-expanded]) [data-expand-icon="collapse"],
+[data-expanded] [data-expand-icon="expand"] {
+  display: none;
+}
+
+/**
+ * Publish state
+ *
+ * PublishSchedule sets data-publish-state on a [data-publish-schedule] area; anything inside it
+ * marked data-publish-show="…" (a list of states) only shows in those states.
+ */
+@each $state in draft, scheduled, live, expired, archived {
+  [data-publish-state="#{$state}"] [data-publish-show]:not([data-publish-show~="#{$state}"]) {
+    display: none !important;
+  }
 }

@@ -6,6 +6,7 @@
   <title>Settings - Parallelogram Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
 </head>
 <body>
 
@@ -55,17 +56,17 @@
         </div>
       </div>
 
-      <div class="navmenu__footer">
-        <a href="settings-account.html" class="navmenu__avatar" aria-label="Your account">
-          <span class="navmenu__avatar-fallback">JD</span>
-        </a>
-      </div>
     </nav>
 
     <!-- Sub Navigation -->
     <aside class="subnav" id="subnav" aria-label="Section navigation">
       <div class="subnav__header">
-        <h2 class="subnav__title">Settings</h2>
+        <h2 class="subnav__title">My site</h2>
+        <div class="subnav__actions">
+          <a href="#" class="subnav__action" target="_blank" rel="noopener" aria-label="View site (opens in a new tab)" data-tooltip="View site">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></svg>
+          </a>
+        </div>
       </div>
 
       <div class="subnav__content">
@@ -95,7 +96,7 @@
               <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
               <span class="subnav__item-text">Team</span>
             </a>
-            <a href="settings.html#billing" class="subnav__item">
+            <a href="billing.html" class="subnav__item">
               <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M3 21l18 0"/><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0m0 -1v1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"/><path d="M5 21l0 -10.15"/><path d="M19 21l0 -10.15"/><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"/></svg>
               <span class="subnav__item-text">Billing</span>
             </a>
@@ -133,9 +134,58 @@
           <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
           </button>
-          <button class="btn btn--ghost btn--icon">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
-          </button>
+          <div class="dropdown dropdown--right">
+            <button type="button" class="btn btn--ghost btn--icon dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Notifications" data-toggle data-toggle-target="#notificationsPanel" data-toggle-capture="true" style="position: relative;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="badge badge--destructive badge--dot" aria-hidden="true" style="position: absolute; top: 0.375rem; right: 0.375rem;"></span>
+            </button>
+            <div id="notificationsPanel" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Notifications">
+              <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                <span class="text--sm text--semibold">Notifications</span>
+                <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notify__time">5 minutes ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--success" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notify__time">1 hour ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--warning" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notify__time">3 hours ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notify__time">Yesterday</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--error" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notify__time">2 days ago</span>
+                </span>
+              </a>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item" style="justify-content: center;">
+                <span class="dropdown__item-text">View all notifications</span>
+              </a>
+            </div>
+          </div>
           <a href="settings-account.html" class="avatar" aria-label="Your account">
             <span class="avatar__fallback">JD</span>
             <span class="avatar__status avatar__status--online"></span>
@@ -250,7 +300,7 @@
           </a>
 
           <!-- Billing Settings -->
-          <a href="#" id="billing" class="card card--interactive">
+          <a href="billing.html" id="billing" class="card card--interactive">
             <div class="card__header card__header--row">
               <div class="cluster cluster--sm">
                 <div class="box box--icon box--success">
@@ -344,21 +394,22 @@
 
   <script type="module" src="js/main.js"></script>
   <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const newTheme = current === 'dark' ? '' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      document.getElementById('darkModeToggle').checked = newTheme === 'dark';
-    }
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const isDark = () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      return theme === 'dark' || (theme !== 'light' && prefersDark.matches);
+    };
 
-    // Sync dark mode toggle with actual theme
-    document.getElementById('darkModeToggle').addEventListener('change', function() {
-      document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : '');
+    darkModeToggle.addEventListener('change', function() {
+      document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light');
     });
 
-    // Set initial state
-    document.getElementById('darkModeToggle').checked = document.documentElement.getAttribute('data-theme') === 'dark';
+    // Keep the switch in step with the theme, whether the navbar button or the OS changed it
+    new MutationObserver(() => { darkModeToggle.checked = isDark(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    prefersDark.addEventListener('change', () => { darkModeToggle.checked = isDark(); });
+    darkModeToggle.checked = isDark();
   </script>
 
 </body>

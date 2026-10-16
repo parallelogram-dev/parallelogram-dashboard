@@ -6,24 +6,24 @@
   <title>Login - Parallelogram Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
 </head>
 <body class="bg--muted">
 
   <div class="auth">
     <div class="auth__container">
 
-      <!-- Logo -->
-      <div class="auth__header">
-        <a href="dashboard.html" class="auth__logo">
-          <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
-        </a>
-        <h1 class="auth__title">Welcome back</h1>
-        <p class="auth__description">Enter your credentials to access your account</p>
-      </div>
-
-      <!-- Login Form -->
       <div class="card">
         <div class="card__content card__content--pt">
+
+          <div class="auth__header">
+            <a href="dashboard.html" class="auth__logo">
+              <svg class="icon icon--xl" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+            </a>
+            <h1 class="auth__title">Welcome back</h1>
+            <p class="auth__description">Enter your credentials to access your account</p>
+          </div>
+
           <form class="form" id="loginForm">
 
             <div class="form__field">
@@ -66,13 +66,13 @@
               GitHub
             </button>
           </div>
+
+          <p class="auth__footer">
+            Don't have an account? <a href="#" class="link">Sign up</a>
+          </p>
+
         </div>
       </div>
-
-      <!-- Footer -->
-      <p class="auth__footer">
-        Don't have an account? <a href="#" class="link">Sign up</a>
-      </p>
 
     </div>
   </div>
@@ -81,7 +81,7 @@
   <script>
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      window.location.href = 'dashboard.html';
+      window.location.href = 'system-check.html';
     });
   </script>
 

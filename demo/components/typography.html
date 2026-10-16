@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Typography - Parallelogram Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' x='10' y='20' width='80' height='60' rx='4' transform='skewX(-10)'/></svg>">
-  <script>try { if (localStorage.getItem('pd-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <link rel="stylesheet" href="../css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="../css/demo.css">
   <link rel="stylesheet" href="../css/docs.css">
 </head>
 <body data-component="typography">
@@ -22,32 +23,99 @@
       <div class="docs__intro">
         <p class="docs__eyebrow">Foundations</p>
         <h1 class="docs__title">Typography</h1>
-        <p class="docs__lead">Text styles and hierarchy.</p>
+        <p class="docs__lead">A compact type scale for dense interfaces. Element styles carry no specificity, so components always win, and every size, font and leading is a custom property.</p>
       </div>
 
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
-          <div class="constrain constrain--md">
-            <h1>Heading 1</h1>
-            <h2>Heading 2</h2>
-            <h3>Heading 3</h3>
-            <h4>Heading 4</h4>
-            <h5>Heading 5</h5>
-            <h6>Heading 6</h6>
+          <div class="demo-label">Heading scale</div>
+          <div class="stack stack--md spacer--lg">
+            <div><h1>Revenue overview</h1><p class="text--xs text--muted text--mono">h1 · --heading-1 · 24px → 30px</p></div>
+            <div><h2>Monthly recurring revenue</h2><p class="text--xs text--muted text--mono">h2 · --heading-2 · 20px → 24px</p></div>
+            <div><h3>Active subscriptions</h3><p class="text--xs text--muted text--mono">h3 · --heading-3 · 18px → 20px</p></div>
+            <div><h4>Plan breakdown</h4><p class="text--xs text--muted text--mono">h4 · --heading-4 · 18px</p></div>
+            <div><h5>Billing contact</h5><p class="text--xs text--muted text--mono">h5 · --heading-5 · 16px</p></div>
+            <div><h6>Last updated</h6><p class="text--xs text--muted text--mono">h6 · --heading-6 · 14px</p></div>
+          </div>
 
-            <hr class="separator separator--lg">
+          <div class="demo-label demo-label--spaced-lg">Page title</div>
+          <div class="constrain constrain--md spacer--lg">
+            <p class="text--overline">Customers</p>
+            <h1>Acme Corporation</h1>
+            <p class="text--lead spacer--xs">Enterprise plan since March 2023. 48 seats, renewing on 1 April.</p>
+          </div>
 
-            <p>This is a paragraph of text. It demonstrates the default body text styling with proper line height and spacing for readability.</p>
+          <div class="demo-label demo-label--spaced-lg">Heading classes</div>
+          <div class="card constrain--sm spacer--lg">
+            <div class="card__header">
+              <h2 class="heading heading--5">Usage this month</h2>
+              <p class="card__description">An h2 in the outline, sized as a small heading.</p>
+            </div>
+            <div class="card__content">
+              <p class="text--sm">Use <code>.heading .heading--1</code> to <code>--6</code> when a heading's level and its look differ.</p>
+            </div>
+          </div>
 
-            <p class="text--muted">This is muted text for secondary information.</p>
-            <p class="text--sm">Small text for captions and labels.</p>
+          <div class="demo-label demo-label--spaced-lg">Body text</div>
+          <div class="constrain constrain--md stack stack--sm spacer--lg">
+            <p>Invoices are sent on the first working day of each month. Paid invoices stay available to download for seven years.</p>
+            <p class="text--sm text--muted">Small, muted text for captions and help under form fields.</p>
+            <p class="text--xs text--subtle">Extra-small, subtle text for timestamps and metadata.</p>
+          </div>
 
-            <p><code>Inline code snippet</code></p>
+          <div class="demo-label demo-label--spaced-lg">Figures</div>
+          <div class="stat__grid constrain--lg spacer--lg">
+            <div class="stat">
+              <div class="stat__header"><span class="stat__label">Revenue</span></div>
+              <div class="stat__value">$111,111</div>
+              <p class="stat__description">Tabular figures keep the width steady.</p>
+            </div>
+            <div class="stat">
+              <div class="stat__header"><span class="stat__label">Orders</span></div>
+              <div class="stat__value">8,888</div>
+              <p class="stat__description">So values don't shift as they update.</p>
+            </div>
+          </div>
 
-            <pre><code>// Code block
-function hello() {
-  console.log("Hello, world!");
-}</code></pre>
+          <div class="demo-label demo-label--spaced-lg">Numbers in tables</div>
+          <div class="table__wrapper constrain--md spacer--lg">
+            <table class="table">
+              <thead class="table__header">
+                <tr class="table__row">
+                  <th class="table__head">Invoice</th>
+                  <th class="table__head text--right">Amount</th>
+                </tr>
+              </thead>
+              <tbody class="table__body">
+                <tr class="table__row"><td class="table__cell">INV-1001</td><td class="table__cell text--right">$1,111.00</td></tr>
+                <tr class="table__row"><td class="table__cell">INV-1002</td><td class="table__cell text--right">$9,840.50</td></tr>
+                <tr class="table__row"><td class="table__cell">INV-1003</td><td class="table__cell text--right">$407.19</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="demo-label demo-label--spaced-lg">Inline elements</div>
+          <div class="constrain constrain--md stack stack--sm spacer--lg">
+            <p>Press <kbd>⌘</kbd> <kbd>K</kbd> to search, or <kbd>Esc</kbd> to close.</p>
+            <p>Set <code>data-theme="dark"</code> on any element to pin its theme.</p>
+            <p><strong>Storage</strong> is billed per <abbr title="Gibibyte">GiB</abbr>; CO<sub>2</sub> reported at 10<sup>3</sup> kg.</p>
+            <p>Read the <a href="#" class="link">billing guide</a> or <a href="#" class="link link--muted">contact support</a>.</p>
+          </div>
+
+          <div class="demo-label demo-label--spaced-lg">Code block</div>
+          <pre class="spacer--lg"><code>fetch('/api/invoices?status=open')
+  .then(response =&gt; response.json())
+  .then(render);</code></pre>
+
+          <div class="demo-label demo-label--spaced-lg">Prose</div>
+          <div class="prose spacer--lg">
+            <h2>Changing your plan</h2>
+            <p>You can upgrade at any time and the new features are available straight away. We charge the difference for the rest of the billing period.</p>
+            <ul>
+              <li>Upgrades take effect immediately.</li>
+              <li>Downgrades apply at the next renewal.</li>
+            </ul>
+            <blockquote>Seats you remove stay active until the end of the period.</blockquote>
           </div>
       </section>
 

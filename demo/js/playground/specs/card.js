@@ -15,12 +15,17 @@ function card(s, title = s.title) {
   }
 
   if (s.header) {
-    const headerClass = bem('card__header', s.header === 'row' && 'row', s.header === 'center' && 'center');
+    const row = s.header === 'row' || s.header === 'actions';
+    const headerClass = bem('card__header', row && 'row', s.header === 'center' && 'center');
     const text = `<h3 class="card__title">${escape(title)}</h3>`
       + (s.description ? `<p class="card__description">${escape(s.description)}</p>` : '');
-    parts.push(s.header === 'row'
-      ? `<div class="${headerClass}"><div>${text}</div>`
-        + `<button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="More">${icon('dots', 'btn__icon')}</button></div>`
+    const actions = s.header === 'actions'
+      ? '<div class="cluster cluster--sm">'
+        + `<button type="button" class="btn btn--outline btn--sm">${icon('plus', 'btn__icon')}Add</button>`
+        + `<button type="button" class="btn btn--outline btn--icon btn--sm" aria-label="More">${icon('dots', 'btn__icon')}</button></div>`
+      : `<button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="More">${icon('dots', 'btn__icon')}</button>`;
+    parts.push(row
+      ? `<div class="${headerClass}"><div>${text}</div>${actions}</div>`
       : `<div class="${headerClass}">${text}</div>`);
   }
 
@@ -48,6 +53,8 @@ export default {
   name: 'Card',
   description: 'Container for grouped content with optional header, image and footer.',
   sources: ['components/_card.scss'],
+  // Flush content rounds a table wrapper's corners; the table itself belongs to the Table spec
+  ignore: ['table__wrapper'],
   target: '.card',
   matrix: { rows: 'variant', cols: 'size' },
   layout: 'block',
@@ -63,6 +70,7 @@ export default {
         { value: '', label: 'None' },
         { value: 'default', label: 'Default' },
         { value: 'row', label: 'Row (with action)' },
+        { value: 'actions', label: 'Row (with actions)' },
         { value: 'center', label: 'Centered' },
       ],
     },
