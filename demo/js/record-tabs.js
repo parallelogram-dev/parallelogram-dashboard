@@ -2,8 +2,10 @@
  * Demo behaviour for record-edit-tabs.html: an editable variants table backed by a sheet
  * that holds each variant's full record.
  *
- * Nothing is persisted. Edited rows get .table__row--changed, added rows .table__row--new,
- * and "Save changes" clears both, as a real save would.
+ * Variant rows save themselves: a row saves shortly after an edit, or when focus leaves it,
+ * showing data-row-state ("saving", "saved", "error") in its checkbox cell. Removing rows is
+ * immediate with an Undo toast. The product's own fields still use "Save changes". Nothing is
+ * persisted; saves are simulated, and a variant without a SKU fails to show the error state.
  */
 (() => {
   const rows = document.getElementById('variantRows');
@@ -23,10 +25,55 @@
   const checked = () => variantRows().filter(row => row.querySelector('[data-variant-select]').checked);
   const sku = row => row.querySelector('[name="sku"]').value.trim() || 'New variant';
   const toast = message => window.toast?.success(message);
+  const status = document.getElementById('variantStatus');
+  const UNDO_ICON = '<svg class="icon" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>';
+  const timers = new WeakMap();
+  const resave = new WeakSet();
 
   function markChanged(row) {
     if (!row.classList.contains('table__row--new')) row.classList.add('table__row--changed');
-    unsaved.hidden = false;
+    clearTimeout(timers.get(row));
+    timers.set(row, setTimeout(() => save(row), 600));
+  }
+
+  function setState(row, state, message = '') {
+    const cell = row.querySelector('.table__checkbox');
+    if (state) row.dataset.rowState = state;
+    else delete row.dataset.rowState;
+    row.toggleAttribute('aria-busy', state === 'saving');
+    if (message) cell.title = message;
+    else cell.removeAttribute('title');
+  }
+
+  /** Simulated save; a real one would send the row's values and handle the response. */
+  function save(row) {
+    clearTimeout(timers.get(row));
+    timers.delete(row);
+    if (!row.isConnected) return;
+    if (row.dataset.rowState === 'saving') {
+      resave.add(row);
+      return;
+    }
+    const value = row.querySelector('[name="sku"]').value.trim();
+    if (!value) {
+      // A blank new row waits until it has a SKU; an existing one can't lose it
+      if (row.classList.contains('table__row--new')) return;
+      setState(row, 'error', 'SKU is required. Add one, or click here to try again.');
+      status.textContent = 'A variant could not be saved: SKU is required.';
+      return;
+    }
+    setState(row, 'saving');
+    setTimeout(() => {
+      if (resave.delete(row)) {
+        setState(row, null);
+        save(row);
+        return;
+      }
+      row.classList.remove('table__row--changed', 'table__row--new');
+      setState(row, 'saved');
+      status.textContent = `${value} saved`;
+      setTimeout(() => { if (row.dataset.rowState === 'saved') setState(row, null); }, 1500);
+    }, 600 + Math.random() * 500);
   }
 
   function refresh() {
@@ -49,15 +96,35 @@
     copy.querySelector('[name="sku"]').value = `${sku(row)}-COPY`;
     after.after(copy);
     window.Parallelogram?.init(copy);
-    unsaved.hidden = false;
+    save(copy);
     return copy;
   }
 
+  /** Remove straight away and offer Undo, which puts each row back where it was. */
   function remove(list) {
-    list.forEach(row => row.remove());
-    unsaved.hidden = false;
+    const removed = list.map(row => ({ row, next: row.nextElementSibling }));
+    list.forEach((row) => {
+      row.remove();
+      row.querySelector('[data-variant-select]').checked = false;
+    });
     refresh();
-    toast(list.length === 1 ? `${sku(list[0])} removed` : `${list.length} variants removed`);
+    window.toast?.show({
+      type: 'success',
+      message: list.length === 1 ? `${sku(list[0])} removed` : `${list.length} variants removed`,
+      duration: 6000,
+      actions: [{
+        label: 'Undo',
+        icon: UNDO_ICON,
+        onClick: () => {
+          // Last first, so each row's original next sibling is already back in place
+          [...removed].reverse().forEach(({ row, next }) => {
+            rows.insertBefore(row, next?.isConnected ? next : null);
+          });
+          refresh();
+          status.textContent = `${list.length === 1 ? sku(list[0]) : `${list.length} variants`} restored`;
+        },
+      }],
+    });
   }
 
   rows.addEventListener('input', (e) => {
@@ -70,10 +137,17 @@
     else if (e.target.matches('select.table__control')) markChanged(e.target.closest('[data-variant]'));
   });
 
+  // Leaving a row saves it straight away rather than waiting for the timer
+  rows.addEventListener('focusout', (e) => {
+    const row = e.target.closest('[data-variant]');
+    if (row && timers.has(row) && !row.contains(e.relatedTarget)) save(row);
+  });
+
   rows.addEventListener('click', (e) => {
     const row = e.target.closest('[data-variant]');
     if (!row) return;
-    if (e.target.closest('[data-variant-edit]')) openSheet(row);
+    if (row.dataset.rowState === 'error' && e.target.closest('.table__checkbox')) save(row);
+    else if (e.target.closest('[data-variant-edit]')) openSheet(row);
     else if (e.target.closest('[data-variant-duplicate]')) {
       insertCopy(row).querySelector('[name="sku"]').focus();
       refresh();
@@ -98,7 +172,6 @@
     row.classList.add('table__row--new');
     rows.append(row);
     window.Parallelogram?.init(row);
-    unsaved.hidden = false;
     refresh();
     row.querySelector('[name="sku"]').focus();
   });
@@ -164,9 +237,6 @@
   // ---------------------------------------------------------------------------
 
   document.getElementById('saveProduct').addEventListener('click', () => {
-    rows.querySelectorAll('.table__row--changed, .table__row--new').forEach((row) => {
-      row.classList.remove('table__row--changed', 'table__row--new');
-    });
     unsaved.hidden = true;
     toast('Desk Lamp saved');
   });
