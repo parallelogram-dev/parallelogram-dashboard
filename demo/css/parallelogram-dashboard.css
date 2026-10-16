@@ -4553,8 +4553,8 @@ p-modal {
   justify-content: center;
   border-radius: inherit;
   overflow: hidden;
-  background-color: var(--primary);
-  color: var(--primary-fg);
+  background-color: var(--avatar-bg, var(--primary));
+  color: var(--avatar-fg, var(--primary-fg));
   font-weight: 500;
   text-transform: uppercase;
 }

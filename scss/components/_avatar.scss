@@ -36,8 +36,9 @@
     justify-content: center;
     border-radius: inherit;
     overflow: hidden;
-    background-color: var(--primary);
-    color: var(--primary-fg);
+    // Initials sit on the brand colour unless a theme sets --avatar-bg and --avatar-fg
+    background-color: var(--avatar-bg, var(--primary));
+    color: var(--avatar-fg, var(--primary-fg));
     font-weight: $font-weight-medium;
     text-transform: uppercase;
   }

@@ -42,6 +42,8 @@
   --warning: #eda771;
   --info: #4a90d9;
   --chart-1: light-dark(#231fff, #6f6cff);
+  --avatar-bg: light-dark(#303036, #3a3c43);
+  --avatar-fg: #ffffff;
 
   /* Shape */
   --radius-sm: 0.125rem;
