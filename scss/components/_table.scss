@@ -56,6 +56,16 @@
     &:last-child {
       border-bottom: none;
     }
+
+    // Edited but not saved, in an editable table
+    &--changed > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--warning);
+    }
+
+    // Added but not saved, in an editable table
+    &--new > .table__cell:first-child {
+      box-shadow: inset 3px 0 0 var(--success);
+    }
   }
 
   &__head {
@@ -154,6 +164,50 @@
 
     .table__cell {
       padding: $spacing-xs $spacing-sm;
+    }
+  }
+
+  // Cells hold .table__control inputs, so rows edit like a spreadsheet
+  &--editable {
+    .table__head,
+    .table__cell {
+      padding-left: $spacing-3xs;
+      padding-right: $spacing-3xs;
+    }
+
+    .table__cell {
+      padding-top: $spacing-3xs;
+      padding-bottom: $spacing-3xs;
+    }
+  }
+
+  // An input or select that sits flush in its cell until hovered or focused
+  &__control {
+    width: 100%;
+    min-width: 5.5rem;
+    height: 2rem;
+    padding: 0 $spacing-2xs;
+    font: inherit;
+    color: var(--fg);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-md;
+    @include transition-colors;
+
+    &:hover {
+      border-color: var(--border);
+    }
+
+    &:focus {
+      @include focus-ring;
+      border-color: var(--ring);
+      background-color: var(--bg);
+    }
+
+    &--number {
+      min-width: 4.5rem;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
     }
   }
 }
