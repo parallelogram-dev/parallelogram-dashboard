@@ -305,25 +305,12 @@
                 <div class="card__header card__header--row">
                   <div>
                     <h3 class="card__title">Variants</h3>
-                    <p class="card__description">Edit common fields in the table, or open a variant for everything else.</p>
+                    <p class="card__description" id="variantHint">Edit common fields in the table, or open a variant for everything else.</p>
                   </div>
-                  <div class="cluster cluster--sm">
-                    <div class="cluster cluster--sm" id="variantBulk" hidden>
-                      <span class="text--sm text--medium" id="variantSelected">0 selected</span>
-                      <button type="button" class="btn btn--outline btn--sm" id="bulkDuplicate">
-                        <svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg>
-                        Duplicate
-                      </button>
-                      <button type="button" class="btn btn--outline btn--sm" id="bulkRemove">
-                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
-                        Remove
-                      </button>
-                    </div>
-                    <button type="button" class="btn btn--outline btn--sm" id="addVariant">
-                      <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
-                      Add variant
-                    </button>
-                  </div>
+                  <button type="button" class="btn btn--outline btn--sm" id="addVariant">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+                    Add variant
+                  </button>
                 </div>
                 <div class="card__content card__content--flush">
                   <div class="table__wrapper table__wrapper--borderless">
@@ -337,7 +324,13 @@
                           <th class="table__head text--right">Price</th>
                           <th class="table__head text--right">Stock</th>
                           <th class="table__head">Status</th>
-                          <th class="table__head"><span class="sr-only">Actions</span></th>
+                          <th class="table__head table__actions">
+                            <span class="sr-only">Actions</span>
+                            <span data-overflow-actions id="variantBulk" hidden>
+                              <button type="button" class="btn btn--ghost btn--icon btn--sm" id="bulkDuplicate" data-priority="low" aria-label="Duplicate selected" data-tooltip="Duplicate selected" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
+                              <button type="button" class="btn btn--ghost btn--icon btn--sm" id="bulkRemove" data-priority="medium" aria-label="Remove selected" data-tooltip="Remove selected" data-tooltip-position="left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button>
+                            </span>
+                          </th>
                         </tr>
                       </thead>
                       <tbody class="table__body" id="variantRows">

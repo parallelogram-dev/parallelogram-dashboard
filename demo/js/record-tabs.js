@@ -12,7 +12,8 @@
   const unsaved = document.getElementById('unsavedBadge');
   const selectAll = document.getElementById('variantSelectAll');
   const bulk = document.getElementById('variantBulk');
-  const selected = document.getElementById('variantSelected');
+  const hint = document.getElementById('variantHint');
+  const defaultHint = hint.textContent;
   const sheet = document.getElementById('variantSheet');
   const position = document.getElementById('variantSheetPosition');
   const title = document.getElementById('variantSheetTitle');
@@ -33,7 +34,7 @@
     const picked = checked();
     count.textContent = all.length;
     bulk.hidden = picked.length === 0;
-    selected.textContent = `${picked.length} selected`;
+    hint.textContent = picked.length ? `${picked.length} of ${all.length} variants selected` : defaultHint;
     selectAll.checked = all.length > 0 && picked.length === all.length;
     selectAll.indeterminate = picked.length > 0 && picked.length < all.length;
   }
