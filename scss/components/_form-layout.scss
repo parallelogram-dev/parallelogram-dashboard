@@ -209,7 +209,7 @@
     }
 
     > :not(:first-child) {
-      margin-left: -1px;
+      margin-left: calc(var(--control-border-width) * -1);
     }
 
     > :focus,
@@ -248,7 +248,7 @@
 
       > :not(:first-child) {
         margin-left: 0;
-        margin-top: -1px;
+        margin-top: calc(var(--control-border-width) * -1);
       }
     }
   }
@@ -260,7 +260,7 @@
     font-size: $font-size-sm;
     white-space: nowrap;
     background-color: var(--bg-muted);
-    border: 1px solid var(--input);
+    border: var(--control-border-width) solid var(--input);
     color: var(--fg-muted);
   }
 

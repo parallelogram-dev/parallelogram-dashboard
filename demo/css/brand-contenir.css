@@ -1,0 +1,98 @@
+/**
+ * Contenir: the Contenir admin's scheme as a dashboard theme. Everything but the logo is a token.
+ *
+ * Values follow contenir-cms-mezzio/src/css/settings: the #231fff brand on the left-hand
+ * navigation's head only, so blue stays a brand mark and actions are charcoal; a near-black rail
+ * beside the #303036 charcoal section menu; the cool grey scale for text and surfaces (the page
+ * grey tinted halfway back to white); Contenir's feedback colours; and its tighter corners with
+ * 2px control borders. Contenir has no dark theme, so the dark values keep the dashboard's dark
+ * surfaces.
+ */
+:root[data-brand="contenir"] {
+  /* Page */
+  --bg: light-dark(#f3f4f5, #09090b);
+  --bg-muted: light-dark(#f4f5f6, #18181b);
+  --bg-subtle: light-dark(#e7e8ea, #27272a);
+  --fg: light-dark(#303036, #fafafa);
+  --fg-muted: light-dark(#6c6f76, #a1a1aa);
+  --fg-subtle: light-dark(#9ea1a6, #71717a);
+  --border: light-dark(#e7e8ea, #27272a);
+  --border-muted: light-dark(#f4f5f6, #18181b);
+  --card: light-dark(#ffffff, #18181b);
+  --card-fg: light-dark(#303036, #fafafa);
+  --popover: light-dark(#ffffff, #18181b);
+  --popover-fg: light-dark(#303036, #fafafa);
+  --input: light-dark(#d4d6d9, #3f3f46);
+  --input-placeholder: light-dark(#9ea1a6, #71717a);
+  --accent: light-dark(#f4f5f6, #27272a);
+  --accent-fg: light-dark(#303036, #fafafa);
+
+  /* Actions are charcoal; the brand blue is kept for the navigation's head */
+  --primary: light-dark(#303036, #fafafa);
+  --primary-fg: light-dark(#ffffff, #18181b);
+  --primary-hover: light-dark(#1a1b1f, #e4e4e7);
+  --secondary: light-dark(#f4f5f6, #27272a);
+  --secondary-fg: light-dark(#303036, #fafafa);
+  --secondary-hover: light-dark(#e7e8ea, #3f3f46);
+  --ring: light-dark(#6c6f76, #a1a1aa);
+  --ring-offset: light-dark(#ffffff, #09090b);
+  --destructive: #fc5130;
+  --destructive-hover: #e2401f;
+  --success: #5aad87;
+  --warning: #eda771;
+  --info: #4a90d9;
+  --avatar-bg: light-dark(#303036, #3a3c43);
+  --avatar-fg: #ffffff;
+
+  /* Shape */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --control-border-width: 2px;
+
+  /* Rail: near-black, with solid light icons drawn a little finer */
+  --navmenu-bg: light-dark(#1a1b1f, #09090b);
+  --navmenu-fg: #ffffff;
+  --navmenu-fg-muted: #a9abb1;
+  --navmenu-accent: #303036;
+  --navmenu-accent-fg: #ffffff;
+  --navmenu-border: #303036;
+  --navmenu-indicator: #6f6cff;
+  --navmenu-icon-stroke-width: 1.5;
+  --navmenu-head-bg: light-dark(#231fff, #1b18c9);
+  --navmenu-head-border: light-dark(#231fff, #1b18c9);
+
+  /* Section menu: Contenir's charcoal sidebar */
+  --subnav-bg: light-dark(#303036, #18181b);
+  --subnav-fg: #ffffff;
+  --subnav-fg-muted: #c4c6cb;
+  --subnav-fg-subtle: #8e9097;
+  --subnav-bg-muted: #3a3c43;
+  --subnav-bg-subtle: #4d4f56;
+  --subnav-accent: #3a3c43;
+  --subnav-accent-fg: #ffffff;
+  --subnav-border: #3a3c43;
+  --subnav-input: #4d4f56;
+  --subnav-input-placeholder: #8e9097;
+  --subnav-head-bg: light-dark(#231fff, #1b18c9);
+  --subnav-head-fg: #ffffff;
+  --subnav-head-fg-muted: #d3d2ff;
+  --subnav-head-accent: #3a37ff;
+  --subnav-head-accent-fg: #ffffff;
+  --subnav-head-border: light-dark(#231fff, #1b18c9);
+
+  /* Page header: white */
+  --header-bg: light-dark(#ffffff, #18181b);
+}
+
+/* Contenir's split-circle mark in place of the dashboard's logo */
+:root[data-brand="contenir"] .navmenu__logo {
+  --contenir-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 97'%3E%3Cpath d='M46.55,13.79H47V2.08A47.19,47.19,0,0,0,.15,43.33H11.71A35.31,35.31,0,0,1,46.55,13.79Z'/%3E%3Cpath d='M11.58,54H0A47.21,47.21,0,0,0,47,96.47V84.41h-.41A35.32,35.32,0,0,1,11.58,54Z'/%3E%3Cpath d='M11.71,43.33H47V13.8h-.41A35.31,35.31,0,0,0,11.71,43.33Z'/%3E%3Cpath d='M11.58,54a35.32,35.32,0,0,0,35,30.43H47V54Z'/%3E%3Cpath d='M75.62,28.32H89.25a47.3,47.3,0,0,0-31.63-25V15.4A35.51,35.51,0,0,1,75.62,28.32Z'/%3E%3Cpath d='M75.62,70.22a35.59,35.59,0,0,1-18,12.93v12.1a47.27,47.27,0,0,0,31.63-25Z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask: var(--contenir-mark) center / 1.75rem no-repeat;
+  mask: var(--contenir-mark) center / 1.75rem no-repeat;
+}
+
+:root[data-brand="contenir"] .navmenu__logo svg {
+  visibility: hidden;
+}

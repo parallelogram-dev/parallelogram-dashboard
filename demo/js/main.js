@@ -13,6 +13,32 @@ import {
 } from '@parallelogram-js/dashboard';
 
 // ============================================================================
+// Brand experiment - lays another product's colours over the theme tokens
+// ============================================================================
+
+const BRANDS = { contenir: 'css/brand-contenir.css' };
+
+function applyBrand(name) {
+  const root = document.documentElement;
+  document.getElementById('demo-brand')?.remove();
+  if (BRANDS[name]) {
+    const link = document.createElement('link');
+    link.id = 'demo-brand';
+    link.rel = 'stylesheet';
+    link.href = new URL(`../${BRANDS[name]}`, import.meta.url).href;
+    document.head.append(link);
+    root.dataset.brand = name;
+  } else {
+    delete root.dataset.brand;
+  }
+}
+
+const storedBrand = (() => {
+  try { return localStorage.getItem('demo-brand'); } catch { return null; }
+})();
+applyBrand(storedBrand);
+
+// ============================================================================
 // Demo Navigation - Floating menu to navigate between demo pages
 // ============================================================================
 
@@ -83,6 +109,7 @@ class DemoNav {
       chart: '<path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/>',
       layers: '<path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/>',
       photo: '<path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>',
+      palette: '<path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/><path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>',
       menu: '<path d="M4 6l16 0"/><path d="M4 12l16 0"/><path d="M4 18l16 0"/>',
       close: '<path d="M18 6l-12 12"/><path d="M6 6l12 12"/>',
     };
@@ -106,6 +133,9 @@ class DemoNav {
       <div class="demonav__menu">
         <div class="demonav__header">
           <span class="demonav__title">Demo Pages</span>
+          <button type="button" class="btn btn--outline btn--sm" data-demo-brand aria-pressed="${document.documentElement.dataset.brand === 'contenir'}">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${this.icons.palette}</svg>Contenir
+          </button>
         </div>
         <nav class="demonav__list">
           ${this.sections.map(section => `<p class="demonav__group">${section.title}</p>${section.pages.map(page => this.createPageLink(page)).join('')}`).join('')}
@@ -137,6 +167,13 @@ class DemoNav {
   bindEvents() {
     // Toggle menu
     this.trigger.addEventListener('click', () => this.toggle());
+
+    this.container.querySelector('[data-demo-brand]').addEventListener('click', (e) => {
+      const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+      e.currentTarget.setAttribute('aria-pressed', String(on));
+      applyBrand(on ? 'contenir' : null);
+      try { localStorage.setItem('demo-brand', on ? 'contenir' : ''); } catch { /* storage unavailable */ }
+    });
 
     // Close on outside click
     document.addEventListener('click', (e) => {

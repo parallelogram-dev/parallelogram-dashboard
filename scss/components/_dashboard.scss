@@ -40,7 +40,7 @@
   flex-direction: column;
   width: 4rem;
   height: 100vh;
-  background-color: var(--bg-muted);
+  @include chrome-region(navmenu);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
   z-index: $z-fixed + 1;
@@ -50,6 +50,7 @@
     align-items: center;
     justify-content: center;
     height: $navbar-height;
+    @include chrome-head(navmenu);
     border-bottom: 1px solid var(--border);
   }
 
@@ -120,7 +121,7 @@
         transform: translateY(-50%);
         width: 3px;
         height: 1.25rem;
-        background-color: var(--primary);
+        background-color: var(--navmenu-indicator);
         border-radius: $radius-full;
       }
     }
@@ -131,11 +132,11 @@
     }
   }
 
+  // Fixed so the rail's scrolling area can't clip it. With no offsets it keeps its static position,
+  // centred on the item by the item's flex alignment, and is then moved clear of the rail's edge
   &__tooltip {
-    position: absolute;
-    left: calc(100% + $spacing-2xs);
-    top: 50%;
-    transform: translateY(-50%);
+    position: fixed;
+    transform: translateX(calc(50% + 2.5rem));
     padding: $spacing-3xs $spacing-2xs;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
@@ -208,7 +209,7 @@
   flex-direction: column;
   width: 16rem;
   height: 100vh;
-  background-color: var(--bg);
+  @include chrome-region(subnav);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
   @include transition-default;
@@ -226,6 +227,7 @@
     justify-content: space-between;
     height: $navbar-height;
     padding: 0 $spacing-sm;
+    @include chrome-head(subnav);
     border-bottom: 1px solid var(--border);
   }
 
@@ -526,7 +528,7 @@
   justify-content: space-between;
   height: $navbar-height;
   padding: 0 $spacing-lg;
-  background-color: var(--bg);
+  @include chrome-region(header);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 
@@ -543,11 +545,12 @@
   }
 }
 
+// The page itself scrolls, so the content area isn't a scroll container and sticky parts of a page
+// (such as .pageheader--sticky) pin under the dashboard header
 .dashboard__content {
   flex: 1;
-  overflow-y: auto;
+  min-width: 0;
   padding: $spacing-lg;
-  @include scrollbar-thin;
 }
 
 // Open and close the off-canvas .subnav; only needed below lg, where the subnav leaves the layout

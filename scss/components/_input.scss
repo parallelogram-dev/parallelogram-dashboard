@@ -16,7 +16,7 @@
   padding: 0 $spacing-xs;
   font-size: $font-size-sm;
   background-color: transparent;
-  border: 1px solid var(--input);
+  border: var(--control-border-width) solid var(--input);
   border-radius: $radius-md;
   color: var(--fg);
   @include transition-colors;
@@ -125,7 +125,7 @@
     appearance: none;
     width: 1rem;
     height: 1rem;
-    border: 1px solid var(--input);
+    border: var(--control-border-width) solid var(--input);
     background-color: transparent;
     @include transition-default;
     cursor: pointer;

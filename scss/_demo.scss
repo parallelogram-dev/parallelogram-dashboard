@@ -329,6 +329,10 @@
   }
 
   &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2xs;
     padding: $spacing-2xs $spacing-xs;
     border-bottom: 1px solid var(--border);
     margin-bottom: $spacing-2xs;

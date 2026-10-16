@@ -5,6 +5,7 @@
 // ==========================================================================
 
 @use "sass:list";
+@use "sass:map";
 @use "variables" as *;
 
 // --------------------------------------------------------------------------
@@ -108,6 +109,45 @@ $theme-tokens: (
   chart-muted: ($zinc-500, $zinc-400),
 ) !default;
 
+// --------------------------------------------------------------------------
+// Chrome Tokens
+//
+// The rail (navmenu), section menu (subnav) and page header each read their own set, so a theme
+// can colour them apart from the page, such as a dark rail beside a light page. Inside a region
+// the component points the general tokens ($chrome-remapped) at its own, so everything in it
+// follows. Each value defaults to the general token, which keeps the standard look.
+// --------------------------------------------------------------------------
+
+$chrome-defaults: (
+  bg: var(--bg),
+  fg: var(--fg),
+  fg-muted: var(--fg-muted),
+  fg-subtle: var(--fg-subtle),
+  bg-muted: var(--bg-muted),
+  bg-subtle: var(--bg-subtle),
+  accent: var(--accent),
+  accent-fg: var(--accent-fg),
+  border: var(--border),
+  input: var(--input),
+  input-placeholder: var(--input-placeholder),
+  icon-stroke-width: var(--icon-stroke-width),
+);
+
+// A region's head (the logo cell, the section menu's title bar) can be coloured apart from its body
+@function _head-defaults($region) {
+  $head: ();
+  @each $name in (bg, fg, fg-muted, accent, accent-fg, border) {
+    $head: map.set($head, head-#{$name}, var(--#{$region}-#{$name}));
+  }
+  @return $head;
+}
+
+$chrome-tokens: (
+  navmenu: map.merge(map.merge($chrome-defaults, (bg: var(--bg-muted), indicator: var(--primary))), _head-defaults(navmenu)),
+  subnav: map.merge($chrome-defaults, _head-defaults(subnav)),
+  header: $chrome-defaults,
+) !default;
+
 :root {
   color-scheme: light dark;
 
@@ -123,6 +163,26 @@ $theme-tokens: (
 
   --ring-alpha: color-mix(in srgb, var(--ring) 25%, transparent);
   --chart-surface: var(--card);
+
+  // Shape
+  @each $name, $size in $radius-sizes {
+    --radius-#{$name}: #{$size};
+  }
+  --radius: var(--radius-lg);
+  --control-border-width: #{$control-border-width};
+  --icon-stroke-width: #{$icon-stroke-width};
+
+  // Chrome regions
+  @each $region, $tokens in $chrome-tokens {
+    @each $name, $value in $tokens {
+      --#{$region}-#{$name}: #{$value};
+    }
+  }
+
+  // The page's own values, kept for popovers that open inside a chrome region
+  @each $name in $chrome-remapped {
+    --page-#{$name}: var(--#{$name});
+  }
 }
 
 [data-theme="light"] {
