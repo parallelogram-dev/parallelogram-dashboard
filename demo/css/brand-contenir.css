@@ -2,11 +2,11 @@
  * Contenir: the Contenir admin's scheme as a dashboard theme. Everything but the logo is a token.
  *
  * Values follow contenir-cms-mezzio/src/css/settings: the #231fff brand on the left-hand
- * navigation's head and on primary actions, a near-black rail beside the #303036 charcoal section
- * menu, the cool grey scale for text and surfaces (the page grey tinted halfway back to white),
- * Contenir's feedback colours, and its tighter corners with 2px control borders. Contenir has no
- * dark theme, so the dark values keep the dashboard's dark surfaces and lift the brand to read on
- * them.
+ * navigation's head only, so blue stays a brand mark and actions are charcoal; a near-black rail
+ * beside the #303036 charcoal section menu; the cool grey scale for text and surfaces (the page
+ * grey tinted halfway back to white); Contenir's feedback colours; and its tighter corners with
+ * 2px control borders. Contenir has no dark theme, so the dark values keep the dashboard's dark
+ * surfaces.
  */
 :root[data-brand="contenir"] {
   /* Page */
@@ -27,21 +27,20 @@
   --accent: light-dark(#f4f5f6, #27272a);
   --accent-fg: light-dark(#303036, #fafafa);
 
-  /* Brand and status */
-  --primary: light-dark(#231fff, #6f6cff);
-  --primary-fg: #ffffff;
-  --primary-hover: light-dark(#1a17cc, #8a88ff);
+  /* Actions are charcoal; the brand blue is kept for the navigation's head */
+  --primary: light-dark(#303036, #fafafa);
+  --primary-fg: light-dark(#ffffff, #18181b);
+  --primary-hover: light-dark(#1a1b1f, #e4e4e7);
   --secondary: light-dark(#f4f5f6, #27272a);
   --secondary-fg: light-dark(#303036, #fafafa);
   --secondary-hover: light-dark(#e7e8ea, #3f3f46);
-  --ring: light-dark(#231fff, #6f6cff);
+  --ring: light-dark(#6c6f76, #a1a1aa);
   --ring-offset: light-dark(#ffffff, #09090b);
   --destructive: #fc5130;
   --destructive-hover: #e2401f;
   --success: #5aad87;
   --warning: #eda771;
   --info: #4a90d9;
-  --chart-1: light-dark(#231fff, #6f6cff);
   --avatar-bg: light-dark(#303036, #3a3c43);
   --avatar-fg: #ffffff;
 
