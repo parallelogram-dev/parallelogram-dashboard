@@ -233,6 +233,8 @@
   &__footer {
     text-align: center;
     margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--border);
     font-size: $font-size-sm;
     color: var(--fg-muted);
   }
@@ -242,7 +244,6 @@
     align-items: center;
     justify-content: center;
     gap: $spacing-2xs;
-    margin-top: $spacing-lg;
     font-size: $font-size-sm;
     color: var(--fg-muted);
     text-decoration: none;
