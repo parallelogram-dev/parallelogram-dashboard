@@ -1480,8 +1480,10 @@ class DemoNav {
       { name: 'System Check', href: 'system-check.html', icon: 'check' },
       { name: 'Fixing Issues', href: 'fixing.html', icon: 'tool' },
       { name: 'Onboarding', href: 'onboarding.html', icon: 'home' },
+      { name: '403', href: '403.html', icon: 'key' },
       { name: '404', href: '404.html', icon: 'alert' },
-      { name: '500 (Debug)', href: '500.html', icon: 'alert' },
+      { name: '500', href: '500.html', icon: 'alert' },
+      { name: '500 (Debug)', href: '500-debug.html', icon: 'tool' },
     ];
     this.icons = {
       grid: '<path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/>',

@@ -846,6 +846,9 @@ p-datetime.input:focus-within {
 .cluster--start {
   align-items: flex-start;
 }
+.cluster--center {
+  justify-content: center;
+}
 .cluster--between {
   justify-content: space-between;
 }

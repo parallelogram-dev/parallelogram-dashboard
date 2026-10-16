@@ -67,6 +67,7 @@
   &--xl { gap: 2rem; }
 
   &--start { align-items: flex-start; }
+  &--center { justify-content: center; }
   &--between { justify-content: space-between; }
 }
 
