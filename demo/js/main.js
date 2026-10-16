@@ -2806,6 +2806,26 @@ const WEB_COMPONENTS = {
 };
 
 /**
+ * The clear button in a toolbar search.
+ *
+ * A .toolbar__clear empties the .toolbar__input in its .toolbar__group, fires "input" so
+ * anything filtering on it updates, and puts focus back in the field. CSS shows the button only
+ * while the field has a value (the field needs a placeholder for that).
+ */
+class SearchClear {
+  static {
+    document.addEventListener('click', (e) => {
+      const button = e.target.closest('.toolbar__clear');
+      const input = button?.closest('.toolbar__group')?.querySelector('.toolbar__input');
+      if (!input) return;
+      input.value = '';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    });
+  }
+}
+
+/**
  * Load the @parallelogram-js/core pieces that markup inside root relies on.
  *
  * The package is copied into demo/vendor by `npm run build`; nothing is fetched when a page
@@ -2858,7 +2878,7 @@ function init(root = document) {
   };
 }
 
-window.Parallelogram = { init, ActionBar, OverflowActions, EditableTable, UnsavedGuard, Expandable, TableColumns,
+window.Parallelogram = { init, SearchClear, ActionBar, OverflowActions, EditableTable, UnsavedGuard, Expandable, TableColumns,
   TableSort, TableReorder, TablePaste, PublishSchedule, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager };
 
 /**

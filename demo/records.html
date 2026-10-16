@@ -247,8 +247,8 @@
             <div class="toolbar">
               <div class="toolbar__group">
                 <svg class="icon toolbar__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
-                <input type="text" class="toolbar__input" placeholder="Search records..." id="searchInput">
-                <button class="toolbar__clear" id="clearSearch" aria-label="Clear search">
+                <input type="search" class="toolbar__input" placeholder="Search records..." id="searchInput" aria-label="Search records">
+                <button type="button" class="toolbar__clear" id="clearSearch" aria-label="Clear search">
                   <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
                 </button>
               </div>
@@ -1321,15 +1321,6 @@
           i.setAttribute('aria-checked', String(checked));
         });
       });
-    });
-
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    const clearBtn = document.getElementById('clearSearch');
-
-    clearBtn.addEventListener('click', function() {
-      searchInput.value = '';
-      searchInput.focus();
     });
 
     // Select all functionality
