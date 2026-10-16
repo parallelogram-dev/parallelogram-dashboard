@@ -34,7 +34,8 @@
   border: 1px solid var(--border);
   border-radius: $radius-lg;
   box-shadow: $shadow-xl;
-  overflow: hidden;
+  // Clip rather than hide: the parked upload panel must never make the dialog scrollable
+  overflow: clip;
   opacity: 0;
   transform: scale(0.98);
   transition: opacity $transition-base $transition-easing, transform $transition-base $transition-easing;
@@ -51,6 +52,7 @@
   &__wrap {
     position: relative;
     height: 100%;
+    overflow: clip;
   }
 
   // The browser fills the dialog; a second panel (uploads) slides over its right side
@@ -94,6 +96,32 @@
     gap: $spacing-sm;
     padding: $spacing-xs $spacing-sm;
     border-bottom: 1px solid var(--border);
+
+    // The dialog clips anything above its top edge, so header tooltips open downwards
+    [data-tooltip]::after {
+      top: calc(100% + #{$spacing-2xs});
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    [data-tooltip]::before {
+      top: calc(100% + #{$spacing-2xs} - 10px);
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      border-color: transparent;
+      border-bottom-color: var(--primary);
+    }
+
+    // At the right edge, keep the tooltip inside the dialog
+    > [data-tooltip]:last-child::after {
+      left: auto;
+      right: 0;
+      transform: none;
+    }
   }
 
   &__title {

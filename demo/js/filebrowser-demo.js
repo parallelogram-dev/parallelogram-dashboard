@@ -166,7 +166,7 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn--ghost btn--icon btn--sm" data-filebrowser-close aria-label="Close" data-tooltip="Close" data-tooltip-position="left">${ICONS.remove}</button>
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" data-filebrowser-close aria-label="Close" data-tooltip="Close">${ICONS.remove}</button>
       </header>
       <div class="overlay__body" data-filebrowser-body>
         <header class="filebrowser__banner filebrowser__banner--hidden">
