@@ -550,8 +550,9 @@
   @include scrollbar-thin;
 }
 
-// Opens the off-canvas .subnav; only needed below lg, where the subnav leaves the layout
-.dashboard__subnav-toggle {
+// Open and close the off-canvas .subnav; only needed below lg, where the subnav leaves the layout
+.dashboard__subnav-toggle,
+.subnav__close {
   @include lg {
     display: none;
   }
