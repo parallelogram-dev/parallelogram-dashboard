@@ -32,6 +32,17 @@
     cursor: progress;
   }
 
+  // Icons are drawn with space inside their box, so a button with an icon beside its label looks
+  // heavier on the icon's side. Pulling a leading or trailing icon towards the edge evens it out
+  // to the eye. Icon-only buttons are centred and left alone.
+  &:not(.btn--icon) > .icon:first-child {
+    margin-left: -$spacing-3xs;
+  }
+
+  &:not(.btn--icon) > * + .icon:last-child {
+    margin-right: -$spacing-3xs;
+  }
+
   // Toggle buttons, and radio buttons in a group (role="radio"): only the neutral variants have
   // a distinct "on" look
   &--outline:is([aria-pressed="true"], [aria-checked="true"]),

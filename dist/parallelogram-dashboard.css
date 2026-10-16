@@ -1331,6 +1331,12 @@ code.code--sm {
 .btn[aria-busy=true] {
   cursor: progress;
 }
+.btn:not(.btn--icon) > .icon:first-child {
+  margin-left: -0.25rem;
+}
+.btn:not(.btn--icon) > * + .icon:last-child {
+  margin-right: -0.25rem;
+}
 .btn--outline:is([aria-pressed=true], [aria-checked=true]), .btn--ghost:is([aria-pressed=true], [aria-checked=true]) {
   background-color: var(--accent);
   color: var(--accent-fg);
