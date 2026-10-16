@@ -1571,6 +1571,7 @@ class DemoNav {
       { name: 'Analytics', href: 'analytics.html', icon: 'home' },
       { name: 'Team', href: 'team.html', icon: 'user' },
       { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
+      { name: 'Record with Tabs', href: 'record-edit-tabs.html', icon: 'edit' },
       { name: 'Record Delete', href: 'record-delete.html', icon: 'trash' },
       { name: 'Settings', href: 'settings.html', icon: 'settings' },
       { name: 'Account Settings', href: 'settings-account.html', icon: 'user' },
