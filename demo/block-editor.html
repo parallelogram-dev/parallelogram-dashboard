@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block Editor - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <!-- Prototype only: these styles stay with this page until the block editor pattern is agreed -->
+  <style>
+    .blk-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+    .blk-card { display: grid; grid-template-columns: 1.5rem 10rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: center; padding: 0.5rem 0.5rem 0.5rem 0.25rem; background: var(--card); border: 2px solid var(--border); border-radius: 2px; cursor: pointer; transition: border-color 150ms, box-shadow 150ms; }
+    .blk-card:hover { border-color: var(--fg-subtle); }
+    .blk-card:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+    .blk-card[data-editing] { border-color: var(--primary); }
+    .blk-card[data-hidden] .blk-wire, .blk-card[data-hidden] .blk-card__body { opacity: 0.4; }
+    .blk-card[data-hidden] [data-visible] { color: var(--fg-muted); }
+    .blk-canvas { padding: 0.75rem; background: var(--bg-muted); border-radius: 0.5rem; }
+    /* Wireframe of a block's layout */
+    .blk-wire { --wire-bg: var(--card); --wire-ink: color-mix(in srgb, var(--fg) 22%, transparent); --wire-media: color-mix(in srgb, var(--fg) 10%, transparent); display: flex; gap: 0.4rem; width: 10rem; padding: 0.5rem; overflow: hidden; background: var(--wire-bg); border: 1px solid var(--border); border-radius: 1px; }
+    .blk-wire[data-theme-preview="dark"] { --wire-bg: #0f172a; --wire-ink: rgb(255 255 255 / 0.45); --wire-media: rgb(255 255 255 / 0.12); }
+    .blk-wire[data-theme-preview="light"] { --wire-bg: #f1f5f9; }
+    .blk-wire__media { display: flex; flex: 0 0 calc(var(--span, 0.5) * 100% - 0.15rem); }
+    .blk-wire__img { flex: 1; min-width: 0; background: var(--wire-media) center / cover no-repeat; border-radius: 0.2rem; }
+    .blk-wire__text { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 0.2rem; min-width: 0; }
+    .blk-wire__line { height: 0.22rem; background: var(--wire-ink); border-radius: 999px; }
+    .blk-wire__line:last-child { width: 70%; }
+    .blk-wire__line--head { height: 0.4rem; width: 80%; margin-bottom: 0.1rem; }
+    .blk-wire--row-reverse { flex-direction: row-reverse; }
+    .blk-wire--stack { flex-direction: column; }
+    .blk-wire--stack .blk-wire__media { flex: 1 1 60%; }
+    .blk-wire--stack .blk-wire__text { flex: 0 0 auto; }
+    .blk-wire--align-left { justify-content: flex-start; }
+    .blk-wire--align-center { justify-content: center; }
+    .blk-wire--align-right { justify-content: flex-end; }
+    .blk-wire--measure-narrow { padding-inline: 1.6rem; }
+    .blk-wire--measure-regular { padding-inline: 0.9rem; }
+    .blk-wire--quote { align-items: center; padding-inline: 0.7rem; }
+    .blk-wire__mark { font: 700 2rem/1 Georgia, serif; color: var(--wire-ink); }
+    .blk-wire--tiles .blk-wire__img { aspect-ratio: 3 / 4; flex: 1; align-self: center; }
+    .blk-card[data-dragging] { position: relative; z-index: 2; border-color: var(--primary); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15); cursor: grabbing; }
+    /* While a block is dragged the add-block rows keep their space but can't be used */
+    .blk-list[data-reordering] .blk-insert { visibility: hidden; pointer-events: none; }
+    .blk-list[data-reordering] .blk-card:not([data-dragging]) { pointer-events: none; }
+    .blk-card__handle { display: inline-flex; align-self: stretch; align-items: center; justify-content: center; padding: 0; color: var(--fg-subtle); background: none; border: 0; cursor: grab; touch-action: none; }
+    .blk-card__body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+    .blk-card__type { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 500; color: var(--fg-muted); }
+    .blk-card__type .icon { width: 0.875rem; height: 0.875rem; }
+    .blk-card__title { font-size: 0.9375rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .blk-card__heading { display: flex; align-items: center; gap: 0.375rem; min-width: 0; }
+    .blk-card__warn { display: inline-flex; flex-shrink: 0; color: var(--warning); }
+    .blk-card__warn .icon { width: 1rem; height: 1rem; }
+    .blk-card__actions { display: flex; align-items: center; gap: 0.25rem; }
+    .blk-insert { position: relative; display: flex; justify-content: center; height: 1rem; }
+    .blk-insert::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--primary); opacity: 0; transition: opacity 150ms; }
+    .blk-insert button { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; padding: 0; color: var(--primary-fg); background: var(--primary); border: 0; border-radius: 999px; opacity: 0; transform: scale(0.8); transition: opacity 150ms, transform 150ms; cursor: pointer; }
+    .blk-insert button .icon { width: 0.875rem; height: 0.875rem; }
+    .blk-insert:hover::before, .blk-insert:focus-within::before { opacity: 0.6; }
+    .blk-insert:hover button, .blk-insert button:focus-visible { opacity: 1; transform: none; }
+    @media (hover: none) { .blk-insert button { opacity: 1; transform: none; } }
+    .blk-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.75rem; }
+    .blk-type { display: flex; flex-direction: column; gap: 0.375rem; padding: 0.75rem; text-align: left; color: inherit; font: inherit; background: var(--card); border: 1px solid var(--border); border-radius: 0.5rem; cursor: pointer; }
+    .blk-type:hover, .blk-type:focus-visible { border-color: var(--primary); }
+    .blk-type__icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); border-radius: 0.375rem; }
+    .blk-type__name { font-size: 0.875rem; font-weight: 600; }
+    .blk-type__text { font-size: 0.75rem; color: var(--fg-muted); }
+    .blk-image { display: flex; align-items: center; gap: 0.75rem; }
+    .blk-image__preview { width: 7rem; aspect-ratio: 4 / 3; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--fg-subtle); background: var(--bg-muted); border: 1px dashed var(--border); border-radius: 0.375rem; }
+    .blk-image__preview img { width: 100%; height: 100%; object-fit: cover; }
+    .blk-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); gap: 0.5rem; }
+    .blk-images button { padding: 0; aspect-ratio: 4 / 3; overflow: hidden; border: 2px solid transparent; border-radius: 0.375rem; cursor: pointer; background: none; }
+    .blk-images button[aria-checked="true"] { border-color: var(--primary); }
+    .blk-images img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .blk-link { position: relative; }
+    .blk-linkbar:focus-within { border-color: var(--ring); box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 30%, transparent); }
+    .blk-linkbar__lead { justify-content: center; width: 2.5rem; padding: 0; color: var(--fg-muted); }
+    .blk-linkbar__lead img { width: 1.5rem; height: 1.5rem; object-fit: cover; border-radius: 1px; }
+    .blk-linkbar__lead .icon { width: 1rem; height: 1rem; }
+    .blk-linkbar__main { flex: 1; min-width: 0; padding: 0; }
+    .blk-linkbar__input { width: 100%; height: 100%; padding: 0 0.625rem; font: inherit; color: var(--fg); background: transparent; border: 0; outline: 0; }
+    .blk-linkbar__input::placeholder { color: var(--input-placeholder, var(--fg-subtle)); }
+    .blk-linkbar__entry { display: flex; align-items: center; gap: 0.5rem; width: 100%; height: 100%; min-width: 0; padding: 0 0.625rem; font: inherit; text-align: left; color: inherit; background: transparent; border: 0; cursor: text; }
+    .blk-linkbar__entry .blk-entry__title, .blk-linkbar__entry .blk-entry__path { line-height: 1.25; }
+    .blk-linkbar__addon { justify-content: center; width: 2.25rem; padding: 0; color: var(--fg-muted); cursor: pointer; }
+    .blk-linkbar__addon:hover { color: var(--fg); background: var(--accent); }
+    .blk-linkbar__addon[hidden] { display: none; }
+    .blk-suggest { position: absolute; top: calc(100% + 0.25rem); left: 0; right: 0; z-index: 5; margin: 0; padding: 0.25rem; list-style: none; background: var(--popover, var(--card)); border: 1px solid var(--border); border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+    .blk-suggest__item { display: flex; align-items: center; gap: 0.625rem; padding: 0.375rem 0.5rem; border-radius: 0.375rem; cursor: pointer; }
+    .blk-suggest__item > .icon { flex-shrink: 0; width: 1rem; height: 1rem; color: var(--fg-muted); }
+    .blk-suggest__item[aria-selected="true"], .blk-suggest__item:hover { background: var(--accent); }
+    .blk-entries { display: flex; flex-direction: column; gap: 0.375rem; }
+    .blk-entry { display: flex; align-items: center; gap: 0.625rem; padding: 0.375rem 0.5rem; text-align: left; color: inherit; font: inherit; background: var(--card); border: 1px solid var(--border); border-radius: 2px; }
+    .blk-entry { cursor: pointer; }
+    .blk-entry:hover { border-color: var(--fg-subtle); }
+    .blk-entry[aria-checked="true"] { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+    .blk-entry__icon { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; width: 2rem; height: 2rem; overflow: hidden; color: var(--fg-muted); background: var(--bg-muted); border-radius: 2px; }
+    .blk-entry__icon img { width: 100%; height: 100%; object-fit: cover; }
+    .blk-entry__text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+    .blk-entry__title { font-size: 0.875rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .blk-entry__path { font-size: 0.75rem; color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .blk-options { display: flex; width: 100%; }
+    .blk-options > .btn { flex: 1; }
+    .blk-swatches { display: flex; gap: 0.5rem; }
+    .blk-swatch { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.375rem; font: inherit; font-size: 0.75rem; color: var(--fg-muted); background: none; border: 1px solid var(--border); border-radius: 0.5rem; cursor: pointer; }
+    .blk-swatch span:first-child { width: 2.5rem; height: 1.75rem; border: 1px solid var(--border); border-radius: 0.25rem; }
+    .blk-swatch[aria-checked="true"] { color: var(--fg); border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+    .blk-field-hint { font-size: 0.75rem; color: var(--fg-muted); }
+    .blk-picks { display: flex; flex-direction: column; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+    .blk-pick { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: center; padding: 0.375rem; border: 1px solid var(--border); border-radius: 0.5rem; }
+    .blk-pick img { width: 3.5rem; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.25rem; }
+    .blk-head { display: flex; align-items: flex-start; gap: 0.5rem; min-width: 0; }
+    .blk-head .breadcrumb { font-size: 0.75rem; }
+    .blk-head .breadcrumb + .sheet__title { margin-top: 0.5rem; }
+    .blk-head .breadcrumb__link { cursor: pointer; background: none; border: 0; padding: 0; font: inherit; color: var(--fg-muted); }
+    .blk-head .breadcrumb__link:hover { color: var(--fg); text-decoration: underline; }
+    .blk-view { animation: blk-in 180ms ease-out; }
+    .blk-view[data-from="back"] { animation-name: blk-back; }
+    @keyframes blk-in { from { opacity: 0; transform: translateX(1.5rem); } }
+    @keyframes blk-back { from { opacity: 0; transform: translateX(-1.5rem); } }
+    @media (prefers-reduced-motion: reduce) { .blk-view { animation: none; } }
+    .blk-confirm { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.5rem 0.75rem; font-size: 0.875rem; background: var(--warning-muted); border-radius: 0.5rem; }
+    .blk-confirm span { margin-right: auto; }
+    @media (max-width: 639px) {
+      .blk-card { grid-template-columns: 1.25rem minmax(0, 1fr) auto; }
+      .blk-wire { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Main Navigation (Icon Rail) -->
+    <nav class="navmenu" aria-label="Main">
+      <div class="navmenu__header">
+        <a href="dashboard.html" class="navmenu__logo" aria-label="Dashboard home">
+          <svg class="icon icon--lg" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg>
+        </a>
+      </div>
+
+      <div class="navmenu__content">
+        <div class="navmenu__section">
+          <a href="dashboard.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+            <span class="navmenu__tooltip">Home</span>
+          </a>
+          <a href="pages.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+            <span class="navmenu__tooltip">Pages</span>
+          </a>
+          <a href="records.html" class="navmenu__item" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0"/><path d="M4 6v6a8 3 0 0 0 16 0v-6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+            <span class="navmenu__tooltip">Records</span>
+          </a>
+          <a href="media.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg>
+            <span class="navmenu__tooltip">Media</span>
+          </a>
+          <a href="analytics.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+            <span class="navmenu__tooltip">Analytics</span>
+          </a>
+          <a href="team.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+            <span class="navmenu__tooltip">Team</span>
+          </a>
+        </div>
+
+        <div class="navmenu__section">
+          <a href="settings.html" class="navmenu__item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+            <span class="navmenu__tooltip">Settings</span>
+          </a>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- Sub Navigation -->
+    <aside class="subnav" id="subnav" aria-label="Section navigation">
+      <div class="subnav__header">
+        <h2 class="subnav__title">My site</h2>
+        <div class="subnav__actions">
+          <a href="#" class="subnav__action" target="_blank" rel="noopener" aria-label="View site (opens in a new tab)" data-tooltip="View site">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></svg>
+          </a>
+          <button type="button" class="subnav__action subnav__close" data-toggle-close aria-label="Close section menu" data-tooltip="Close" data-tooltip-position="bottom"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+        </div>
+      </div>
+
+      <div class="subnav__content">
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Views</span>
+          </div>
+          <div class="subnav__list">
+            <a href="records.html" class="subnav__item" aria-current="page">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></svg>
+              <span class="subnav__item-text">All Records</span>
+            </a>
+            <a href="record-form.html" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>
+              <span class="subnav__item-text">Add New</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="subnav__section">
+          <div class="subnav__section-header">
+            <span class="subnav__section-title">Quick Templates</span>
+          </div>
+          <div class="subnav__list">
+            <a href="record-form.html?type=product" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></svg>
+              <span class="subnav__item-text">Product</span>
+            </a>
+            <a href="record-form.html?type=customer" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+              <span class="subnav__item-text">Customer</span>
+            </a>
+            <a href="record-form.html?type=order" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17h-11v-14h-2"/><path d="M6 5l14 1l-1 7h-13"/></svg>
+              <span class="subnav__item-text">Order</span>
+            </a>
+            <a href="record-form.html?type=invoice" class="subnav__item">
+              <svg class="icon subnav__item-icon" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 7l1 0"/><path d="M9 13l6 0"/><path d="M13 17l2 0"/></svg>
+              <span class="subnav__item-text">Invoice</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="dashboard__overlay" id="subnav-overlay" aria-hidden="true"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <div class="dashboard__header-left">
+          <button type="button" class="btn btn--ghost btn--icon dashboard__subnav-toggle" aria-label="Section menu" aria-controls="subnav" data-tooltip="Section menu" data-tooltip-position="bottom"
+                  data-toggle data-toggle-target="#subnav" data-toggle-class="subnav--open" data-toggle-overlay="#subnav-overlay">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l16 0"/><path d="M4 12l16 0"/><path d="M4 18l16 0"/></svg>
+          </button>
+          <nav class="breadcrumb">
+            <ol class="breadcrumb__list">
+              <li class="breadcrumb__item">
+                <a href="dashboard.html" class="breadcrumb__link">Home</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <a href="records.html" class="breadcrumb__link">Records</a>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__separator">
+                  <svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                </span>
+              </li>
+              <li class="breadcrumb__item">
+                <span class="breadcrumb__page">About</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dashboard__header-right">
+          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+          </button>
+          <div class="dropdown dropdown--right">
+            <button type="button" class="btn btn--ghost btn--icon dropdown__trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Notifications" data-toggle data-toggle-target="#notificationsPanel" data-toggle-capture="true" style="position: relative;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+              <span class="badge badge--destructive badge--dot" aria-hidden="true" style="position: absolute; top: 0.375rem; right: 0.375rem;"></span>
+            </button>
+            <div id="notificationsPanel" class="dropdown__menu dropdown__menu--lg" role="dialog" aria-label="Notifications">
+              <div class="cluster cluster--between" style="padding: 0.375rem 0.5rem;">
+                <span class="text--sm text--semibold">Notifications</span>
+                <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notify__time">5 minutes ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--success" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notify__time">1 hour ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--warning" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notify__time">3 hours ago</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notify__time">Yesterday</span>
+                </span>
+              </a>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--error" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notify__time">2 days ago</span>
+                </span>
+              </a>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="#" class="dropdown__item" style="justify-content: center;">
+                <span class="dropdown__item-text">View all notifications</span>
+              </a>
+            </div>
+          </div>
+          <a href="settings-account.html" class="avatar" aria-label="Your account">
+            <span class="avatar__fallback">JD</span>
+            <span class="avatar__status avatar__status--online"></span>
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard__content">
+        <div class="pageheader pageheader--row">
+          <div class="pageheader__content">
+            <h1 class="pageheader__title">About <span class="badge badge--warning-muted" id="pageUnsaved" hidden>Unsaved changes</span></h1>
+            <p class="pageheader__description">Page &middot; a mock-up of the block editor</p>
+          </div>
+          <div class="pageheader__actions">
+            <a href="index.html" class="btn btn--ghost"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>Cancel</a>
+            <button type="button" class="btn btn--primary" id="savePage"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>Save page</button>
+          </div>
+        </div>
+
+        <div class="grid grid--2-1 grid--start">
+          <div class="stack stack--lg">
+            <div class="card">
+              <div class="card__header card__header--row">
+                <div>
+                  <h3 class="card__title">Content</h3>
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="blk-canvas"><ol class="blk-list" id="blocks" aria-label="Blocks"></ol></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack stack--lg">
+            <div class="card">
+              <div class="card__header"><h3 class="card__title">Page</h3></div>
+              <div class="card__content">
+                <div class="form">
+                  <div class="form__field">
+                    <label class="form__label" for="pageTitle">Title</label>
+                    <input type="text" class="input form__control" id="pageTitle" value="About">
+                  </div>
+                  <div class="form__field">
+                    <label class="form__label" for="pageUrl">URL</label>
+                    <input type="text" class="input form__control" id="pageUrl" value="about">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <dialog class="sheet sheet--right sheet--lg" id="blockSheet" aria-labelledby="blockSheetTitle">
+    <button type="button" class="sheet__backdrop" data-sheet-close aria-label="Close" tabindex="-1"></button>
+    <div class="sheet__panel">
+      <div class="sheet__header" id="blockSheetHeader"></div>
+      <div class="sheet__content" id="blockSheetBody"></div>
+      <div class="sheet__footer" id="blockSheetFooter"></div>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+  <script src="js/block-editor.js"></script>
+</body>
+</html>
