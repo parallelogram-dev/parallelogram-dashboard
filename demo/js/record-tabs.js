@@ -128,6 +128,9 @@
     });
   }
 
+  // A new order saves like an edit, shown on the row that moved
+  rows.closest('table').addEventListener('table:reorder', e => save(e.detail.row));
+
   rows.addEventListener('input', (e) => {
     const row = e.target.closest('[data-variant]');
     if (row && e.target.matches('.table__control')) markChanged(row);

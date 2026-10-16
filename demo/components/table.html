@@ -210,6 +210,43 @@
               </div>
             </div>
           </div>
+          <div class="demo-label spacer--xl">Reordering rows</div>
+          <p class="text--sm text--muted spacer--md">Give a table <code>data-table-reorder</code> and a first <code>.table__handle</code> column holding a handle button in each row. Drag a handle and the row moves into place as you go, with the other rows sliding aside and the table scrolling near its edges; Escape puts it back. With the keyboard, focus a handle and press Space to pick the row up, the arrow keys to move it and Space to drop it. The row being moved carries <code>data-dragging</code>, moves are announced, and the table fires <code>table:reorder</code> with <code>{ row, from, to }</code>. A reorderable table can't also sort by column, so leave its headers plain. With <code>.table--sticky-start</code>, the handle, checkbox and first column stay pinned together.</p>
+          <div class="constrain constrain--sm spacer--lg">
+            <div class="table__wrapper">
+              <table class="table table--editable" data-table-reorder>
+                <thead class="table__header">
+                  <tr class="table__row">
+                    <th class="table__head table__handle"><span class="sr-only">Order</span></th>
+                    <th class="table__head">Block</th>
+                    <th class="table__head">Type</th>
+                  </tr>
+                </thead>
+                <tbody class="table__body">
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Hero banner"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Hero banner" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option selected>Image</option><option>Text</option><option>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Introduction"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Introduction" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option selected>Text</option><option>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Product gallery"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Product gallery" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option>Text</option><option selected>Gallery</option><option>Button</option></select></td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder Call to action"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></td>
+                    <td class="table__cell"><input type="text" class="table__control table__control--wide" value="Call to action" aria-label="Title"></td>
+                    <td class="table__cell"><select class="table__control" aria-label="Type"><option>Image</option><option>Text</option><option>Gallery</option><option selected>Button</option></select></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

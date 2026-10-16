@@ -2,6 +2,8 @@ import { bem, cx, escape } from '../lib.js';
 
 const SORT_ICON = '<path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/>';
 
+const GRIP = '<path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>';
+
 const STATUS = { Active: 'badge--success-muted', Pending: 'badge--warning-muted', Inactive: 'badge--destructive-muted' };
 
 const ROWS = [
@@ -24,7 +26,7 @@ function checkbox(label) {
 
 function head(s, column) {
   const align = column.right ? ' text--right' : '';
-  if (!s.sortable) {
+  if (!s.sortable || s.reorder) {
     return `<th class="table__head${align}" scope="col">${column.label}</th>`;
   }
   const sorted = column.key === 'name' && s.sort;
@@ -86,14 +88,15 @@ export default {
         { value: 'borderless', label: 'Borderless scroll wrapper' },
       ],
     },
-    { key: 'sortable', label: 'Sortable headers', type: 'toggle', default: true },
+    { key: 'sortable', label: 'Sortable headers', type: 'toggle', default: true, when: s => !s.reorder },
+    { key: 'reorder', label: 'Drag to reorder', type: 'toggle' },
     {
       key: 'sort',
       label: 'Sort by name',
       type: 'select',
       default: 'ascending',
       options: [{ value: '', label: 'Unsorted' }, { value: 'ascending', label: 'Ascending' }, { value: 'descending', label: 'Descending' }],
-      when: s => s.sortable,
+      when: s => s.sortable && !s.reorder,
     },
     { key: 'selectable', label: 'Checkbox column', type: 'toggle' },
     { key: 'actions', label: 'Actions column', type: 'toggle', default: true },
@@ -115,11 +118,12 @@ export default {
     { name: 'Inside a card', state: { density: 'card', wrapper: 'borderless', sortable: false } },
     { name: 'Responsive', state: { responsive: true, actions: false } },
     { name: 'Empty', state: { empty: true, sortable: false } },
-    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true, stickyStart: true, stickyHeader: true } },
+    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true, stickyStart: true, stickyHeader: true, reorder: true } },
   ],
   render(s) {
-    const span = COLUMNS.length + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
+    const span = COLUMNS.length + (s.reorder ? 1 : 0) + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
     const headCells = [
+      s.reorder ? '<th class="table__head table__handle" scope="col"><span class="sr-only">Order</span></th>' : '',
       s.selectable ? `<th class="table__head table__checkbox" scope="col">${checkbox('Select all')}</th>` : '',
       ...COLUMNS.map(c => head(s, c)),
       s.actions ? '<th class="table__head table__actions" scope="col">Actions</th>' : '',
@@ -128,6 +132,7 @@ export default {
     const rows = s.empty
       ? [`<tr class="table__row"><td class="table__empty" colspan="${span}">No customers match your filters.</td></tr>`]
       : ROWS.map(row => `<tr class="${bem('table__row', s.editable && ROW_STATE[row.name])}">`
+        + (s.reorder ? `<td class="table__cell table__handle"><button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Reorder ${escape(row.name)}"><svg class="icon" viewBox="0 0 24 24">${GRIP}</svg></button></td>` : '')
         + (s.selectable ? `<td class="table__cell table__checkbox">${checkbox(`Select ${row.name}`)}</td>` : '')
         + COLUMNS.map(c => cell(s, c, row)).join('')
         + (s.actions
@@ -147,7 +152,7 @@ export default {
 
     const caption = s.caption ? `<caption class="table__caption">${escape(s.caption)}</caption>` : '';
     const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions', s.stickyHeader && 'sticky-header', s.stickyStart && 'sticky-start');
-    const table = `<table class="${className}">${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
+    const table = `<table class="${className}"${s.reorder ? ' data-table-reorder' : ''}>${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
       + `<tbody class="table__body">${rows.join('')}</tbody>${footer}</table>`;
 
     if (!s.wrapper) {
