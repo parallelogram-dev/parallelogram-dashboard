@@ -281,26 +281,75 @@
     list.querySelector(`[data-visible="${block.id}"]`)?.focus();
   });
 
-  // Drag a card's handle to reorder; cards swap as the pointer passes their middle
+  /**
+   * Drag a card's handle to reorder. Each card moves together with the "add block" row above it,
+   * so the gaps stay even; while dragging those rows are hidden, the card follows the pointer and
+   * the others slide out of the way. Escape puts it back.
+   */
   list.addEventListener('pointerdown', (e) => {
     const handle = e.target.closest('[data-reorder]');
     if (!handle || e.button !== 0) return;
     e.preventDefault();
     const item = handle.closest('[data-block]');
+    const pair = () => [item.previousElementSibling, item];
+    const grab = e.clientY - item.getBoundingClientRect().top;
+    let pointerY = e.clientY;
+    list.setAttribute('data-reordering', '');
     item.setAttribute('data-dragging', '');
-    const move = (ev) => {
-      const cards = [...list.querySelectorAll('[data-block]')].filter(el => el !== item);
-      const after = cards.find(el => ev.clientY < el.getBoundingClientRect().top + el.offsetHeight / 2);
-      list.insertBefore(item, after ? after.previousElementSibling : list.lastElementChild);
+
+    const follow = () => {
+      item.style.transform = '';
+      item.style.transform = `translateY(${pointerY - grab - item.getBoundingClientRect().top}px)`;
     };
-    const up = () => {
+
+    /** Move the card (and its row) before another card's row, sliding the others into place. */
+    const place = (beforeEl) => {
+      const others = [...list.querySelectorAll('[data-block]')].filter(el => el !== item);
+      const tops = new Map(others.map(el => [el, el.getBoundingClientRect().top]));
+      list.insertBefore(pair()[0], beforeEl);
+      list.insertBefore(item, beforeEl);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      tops.forEach((top, el) => {
+        const delta = top - el.getBoundingClientRect().top;
+        if (delta) el.animate([{ transform: `translateY(${delta}px)` }, { transform: 'none' }], { duration: 150, easing: 'ease-out' });
+      });
+    };
+
+    const move = (ev) => {
+      pointerY = ev.clientY;
+      const others = [...list.querySelectorAll('[data-block]')].filter(el => el !== item);
+      const next = others.find((el) => {
+        const r = el.getBoundingClientRect();
+        const shift = new DOMMatrixReadOnly(getComputedStyle(el).transform).m42;
+        return pointerY < r.top - shift + r.height / 2;
+      });
+      // The row above the next card, or the closing "Add block" row when dropping at the end
+      const beforeEl = next ? next.previousElementSibling : list.lastElementChild;
+      const already = item.nextElementSibling === beforeEl;
+      if (!already) place(beforeEl);
+      follow();
+    };
+
+    const finish = (commit) => {
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerup', up);
-      blocks = [...list.querySelectorAll('[data-block]')].map(el => find(blocks, el.dataset.block));
+      document.removeEventListener('keydown', escape, true);
+      // Cancelling just redraws from the order the blocks had before the drag
+      if (commit) blocks = [...list.querySelectorAll('[data-block]')].map(el => find(blocks, el.dataset.block));
+      list.removeAttribute('data-reordering');
       renderList();
     };
+    const up = () => finish(true);
+    const escape = (ev) => {
+      if (ev.key !== 'Escape') return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      finish(false);
+    };
+
     document.addEventListener('pointermove', move);
     document.addEventListener('pointerup', up);
+    document.addEventListener('keydown', escape, true);
   });
 
   document.getElementById('savePage').addEventListener('click', () => {

@@ -39,8 +39,11 @@
     .blk-wire--quote { align-items: center; padding-inline: 0.7rem; }
     .blk-wire__mark { font: 700 1.5rem/1 Georgia, serif; color: var(--wire-ink); }
     .blk-wire--tiles .blk-wire__img { aspect-ratio: 3 / 4; flex: 1; align-self: center; }
-    .blk-card[data-dragging] { position: relative; z-index: 2; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.12); }
-    .blk-card__handle { display: inline-flex; justify-content: center; padding: 0; color: var(--fg-subtle); background: none; border: 0; cursor: grab; touch-action: none; }
+    .blk-card[data-dragging] { position: relative; z-index: 2; border-color: var(--primary); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15); cursor: grabbing; }
+    /* While a block is dragged the add-block rows keep their space but can't be used */
+    .blk-list[data-reordering] .blk-insert { visibility: hidden; pointer-events: none; }
+    .blk-list[data-reordering] .blk-card:not([data-dragging]) { pointer-events: none; }
+    .blk-card__handle { display: inline-flex; align-self: stretch; align-items: center; justify-content: center; padding: 0; color: var(--fg-subtle); background: none; border: 0; cursor: grab; touch-action: none; }
     .blk-card__body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
     .blk-card__type { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 500; color: var(--fg-muted); }
     .blk-card__type .icon { width: 0.875rem; height: 0.875rem; }
