@@ -23,7 +23,7 @@
       <div class="docs__intro">
         <p class="docs__eyebrow">Data display</p>
         <h1 class="docs__title">Table</h1>
-        <p class="docs__lead">Data display in rows and columns.</p>
+        <p class="docs__lead">Data display in rows and columns. Add <code>.table--editable</code> to edit rows in place, and <code>data-overflow-actions</code> to fold row actions into a "⋯" menu when space runs out.</p>
       </div>
 
       <section class="docs__section" aria-labelledby="playground-heading">
@@ -73,6 +73,54 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="demo-label spacer--xl">Editable rows with folding actions</div>
+          <p class="text--sm text--muted spacer--md">In a <code>.table--editable</code>, cells hold <code>.table__control</code> inputs and selects that sit flush until hovered or focused (<code>--number</code> right-aligns figures). Mark rows with unsaved edits <code>.table__row--changed</code> and added rows <code>.table__row--new</code>. Give the actions cell <code>data-overflow-actions</code> and mark foldable buttons <code>data-priority="low"</code> (folds first) or <code>"medium"</code>. Rows in the same <code>.table__wrapper</code> fold together, before the table would scroll sideways or a text input could no longer show its value; anything marked <code>data-overflow-protect</code> counts too. The script only sets <code>data-overflow-level</code> on the wrapper and the stylesheet hides what that level folds. The "⋯" menu is built when it opens, from each action's icon and <code>aria-label</code> or <code>data-label</code>, and floats in the top layer so the table can't clip it. This example is narrow, so its actions fold.</p>
+          <div class="constrain constrain--sm spacer--lg">
+            <div class="table__wrapper">
+              <table class="table table--editable">
+                <thead class="table__header">
+                  <tr class="table__row">
+                    <th class="table__head">SKU</th>
+                    <th class="table__head text--right">Price</th>
+                    <th class="table__head">Status</th>
+                    <th class="table__head"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody class="table__body">
+                <tr class="table__row">
+                  <td class="table__cell"><input type="text" class="table__control" value="DL-SM-BLK" aria-label="SKU"></td>
+                  <td class="table__cell"><input type="text" class="table__control table__control--number" value="89.00" aria-label="Price"></td>
+                  <td class="table__cell"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                  <td class="table__cell table__actions" data-overflow-actions>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Edit all fields"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="low" aria-label="Duplicate"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="medium" aria-label="Remove"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button>
+                  </td>
+                </tr>
+                <tr class="table__row table__row--changed">
+                  <td class="table__cell"><input type="text" class="table__control" value="DL-SM-WHT" aria-label="SKU"></td>
+                  <td class="table__cell"><input type="text" class="table__control table__control--number" value="89.00" aria-label="Price"></td>
+                  <td class="table__cell"><select class="table__control" aria-label="Status"><option selected>Active</option><option>Draft</option><option>Archived</option></select></td>
+                  <td class="table__cell table__actions" data-overflow-actions>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Edit all fields"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="low" aria-label="Duplicate"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="medium" aria-label="Remove"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button>
+                  </td>
+                </tr>
+                <tr class="table__row table__row--new">
+                  <td class="table__cell"><input type="text" class="table__control" value="DL-LG-BLK" aria-label="SKU"></td>
+                  <td class="table__cell"><input type="text" class="table__control table__control--number" value="129.00" aria-label="Price"></td>
+                  <td class="table__cell"><select class="table__control" aria-label="Status"><option>Active</option><option selected>Draft</option><option>Archived</option></select></td>
+                  <td class="table__cell table__actions" data-overflow-actions>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Edit all fields"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="low" aria-label="Duplicate"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/></svg></button>
+                    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-priority="medium" aria-label="Remove"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
       </section>
 

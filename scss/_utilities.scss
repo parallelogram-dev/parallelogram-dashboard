@@ -363,3 +363,19 @@ code.code--sm {
 .text--primary {
   color: var(--primary);
 }
+
+/**
+ * Overflow actions
+ *
+ * main.js sets data-overflow-level on the boundary (a .table__wrapper, or the container itself):
+ * 1 folds [data-priority="low"] actions into the "more" menu, 2 folds "medium" ones as well.
+ * Every container in the boundary folds together, so table rows stay aligned.
+ */
+:is([data-overflow-level="1"], [data-overflow-level="2"]) [data-overflow-actions] > [data-priority="low"],
+:is([data-overflow-level="1"], [data-overflow-level="2"])[data-overflow-actions] > [data-priority="low"],
+[data-overflow-level="2"] [data-overflow-actions] > [data-priority="medium"],
+[data-overflow-level="2"][data-overflow-actions] > [data-priority="medium"],
+[data-overflow-level="0"] [data-overflow-actions] > [data-overflow-more],
+[data-overflow-level="0"][data-overflow-actions] > [data-overflow-more] {
+  display: none !important;
+}
