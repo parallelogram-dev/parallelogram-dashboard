@@ -476,7 +476,14 @@ table {
   border-left: 4px solid var(--border);
   padding-left: 1rem;
   color: var(--fg-muted);
-  font-style: italic;
+}
+
+:where(em, i, cite, dfn, var, address) {
+  font-style: normal;
+}
+
+:where(em, i) {
+  font-weight: 500;
 }
 
 :where(hr) {
