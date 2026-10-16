@@ -8035,8 +8035,8 @@ dl.descriptionlist dd {
 }
 .media__remove, .media__copy {
   position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
+  top: 0.5rem;
+  right: 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -8069,7 +8069,7 @@ dl.descriptionlist dd {
 }
 .media__copy {
   right: auto;
-  left: 0.25rem;
+  left: 0.5rem;
 }
 .media__copy:hover {
   color: var(--primary);

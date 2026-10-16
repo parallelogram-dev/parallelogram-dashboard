@@ -130,11 +130,12 @@
   }
 
   // Buttons in the tile's top-right corner, shown while it's hovered or focused
+  // Inset past the image's own padding, so they sit clear of its edges
   &__remove,
   &__copy {
     position: absolute;
-    top: $spacing-3xs;
-    right: $spacing-3xs;
+    top: $spacing-2xs;
+    right: $spacing-2xs;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -173,7 +174,7 @@
   // Copies the asset's URL; sits in the opposite corner to the remove button
   &__copy {
     right: auto;
-    left: $spacing-3xs;
+    left: $spacing-2xs;
 
     &:hover {
       color: var(--primary);
