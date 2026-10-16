@@ -11,6 +11,14 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- Auth, a component for signing in and the other screens shown before the dashboard shell: `.auth`
+  centres an `.auth__container` (`--wide` for a longer form) holding a header (`auth__logo`,
+  `auth__title`, `auth__description`), the form and an `auth__footer` with `auth__back`, and
+  `auth__icon` (`--success`, `--error`) heads a screen that reports an outcome. It was in the demo
+  stylesheet, so a site had to copy it; it now ships in the library, with a component page.
+
 ## [0.1.1] - 2026-10-16
 
 Ready to publish on npm as a public package.
