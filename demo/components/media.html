@@ -41,6 +41,7 @@
               </ul>
             </div>
             <p class="text--sm text--muted spacer--md">Each tile is an <code>li.media.editable</code> with <code>data-handle</code> for drag reordering and a <code>.media__remove</code> button that shows on hover or focus. The last tile, <code>[data-filebrowser-add]</code>, holds a <code>.media__btn</code> that opens the file browser. Add <code>.selected</code> to highlight a tile. Class names match Contenir’s markup, so these styles apply to it unchanged.</p>
+            <p class="text--sm text--muted spacer--md">Drop image files onto the field to upload them into the same set of assets the browser shows. <code>.media__list--dragover</code> outlines the field and highlights the + tile while files are dragged over it; each dropped file becomes a tile with <code>.media--busy</code> and a <code>.media__progress</code> bar (width from <code>--progress</code>) until it uploads, or <code>.media--error</code> if it fails. Try it here; a file with “fail” in its name shows the error state.</p>
 
             <div class="demo-label spacer--xl">Small tiles (media__list--small)</div>
             <div data-filebrowser="image" data-type="image" data-filebrowser-mode="asset" data-filebrowser-max="0" data-filebrowser-name="image[]" data-filebrowser-scope="Products › Images">
