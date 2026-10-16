@@ -4343,13 +4343,33 @@ p-modal {
   z-index: 600;
   transition: var(--transition-opacity);
 }
-[data-tooltip]:hover::after, [data-tooltip]:focus-visible::after {
+[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 0.5rem - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--primary);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 600;
+  transition: var(--transition-opacity);
+}
+[data-tooltip]:hover::after, [data-tooltip]:hover::before, [data-tooltip]:focus-visible::after, [data-tooltip]:focus-visible::before {
   opacity: 1;
   visibility: visible;
 }
 [data-tooltip][data-tooltip-position=bottom]::after {
   bottom: auto;
   top: calc(100% + 0.5rem);
+}
+[data-tooltip][data-tooltip-position=bottom]::before {
+  bottom: auto;
+  top: calc(100% + 0.5rem - 10px);
+  border-top-color: transparent;
+  border-bottom-color: var(--primary);
 }
 [data-tooltip][data-tooltip-position=left]::after {
   bottom: auto;
@@ -4358,11 +4378,28 @@ p-modal {
   top: 50%;
   transform: translateY(-50%);
 }
+[data-tooltip][data-tooltip-position=left]::before {
+  bottom: auto;
+  left: auto;
+  right: calc(100% + 0.5rem - 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: transparent;
+  border-left-color: var(--primary);
+}
 [data-tooltip][data-tooltip-position=right]::after {
   bottom: auto;
   left: calc(100% + 0.5rem);
   top: 50%;
   transform: translateY(-50%);
+}
+[data-tooltip][data-tooltip-position=right]::before {
+  bottom: auto;
+  left: calc(100% + 0.5rem - 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: transparent;
+  border-right-color: var(--primary);
 }
 
 .progress {
@@ -8038,7 +8075,7 @@ dl.descriptionlist dd {
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow: clip;
   opacity: 0;
   transform: scale(0.98);
   transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -8053,6 +8090,7 @@ dl.descriptionlist dd {
 .overlay__wrap {
   position: relative;
   height: 100%;
+  overflow: clip;
 }
 .overlay__inner {
   display: flex;
@@ -8090,6 +8128,27 @@ dl.descriptionlist dd {
   gap: 1rem;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border);
+}
+.overlay__header [data-tooltip]::after {
+  top: calc(100% + 0.5rem);
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.overlay__header [data-tooltip]::before {
+  top: calc(100% + 0.5rem - 10px);
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: transparent;
+  border-bottom-color: var(--primary);
+}
+.overlay__header > [data-tooltip]:last-child::after {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 .overlay__title {
   display: flex;
