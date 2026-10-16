@@ -443,6 +443,7 @@ class Toggle {
     // Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && state.isOpen && !state.manual) {
+        e.preventDefault();
         this.hide(element);
       }
     });
@@ -564,6 +565,265 @@ class Toggle {
 document.addEventListener('p-modal:open', () => Toggle.closeAll());
 
 /**
+ * Shows a [data-expandable] element full-screen and back again.
+ *
+ * A [data-expand] button inside it moves the element into a full-window <dialog> (and back on
+ * the next press, Escape or the dialog closing), so its state, focus handling and top-layer
+ * menus carry over. While expanded the element has data-expanded and the button aria-pressed;
+ * give the button data-expand-label and data-collapse-label to swap its accessible name. The
+ * element fires "expandable:change" with { expanded }.
+ */
+class Expandable {
+  static elements = new WeakMap();
+
+  mount(element) {
+    if (Expandable.elements.has(element)) return;
+    const state = { dialog: null, placeholder: null };
+    Expandable.elements.set(element, state);
+    element.addEventListener('click', (e) => {
+      const button = e.target.closest('[data-expand]');
+      if (button && button.closest('[data-expandable]') === element) this.toggle(element);
+    });
+  }
+
+  toggle(element) {
+    const state = Expandable.elements.get(element);
+    if (state?.dialog) this.collapse(element);
+    else this.expand(element);
+  }
+
+  expand(element) {
+    const state = Expandable.elements.get(element);
+    if (!state || state.dialog) return;
+    state.placeholder = document.createComment('expandable');
+    element.before(state.placeholder);
+    const dialog = document.createElement('dialog');
+    dialog.className = 'expandable';
+    dialog.setAttribute('aria-label', element.dataset.expandableLabel || 'Full screen');
+    dialog.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      this.collapse(element);
+    });
+    dialog.append(element);
+    document.body.append(dialog);
+    state.dialog = dialog;
+    dialog.showModal();
+    this._changed(element, true);
+  }
+
+  collapse(element) {
+    const state = Expandable.elements.get(element);
+    if (!state?.dialog) return;
+    Toggle.closeAll();
+    state.placeholder.replaceWith(element);
+    state.dialog.close();
+    state.dialog.remove();
+    state.dialog = null;
+    this._changed(element, false);
+  }
+
+  _changed(element, expanded) {
+    element.toggleAttribute('data-expanded', expanded);
+    element.querySelectorAll('[data-expand]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(expanded));
+      const label = expanded ? button.dataset.collapseLabel : button.dataset.expandLabel;
+      if (label) {
+        button.setAttribute('aria-label', label);
+        if (button.hasAttribute('data-tooltip')) button.dataset.tooltip = label;
+      }
+    });
+    element.querySelector('[data-expand]')?.focus();
+    element.dispatchEvent(new CustomEvent('expandable:change', { bubbles: true, detail: { expanded } }));
+  }
+
+  static enhanceAll(selector = '[data-expandable]', root = document) {
+    const instance = new Expandable();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+/**
+ * A column picker for a table.
+ *
+ * A menu with data-table-columns="#tableId" holds items with data-column-toggle="key"; each
+ * shows or hides every cell in that table marked data-column="key", and reflects it with
+ * aria-checked. Choices are remembered per table in localStorage, and rows added later follow
+ * them. Cells (and picker items) marked data-column-expanded only show while the table is in a
+ * [data-expanded] area. A cell marked data-column-span (such as the first cell of a footer row)
+ * spans whatever columns are left over.
+ */
+class TableColumns {
+  static elements = new WeakSet();
+
+  mount(menu) {
+    if (TableColumns.elements.has(menu)) return;
+    const table = document.querySelector(menu.dataset.tableColumns);
+    if (!table) return;
+    TableColumns.elements.add(menu);
+    const key = `pd-table-columns:${table.id}`;
+    let hidden = new Set();
+    try {
+      hidden = new Set(JSON.parse(localStorage.getItem(key)) || []);
+    } catch (e) {
+      // Storage can be unavailable (private mode, blocked); the picker still works for the visit
+    }
+
+    const apply = () => {
+      table.querySelectorAll('[data-column]').forEach((cell) => { cell.hidden = hidden.has(cell.dataset.column); });
+      menu.querySelectorAll('[data-column-toggle]').forEach((item) => {
+        item.setAttribute('role', 'menuitemcheckbox');
+        item.setAttribute('aria-checked', String(!hidden.has(item.dataset.columnToggle)));
+      });
+      TableColumns.span(table);
+    };
+
+    menu.addEventListener('click', (e) => {
+      const item = e.target.closest('[data-column-toggle]');
+      if (!item) return;
+      const column = item.dataset.columnToggle;
+      if (hidden.has(column)) hidden.delete(column);
+      else hidden.add(column);
+      try {
+        localStorage.setItem(key, JSON.stringify([...hidden]));
+      } catch (err) {
+        // Not remembered, but still applied
+      }
+      apply();
+    });
+
+    new MutationObserver(apply).observe(table.tBodies[0] || table, { childList: true });
+    table.closest('[data-expandable]')?.addEventListener('expandable:change', () => TableColumns.span(table));
+    apply();
+  }
+
+  /**
+   * Sizes each [data-column-span] cell to cover the columns its row's other cells leave, so a
+   * footer cell stays lined up as columns are hidden or shown. Uses computed display rather than
+   * layout, which also works while the table sits in a hidden tab.
+   */
+  static span(table) {
+    const shown = cell => getComputedStyle(cell).display !== 'none';
+    const width = cells => cells.filter(shown).reduce((total, cell) => total + cell.colSpan, 0);
+    const head = table.tHead?.rows[0];
+    if (!head) return;
+    const columns = width([...head.cells]);
+    table.querySelectorAll('[data-column-span]').forEach((cell) => {
+      const others = [...cell.parentElement.cells].filter(other => other !== cell);
+      cell.colSpan = Math.max(1, columns - width(others));
+    });
+  }
+
+  static enhanceAll(selector = '[data-table-columns]', root = document) {
+    const instance = new TableColumns();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+/**
+ * Click-to-sort headers that only change the view.
+ *
+ * In a table with data-table-sort, each .table__head--sortable sorts the rows by its column:
+ * ascending, then descending, then back to the natural order. Cells sort by their control's value
+ * (a select's chosen text), their data-sort-value, or their text, comparing numbers as numbers and
+ * leaving blanks last. The table carries data-sorted while sorted.
+ *
+ * Every row keeps its natural position while the view is sorted: a row added at the end joins
+ * the end, a row inserted after another (a duplicate) follows it, and a row put back keeps its
+ * place. Values edited while sorted stay put until the next sort, so rows don't move under the
+ * cursor. The table fires "table:sort" with { column, direction }.
+ */
+class TableSort {
+  static elements = new WeakSet();
+
+  static collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+  mount(table) {
+    if (TableSort.elements.has(table) || !table.tBodies[0]) return;
+    TableSort.elements.add(table);
+    const body = table.tBodies[0];
+    const ranks = new WeakMap();
+    const state = { head: null, direction: null };
+
+    const rerank = () => {
+      const rows = [...body.rows];
+      if (!state.head) {
+        rows.forEach((row, i) => ranks.set(row, i));
+        return;
+      }
+      const ranked = rows.filter(row => ranks.has(row)).map(row => ranks.get(row)).sort((a, b) => a - b);
+      rows.forEach((row) => {
+        if (ranks.has(row)) return;
+        const before = row.previousElementSibling;
+        if (!row.nextElementSibling || !before || !ranks.has(before)) {
+          ranks.set(row, (ranked.at(-1) ?? 0) + 1);
+        } else {
+          const after = ranked.find(rank => rank > ranks.get(before));
+          ranks.set(row, after === undefined ? ranks.get(before) + 1 : (ranks.get(before) + after) / 2);
+        }
+        ranked.push(ranks.get(row));
+        ranked.sort((a, b) => a - b);
+      });
+    };
+
+    const sort = (head, direction) => {
+      table.querySelectorAll('.table__head--sortable[aria-sort]').forEach(other => other.removeAttribute('aria-sort'));
+      state.head = direction ? head : null;
+      state.direction = direction;
+      if (direction) head.setAttribute('aria-sort', direction);
+      table.toggleAttribute('data-sorted', !!direction);
+
+      const order = direction === 'descending' ? -1 : 1;
+      const rows = [...body.rows].sort((a, b) => {
+        if (!direction) return ranks.get(a) - ranks.get(b);
+        const x = TableSort.value(a.cells[head.cellIndex]);
+        const y = TableSort.value(b.cells[head.cellIndex]);
+        if (!x || !y) return (!x - !y) || ranks.get(a) - ranks.get(b);
+        return TableSort.collator.compare(x, y) * order || ranks.get(a) - ranks.get(b);
+      });
+      observer.disconnect();
+      body.append(...rows);
+      observer.observe(body, { childList: true });
+      table.dispatchEvent(new CustomEvent('table:sort', { bubbles: true, detail: { column: direction ? head : null, direction } }));
+    };
+
+    const observer = new MutationObserver(rerank);
+    observer.observe(body, { childList: true });
+    rerank();
+
+    table.querySelectorAll('.table__head--sortable').forEach((head) => {
+      head.tabIndex = 0;
+      const next = () => {
+        const current = state.head === head ? state.direction : null;
+        sort(head, { null: 'ascending', ascending: 'descending', descending: null }[current]);
+      };
+      head.addEventListener('click', next);
+      head.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        next();
+      });
+    });
+  }
+
+  static value(cell) {
+    if (!cell) return '';
+    if (cell.dataset.sortValue !== undefined) return cell.dataset.sortValue;
+    const control = cell.querySelector('input, select, textarea');
+    if (control?.tagName === 'SELECT') return control.selectedOptions[0]?.text.trim() ?? '';
+    if (control) return control.value.trim();
+    return cell.textContent.trim();
+  }
+
+  static enhanceAll(selector = '[data-table-sort]', root = document) {
+    const instance = new TableSort();
+    root.querySelectorAll(selector).forEach(el => instance.mount(el));
+    return instance;
+  }
+}
+
+/**
  * Tracks unsaved edits in a [data-unsaved-guard] area.
  *
  * Each field's value is recorded when the area is enhanced; while any differs (so undoing an edit
@@ -677,7 +937,8 @@ class EditableTable {
   _grid(table) {
     return [...table.querySelectorAll('.table__body > .table__row')]
       .filter(row => row.offsetParent !== null)
-      .map(row => [...row.querySelectorAll('.table__control')]);
+      // Skip controls in hidden columns
+      .map(row => [...row.querySelectorAll('.table__control')].filter(control => control.getClientRects().length));
   }
 
   _neighbour(table, control, rows, columns) {
@@ -1933,11 +2194,15 @@ function init(root = document) {
     toggle: Toggle.enhanceAll('[data-toggle]', root),
     editableTable: EditableTable.enhanceAll('.table--editable', root),
     unsavedGuard: UnsavedGuard.enhanceAll('[data-unsaved-guard]', root),
+    expandable: Expandable.enhanceAll('[data-expandable]', root),
+    tableColumns: TableColumns.enhanceAll('[data-table-columns]', root),
+    tableSort: TableSort.enhanceAll('[data-table-sort]', root),
     chart: Chart.enhanceAll('[data-chart]', root),
   };
 }
 
-window.Parallelogram = { init, ActionBar, OverflowActions, EditableTable, UnsavedGuard, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager };
+window.Parallelogram = { init, ActionBar, OverflowActions, EditableTable, UnsavedGuard, Expandable, TableColumns,
+  TableSort, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager };
 
 /**
  * Fallback for the Invoker Commands API (button commandfor/command) in browsers without it,

@@ -83,6 +83,11 @@
       &:hover {
         color: var(--fg);
       }
+
+      &:focus-visible {
+        @include focus-ring;
+        outline-offset: -2px;
+      }
     }
 
     &[aria-sort="ascending"],
@@ -256,8 +261,63 @@
   }
 }
 
-.table__wrapper:has(> .table--sticky-actions) {
+.table__wrapper:has(> .table--sticky-actions, > .table--sticky-start) {
   scroll-timeline: --table-scroll inline;
+}
+
+/**
+ * Sticky header and leading columns
+ *
+ * .table--sticky-header keeps the header row in view while the table's wrapper scrolls (such as in a
+ * full-screen card). .table--sticky-start pins the selection column and the first column after it
+ * (or just the first column) while the table scrolls sideways, with a shadow once columns are
+ * scrolled under them.
+ */
+.table--sticky-header .table__header .table__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--card);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+.table--sticky-start {
+  .table__checkbox,
+  .table__checkbox + :is(.table__head, .table__cell),
+  .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--card);
+  }
+
+  .table__checkbox + :is(.table__head, .table__cell) {
+    left: $spacing-xl;
+  }
+
+  // Corners where the sticky header meets the sticky columns sit above both
+  .table__header :is(.table__checkbox, .table__checkbox + .table__head, .table__head:first-child) {
+    z-index: 3;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .table__checkbox + :is(.table__head, .table__cell),
+    .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+      animation: table-sticky-start-edge linear both;
+      animation-timeline: --table-scroll;
+    }
+  }
+}
+
+@keyframes table-sticky-start-edge {
+  from {
+    box-shadow: none;
+  }
+
+  2%,
+  to {
+    box-shadow: 8px 0 8px -8px rgb(0 0 0 / 0.2);
+  }
 }
 
 @keyframes table-sticky-edge {
@@ -280,6 +340,8 @@
   margin-left: $spacing-3xs;
   width: $icon-size-sm;
   height: $icon-size-sm;
+  // Sits on the baseline by default, which rides high; this centres the arrows on the capitals
+  vertical-align: -0.2em;
   color: var(--fg-subtle);
 
   [aria-sort="ascending"] &,
@@ -287,6 +349,18 @@
   &--asc,
   &--desc {
     color: var(--fg);
+  }
+
+  // Before the label, for right-aligned columns, so the label lines up with the figures
+  &--start {
+    margin-left: 0;
+    margin-right: $spacing-3xs;
+  }
+
+  // An icon holding both arrows (data-sort="ascending" and "descending" paths) fades the one not in use
+  [aria-sort="ascending"] & [data-sort="descending"],
+  [aria-sort="descending"] & [data-sort="ascending"] {
+    opacity: 0.3;
   }
 }
 

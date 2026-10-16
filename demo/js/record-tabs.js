@@ -182,7 +182,7 @@
   // ---------------------------------------------------------------------------
 
   const sheetField = name => sheet.querySelector(`[data-field="${name}"]`);
-  const shared = ['sku', 'size', 'finish', 'price', 'stock', 'status'];
+  const shared = ['sku', 'size', 'finish', 'price', 'sale', 'stock', 'weight', 'power', 'temp', 'status'];
 
   function fillSheet(row) {
     editing = row;

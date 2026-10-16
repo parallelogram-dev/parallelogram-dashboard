@@ -1,10 +1,6 @@
 import { bem, cx, escape } from '../lib.js';
 
-const SORT_ICONS = {
-  '': '<path d="M8 9l4 -4l4 4"/><path d="M16 15l-4 4l-4 -4"/>',
-  ascending: '<path d="M6 15l6 -6l6 6"/>',
-  descending: '<path d="M6 9l6 6l6 -6"/>',
-};
+const SORT_ICON = '<path data-sort="ascending" d="M8 9l4 -4l4 4"/><path data-sort="descending" d="M16 15l-4 4l-4 -4"/>';
 
 const STATUS = { Active: 'badge--success-muted', Pending: 'badge--warning-muted', Inactive: 'badge--destructive-muted' };
 
@@ -19,7 +15,7 @@ const COLUMNS = [
   { key: 'name', label: 'Name' },
   { key: 'email', label: 'Email' },
   { key: 'status', label: 'Status' },
-  { key: 'spend', label: 'Spend' },
+  { key: 'spend', label: 'Spend', right: true },
 ];
 
 function checkbox(label) {
@@ -27,13 +23,15 @@ function checkbox(label) {
 }
 
 function head(s, column) {
+  const align = column.right ? ' text--right' : '';
   if (!s.sortable) {
-    return `<th class="table__head" scope="col">${column.label}</th>`;
+    return `<th class="table__head${align}" scope="col">${column.label}</th>`;
   }
   const sorted = column.key === 'name' && s.sort;
   const aria = sorted ? ` aria-sort="${s.sort}"` : '';
-  return `<th class="table__head table__head--sortable" scope="col"${aria}>${column.label}`
-    + `<svg class="icon table__sort-icon" viewBox="0 0 24 24" aria-hidden="true">${SORT_ICONS[sorted || '']}</svg></th>`;
+  const icon = `<svg class="${cx('icon table__sort-icon', column.right && 'table__sort-icon--start')}" viewBox="0 0 24 24" aria-hidden="true">${SORT_ICON}</svg>`;
+  return `<th class="table__head table__head--sortable${align}" scope="col"${aria}>`
+    + (column.right ? `${icon}${column.label}` : `${column.label}${icon}`) + '</th>';
 }
 
 function control(column, row) {
@@ -51,7 +49,7 @@ function cell(s, column, row) {
   let value = escape(row[column.key]);
   if (s.editable) value = control(column, row);
   else if (column.key === 'status') value = `<span class="badge ${STATUS[row.status]}">${row.status}</span>`;
-  return `<td class="table__cell"${label}>${value}</td>`;
+  return `<td class="${cx('table__cell', column.right && 'text--right')}"${label}>${value}</td>`;
 }
 
 // In the editable table, one row shows unsaved edits and one is newly added
@@ -106,6 +104,8 @@ export default {
     { key: 'responsive', label: 'Stack on mobile', type: 'toggle' },
     { key: 'editable', label: 'Editable cells', type: 'toggle' },
     { key: 'stickyActions', label: 'Pin actions column', type: 'toggle', when: s => s.actions },
+    { key: 'stickyStart', label: 'Pin first column', type: 'toggle' },
+    { key: 'stickyHeader', label: 'Pin header row', type: 'toggle' },
   ],
   presets: [
     { name: 'Users', state: {} },
@@ -115,7 +115,7 @@ export default {
     { name: 'Inside a card', state: { density: 'card', wrapper: 'borderless', sortable: false } },
     { name: 'Responsive', state: { responsive: true, actions: false } },
     { name: 'Empty', state: { empty: true, sortable: false } },
-    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true } },
+    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true, stickyStart: true, stickyHeader: true } },
   ],
   render(s) {
     const span = COLUMNS.length + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
@@ -140,13 +140,13 @@ export default {
     const footer = s.footer && !s.empty
       ? '<tfoot class="table__footer"><tr class="table__row">'
         + `<td class="table__cell" colspan="${span - 1 - (s.actions ? 1 : 0)}">Total</td>`
-        + '<td class="table__cell">$4,491.25</td>'
+        + '<td class="table__cell text--right">$4,491.25</td>'
         + (s.actions ? '<td class="table__cell"></td>' : '')
         + '</tr></tfoot>'
       : '';
 
     const caption = s.caption ? `<caption class="table__caption">${escape(s.caption)}</caption>` : '';
-    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions');
+    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions', s.stickyHeader && 'sticky-header', s.stickyStart && 'sticky-start');
     const table = `<table class="${className}">${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
       + `<tbody class="table__body">${rows.join('')}</tbody>${footer}</table>`;
 
