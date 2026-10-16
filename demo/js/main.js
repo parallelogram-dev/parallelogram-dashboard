@@ -2669,31 +2669,50 @@ class ToastManager {
 class DemoNav {
   constructor() {
     this.isOpen = false;
-    this.pages = [
-      { name: 'Components', href: 'index.html', icon: 'grid' },
-      { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },
-      { name: 'CMS Dashboard', href: 'cms-dashboard.html', icon: 'home' },
-      { name: 'CMS Dashboard (Admin)', href: 'cms-dashboard-admin.html', icon: 'settings' },
-      { name: 'Pages', href: 'pages.html', icon: 'edit' },
-      { name: 'Records List', href: 'records.html', icon: 'database' },
-      { name: 'Media', href: 'media.html', icon: 'grid' },
-      { name: 'Analytics', href: 'analytics.html', icon: 'home' },
-      { name: 'Team', href: 'team.html', icon: 'user' },
-      { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
-      { name: 'Record with Tabs', href: 'record-edit-tabs.html', icon: 'edit' },
-      { name: 'Record Delete', href: 'record-delete.html', icon: 'trash' },
-      { name: 'Settings', href: 'settings.html', icon: 'settings' },
-      { name: 'Account Settings', href: 'settings-account.html', icon: 'user' },
-      { name: 'Billing', href: 'billing.html', icon: 'card' },
-      { name: 'Login', href: 'login.html', icon: 'login' },
-      { name: 'Forgot Password', href: 'forgot-password.html', icon: 'key' },
-      { name: 'System Check', href: 'system-check.html', icon: 'check' },
-      { name: 'Fixing Issues', href: 'fixing.html', icon: 'tool' },
-      { name: 'Onboarding', href: 'onboarding.html', icon: 'home' },
-      { name: '403', href: '403.html', icon: 'key' },
-      { name: '404', href: '404.html', icon: 'alert' },
-      { name: '500', href: '500.html', icon: 'alert' },
-      { name: '500 (Debug)', href: '500-debug.html', icon: 'tool' },
+    // Grouped so every demo page is one click away; component docs live behind Components
+    this.sections = [
+      { title: 'Start', pages: [
+        { name: 'Components', href: 'index.html', icon: 'grid' },
+        { name: 'Playground', href: 'playground.html', icon: 'play' },
+      ] },
+      { title: 'Dashboards', pages: [
+        { name: 'Dashboard', href: 'dashboard.html', icon: 'home' },
+        { name: 'CMS Dashboard', href: 'cms-dashboard.html', icon: 'home' },
+        { name: 'CMS Dashboard (Admin)', href: 'cms-dashboard-admin.html', icon: 'settings' },
+        { name: 'Analytics', href: 'analytics.html', icon: 'chart' },
+      ] },
+      { title: 'Content', pages: [
+        { name: 'Pages', href: 'pages.html', icon: 'edit' },
+        { name: 'Records List', href: 'records.html', icon: 'database' },
+        { name: 'Record Form', href: 'record-form.html', icon: 'edit' },
+        { name: 'Record with Tabs', href: 'record-edit-tabs.html', icon: 'edit' },
+        { name: 'Nested Editing', href: 'nested-edit.html', icon: 'layers' },
+        { name: 'Record Delete', href: 'record-delete.html', icon: 'trash' },
+      ] },
+      { title: 'Media', pages: [
+        { name: 'Media Library', href: 'media.html', icon: 'photo' },
+        { name: 'File Browser', href: 'components/filebrowser.html', icon: 'photo' },
+        { name: 'Media Field', href: 'components/media.html', icon: 'photo' },
+      ] },
+      { title: 'People & settings', pages: [
+        { name: 'Team', href: 'team.html', icon: 'user' },
+        { name: 'Settings', href: 'settings.html', icon: 'settings' },
+        { name: 'Account Settings', href: 'settings-account.html', icon: 'user' },
+        { name: 'Billing', href: 'billing.html', icon: 'card' },
+      ] },
+      { title: 'Access', pages: [
+        { name: 'Login', href: 'login.html', icon: 'login' },
+        { name: 'Forgot Password', href: 'forgot-password.html', icon: 'key' },
+        { name: 'Onboarding', href: 'onboarding.html', icon: 'home' },
+      ] },
+      { title: 'System', pages: [
+        { name: 'System Check', href: 'system-check.html', icon: 'check' },
+        { name: 'Fixing Issues', href: 'fixing.html', icon: 'tool' },
+        { name: '403', href: '403.html', icon: 'key' },
+        { name: '404', href: '404.html', icon: 'alert' },
+        { name: '500', href: '500.html', icon: 'alert' },
+        { name: '500 (Debug)', href: '500-debug.html', icon: 'tool' },
+      ] },
     ];
     this.icons = {
       grid: '<path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/>',
@@ -2709,6 +2728,10 @@ class DemoNav {
       check: '<path d="M5 12l5 5l10 -10"/>',
       tool: '<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5"/>',
       alert: '<path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.536a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/>',
+      play: '<path d="M7 4v16l13 -8z"/>',
+      chart: '<path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/>',
+      layers: '<path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/>',
+      photo: '<path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>',
       menu: '<path d="M4 6l16 0"/><path d="M4 12l16 0"/><path d="M4 18l16 0"/>',
       close: '<path d="M18 6l-12 12"/><path d="M6 6l12 12"/>',
     };
@@ -2734,7 +2757,7 @@ class DemoNav {
           <span class="demonav__title">Demo Pages</span>
         </div>
         <nav class="demonav__list">
-          ${this.pages.map(page => this.createPageLink(page)).join('')}
+          ${this.sections.map(section => `<p class="demonav__group">${section.title}</p>${section.pages.map(page => this.createPageLink(page)).join('')}`).join('')}
         </nav>
       </div>
     `;
