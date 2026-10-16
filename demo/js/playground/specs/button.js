@@ -38,7 +38,7 @@ export default {
       default: 'primary',
       options: [
         { value: '', label: 'None (implicit primary)' },
-        'primary', 'secondary', 'outline', 'ghost', 'destructive', 'link',
+        'primary', 'secondary', 'outline', 'ghost', 'destructive', 'warning', 'success', 'info', 'link',
       ],
     },
     { key: 'size', label: 'Size', type: 'select', options: ['', 'sm', 'lg'] },

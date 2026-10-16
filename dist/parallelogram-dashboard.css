@@ -21,15 +21,18 @@
   --destructive-muted: light-dark(#fef2f2, #7f1d1d);
   --destructive-muted-fg: light-dark(#7f1d1d, #fee2e2);
   --success: #22c55e;
-  --success-fg: light-dark(#fafafa, #09090b);
+  --success-fg: #09090b;
+  --success-hover: light-dark(#16a34a, #4ade80);
   --success-muted: light-dark(#f0fdf4, #14532d);
   --success-muted-fg: light-dark(#14532d, #dcfce7);
   --warning: #f59e0b;
   --warning-fg: #09090b;
+  --warning-hover: light-dark(#d97706, #fbbf24);
   --warning-muted: light-dark(#fffbeb, #78350f);
   --warning-muted-fg: light-dark(#78350f, #fef3c7);
   --info: #3b82f6;
-  --info-fg: #fafafa;
+  --info-fg: #09090b;
+  --info-hover: #60a5fa;
   --info-muted: light-dark(#eff6ff, #1e3a8a);
   --info-muted-fg: light-dark(#1e3a8a, #dbeafe);
   --accent: light-dark(#f4f4f5, #27272a);
@@ -1447,6 +1450,27 @@ code.code--sm {
 }
 .btn--destructive:hover:not(:disabled) {
   background-color: var(--destructive-hover);
+}
+.btn--warning {
+  background-color: var(--warning);
+  color: var(--warning-fg);
+}
+.btn--warning:hover:not(:disabled) {
+  background-color: var(--warning-hover);
+}
+.btn--success {
+  background-color: var(--success);
+  color: var(--success-fg);
+}
+.btn--success:hover:not(:disabled) {
+  background-color: var(--success-hover);
+}
+.btn--info {
+  background-color: var(--info);
+  color: var(--info-fg);
+}
+.btn--info:hover:not(:disabled) {
+  background-color: var(--info-hover);
 }
 .btn--link {
   background-color: transparent;
