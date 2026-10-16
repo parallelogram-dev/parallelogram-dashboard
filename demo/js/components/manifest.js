@@ -25,6 +25,8 @@ export default [
     pages: [
       { slug: 'input', name: 'Input', description: 'Text inputs, textareas, selects, checkboxes, radios and switches.', scss: 'components/_input.scss', spec: 'input' },
       { slug: 'datetime', name: 'Datetime Picker', description: 'Date and time selection using the <p-datetime> web component from parallelogram-js.', scss: '_datetime.scss' },
+      { slug: 'media', name: 'Media Field', description: 'Gallery field of asset tiles that reorder and remove, with a + tile that opens the file browser.', scss: 'components/_media.scss' },
+      { slug: 'filebrowser', name: 'File Browser', description: 'Browser for a set of site assets: search, sort, grid and list views, selection and drag-and-drop uploads.', scss: 'components/_filebrowser.scss' },
       { slug: 'form-layout', name: 'Form Layout', description: 'Form sections, rows, and enhanced fields.', scss: 'components/_form-layout.scss', spec: 'form-layout' },
       { slug: 'toolbar', name: 'Toolbar', description: 'Search input with filters and actions.', scss: 'components/_toolbar.scss', spec: 'toolbar' },
     ],
