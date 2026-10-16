@@ -54,4 +54,48 @@
       margin-top: 0;
     }
   }
+
+  // Sticky: the title row (title and actions) pins under the dashboard header from tablet up, and
+  // gains a shadow once pinned. Its description follows it as a sibling, so it scrolls away.
+  &--sticky {
+    align-items: center;
+    margin-bottom: 0;
+    padding-bottom: $spacing-sm;
+
+    &:not(:has(+ .pageheader__description)) {
+      margin-bottom: $spacing-lg - $spacing-sm;
+    }
+
+    @include md {
+      position: sticky;
+      // Pinned, the top padding tucks partly under the dashboard header so the bar stays compact
+      top: calc(#{$navbar-height} - #{$spacing-lg - $spacing-sm});
+      z-index: $z-sticky - 1;
+      margin-top: -$spacing-lg;
+      margin-inline: -$spacing-lg;
+      padding: $spacing-lg $spacing-lg $spacing-sm;
+      background-color: var(--bg);
+
+      @supports (animation-timeline: scroll()) {
+        animation: pageheader-pinned linear both;
+        animation-timeline: scroll(root);
+        animation-range: #{$spacing-lg - $spacing-sm} #{$spacing-lg * 2};
+      }
+    }
+
+    + .pageheader__description {
+      margin-top: $spacing-2xs - $spacing-sm;
+      margin-bottom: $spacing-lg;
+    }
+  }
+}
+
+@keyframes pageheader-pinned {
+  from {
+    box-shadow: 0 1px 0 transparent, 0 6px 12px -6px transparent;
+  }
+
+  to {
+    box-shadow: 0 1px 0 var(--border), 0 6px 12px -6px rgb(0 0 0 / 0.12);
+  }
 }

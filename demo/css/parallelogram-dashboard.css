@@ -252,24 +252,24 @@
   outline-offset: var(--framework-focus-offset);
 }
 
-.sheet__content, .drawer__content, .command__list, .subnav__content, .dashboard__content, .modal__content, .sidebar, .table__wrapper, :where(pre) {
+.sheet__content, .drawer__content, .command__list, .subnav__content, .modal__content, .sidebar, .table__wrapper, :where(pre) {
   scrollbar-width: thin;
   scrollbar-color: var(--fg-subtle) transparent;
 }
-.sheet__content::-webkit-scrollbar, .drawer__content::-webkit-scrollbar, .command__list::-webkit-scrollbar, .subnav__content::-webkit-scrollbar, .dashboard__content::-webkit-scrollbar, .modal__content::-webkit-scrollbar, .sidebar::-webkit-scrollbar, .table__wrapper::-webkit-scrollbar, :where(pre)::-webkit-scrollbar {
+.sheet__content::-webkit-scrollbar, .drawer__content::-webkit-scrollbar, .command__list::-webkit-scrollbar, .subnav__content::-webkit-scrollbar, .modal__content::-webkit-scrollbar, .sidebar::-webkit-scrollbar, .table__wrapper::-webkit-scrollbar, :where(pre)::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-.sheet__content::-webkit-scrollbar-track, .drawer__content::-webkit-scrollbar-track, .command__list::-webkit-scrollbar-track, .subnav__content::-webkit-scrollbar-track, .dashboard__content::-webkit-scrollbar-track, .modal__content::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track, .table__wrapper::-webkit-scrollbar-track, :where(pre)::-webkit-scrollbar-track {
+.sheet__content::-webkit-scrollbar-track, .drawer__content::-webkit-scrollbar-track, .command__list::-webkit-scrollbar-track, .subnav__content::-webkit-scrollbar-track, .modal__content::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track, .table__wrapper::-webkit-scrollbar-track, :where(pre)::-webkit-scrollbar-track {
   background: transparent;
 }
-.sheet__content::-webkit-scrollbar-thumb, .drawer__content::-webkit-scrollbar-thumb, .command__list::-webkit-scrollbar-thumb, .subnav__content::-webkit-scrollbar-thumb, .dashboard__content::-webkit-scrollbar-thumb, .modal__content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb, .table__wrapper::-webkit-scrollbar-thumb, :where(pre)::-webkit-scrollbar-thumb {
+.sheet__content::-webkit-scrollbar-thumb, .drawer__content::-webkit-scrollbar-thumb, .command__list::-webkit-scrollbar-thumb, .subnav__content::-webkit-scrollbar-thumb, .modal__content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb, .table__wrapper::-webkit-scrollbar-thumb, :where(pre)::-webkit-scrollbar-thumb {
   background-color: var(--fg-subtle);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
-.sheet__content::-webkit-scrollbar-thumb:hover, .drawer__content::-webkit-scrollbar-thumb:hover, .command__list::-webkit-scrollbar-thumb:hover, .subnav__content::-webkit-scrollbar-thumb:hover, .dashboard__content::-webkit-scrollbar-thumb:hover, .modal__content::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover, .table__wrapper::-webkit-scrollbar-thumb:hover, :where(pre)::-webkit-scrollbar-thumb:hover {
+.sheet__content::-webkit-scrollbar-thumb:hover, .drawer__content::-webkit-scrollbar-thumb:hover, .command__list::-webkit-scrollbar-thumb:hover, .subnav__content::-webkit-scrollbar-thumb:hover, .modal__content::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover, .table__wrapper::-webkit-scrollbar-thumb:hover, :where(pre)::-webkit-scrollbar-thumb:hover {
   background-color: var(--fg-muted);
 }
 
@@ -3875,7 +3875,45 @@ p-modal {
 .pageheader--row .pageheader__actions {
   margin-top: 0;
 }
+.pageheader--sticky {
+  align-items: center;
+  margin-bottom: 0;
+  padding-bottom: 1rem;
+}
+.pageheader--sticky:not(:has(+ .pageheader__description)) {
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 768px) {
+  .pageheader--sticky {
+    position: sticky;
+    top: calc(4rem - 0.5rem);
+    z-index: 99;
+    margin-top: -1.5rem;
+    margin-inline: -1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
+    background-color: var(--bg);
+  }
+  @supports (animation-timeline: scroll()) {
+    .pageheader--sticky {
+      animation: pageheader-pinned linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0.5rem 3rem;
+    }
+  }
+}
+.pageheader--sticky + .pageheader__description {
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
 
+@keyframes pageheader-pinned {
+  from {
+    box-shadow: 0 1px 0 transparent, 0 6px 12px -6px transparent;
+  }
+  to {
+    box-shadow: 0 1px 0 var(--border), 0 6px 12px -6px rgba(0, 0, 0, 0.12);
+  }
+}
 .dashboard {
   display: flex;
   min-height: 100vh;
@@ -4423,7 +4461,7 @@ p-modal {
 
 .dashboard__content {
   flex: 1;
-  overflow-y: auto;
+  min-width: 0;
   padding: 1.5rem;
 }
 

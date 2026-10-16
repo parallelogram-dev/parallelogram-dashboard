@@ -545,11 +545,12 @@
   }
 }
 
+// The page itself scrolls, so the content area isn't a scroll container and sticky parts of a page
+// (such as .pageheader--sticky) pin under the dashboard header
 .dashboard__content {
   flex: 1;
-  overflow-y: auto;
+  min-width: 0;
   padding: $spacing-lg;
-  @include scrollbar-thin;
 }
 
 // Open and close the off-canvas .subnav; only needed below lg, where the subnav leaves the layout
