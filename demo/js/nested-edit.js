@@ -144,22 +144,47 @@
     if (edit) open([recordFrame('project', edit.dataset.editProject)]);
   });
 
-  // Drag a card's handle to reorder; the cards swap as the pointer passes their middle
+  /**
+   * Drag a card's handle to reorder. The card follows the pointer and the others slide aside; a
+   * neighbour gives way once the card's leading edge covers half of it.
+   */
   field.addEventListener('pointerdown', (e) => {
     const handle = e.target.closest('[data-reorder]');
     if (!handle || e.button !== 0) return;
     e.preventDefault();
     const itemEl = handle.closest('.nest-item');
+    const grab = e.clientY - itemEl.getBoundingClientRect().top;
+    let pointerY = e.clientY;
     itemEl.setAttribute('data-dragging', '');
+
+    const slotTop = () => itemEl.getBoundingClientRect().top - new DOMMatrixReadOnly(getComputedStyle(itemEl).transform).m42;
+    const follow = () => { itemEl.style.transform = `translateY(${pointerY - grab - slotTop()}px)`; };
     const move = (ev) => {
+      pointerY = ev.clientY;
+      const top = pointerY - grab;
+      const edge = top > slotTop() ? top + itemEl.offsetHeight : top;
       const others = [...field.children].filter(el => el !== itemEl);
-      const after = others.find(el => ev.clientY < el.getBoundingClientRect().top + el.offsetHeight / 2);
-      if (after !== itemEl.nextElementSibling) field.insertBefore(itemEl, after || null);
+      const after = others.find((el) => {
+        const r = el.getBoundingClientRect();
+        return edge < r.top - new DOMMatrixReadOnly(getComputedStyle(el).transform).m42 + r.height / 2;
+      });
+      if (after !== itemEl.nextElementSibling && !(after === undefined && !itemEl.nextElementSibling)) {
+        const tops = new Map(others.map(el => [el, el.getBoundingClientRect().top]));
+        field.insertBefore(itemEl, after || null);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          tops.forEach((before, el) => {
+            const delta = before - el.getBoundingClientRect().top;
+            if (delta) el.animate([{ transform: `translateY(${delta}px)` }, { transform: 'none' }], { duration: 150, easing: 'ease-out' });
+          });
+        }
+      }
+      follow();
     };
     const up = () => {
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerup', up);
       itemEl.removeAttribute('data-dragging');
+      itemEl.style.transform = '';
       const order = [...field.children].map(el => page.items[Number(el.dataset.index)]);
       page.items = order;
       renderField();

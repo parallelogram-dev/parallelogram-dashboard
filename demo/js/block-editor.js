@@ -285,7 +285,7 @@
   /**
    * Drag a card's handle to reorder. Each card moves together with the "add block" row above it,
    * so the gaps stay even; while dragging those rows are hidden, the card follows the pointer and
-   * the others slide out of the way. Escape puts it back.
+   * the others slide out of the way; a neighbour gives way once half covered. Escape puts it back.
    */
   list.addEventListener('pointerdown', (e) => {
     const handle = e.target.closest('[data-reorder]');
@@ -318,11 +318,15 @@
 
     const move = (ev) => {
       pointerY = ev.clientY;
+      // Compare the card's leading edge with each neighbour's middle, so it gives way half covered
+      const slotTop = item.getBoundingClientRect().top - new DOMMatrixReadOnly(getComputedStyle(item).transform).m42;
+      const top = pointerY - grab;
+      const edge = top > slotTop ? top + item.offsetHeight : top;
       const others = [...list.querySelectorAll('[data-block]')].filter(el => el !== item);
       const next = others.find((el) => {
         const r = el.getBoundingClientRect();
         const shift = new DOMMatrixReadOnly(getComputedStyle(el).transform).m42;
-        return pointerY < r.top - shift + r.height / 2;
+        return edge < r.top - shift + r.height / 2;
       });
       // The row above the next card, or the closing "Add block" row when dropping at the end
       const beforeEl = next ? next.previousElementSibling : list.lastElementChild;
