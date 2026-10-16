@@ -2262,23 +2262,31 @@ select.table__control {
   box-shadow: inset 0 -1px 0 var(--border);
 }
 
-.table--sticky-start .table__checkbox,
-.table--sticky-start .table__checkbox + :is(.table__head, .table__cell),
-.table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+.table--sticky-start .table__handle, .table--sticky-start .table__checkbox, .table--sticky-start .table__handle + :is(.table__head, .table__cell), .table--sticky-start .table__checkbox + :is(.table__head, .table__cell), .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child {
   position: sticky;
   left: 0;
   z-index: 1;
   background-color: var(--card);
 }
+.table--sticky-start .table__checkbox:is(.table__head, .table__cell) {
+  padding-left: 0;
+  padding-right: 0;
+}
+.table--sticky-start .table__checkbox:is(.table__head, .table__cell) .checkbox {
+  min-width: 2rem;
+}
+.table--sticky-start .table__handle + :is(.table__head, .table__cell),
 .table--sticky-start .table__checkbox + :is(.table__head, .table__cell) {
   left: 2rem;
 }
-.table--sticky-start .table__header :is(.table__checkbox, .table__checkbox + .table__head, .table__head:first-child) {
+.table--sticky-start .table__handle + .table__checkbox + :is(.table__head, .table__cell) {
+  left: 4rem;
+}
+.table--sticky-start .table__header :is(.table__handle, .table__checkbox, .table__handle + :is(.table__head, .table__cell), .table__checkbox + :is(.table__head, .table__cell), .table__row > :is(.table__head, .table__cell):first-child) {
   z-index: 3;
 }
 @supports (animation-timeline: scroll()) {
-  .table--sticky-start .table__checkbox + :is(.table__head, .table__cell),
-  .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__checkbox) {
+  .table--sticky-start .table__handle + :is(.table__head, .table__cell):not(.table__checkbox), .table--sticky-start .table__checkbox + :is(.table__head, .table__cell), .table--sticky-start .table__row > :is(.table__head, .table__cell):first-child:not(.table__handle, .table__checkbox) {
     animation: table-sticky-start-edge linear both;
     animation-timeline: --table-scroll;
   }
@@ -2376,6 +2384,55 @@ select.table__control {
     animation-duration: 2s;
   }
 }
+/**
+ * Reorder handle column
+ *
+ * In a table with data-table-reorder, the first cell of each row holds a handle button for
+ * dragging the row (see TableReorder). The handle stays faint until its row is hovered or the
+ * handle is focused; the row being moved carries data-dragging and lifts above the others.
+ */
+.table__handle {
+  width: 2rem;
+  text-align: center;
+}
+.table__handle.table__head, .table__handle.table__cell {
+  padding-left: 0;
+  padding-right: 0;
+}
+.table__handle .btn {
+  color: var(--fg-subtle);
+  cursor: grab;
+  touch-action: none;
+  opacity: 0.4;
+  transition: var(--transition-colors);
+}
+.table__handle .btn:active, .table__handle .btn[aria-pressed=true] {
+  color: var(--primary);
+  cursor: grabbing;
+}
+.table__handle .btn:focus-visible {
+  outline-offset: calc(var(--framework-focus-width) * -1);
+}
+
+.table__row:hover > .table__handle .btn,
+.table__handle .btn:focus-visible,
+.table__handle .btn[aria-pressed=true] {
+  opacity: 1;
+}
+
+.table__row[data-dragging] {
+  position: relative;
+  z-index: 4;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.12)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
+  cursor: grabbing;
+}
+.table__row[data-dragging] > .table__cell {
+  background-color: var(--card);
+}
+.table__row[data-dragging] > .table__handle .btn {
+  opacity: 1;
+}
+
 .table__actions {
   width: auto;
   text-align: right;
