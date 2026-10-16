@@ -50,19 +50,22 @@ $theme-tokens: (
 
   // Success
   success: ($green-500, $green-500),
-  success-fg: ($zinc-50, $zinc-950),
+  success-fg: ($zinc-950, $zinc-950),
+  success-hover: ($green-600, $green-400),
   success-muted: ($green-50, $green-900),
   success-muted-fg: ($green-900, $green-100),
 
   // Warning
   warning: ($amber-500, $amber-500),
   warning-fg: ($zinc-950, $zinc-950),
+  warning-hover: ($amber-600, $amber-400),
   warning-muted: ($amber-50, $amber-900),
   warning-muted-fg: ($amber-900, $amber-100),
 
   // Info
   info: ($blue-500, $blue-500),
-  info-fg: ($zinc-50, $zinc-50),
+  info-fg: ($zinc-950, $zinc-950),
+  info-hover: ($blue-400, $blue-400),
   info-muted: ($blue-50, $blue-900),
   info-muted-fg: ($blue-900, $blue-100),
 

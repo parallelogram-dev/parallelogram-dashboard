@@ -421,6 +421,9 @@ warns when a playground spec or demo page renders one. The list lives in
 <button class="btn btn--primary">Primary</button>
 <button class="btn btn--secondary">Secondary</button>
 <button class="btn btn--destructive">Destructive</button>
+<button class="btn btn--warning">Warning</button>
+<button class="btn btn--success">Success</button>
+<button class="btn btn--info">Info</button>
 <button class="btn btn--outline">Outline</button>
 <button class="btn btn--ghost">Ghost</button>
 <button class="btn btn--link">Link</button>

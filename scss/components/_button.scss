@@ -110,6 +110,36 @@
     }
   }
 
+  // Warning
+  &--warning {
+    background-color: var(--warning);
+    color: var(--warning-fg);
+
+    &:hover:not(:disabled) {
+      background-color: var(--warning-hover);
+    }
+  }
+
+  // Success
+  &--success {
+    background-color: var(--success);
+    color: var(--success-fg);
+
+    &:hover:not(:disabled) {
+      background-color: var(--success-hover);
+    }
+  }
+
+  // Info
+  &--info {
+    background-color: var(--info);
+    color: var(--info-fg);
+
+    &:hover:not(:disabled) {
+      background-color: var(--info-hover);
+    }
+  }
+
   // Link style
   &--link {
     background-color: transparent;

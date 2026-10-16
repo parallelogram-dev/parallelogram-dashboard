@@ -11,6 +11,18 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `btn--warning`, `btn--success` and `btn--info`, coloured buttons beside `btn--destructive` for
+  an action that matches a status, such as a Fix button next to a Warning badge. They read the
+  new `--warning-hover`, `--success-hover` and `--info-hover` tokens.
+
+### Changed
+
+- `--success-fg` is dark in the light theme too, as it already was in dark, and `--info-fg` is
+  dark in both. Light text on green-500 and blue-500 fell short of WCAG AA contrast, so
+  `badge--success` and `badge--info` now have dark text.
+
 ## [0.1.2] - 2026-10-16
 
 ### Added
