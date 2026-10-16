@@ -208,9 +208,33 @@
                 <p class="card__description">6 people have access</p>
               </div>
             </div>
-            <div class="card__content">
+            <div class="card__content stack stack--sm">
+              <div class="toolbar">
+                <div class="toolbar__group">
+                  <svg class="icon toolbar__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                  <input type="search" class="toolbar__input" id="members-search" placeholder="Search by name, role or email" aria-label="Search members" aria-controls="members-list">
+                  <button type="button" class="toolbar__clear" aria-label="Clear search"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+                </div>
+              </div>
+              <div class="toolbar toolbar--sm">
+                <div class="toolbar__filters" role="group" aria-label="Surname" id="members-index">
+                  <button type="button" class="filter__label" data-surname-range="" aria-pressed="true">
+                    <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg>
+                    All
+                  </button>
+                  <button type="button" class="filter__label" data-surname-range="AC" aria-pressed="false" aria-label="Surnames A to C">A&ndash;C</button>
+                  <button type="button" class="filter__label" data-surname-range="DF" aria-pressed="false" aria-label="Surnames D to F">D&ndash;F</button>
+                  <button type="button" class="filter__label" data-surname-range="GI" aria-pressed="false" aria-label="Surnames G to I">G&ndash;I</button>
+                  <button type="button" class="filter__label" data-surname-range="JL" aria-pressed="false" aria-label="Surnames J to L">J&ndash;L</button>
+                  <button type="button" class="filter__label" data-surname-range="MO" aria-pressed="false" aria-label="Surnames M to O">M&ndash;O</button>
+                  <button type="button" class="filter__label" data-surname-range="PR" aria-pressed="false" aria-label="Surnames P to R">P&ndash;R</button>
+                  <button type="button" class="filter__label" data-surname-range="SU" aria-pressed="false" aria-label="Surnames S to U">S&ndash;U</button>
+                  <button type="button" class="filter__label" data-surname-range="VZ" aria-pressed="false" aria-label="Surnames V to Z">V&ndash;Z</button>
+                </div>
+              </div>
+              <p class="sr-only" id="members-status" role="status"></p>
               <div class="table__wrapper table__wrapper--borderless">
-                <table class="table table--hoverable">
+                <table class="table table--hoverable" id="members-list">
                   <thead class="table__header">
                     <tr class="table__row">
                       <th class="table__head" scope="col">Member</th>
@@ -223,33 +247,17 @@
                   <tr class="table__row">
                     <td class="table__cell">
                       <div class="cluster cluster--sm">
-                        <span class="avatar avatar--sm"><span class="avatar__fallback">AS</span><span class="avatar__status avatar__status--online"></span></span>
+                        <span class="avatar avatar--sm"><span class="avatar__fallback">EC</span><span class="avatar__status avatar__status--busy"></span></span>
                         <div>
-                          <p class="text--sm text--medium">Alice Smith</p>
-                          <p class="text--xs text--muted">alice@example.com</p>
+                          <p class="text--sm text--medium">Eve Chen</p>
+                          <p class="text--xs text--muted">eve@example.com</p>
                         </div>
                       </div>
                     </td>
-                    <td class="table__cell"><span class="badge badge--sm badge--primary">Owner</span></td>
-                    <td class="table__cell text--sm text--muted">Now</td>
+                    <td class="table__cell"><span class="badge badge--sm badge--outline">Viewer</span></td>
+                    <td class="table__cell text--sm text--muted">2 days ago</td>
                     <td class="table__cell table__actions">
-                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Alice Smith"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr class="table__row">
-                    <td class="table__cell">
-                      <div class="cluster cluster--sm">
-                        <span class="avatar avatar--sm"><span class="avatar__fallback">BW</span><span class="avatar__status avatar__status--online"></span></span>
-                        <div>
-                          <p class="text--sm text--medium">Bob Wilson</p>
-                          <p class="text--xs text--muted">bob@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="table__cell"><span class="badge badge--sm badge--info-muted">Admin</span></td>
-                    <td class="table__cell text--sm text--muted">5 min ago</td>
-                    <td class="table__cell table__actions">
-                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Bob Wilson"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Eve Chen"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
                     </td>
                   </tr>
                   <tr class="table__row">
@@ -287,22 +295,6 @@
                   <tr class="table__row">
                     <td class="table__cell">
                       <div class="cluster cluster--sm">
-                        <span class="avatar avatar--sm"><span class="avatar__fallback">EC</span><span class="avatar__status avatar__status--busy"></span></span>
-                        <div>
-                          <p class="text--sm text--medium">Eve Chen</p>
-                          <p class="text--xs text--muted">eve@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="table__cell"><span class="badge badge--sm badge--outline">Viewer</span></td>
-                    <td class="table__cell text--sm text--muted">2 days ago</td>
-                    <td class="table__cell table__actions">
-                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Eve Chen"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr class="table__row">
-                    <td class="table__cell">
-                      <div class="cluster cluster--sm">
                         <span class="avatar avatar--sm"><span class="avatar__fallback">FO</span><span class="avatar__status avatar__status--offline"></span></span>
                         <div>
                           <p class="text--sm text--medium">Frank Okafor</p>
@@ -314,6 +306,55 @@
                     <td class="table__cell text--sm text--muted">Last week</td>
                     <td class="table__cell table__actions">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Frank Okafor"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell">
+                      <div class="cluster cluster--sm">
+                        <span class="avatar avatar--sm"><span class="avatar__fallback">AS</span><span class="avatar__status avatar__status--online"></span></span>
+                        <div>
+                          <p class="text--sm text--medium">Alice Smith</p>
+                          <p class="text--xs text--muted">alice@example.com</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="table__cell"><span class="badge badge--sm badge--primary">Owner</span></td>
+                    <td class="table__cell text--sm text--muted">Now</td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Alice Smith"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="table__row">
+                    <td class="table__cell">
+                      <div class="cluster cluster--sm">
+                        <span class="avatar avatar--sm"><span class="avatar__fallback">BW</span><span class="avatar__status avatar__status--online"></span></span>
+                        <div>
+                          <p class="text--sm text--medium">Bob Wilson</p>
+                          <p class="text--xs text--muted">bob@example.com</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="table__cell"><span class="badge badge--sm badge--info-muted">Admin</span></td>
+                    <td class="table__cell text--sm text--muted">5 min ago</td>
+                    <td class="table__cell table__actions">
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm" aria-label="Actions for Bob Wilson"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="table__row" id="members-empty" hidden>
+                    <td class="table__cell" colspan="4">
+                      <div class="empty empty--sm empty--search">
+                        <div class="empty__icon">
+                          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                        </div>
+                        <h3 class="empty__title">No members found</h3>
+                        <p class="empty__description">Nobody matches that search in this part of the alphabet.</p>
+                        <div class="empty__actions">
+                          <button type="button" class="btn btn--outline btn--sm" id="members-reset">
+                            <svg class="icon btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+                            Show everyone
+                          </button>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                   </tbody>
@@ -384,5 +425,59 @@
   </div>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    /**
+     * Narrow the member table by the search field and the surname index together.
+     * Rows stay sorted by surname; a range with nobody in it is disabled.
+     */
+    (function () {
+      const search = document.getElementById('members-search');
+      const index = document.getElementById('members-index');
+      const status = document.getElementById('members-status');
+      const empty = document.getElementById('members-empty');
+      const chips = [...index.querySelectorAll('[data-surname-range]')];
+      const rows = [...document.querySelectorAll('#members-list .table__body .table__row')].filter(row => row !== empty);
+      const surname = row => row.querySelector('.text--medium').textContent.trim().split(/\s+/).pop().toUpperCase();
+      const inRange = (row, range) => !range || (surname(row)[0] >= range[0] && surname(row)[0] <= range[1]);
+      let range = '';
+      let announce;
+
+      chips.forEach(chip => {
+        chip.disabled = !rows.some(row => inRange(row, chip.dataset.surnameRange));
+      });
+
+      function render() {
+        const query = search.value.trim().toLowerCase();
+        let shown = 0;
+        rows.forEach(row => {
+          row.hidden = !(inRange(row, range) && row.textContent.toLowerCase().includes(query));
+          if (!row.hidden) shown++;
+        });
+        empty.hidden = shown > 0;
+        chips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.surnameRange === range)));
+
+        const people = `${shown} ${shown === 1 ? 'person' : 'people'}`;
+        const where = range ? `Surnames ${range[0]} to ${range[1]}: ` : '';
+        clearTimeout(announce);
+        announce = setTimeout(() => { status.textContent = `${where}${people}`; }, 400);
+      }
+
+      index.addEventListener('click', e => {
+        const chip = e.target.closest('[data-surname-range]');
+        if (!chip || chip.disabled) return;
+        range = chip.dataset.surnameRange === range ? '' : chip.dataset.surnameRange;
+        render();
+      });
+
+      search.addEventListener('input', () => render());
+
+      document.getElementById('members-reset').addEventListener('click', () => {
+        range = '';
+        search.value = '';
+        render();
+        search.focus();
+      });
+    })();
+  </script>
 </body>
 </html>

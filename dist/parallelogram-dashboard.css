@@ -5535,6 +5535,7 @@ p-modal {
 }
 .toolbar__filters {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
 }
@@ -5579,6 +5580,7 @@ p-modal {
   height: 2rem;
   padding: 0 0.75rem;
   font-size: 0.75rem;
+  white-space: nowrap;
   font-weight: 500;
   background-color: var(--bg-muted);
   border: 1px solid var(--border);
@@ -5590,6 +5592,10 @@ p-modal {
 }
 .filter__label:hover {
   background-color: var(--bg-subtle);
+}
+.filter__label:disabled, .filter__label[aria-disabled=true] {
+  pointer-events: none;
+  opacity: 0.5;
 }
 .filter__label[aria-pressed=true], .filter__label--active {
   background-color: var(--primary);
@@ -5657,7 +5663,6 @@ p-modal {
   }
   .toolbar__filters {
     order: 2;
-    flex-wrap: wrap;
   }
   .toolbar__actions {
     order: 3;
