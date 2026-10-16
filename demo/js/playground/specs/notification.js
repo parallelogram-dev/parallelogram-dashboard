@@ -12,7 +12,7 @@ export default {
   name: 'Notification Item',
   description: 'A single row for a header notifications dropdown, with an unread dot and read/unread state.',
   sources: ['components/_notification.scss'],
-  target: '.notif__item, .notif__dot, .notif__body',
+  target: '.notify__item, .notify__dot, .notify__body',
   matrix: { rows: 'tone', cols: 'read' },
   layout: 'block',
   controls: [
@@ -28,9 +28,9 @@ export default {
   ],
   render(s) {
     const [text, time] = SAMPLES[s.tone];
-    return `<a href="#" class="${bem('notif__item', s.read && 'read')}" role="menuitem">`
-      + `<span class="${bem('notif__dot', s.tone)}" aria-hidden="true"></span>`
-      + `<span class="notif__body"><span class="notif__text">${escape(text)}</span><span class="notif__time">${escape(time)}</span></span>`
+    return `<a href="#" class="${bem('notify__item', s.read && 'read')}" role="menuitem">`
+      + `<span class="${bem('notify__dot', s.tone)}" aria-hidden="true"></span>`
+      + `<span class="notify__body"><span class="notify__text">${escape(text)}</span><span class="notify__time">${escape(time)}</span></span>`
       + '</a>';
   },
 };

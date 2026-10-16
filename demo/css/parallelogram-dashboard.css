@@ -911,6 +911,21 @@ p-datetime.input:focus-within {
 .grid--4 {
   grid-template-columns: repeat(4, 1fr);
 }
+@media (max-width: 1023px) {
+  .grid--2-1, .grid--1-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1023px) {
+  .grid--3, .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .grid--2, .grid--3, .grid--4 {
+    grid-template-columns: 1fr;
+  }
+}
 .grid--gap-sm {
   gap: 0.5rem;
 }
@@ -1112,16 +1127,6 @@ p-datetime.input:focus-within {
 
 .w--full {
   width: 100%;
-}
-
-.list--disc {
-  list-style: disc;
-  padding-left: 1.25rem;
-}
-.list--spaced {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .box--muted {
@@ -1596,7 +1601,6 @@ code.code--sm {
   color: var(--card-fg);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  overflow: hidden;
 }
 .card--elevated {
   border: none;
@@ -1625,8 +1629,12 @@ code.code--sm {
 }
 .card__header--row {
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
+}
+.card__header--row > svg,
+.card__header--row > .btn--icon {
+  align-self: center;
 }
 .card__header--center {
   text-align: center;
@@ -1653,6 +1661,17 @@ code.code--sm {
 .card__content--flush {
   padding: 0;
 }
+.card__content--flush:first-child {
+  border-top-left-radius: calc(0.5rem - 1px);
+  border-top-right-radius: calc(0.5rem - 1px);
+}
+.card__content--flush:last-child {
+  border-bottom-left-radius: calc(0.5rem - 1px);
+  border-bottom-right-radius: calc(0.5rem - 1px);
+}
+.card__content--flush > .table__wrapper {
+  border-radius: inherit;
+}
 .card__content:first-child {
   padding-top: 1rem;
 }
@@ -1677,6 +1696,14 @@ code.code--sm {
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+.card__image:first-child {
+  border-top-left-radius: calc(0.5rem - 1px);
+  border-top-right-radius: calc(0.5rem - 1px);
+}
+.card__image:last-child {
+  border-bottom-left-radius: calc(0.5rem - 1px);
+  border-bottom-right-radius: calc(0.5rem - 1px);
 }
 .card__image--top {
   border-bottom: 1px solid var(--border);
@@ -3354,9 +3381,12 @@ p-modal {
 }
 
 .navmenu {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 4rem;
+  height: 100vh;
   background-color: var(--bg-muted);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
@@ -3503,9 +3533,12 @@ p-modal {
 }
 
 .subnav {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 16rem;
+  height: 100vh;
   background-color: var(--bg);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
@@ -3758,10 +3791,13 @@ p-modal {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .dashboard__header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7550,14 +7586,14 @@ dl.descriptionlist dd {
   padding-left: 2rem;
 }
 
-.notif__item {
+.notify__item {
   align-items: flex-start;
   gap: 0.75rem;
 }
-.notif__item--read {
+.notify__item--read {
   opacity: 0.6;
 }
-.notif__dot {
+.notify__dot {
   flex-shrink: 0;
   width: 0.5rem;
   height: 0.5rem;
@@ -7565,31 +7601,136 @@ dl.descriptionlist dd {
   border-radius: 9999px;
   background-color: var(--fg-muted);
 }
-.notif__dot--info {
+.notify__dot--info {
   background-color: var(--info);
 }
-.notif__dot--success {
+.notify__dot--success {
   background-color: var(--success);
 }
-.notif__dot--warning {
+.notify__dot--warning {
   background-color: var(--warning);
 }
-.notif__dot--error {
+.notify__dot--error {
   background-color: var(--destructive);
 }
-.notif__body {
+.notify__body {
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
   min-width: 0;
   white-space: normal;
 }
-.notif__text {
+.notify__text {
   color: var(--popover-fg);
 }
-.notif__time {
+.notify__time {
   font-size: 0.75rem;
   color: var(--fg-muted);
+}
+
+/**
+ * List Component
+ *
+ * Rows with an optional leading status, a title and description, and trailing actions.
+ * An empty .list__status renders as a dot; put an icon inside it to show that instead.
+ * --segment divides rows with rules, --boxed puts each row in its own bordered box.
+ * The status and actions line up with the title's first line, like a bullet; --center centres them on the whole row.
+ * --disc and --spaced cover plain text lists.
+ */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.list--spaced {
+  gap: 0.5rem;
+}
+.list--disc {
+  display: block;
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.list--segment > .list__item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.list--segment > .list__item:first-child {
+  padding-top: 0;
+}
+.list--segment > .list__item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.list--center > .list__item {
+  align-items: center;
+}
+.list--center .list__status {
+  height: auto;
+}
+.list--boxed {
+  gap: 0.5rem;
+}
+.list--boxed > .list__item {
+  padding: 0.75rem 1rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.list__status {
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 1lh;
+  font-size: 0.875rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+}
+.list__status:empty::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+}
+.list__status svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.list__status--success {
+  color: var(--success);
+}
+.list__status--warning {
+  color: var(--warning);
+}
+.list__status--error {
+  color: var(--destructive);
+}
+.list__status--info {
+  color: var(--info);
+}
+.list__body {
+  flex: 1;
+  min-width: 0;
+}
+.list__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+.list__description {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+.list__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /*# sourceMappingURL=parallelogram-dashboard.css.map */

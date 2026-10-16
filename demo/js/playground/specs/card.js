@@ -48,6 +48,8 @@ export default {
   name: 'Card',
   description: 'Container for grouped content with optional header, image and footer.',
   sources: ['components/_card.scss'],
+  // Flush content rounds a table wrapper's corners; the table itself belongs to the Table spec
+  ignore: ['table__wrapper'],
   target: '.card',
   matrix: { rows: 'variant', cols: 'size' },
   layout: 'block',

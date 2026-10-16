@@ -38,6 +38,7 @@ export default [
       { slug: 'chart', name: 'Chart', description: 'Line, area, bar and stacked bar charts drawn from a data table.', scss: 'components/_chart.scss', spec: 'chart' },
       { slug: 'card', name: 'Card', description: 'Container for grouped content with optional header, image and footer.', scss: 'components/_card.scss', spec: 'card' },
       { slug: 'data-list', name: 'Data List', description: 'Key-value pair displays for record details.', scss: 'components/_data-list.scss', spec: 'data-list' },
+      { slug: 'list', name: 'List', description: 'Rows with an optional status, title and description, and trailing actions. Divided, boxed or plain.', scss: 'components/_list.scss', spec: 'list' },
       { slug: 'empty', name: 'Empty State', description: 'Placeholder content for empty views.', scss: 'components/_empty.scss', spec: 'empty' },
       { slug: 'progress', name: 'Progress', description: 'Progress indicators and loading states.', scss: 'components/_progress.scss', spec: 'progress' },
       { slug: 'separator', name: 'Separator', description: 'Visual dividers for content sections.', scss: 'components/_separator.scss', spec: 'separator' },

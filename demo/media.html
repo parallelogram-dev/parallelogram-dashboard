@@ -59,7 +59,12 @@
     <!-- Sub Navigation -->
     <aside class="subnav">
       <div class="subnav__header">
-        <h2 class="subnav__title">Media</h2>
+        <h2 class="subnav__title">My site</h2>
+        <div class="subnav__actions">
+          <a href="#" class="subnav__action" target="_blank" rel="noopener" aria-label="View site (opens in a new tab)" data-tooltip="View site">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></svg>
+          </a>
+        </div>
       </div>
 
       <div class="subnav__content">
@@ -145,39 +150,39 @@
                 <button type="button" class="btn btn--ghost btn--sm">Mark all read</button>
               </div>
               <div class="dropdown__divider" role="separator"></div>
-              <a href="#" class="dropdown__item notif__item">
-                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
-                <span class="notif__body">
-                  <span class="notif__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
-                  <span class="notif__time">5 minutes ago</span>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Bob Wilson</strong> commented on <strong>Mobile App</strong></span>
+                  <span class="notify__time">5 minutes ago</span>
                 </span>
               </a>
-              <a href="#" class="dropdown__item notif__item">
-                <span class="notif__dot notif__dot--success" aria-hidden="true"></span>
-                <span class="notif__body">
-                  <span class="notif__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
-                  <span class="notif__time">1 hour ago</span>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--success" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Deploy succeeded</strong> for Website Redesign</span>
+                  <span class="notify__time">1 hour ago</span>
                 </span>
               </a>
-              <a href="#" class="dropdown__item notif__item">
-                <span class="notif__dot notif__dot--warning" aria-hidden="true"></span>
-                <span class="notif__body">
-                  <span class="notif__text">Your trial ends in <strong>3 days</strong></span>
-                  <span class="notif__time">3 hours ago</span>
+              <a href="#" class="dropdown__item notify__item">
+                <span class="notify__dot notify__dot--warning" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Your trial ends in <strong>3 days</strong></span>
+                  <span class="notify__time">3 hours ago</span>
                 </span>
               </a>
-              <a href="#" class="dropdown__item notif__item notif__item--read">
-                <span class="notif__dot notif__dot--info" aria-hidden="true"></span>
-                <span class="notif__body">
-                  <span class="notif__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
-                  <span class="notif__time">Yesterday</span>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--info" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text"><strong>Carol Jones</strong> invited you to <strong>Team</strong></span>
+                  <span class="notify__time">Yesterday</span>
                 </span>
               </a>
-              <a href="#" class="dropdown__item notif__item notif__item--read">
-                <span class="notif__dot notif__dot--error" aria-hidden="true"></span>
-                <span class="notif__body">
-                  <span class="notif__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
-                  <span class="notif__time">2 days ago</span>
+              <a href="#" class="dropdown__item notify__item notify__item--read">
+                <span class="notify__dot notify__dot--error" aria-hidden="true"></span>
+                <span class="notify__body">
+                  <span class="notify__text">Payment failed for invoice <strong>INV-2024-089</strong></span>
+                  <span class="notify__time">2 days ago</span>
                 </span>
               </a>
               <div class="dropdown__divider" role="separator"></div>
@@ -475,7 +480,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -513,7 +518,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -551,7 +556,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -589,7 +594,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -627,7 +632,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -665,7 +670,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -703,7 +708,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -741,7 +746,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -779,7 +784,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -817,7 +822,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -855,7 +860,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -893,7 +898,7 @@
                           <span class="dropdown__item-text">Download</span>
                         </button>
                         <div class="dropdown__divider" role="separator"></div>
-                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem">
+                        <button type="button" class="dropdown__item dropdown__item--destructive" role="menuitem" data-modal data-modal-target="#delete-modal">
                           <svg class="icon dropdown__item-icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
                           <span class="dropdown__item-text">Delete</span>
                         </button>
@@ -920,6 +925,26 @@
         </div>
       </div>
     </main>
+
+  <!-- Delete confirmation, filled in with the chosen item's name -->
+  <p-modal id="delete-modal" data-modal-size="sm">
+    <h2 slot="title">Delete <span data-delete-name>this item</span>?</h2>
+    <p class="text--sm text--muted">This permanently deletes the file and removes it from any records that use it. It can't be undone.</p>
+    <div class="form__field">
+      <label class="form__label" for="deleteConfirm">Type <strong>DELETE</strong> to confirm</label>
+      <input type="text" class="input form__control" id="deleteConfirm" autocomplete="off" autofocus>
+    </div>
+    <div slot="actions" class="cluster cluster--sm">
+      <button type="button" class="btn btn--outline" data-modal-close>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+        Cancel
+      </button>
+      <button type="button" class="btn btn--destructive" data-delete-confirm disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
+        Delete
+      </button>
+    </div>
+  </p-modal>
   </div>
 
   <script type="module" src="js/main.js"></script>
@@ -963,5 +988,44 @@
       mediaGridBtn.setAttribute('aria-pressed', 'true');
     });
   </script>
+  <script>
+    (() => {
+      const modal = document.getElementById('delete-modal');
+      const name = modal.querySelector('[data-delete-name]');
+      const field = modal.querySelector('#deleteConfirm');
+      const confirm = modal.querySelector('[data-delete-confirm]');
+      let item = null;
+      let opener = null;
+
+      // Capture phase, so the name is in place before the modal opens
+      document.addEventListener('click', (event) => {
+        const trigger = event.target.closest('[data-modal-target="#delete-modal"]');
+        if (!trigger) return;
+        item = trigger.closest('tr, .card');
+        opener = trigger.closest('.dropdown')?.querySelector('.dropdown__trigger');
+        name.textContent = item?.querySelector('.text--medium')?.textContent.trim() || 'this item';
+        field.value = '';
+        confirm.disabled = true;
+      }, true);
+
+      field.addEventListener('input', () => {
+        confirm.disabled = field.value !== 'DELETE';
+      });
+
+      confirm.addEventListener('click', () => {
+        if (field.value !== 'DELETE') return;
+        const label = name.textContent;
+        modal.close();
+        item?.remove();
+        window.toast?.success(`${label} deleted`);
+      });
+
+      // The menu item that opened the modal is hidden again, so return focus to its menu button
+      modal.addEventListener('p-modal:close', () => {
+        if (opener?.isConnected) opener.focus();
+      });
+    })();
+  </script>
+
 </body>
 </html>

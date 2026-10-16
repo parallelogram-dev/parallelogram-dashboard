@@ -214,8 +214,11 @@ export function mountPlayground(container, spec) {
   function matrixHtml() {
     const rowsControl = spec.controls.find(c => c.key === spec.matrix.rows);
     const colsControl = spec.controls.find(c => c.key === spec.matrix.cols);
-    const rows = normaliseOptions(rowsControl.options);
-    const cols = normaliseOptions(colsControl.options);
+    const axis = control => (control.type === 'toggle'
+      ? [{ value: false, label: 'Off' }, { value: true, label: 'On' }]
+      : normaliseOptions(control.options));
+    const rows = axis(rowsControl);
+    const cols = axis(colsControl);
 
     const head = `<tr><th></th>${cols.map(c => `<th scope="col">${escape(colsControl.label)}: ${escape(c.label)}</th>`).join('')}</tr>`;
     const body = rows.map((r, ri) => {
