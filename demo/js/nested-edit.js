@@ -340,17 +340,16 @@
       footer.innerHTML = `
         <div class="nest-confirm" role="alert">
           <span>${escape(confirming.message)}</span>
-          <button type="button" class="btn btn--ghost btn--sm" data-confirm-keep>Keep it</button>
+          <button type="button" class="btn btn--outline btn--sm" data-confirm-keep>Keep it</button>
           <button type="button" class="btn btn--destructive btn--sm" data-confirm-delete>${ICONS.trash}Delete</button>
         </div>`;
       return;
     }
     if (confirming) {
-      const names = confirming.names.join(' and ');
       footer.innerHTML = `
         <div class="nest-confirm" role="alert">
-          <span>Discard your changes to ${escape(names)}?</span>
-          <button type="button" class="btn btn--ghost btn--sm" data-confirm-keep>Keep editing</button>
+          <span>Discard changes?</span>
+          <button type="button" class="btn btn--outline btn--sm" data-confirm-keep>Keep editing</button>
           <button type="button" class="btn btn--destructive btn--sm" data-confirm-discard>${ICONS.remove}Discard</button>
         </div>`;
       return;

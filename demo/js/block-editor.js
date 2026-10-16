@@ -508,8 +508,8 @@
     if (confirming) {
       footer.innerHTML = `
         <div class="blk-confirm" role="alert">
-          <span>Discard your changes to ${escape(confirming.names.join(' and '))}?</span>
-          <button type="button" class="btn btn--ghost btn--sm" data-keep>Keep editing</button>
+          <span>Discard changes?</span>
+          <button type="button" class="btn btn--outline btn--sm" data-keep>Keep editing</button>
           <button type="button" class="btn btn--destructive btn--sm" data-discard>${ICONS.remove}Discard</button>
         </div>`;
       return;
