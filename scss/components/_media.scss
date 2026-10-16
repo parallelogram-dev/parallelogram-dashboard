@@ -2,7 +2,7 @@
  * Media field
  *
  * Contenir's gallery field: a grid of asset tiles that reorder by drag ([data-handle]), each with
- * a remove button, and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
+ * a remove button and a copy-URL button (.media__copy), and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
  * Class names match Contenir's markup so these styles drop onto it unchanged.
  *
  * Files can also be dropped straight onto the field: .media__list--dragover marks it while files
@@ -129,10 +129,13 @@
     }
   }
 
-  &__remove {
+  // Buttons in the tile's top-right corner, shown while it's hovered or focused
+  // Inset past the image's own padding, so they sit clear of its edges
+  &__remove,
+  &__copy {
     position: absolute;
-    top: $spacing-3xs;
-    right: $spacing-3xs;
+    top: $spacing-2xs;
+    right: $spacing-2xs;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -152,25 +155,58 @@
       height: $icon-size-sm;
     }
 
-    &:hover {
-      color: var(--destructive);
-      border-color: var(--destructive);
-    }
-
     &:focus-visible {
       opacity: 1;
       @include focus-ring;
     }
 
-    // Touch screens have no hover, so the button is always there
+    // Touch screens have no hover, so the buttons are always there
     @media (hover: none) {
       opacity: 1;
     }
   }
 
-  &:hover &__remove,
-  &:focus-within &__remove {
+  &__remove:hover {
+    color: var(--destructive);
+    border-color: var(--destructive);
+  }
+
+  // Copies the asset's URL; sits in the opposite corner to the remove button
+  &__copy {
+    right: auto;
+    left: $spacing-2xs;
+
+    &:hover {
+      color: var(--primary);
+      border-color: var(--fg-subtle);
+    }
+  }
+
+  &:hover :is(&__remove, &__copy),
+  &:focus-within :is(&__remove, &__copy) {
     opacity: 1;
+  }
+
+  // The tile clips its contents, so tooltips open downwards and line up with their button's
+  // outer edge (right for remove, left for copy)
+  [data-tooltip]::after {
+    top: calc(100% + #{$spacing-2xs});
+    right: 0;
+    bottom: auto;
+    left: auto;
+    transform: none;
+  }
+
+  &__copy[data-tooltip]::after {
+    right: auto;
+    left: 0;
+  }
+
+  [data-tooltip]::before {
+    top: calc(100% + #{$spacing-2xs} - 10px);
+    bottom: auto;
+    border-color: transparent;
+    border-bottom-color: var(--primary);
   }
 
   &__btn {
