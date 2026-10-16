@@ -261,9 +261,20 @@
   // ---------------------------------------------------------------------------
 
   // The unsaved-changes guard tracks the product's own fields; saving makes their values the saved ones
+  // The toast says what saving did to the product's visibility, not just that it saved
+  // main.js is a module, so it (and window.Parallelogram) only runs once the page has parsed
+  const schedule = () => window.Parallelogram.PublishSchedule;
+  let savedState = null;
+  document.addEventListener('DOMContentLoaded', () => { savedState = schedule().state(editor).state; });
   document.getElementById('saveProduct').addEventListener('click', () => {
     editor.dispatchEvent(new CustomEvent('unsaved:reset'));
-    toast('Desk Lamp saved');
+    const Schedule = schedule();
+    const { state, publishAt } = Schedule.state(editor);
+    if (state === 'scheduled') toast(`Desk Lamp scheduled for ${Schedule.format.format(publishAt)}`);
+    else if (state === 'live' && savedState !== 'live') toast('Desk Lamp published');
+    else if (state === 'expired' && savedState !== 'expired') toast('Desk Lamp saved; it has been taken down');
+    else toast('Desk Lamp saved');
+    savedState = state;
   });
 
   const metaTitle = document.getElementById('metaTitle');

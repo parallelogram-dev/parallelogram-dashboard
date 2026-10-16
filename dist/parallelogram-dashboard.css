@@ -1276,6 +1276,32 @@ code.code--sm {
   display: none;
 }
 
+/**
+ * Publish state
+ *
+ * PublishSchedule sets data-publish-state on a [data-publish-schedule] area; anything inside it
+ * marked data-publish-show="…" (a list of states) only shows in those states.
+ */
+[data-publish-state=draft] [data-publish-show]:not([data-publish-show~=draft]) {
+  display: none !important;
+}
+
+[data-publish-state=scheduled] [data-publish-show]:not([data-publish-show~=scheduled]) {
+  display: none !important;
+}
+
+[data-publish-state=live] [data-publish-show]:not([data-publish-show~=live]) {
+  display: none !important;
+}
+
+[data-publish-state=expired] [data-publish-show]:not([data-publish-show~=expired]) {
+  display: none !important;
+}
+
+[data-publish-state=archived] [data-publish-show]:not([data-publish-show~=archived]) {
+  display: none !important;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -3177,6 +3203,10 @@ select.table__control {
 }
 .dropdown__menu--full {
   min-width: 100%;
+}
+
+p-modal:not(:defined) {
+  display: none;
 }
 
 p-modal > [slot=title] {

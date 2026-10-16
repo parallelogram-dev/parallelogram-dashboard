@@ -12,6 +12,11 @@
 // the sizes and timings where the dashboard differs from core's defaults
 // --------------------------------------------------------------------------
 
+// Until the component loads, its slotted content would show inline on the page
+p-modal:not(:defined) {
+  display: none;
+}
+
 p-modal > [slot="title"] {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;

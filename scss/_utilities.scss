@@ -450,3 +450,15 @@ code.code--sm {
 [data-expanded] [data-expand-icon="expand"] {
   display: none;
 }
+
+/**
+ * Publish state
+ *
+ * PublishSchedule sets data-publish-state on a [data-publish-schedule] area; anything inside it
+ * marked data-publish-show="…" (a list of states) only shows in those states.
+ */
+@each $state in draft, scheduled, live, expired, archived {
+  [data-publish-state="#{$state}"] [data-publish-show]:not([data-publish-show~="#{$state}"]) {
+    display: none !important;
+  }
+}
