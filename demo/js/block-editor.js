@@ -39,6 +39,7 @@
     box: icon('<path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/>'),
     external: icon('<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/>'),
     search: icon('<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/>'),
+    browse: icon('<path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/>'),
     swap: icon('<path d="M7 10h14l-4 -4"/><path d="M17 14h-14l4 4"/>'),
     eye: icon('<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>'),
     eyeOff: icon('<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/><path d="M3 3l18 18"/>'),
@@ -592,37 +593,34 @@
   }
 
   /**
-   * One field for both kinds of link. Typing searches entries and, when the text looks like a web
-   * address or path, offers to link to it as typed; Browse opens the entry picker one level deeper.
-   * A chosen entry shows as a compact card, so renames and moves never break it.
+   * One field for both kinds of link, built like an action bar so it keeps the same shape whatever
+   * it holds: an icon, then the search input or the chosen entry, then clear and browse add-ons.
+   * Typing searches entries and, when the text looks like a web address or path, offers to link to
+   * it as typed; clicking a chosen entry searches again. Entries are stored by reference, so
+   * renames and moves never break them.
    */
   function linkField(f, link) {
-    const label = `<span class="form__label" id="lbl-${f.key}">${f.label}</span>`;
-    if (link?.type === 'entry') {
-      const e = find(ENTRIES, link.id);
-      return `
-        <div class="form__field">
-          ${label}
-          <div class="blk-link-card">
-            <span class="blk-entry__icon">${e?.image ? `<img src="${e.image}" alt="">` : KIND_ICON[e?.kind] || ICONS.alert}</span>
-            <span class="blk-entry__text"><span class="blk-entry__title">${escape(e?.title || 'Missing page')}</span><span class="blk-entry__path">${escape(e?.path || '')}</span></span>
-            ${e?.status ? `<span class="badge badge--sm badge--warning-muted">${escape(e.status)}</span>` : ''}
-            <button type="button" class="btn btn--ghost btn--icon btn--sm" data-link-change="${f.key}" aria-label="Change link" data-tooltip="Change" data-tooltip-position="left">${ICONS.swap}</button>
-            <button type="button" class="btn btn--ghost btn--icon btn--sm" data-link-clear="${f.key}" aria-label="Remove link" data-tooltip="Remove" data-tooltip-position="left">${ICONS.remove}</button>
-          </div>
-        </div>`;
-    }
+    const entry = link?.type === 'entry' ? find(ENTRIES, link.id) : null;
     const text = link?.type === 'url' ? link.url : '';
-    const typed = text && looksLikeUrl(text);
+    const lead = entry
+      ? (entry.image ? `<img src="${entry.image}" alt="">` : KIND_ICON[entry.kind])
+      : text && looksLikeUrl(text) ? ICONS.external : ICONS.search;
+    const main = link?.type === 'entry'
+      ? `<button type="button" class="blk-linkbar__entry" data-link-change="${f.key}" aria-label="${escape(entry?.title || 'Missing page')}, change link">
+          <span class="blk-entry__title">${escape(entry?.title || 'Missing page')}</span><span class="blk-entry__path">${escape(entry?.path || '')}</span>
+          ${entry?.status ? `<span class="badge badge--sm badge--warning-muted">${escape(entry.status)}</span>` : ''}
+        </button>`
+      : `<input type="text" class="blk-linkbar__input" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="sug-${f.key}" aria-labelledby="lbl-${f.key}" placeholder="Search pages or paste a link" value="${escape(text)}" data-link-input="${f.key}" autocomplete="off">`;
     return `
       <div class="form__field">
-        ${label}
+        <span class="form__label" id="lbl-${f.key}">${f.label}</span>
         <div class="blk-link" data-link="${f.key}">
-          <div class="toolbar__group blk-link__input" style="max-width: none;">
-            ${(typed ? ICONS.external : ICONS.search).replace('class="icon"', 'class="icon toolbar__icon"')}
-            <input type="text" class="toolbar__input" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="sug-${f.key}" aria-labelledby="lbl-${f.key}" placeholder="Search pages or paste a link" value="${escape(text)}" data-link-input="${f.key}" autocomplete="off">
+          <div class="actionbar blk-linkbar">
+            <span class="actionbar__segment blk-linkbar__lead" aria-hidden="true">${lead}</span>
+            <div class="actionbar__segment actionbar__title blk-linkbar__main">${main}</div>
+            <button type="button" class="actionbar__segment blk-linkbar__addon" data-link-clear="${f.key}" aria-label="Remove link" data-tooltip="Remove"${link ? '' : ' hidden'}>${ICONS.remove}</button>
+            <button type="button" class="actionbar__segment blk-linkbar__addon" data-lookup="link:${f.key}" aria-label="Browse pages" data-tooltip="Browse" data-tooltip-position="left">${ICONS.browse}</button>
           </div>
-          <button type="button" class="btn btn--outline btn--sm" data-lookup="link:${f.key}">${ICONS.page}Browse</button>
           <ul class="blk-suggest" id="sug-${f.key}" role="listbox" hidden></ul>
         </div>
       </div>`;
@@ -774,7 +772,9 @@
     const clearLink = t.closest('[data-link-clear]');
     if (clearLink) {
       frame.draft[clearLink.dataset.linkClear] = null;
-      return render('same');
+      render('same');
+      body.querySelector(`[data-link-input="${clearLink.dataset.linkClear}"]`)?.focus();
+      return undefined;
     }
     const lookup = t.closest('[data-lookup]');
     if (lookup) return push(lookupFrame(lookup.dataset.lookup, frame));
@@ -819,8 +819,10 @@
       // Whatever is typed is kept as a typed link until an entry is chosen
       const text = linkInput.value;
       top().draft[linkInput.dataset.linkInput] = text.trim() ? { type: 'url', url: text.trim() } : null;
-      // The icon says what the text is: a web address, or a search
-      linkInput.parentElement.querySelector('.toolbar__icon').outerHTML = (looksLikeUrl(text.trim()) ? ICONS.external : ICONS.search).replace('class="icon"', 'class="icon toolbar__icon"');
+      // The leading icon says what the text is (a web address, or a search); clear shows once there's text
+      const bar = linkInput.closest('.blk-linkbar');
+      bar.querySelector('.blk-linkbar__lead').innerHTML = looksLikeUrl(text.trim()) ? ICONS.external : ICONS.search;
+      bar.querySelector('[data-link-clear]').hidden = !text.trim();
       showSuggestions(linkInput);
       renderFooter();
       return;
