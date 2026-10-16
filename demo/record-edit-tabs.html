@@ -59,7 +59,7 @@
     </nav>
 
     <!-- Sub Navigation -->
-    <aside class="subnav">
+    <aside class="subnav" id="subnav" aria-label="Section navigation">
       <div class="subnav__header">
         <h2 class="subnav__title">My site</h2>
         <div class="subnav__actions">
@@ -111,11 +111,16 @@
         </div>
       </div>
     </aside>
+    <div class="dashboard__overlay" id="subnav-overlay" aria-hidden="true"></div>
 
     <!-- Main Content Area -->
     <main class="dashboard__main">
       <header class="dashboard__header">
         <div class="dashboard__header-left">
+          <button type="button" class="btn btn--ghost btn--icon dashboard__subnav-toggle" aria-label="Section navigation" aria-controls="subnav"
+                  data-toggle data-toggle-target="#subnav" data-toggle-class="subnav--open" data-toggle-overlay="#subnav-overlay">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M9 4v16"/></svg>
+          </button>
           <nav class="breadcrumb">
             <ol class="breadcrumb__list">
               <li class="breadcrumb__item">
