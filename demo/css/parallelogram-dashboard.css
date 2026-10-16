@@ -3196,6 +3196,10 @@ code.code--sm {
   min-width: 100%;
 }
 
+p-modal:not(:defined) {
+  display: none;
+}
+
 p-modal > [slot=title] {
   font-size: 1.125rem;
   font-weight: 600;
