@@ -1626,8 +1626,12 @@ code.code--sm {
 }
 .card__header--row {
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
+}
+.card__header--row > svg,
+.card__header--row > .btn--icon {
+  align-self: center;
 }
 .card__header--center {
   text-align: center;

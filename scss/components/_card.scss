@@ -63,8 +63,13 @@ $card-inner-radius: calc(#{$radius} - 1px);
 
     &--row {
       flex-direction: row;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
+
+      > svg,
+      > .btn--icon {
+        align-self: center;
+      }
     }
 
     &--center {
