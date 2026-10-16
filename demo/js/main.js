@@ -1124,6 +1124,11 @@ class ActionBarList {
   // Pointer dragging
   // ---------------------------------------------------------------------------
 
+  /**
+   * The item moves to its landing place as the pointer moves, so a gap opens where it will drop
+   * while the item itself (with any children) follows the pointer. Other rows slide out of the
+   * way. Releasing settles the item into the gap; Escape or a cancelled pointer puts it back.
+   */
   _pointerDown(event, state) {
     const handle = event.target.closest('.actionbar__handle');
     const item = this._itemFor(handle, state);
@@ -1131,48 +1136,117 @@ class ActionBarList {
     event.preventDefault();
 
     const bar = this._bar(item);
-    const startY = event.clientY;
+    const grabOffset = event.clientY - item.getBoundingClientRect().top;
+    let pointerY = event.clientY;
     state.origin = this._position(item);
     bar.setAttribute('data-dragging', '');
-    let drop = null;
+    item.style.position = 'relative';
+    item.style.zIndex = '2';
 
-    const clear = () => {
-      if (drop) this._bar(drop.target).removeAttribute('data-drop');
+    const follow = () => {
+      item.style.transform = '';
+      const slotTop = item.getBoundingClientRect().top;
+      item.style.transform = `translateY(${pointerY - grabOffset - slotTop}px)`;
     };
 
-    // Listen on the document: nothing moves until the drop, so the pointer can roam freely
     const move = (e) => {
-      bar.style.transform = `translateY(${e.clientY - startY}px)`;
-      const next = this._dropTarget(state, item, e.clientY);
-      if (drop?.target === next?.target && drop?.where === next?.where) return;
-      clear();
-      drop = next;
-      if (drop) this._bar(drop.target).setAttribute('data-drop', drop.where);
+      pointerY = e.clientY;
+      const next = this._dropTarget(state, item, pointerY);
+      if (next && !this._isAt(item, next)) {
+        this._animate(state, item, () => this._place(item, next.target, next.where, state));
+      }
+      follow();
     };
 
-    const end = (e) => {
+    const finish = (commit) => {
       document.removeEventListener('pointermove', move);
-      document.removeEventListener('pointerup', end);
-      document.removeEventListener('pointercancel', end);
-      bar.removeAttribute('data-dragging');
-      bar.style.transform = '';
-      clear();
-      if (e.type === 'pointerup' && drop) {
-        this._place(item, drop.target, drop.where, state);
-        this._dispatch(state, item);
-      }
+      document.removeEventListener('pointerup', release);
+      document.removeEventListener('pointercancel', cancel);
+      document.removeEventListener('keydown', escape);
+      if (!commit) this._restore(item, state);
+      this._settle(item, () => {
+        bar.removeAttribute('data-dragging');
+        item.style.position = '';
+        item.style.zIndex = '';
+      });
+      if (commit) this._dispatch(state, item);
+    };
+    const release = () => finish(true);
+    const cancel = () => finish(false);
+    const escape = (e) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      finish(false);
     };
 
     document.addEventListener('pointermove', move);
-    document.addEventListener('pointerup', end);
-    document.addEventListener('pointercancel', end);
+    document.addEventListener('pointerup', release);
+    document.addEventListener('pointercancel', cancel);
+    document.addEventListener('keydown', escape);
+  }
+
+  /** Whether the item already sits where a drop target would put it. */
+  _isAt(item, { target, where }) {
+    if (where === 'before') return item.nextElementSibling === target;
+    if (where === 'after') return target.nextElementSibling === item;
+    const list = this._childList(target);
+    if (!list || item.parentElement !== list) return false;
+    return where === 'inside' ? !item.nextElementSibling : !item.previousElementSibling;
+  }
+
+  _reducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /** Run a DOM move, then slide the other bars from where they were to where they now are. */
+  _animate(state, item, mutate) {
+    const bars = this._candidates(state, item).map(li => this._bar(li));
+    const before = new Map(bars.map(bar => [bar, bar.getBoundingClientRect().top]));
+    mutate();
+    if (this._reducedMotion()) return;
+    for (const [bar, top] of before) {
+      const delta = top - bar.getBoundingClientRect().top;
+      if (delta) {
+        bar.animate([{ transform: `translateY(${delta}px)` }, { transform: 'none' }], { duration: 150, easing: 'ease-out' });
+      }
+    }
+  }
+
+  /** Drop the pointer offset and glide the item into its slot, then run done. */
+  _settle(item, done) {
+    const from = item.getBoundingClientRect().top;
+    item.style.transform = '';
+    const delta = from - item.getBoundingClientRect().top;
+    if (!delta || this._reducedMotion()) {
+      done();
+      return;
+    }
+    item.animate([{ transform: `translateY(${delta}px)` }, { transform: 'none' }], { duration: 150, easing: 'ease-out' })
+      .finished.then(done, done);
+  }
+
+  /** Put an item back where the current move started. */
+  _restore(item, state) {
+    const { list, index, parent } = state.origin;
+    const oldList = item.parentElement;
+    // The original list may have been removed when the move emptied it
+    const home = list.isConnected ? list : this._ensureChildList(parent);
+    home.insertBefore(item, [...home.children].filter(el => el !== item)[index] || null);
+    if (home !== oldList) this._pruneEmpty(oldList, state);
+  }
+
+  /** A bar's box without any slide animation still running on it, so targets don't flicker. */
+  _layoutRect(bar) {
+    const rect = bar.getBoundingClientRect();
+    const shift = new DOMMatrixReadOnly(getComputedStyle(bar).transform).m42;
+    return { top: rect.top - shift, bottom: rect.bottom - shift, height: rect.height };
   }
 
   /** Where the dragged item would land for a pointer at clientY. */
   _dropTarget(state, item, y) {
     let best = null;
     for (const candidate of this._candidates(state, item)) {
-      const rect = this._bar(candidate).getBoundingClientRect();
+      const rect = this._layoutRect(this._bar(candidate));
       const distance = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
       if (!best || distance < best.distance) best = { target: candidate, rect, distance };
     }
@@ -1228,12 +1302,7 @@ class ActionBarList {
 
     if (event.key === 'Escape') {
       event.preventDefault();
-      const { list, index, parent } = state.origin;
-      const oldList = item.parentElement;
-      // The original list may have been removed when the move emptied it
-      const home = list.isConnected ? list : this._ensureChildList(parent);
-      home.insertBefore(item, [...home.children].filter(el => el !== item)[index] || null);
-      if (home !== oldList) this._pruneEmpty(oldList, state);
+      this._restore(item, state);
       state.grabbed = null;
       handle.setAttribute('aria-pressed', 'false');
       bar.removeAttribute('data-dragging');
