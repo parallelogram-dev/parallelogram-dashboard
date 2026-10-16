@@ -3136,12 +3136,22 @@ select.table__control {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-0.25rem);
-  transition: var(--transition-default);
+  transition: var(--transition-default), display var(--framework-transition-duration) allow-discrete;
+}
+.dropdown__menu:where(:not([popover])) {
+  display: none;
 }
 .dropdown__menu--open, :is(.dropdown:has(> .dropdown__trigger[aria-expanded=true]), .dropdown--open) > .dropdown__menu {
+  display: block;
   opacity: 1;
   visibility: visible;
   transform: translateY(0.25rem);
+}
+@starting-style {
+  .dropdown__menu--open, :is(.dropdown:has(> .dropdown__trigger[aria-expanded=true]), .dropdown--open) > .dropdown__menu {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
 }
 .dropdown__menu[popover] {
   position: fixed;

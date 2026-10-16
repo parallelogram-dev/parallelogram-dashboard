@@ -41,14 +41,27 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     opacity: 0;
     visibility: hidden;
     transform: translateY(-0.25rem);
-    @include transition-default;
+    // display eases as a discrete value, so the menu stays on screen until it has faded out
+    transition: var(--transition-default), display var(--framework-transition-duration) allow-discrete;
+
+    // A closed menu takes no space, so one near the bottom of a scrolling area can't stretch it.
+    // A popover menu is already hidden by the browser while closed.
+    &:where(:not([popover])) {
+      display: none;
+    }
 
     // Child combinator so a nested submenu stays closed until it is opened itself
     &--open,
     :is(#{$dropdown-open}) > & {
+      display: block;
       opacity: 1;
       visibility: visible;
       transform: translateY($spacing-3xs);
+
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+      }
     }
   }
 
