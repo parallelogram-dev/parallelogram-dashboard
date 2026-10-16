@@ -177,7 +177,7 @@
   --tracking-tight: -0.025em;
 }
 
-.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -7933,7 +7933,7 @@ dl.descriptionlist dd {
  * Media field
  *
  * Contenir's gallery field: a grid of asset tiles that reorder by drag ([data-handle]), each with
- * a remove button, and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
+ * a remove button and a copy-URL button (.media__copy), and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
  * Class names match Contenir's markup so these styles drop onto it unchanged.
  *
  * Files can also be dropped straight onto the field: .media__list--dragover marks it while files
@@ -8033,7 +8033,7 @@ dl.descriptionlist dd {
   padding: 0.25rem;
   object-fit: contain;
 }
-.media__remove {
+.media__remove, .media__copy {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
@@ -8051,24 +8051,49 @@ dl.descriptionlist dd {
   opacity: 0;
   transition: var(--transition-default);
 }
-.media__remove svg {
+.media__remove svg, .media__copy svg {
   width: 1rem;
   height: 1rem;
+}
+.media__remove:focus-visible, .media__copy:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .media__remove, .media__copy {
+    opacity: 1;
+  }
 }
 .media__remove:hover {
   color: var(--destructive);
   border-color: var(--destructive);
 }
-.media__remove:focus-visible {
+.media__copy {
+  right: auto;
+  left: 0.25rem;
+}
+.media__copy:hover {
+  color: var(--primary);
+  border-color: var(--fg-subtle);
+}
+.media:hover :is(.media__remove, .media__copy), .media:focus-within :is(.media__remove, .media__copy) {
   opacity: 1;
 }
-@media (hover: none) {
-  .media__remove {
-    opacity: 1;
-  }
+.media [data-tooltip]::after {
+  top: calc(100% + 0.5rem);
+  right: 0;
+  bottom: auto;
+  left: auto;
+  transform: none;
 }
-.media:hover .media__remove, .media:focus-within .media__remove {
-  opacity: 1;
+.media__copy[data-tooltip]::after {
+  right: auto;
+  left: 0;
+}
+.media [data-tooltip]::before {
+  top: calc(100% + 0.5rem - 10px);
+  bottom: auto;
+  border-color: transparent;
+  border-bottom-color: var(--primary);
 }
 .media__btn {
   display: flex;

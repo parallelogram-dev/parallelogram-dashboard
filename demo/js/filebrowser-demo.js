@@ -93,8 +93,11 @@
   // Where the site serves each file; the demo makes one up from the name
   const urlFor = asset => `https://example.com/assets/${scope.toLowerCase().replace(/\s*›\s*/g, '/').replace(/\s+/g, '-')}/${asset.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.${asset.type.toLowerCase()}`;
 
-  async function copyUrl(asset) {
-    const url = urlFor(asset);
+  function copyUrl(asset) {
+    copyText(urlFor(asset));
+  }
+
+  async function copyText(url) {
     try {
       await navigator.clipboard.writeText(url);
       window.toast?.success('Image URL copied');
@@ -122,12 +125,19 @@
     li.setAttribute('data-filebrowser-item', '');
     li.dataset.assetId = asset.id;
     li.dataset.alt = asset.altState;
+    li.dataset.url = urlFor(asset);
     li.innerHTML = `<figure class="media__image"><picture><img src="${asset.src}" alt="${escape(asset.alt)}"></picture>`
+      + `<button type="button" class="media__copy" data-filebrowser-copy data-tooltip="Copy URL" aria-label="Copy URL of ${escape(asset.name)}">${ICONS.link}</button>`
       + `<button type="button" class="media__remove" data-filebrowser-remove data-tooltip="Remove" aria-label="Remove ${asset.name}">${ICONS.remove}</button></figure>`;
     return li;
   }
 
   list.addEventListener('click', (e) => {
+    const copy = e.target.closest('[data-filebrowser-copy]');
+    if (copy) {
+      copyText(copy.closest('.media').dataset.url);
+      return;
+    }
     const remove = e.target.closest('[data-filebrowser-remove]');
     if (remove) {
       const item = remove.closest('.media');
