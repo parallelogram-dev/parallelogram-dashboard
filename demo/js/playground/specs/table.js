@@ -42,8 +42,8 @@ function control(column, row) {
     const options = Object.keys(STATUS).map(v => `<option${v === row.status ? ' selected' : ''}>${v}</option>`).join('');
     return `<select class="table__control" ${label}>${options}</select>`;
   }
-  const number = column.key === 'spend' ? ' table__control--number' : '';
-  return `<input type="text" class="table__control${number}" value="${escape(row[column.key])}" ${label}>`;
+  const modifier = { spend: ' table__control--number', email: ' table__control--wide' }[column.key] || '';
+  return `<input type="text" class="table__control${modifier}" value="${escape(row[column.key])}" ${label}>`;
 }
 
 function cell(s, column, row) {
@@ -105,6 +105,7 @@ export default {
     { key: 'fixed', label: 'Fixed layout', type: 'toggle' },
     { key: 'responsive', label: 'Stack on mobile', type: 'toggle' },
     { key: 'editable', label: 'Editable cells', type: 'toggle' },
+    { key: 'stickyActions', label: 'Pin actions column', type: 'toggle', when: s => s.actions },
   ],
   presets: [
     { name: 'Users', state: {} },
@@ -114,7 +115,7 @@ export default {
     { name: 'Inside a card', state: { density: 'card', wrapper: 'borderless', sortable: false } },
     { name: 'Responsive', state: { responsive: true, actions: false } },
     { name: 'Empty', state: { empty: true, sortable: false } },
-    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless' } },
+    { name: 'Editable', state: { editable: true, variant: '', sortable: false, selectable: true, wrapper: 'borderless', stickyActions: true } },
   ],
   render(s) {
     const span = COLUMNS.length + (s.selectable ? 1 : 0) + (s.actions ? 1 : 0);
@@ -145,7 +146,7 @@ export default {
       : '';
 
     const caption = s.caption ? `<caption class="table__caption">${escape(s.caption)}</caption>` : '';
-    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable');
+    const className = bem('table', s.variant, s.density, s.fixed && 'fixed', s.responsive && 'responsive', s.editable && 'editable', s.actions && s.stickyActions && 'sticky-actions');
     const table = `<table class="${className}">${caption}<thead class="table__header"><tr class="table__row">${headCells}</tr></thead>`
       + `<tbody class="table__body">${rows.join('')}</tbody>${footer}</table>`;
 

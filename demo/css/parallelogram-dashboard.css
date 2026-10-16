@@ -896,6 +896,9 @@ p-datetime.input:focus-within {
   display: grid;
   gap: 1.5rem;
 }
+.grid > * {
+  min-width: 0;
+}
 .grid--2-1 {
   grid-template-columns: 2fr 1fr;
 }
@@ -2145,7 +2148,37 @@ code.code--sm {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+.table__control--wide {
+  min-width: 8rem;
+}
+.table:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
+  visibility: hidden;
+}
+.table--sticky-actions .table__actions {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background-color: var(--card);
+}
+@supports (animation-timeline: scroll()) {
+  .table--sticky-actions .table__actions {
+    animation: table-sticky-edge linear both;
+    animation-timeline: --table-scroll;
+  }
+}
 
+.table__wrapper:has(> .table--sticky-actions) {
+  scroll-timeline: --table-scroll inline;
+}
+
+@keyframes table-sticky-edge {
+  from {
+    box-shadow: -8px 0 8px -8px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    box-shadow: none;
+  }
+}
 .table__sort-icon {
   display: inline-flex;
   align-items: center;
@@ -2161,6 +2194,10 @@ code.code--sm {
 .table__checkbox {
   width: 2rem;
   text-align: center;
+}
+.table__checkbox .checkbox {
+  display: flex;
+  justify-content: center;
 }
 
 .table__actions {

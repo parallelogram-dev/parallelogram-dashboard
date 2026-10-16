@@ -215,6 +215,48 @@
       text-align: right;
       font-variant-numeric: tabular-nums;
     }
+
+    // For longer values such as codes and SKUs; the table scrolls rather than squeezing them
+    &--wide {
+      min-width: 8rem;
+    }
+  }
+
+  // While rows are selected, row actions step aside for the bulk actions; they keep their space
+  &:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
+    visibility: hidden;
+  }
+
+  // The actions column stays pinned to the right edge while the table scrolls sideways
+  &--sticky-actions {
+    .table__actions {
+      position: sticky;
+      right: 0;
+      z-index: 1;
+      background-color: var(--card);
+    }
+
+    // A shadow shows only while columns are scrolled underneath the pinned actions
+    @supports (animation-timeline: scroll()) {
+      .table__actions {
+        animation: table-sticky-edge linear both;
+        animation-timeline: --table-scroll;
+      }
+    }
+  }
+}
+
+.table__wrapper:has(> .table--sticky-actions) {
+  scroll-timeline: --table-scroll inline;
+}
+
+@keyframes table-sticky-edge {
+  from {
+    box-shadow: -8px 0 8px -8px rgb(0 0 0 / 0.2);
+  }
+
+  to {
+    box-shadow: none;
   }
 }
 
@@ -245,6 +287,12 @@
 .table__checkbox {
   width: $spacing-xl;
   text-align: center;
+
+  // A label with no text sits on the baseline and rides high; centre it in the cell instead
+  .checkbox {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 // --------------------------------------------------------------------------
