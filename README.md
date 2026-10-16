@@ -21,22 +21,21 @@ npm run serve
 ## Using the Package
 
 The library is consumed as `@parallelogram-js/dashboard` from another project's build. There is no
-CDN copy and no prebuilt `<script>` bundle. The repository is private and not yet on npm, so
-install a tagged release straight from GitHub (this needs git access to the repository):
+CDN copy and no prebuilt `<script>` bundle. Install a published version from npm:
 
 ```bash
-npm install "git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0"
+npm install @parallelogram-js/dashboard@0.1.1
 ```
 
-That records the tag in `package.json`, so the project stays on that release until you change it:
+Or install a tagged release straight from GitHub, which needs git access to the repository:
 
-```json
-"@parallelogram-js/dashboard": "git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.0"
+```bash
+npm install "git+ssh://git@github.com/parallelogram-dev/parallelogram-dashboard.git#v0.1.1"
 ```
 
-To upgrade, read the [changelog](CHANGELOG.md) entries since the current tag, make any listed
-markup changes in the project's templates, change the tag and run `npm install`. The compiled CSS
-in `dist/` is committed, so nothing needs building after install.
+To upgrade, read the [changelog](CHANGELOG.md) entries since the current version, make any listed
+markup changes in the project's templates, then install the new version. The compiled CSS in
+`dist/` ships with the package, so nothing needs building after install.
 
 ```js
 import { init } from '@parallelogram-js/dashboard';
@@ -1359,6 +1358,8 @@ Every change that needs a site to edit its templates goes under **Markup changes
    playground check, sets the version in `package.json` and `package-lock.json`, moves the
    Unreleased entries under the new version and date, commits, and creates the tag `vX.Y.Z`.
 3. Check the commit, then push it with its tag: `git push --follow-tags`.
+4. Publish that version to npm from the same clean `main`: `npm publish` (after `npm login` as an
+   owner of the `@parallelogram-js` scope). `publishConfig` makes it public.
 
 ## Comparing Styles Between Releases
 

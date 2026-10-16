@@ -11,6 +11,25 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-16
+
+Ready to publish on npm as a public package.
+
+### Added
+
+- An MIT `LICENSE` file, and `author`, `repository` and `publishConfig` (public access) in
+  `package.json`.
+- `CHANGELOG.md` is included in the package, so the markup notes ship with each version.
+
+### Changed
+
+- The popovers that keep the page's colours inside the rail, section menu and header are picked
+  out by role (`[popover]`, `menu`, `dialog`, `tooltip`) instead of by class.
+
+### Removed
+
+- The demo-only stylesheets `scss/_demo.scss` and `scss/demo-pages.scss` from the package.
+
 ## [0.1.0] - 2026-10-16
 
 The first tagged release, covering everything on `main` to date.
@@ -89,5 +108,6 @@ The first tagged release, covering everything on `main` to date.
   `overflow-y: auto`; the page itself scrolls. Templates that relied on the content area
   scrolling inside a fixed-height shell need their own scrolling wrapper.
 
-[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/parallelogram-dev/parallelogram-dashboard/releases/tag/v0.1.0
