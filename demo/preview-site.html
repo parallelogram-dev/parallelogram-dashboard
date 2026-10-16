@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Preview - About</title>
+  <!--
+    Stands in for the public site's preview route. The CMS saves a draft under a token and loads
+    this page with ?token=…; the site fetches the draft (here, from localStorage), renders it with
+    its own templates and marks each block with data-block-id so the editor can point at it.
+  -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font: 400 1.0625rem/1.6 Georgia, "Times New Roman", serif; color: #1c1917; background: #fafaf9; }
+    h1, h2, h3, h4 { margin: 0 0 0.75rem; font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+    p { margin: 0 0 1rem; }
+    em, i, cite { font-style: normal; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .wrap { width: min(72rem, 100% - 3rem); margin-inline: auto; }
+    .preview-flag { position: sticky; top: 0; z-index: 2; padding: 0.25rem; font: 600 0.6875rem/1.4 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; color: #fff; background: #6366f1; }
+    .site-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+    .site-head strong { font-size: 1.125rem; letter-spacing: -0.02em; }
+    .site-head nav { display: flex; gap: 1.25rem; font-size: 0.9375rem; }
+    .site-head nav a { text-decoration: none; color: #57534e; }
+    .site-head nav a[aria-current] { color: #1c1917; font-weight: 600; }
+    .page-title { padding-block: 3rem 1rem; font-size: clamp(2.25rem, 6vw, 4rem); }
+    .block { position: relative; padding-block: 3rem; scroll-margin-top: 2rem; }
+    .block[data-theme="light"] { background: #f1f5f9; }
+    .block[data-theme="dark"] { color: #f8fafc; background: #0f172a; }
+    .block[data-preview-focus]::after { content: ""; position: absolute; inset: 0.25rem; border: 2px solid #6366f1; pointer-events: none; }
+    .split { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
+    .split__media { grid-column: span var(--span); }
+    .split__text { grid-column: span calc(12 - var(--span)); display: flex; flex-direction: column; }
+    .split[data-align="right"] .split__media { order: 2; }
+    .split[data-span="12"] .split__text { grid-column: 1 / -1; }
+    .split[data-position="middle"] .split__text { justify-content: center; }
+    .split[data-position="bottom"] .split__text { justify-content: flex-end; }
+    .shape-square img { aspect-ratio: 1; object-fit: cover; width: 100%; }
+    .shape-landscape img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+    .shape-portrait img { aspect-ratio: 3 / 4; object-fit: cover; width: 100%; }
+    .shape-original img { aspect-ratio: 3 / 2; object-fit: cover; width: 100%; }
+    .heading-medium { font-size: 1.875rem; }
+    .heading-large, .heading-offset { font-size: 2.75rem; }
+    .heading-offset { margin-left: -2rem; }
+    .cta { display: inline-block; margin-top: 0.5rem; font: 600 0.9375rem/1 ui-sans-serif, system-ui, sans-serif; text-underline-offset: 0.25em; }
+    .figure { margin: 0 auto; }
+    .figure[data-size="regular"] { width: 50%; }
+    .figure[data-size="medium"] { width: 65%; }
+    .figure[data-size="large"] { width: 80%; }
+    .figure[data-align="left"] { margin-left: 0; }
+    .figure[data-align="right"] { margin-right: 0; }
+    .figure figcaption { margin-top: 0.75rem; font: 0.875rem/1.4 ui-sans-serif, system-ui, sans-serif; color: #78716c; }
+    .block[data-theme="dark"] figcaption { color: #94a3b8; }
+    .block--full { padding-block: 0; }
+    .block--full .figure { width: 100%; }
+    .block--full figcaption { width: min(72rem, 100% - 3rem); margin-inline: auto; padding-bottom: 1rem; }
+    .prose { max-width: 44rem; }
+    .prose[data-width="narrow"] { max-width: 34rem; }
+    .prose[data-width="wide"] { max-width: none; }
+    .quote { max-width: 48rem; margin: 0 auto; text-align: center; }
+    .quote p { font-size: clamp(1.5rem, 3.5vw, 2.25rem); line-height: 1.3; }
+    .quote cite { font: 600 0.875rem/1.4 ui-sans-serif, system-ui, sans-serif; color: #78716c; }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .tile { text-decoration: none; font-family: ui-sans-serif, system-ui, sans-serif; }
+    .tile img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; margin-bottom: 0.75rem; }
+    .tile strong { display: block; }
+    .tile span { font-size: 0.875rem; color: #78716c; }
+    .tiles-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+    .site-foot { padding-block: 3rem; font: 0.875rem/1.4 ui-sans-serif, system-ui, sans-serif; color: #78716c; }
+    .expired { padding: 6rem 1.5rem; font-family: ui-sans-serif, system-ui, sans-serif; text-align: center; color: #57534e; }
+    @media (max-width: 700px) {
+      .site-head nav { display: none; }
+      .split { grid-template-columns: 1fr; gap: 1.25rem; }
+      .split__media, .split__text { grid-column: auto; }
+      .split[data-align="right"] .split__media { order: 0; }
+      .figure[data-size] { width: 100%; }
+      .heading-large, .heading-offset { font-size: 2rem; }
+      .heading-offset { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="page"></div>
+  <script>
+    (() => {
+      const token = new URLSearchParams(location.search).get('token');
+      const raw = token && localStorage.getItem(`preview:${token}`);
+      const page = document.getElementById('page');
+      if (!raw) {
+        page.innerHTML = '<p class="expired">This preview link has expired.</p>';
+        return;
+      }
+      const draft = JSON.parse(raw);
+      const esc = value => String(value ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+      const paras = text => String(text || '').split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
+      const link = (href, label, cls = 'cta') => (label ? `<a class="${cls}" href="${esc(href || '#')}">${esc(label)} &rarr;</a>` : '');
+
+      const render = {
+        textImage: d => `
+          <div class="wrap split" style="--span: ${d.width};" data-span="${d.width}" data-align="${d.align}" data-position="${d.position}">
+            ${d.image ? `<div class="split__media shape-${d.shape}"><img src="${d.image}" alt=""></div>` : ''}
+            <div class="split__text">
+              ${d.heading ? `<${d.headingTag} class="heading-${d.headingStyle}">${esc(d.heading)}</${d.headingTag}>` : ''}
+              ${paras(d.body)}
+              ${link(d.href, d.cta)}
+            </div>
+          </div>`,
+        image: d => `
+          <figure class="figure shape-${d.shape}" data-size="${d.size}" data-align="${d.align}">
+            ${d.image ? `<img src="${d.image}" alt="">` : ''}
+            ${d.caption ? `<figcaption>${esc(d.caption)}</figcaption>` : ''}
+          </figure>`,
+        text: d => `<div class="wrap"><div class="prose" data-width="${d.width}">${d.heading ? `<h2>${esc(d.heading)}</h2>` : ''}${paras(d.body)}</div></div>`,
+        quote: d => `<div class="wrap"><blockquote class="quote"><p>&ldquo;${esc(d.quote)}&rdquo;</p>${d.cite ? `<cite>${esc(d.cite)}</cite>` : ''}</blockquote></div>`,
+        projects: d => `
+          <div class="wrap">
+            <div class="tiles-head">${d.heading ? `<h2>${esc(d.heading)}</h2>` : '<span></span>'}${d.viewAllHref ? link(d.viewAllHref, 'View all') : ''}</div>
+            <div class="tiles">${d.projects.map(p => `<a class="tile" href="${esc(p.href)}"><img src="${p.image}" alt=""><strong>${esc(p.title)}</strong><span>${esc(p.meta)}</span></a>`).join('')}</div>
+          </div>`,
+      };
+
+      page.innerHTML = `
+        <div class="preview-flag">Preview</div>
+        <header class="wrap site-head">
+          <strong>Studio</strong>
+          <nav><a href="#">Projects</a><a href="#" aria-current="page">About</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+        </header>
+        <main>
+          <h1 class="wrap page-title">${esc(draft.title)}</h1>
+          ${draft.blocks.map(b => `<section class="block${b.type === 'image' && b.data.size === 'full' ? ' block--full' : ''}" data-block-id="${b.id}" data-theme="${b.data.theme || 'default'}">${render[b.type](b.data)}</section>`).join('')}
+        </main>
+        <footer class="wrap site-foot">&copy; Studio</footer>`;
+
+      // Keep the reader's place across refreshes
+      const scrollKey = `preview-scroll:${token}`;
+      const y = sessionStorage.getItem(scrollKey);
+      if (y) window.scrollTo(0, Number(y));
+      addEventListener('pagehide', () => sessionStorage.setItem(scrollKey, String(window.scrollY)));
+
+      // The editor says which block is open; the site shows where it is
+      addEventListener('message', (e) => {
+        if (e.origin !== location.origin || e.data?.type !== 'preview:focus') return;
+        document.querySelectorAll('[data-preview-focus]').forEach(el => el.removeAttribute('data-preview-focus'));
+        const el = e.data.id && document.querySelector(`[data-block-id="${CSS.escape(e.data.id)}"]`);
+        if (!el) return;
+        el.setAttribute('data-preview-focus', '');
+        el.scrollIntoView({ block: 'start', behavior: e.data.instant ? 'instant' : 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>

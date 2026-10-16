@@ -8,6 +8,9 @@
  * sheet. Blocks belong to the page, so the sheet ends in Done and "Save page" keeps everything;
  * a block's own lookups (images, a carousel's projects) open one level deeper. Escape and Back go
  * up a level and ask before discarding changes. All data is in memory and resets on reload.
+ *
+ * Preview (at 1280px and wider) shows the page full-screen with the blocks on the left and the
+ * site's own rendering on the right; narrower screens open the preview in a new tab instead.
  */
 (() => {
   const list = document.getElementById('blocks');
@@ -260,8 +263,9 @@
     list.innerHTML = blocks.map(card).join('')
       + `<li class="blk-insert" style="height: auto; margin-top: 0.5rem;"><button type="button" class="btn btn--outline btn--sm" data-insert="${blocks.length}" style="opacity: 1; transform: none; width: auto; height: auto; padding: 0.25rem 0.75rem; color: inherit; background: var(--card); border: 1px solid var(--border);">${ICONS.plus}Add block</button></li>`;
     if (editing) list.querySelector(`[data-block="${editing}"]`)?.setAttribute('data-editing', '');
-    document.getElementById('pageUnsaved').hidden = JSON.stringify(blocks) === saved;
+    document.querySelectorAll('[data-unsaved]').forEach((el) => { el.hidden = JSON.stringify(blocks) === saved; });
     window.Parallelogram?.init(list);
+    preview.sync();
   }
 
   function undoToast(message, restore) {
@@ -390,11 +394,11 @@
     document.addEventListener('keydown', escape, true);
   });
 
-  document.getElementById('savePage').addEventListener('click', () => {
+  document.querySelectorAll('[data-save-page]').forEach(button => button.addEventListener('click', () => {
     saved = JSON.stringify(blocks);
     renderList();
     window.toast?.success('About saved');
-  });
+  }));
 
   // ---------------------------------------------------------------------------
   // The stacked sheet
@@ -443,7 +447,11 @@
     stack = frames;
     confirming = null;
     render('forward');
-    if (!sheet.open) sheet.showModal();
+    // While previewing the sheet covers only the blocks, so the preview and its toolbar stay usable
+    if (!sheet.open) {
+      if (preview.active) sheet.show();
+      else sheet.showModal();
+    }
     renderList();
   }
 
@@ -504,6 +512,7 @@
   }
 
   function renderFooter() {
+    preview.sync();
     const frame = top();
     if (confirming) {
       footer.innerHTML = `
@@ -736,6 +745,13 @@
     back();
   });
 
+  // A sheet shown alongside the preview isn't modal, so Escape needs handling here
+  sheet.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || e.defaultPrevented || sheet.matches(':modal')) return;
+    e.preventDefault();
+    sheet.dispatchEvent(new Event('cancel', { cancelable: true }));
+  });
+
   sheet.addEventListener('click', (e) => {
     const t = e.target;
     if (t.closest('[data-sheet-close]')) return back(0);
@@ -915,6 +931,185 @@
     renderList();
     return undefined;
   }
+
+  // ---------------------------------------------------------------------------
+  // Live preview
+  // ---------------------------------------------------------------------------
+
+  /**
+   * The CMS saves the page as it stands under a short-lived token and the site renders it at its
+   * preview URL, marking each block with data-block-id. Here the "site" is preview-site.html and
+   * the token's draft lives in localStorage. The preview redraws whenever a change is applied (Done,
+   * reorder, hide, delete) but never while typing; Refresh also shows the open block's unapplied
+   * changes, and a dot on it says the preview is behind. Opening a block scrolls the site to it.
+   */
+  const preview = (() => {
+    const studio = document.getElementById('previewStudio');
+    const iframe = studio.querySelector('[data-preview-frame]');
+    const device = studio.querySelector('[data-preview-device]');
+    const stage = studio.querySelector('[data-preview-stage]');
+    const refreshButton = studio.querySelector('[data-preview-refresh]');
+    const editor = document.getElementById('previewEditor');
+    const canvas = list.closest('.blk-canvas');
+    const home = canvas.parentElement;
+    const wide = window.matchMedia('(min-width: 1280px)');
+    const token = () => Math.random().toString(36).slice(2, 12);
+    const draftToken = `draft-${token()}`;
+    const url = t => `preview-site.html?token=${t}`;
+    let width = 1280;
+    let shown = '';
+    let focused = null;
+    let active = false;
+
+    const href = link => (!link ? '' : link.type === 'entry' ? find(ENTRIES, link.id)?.path || '' : link.url);
+
+    /** What the site needs to render a block: images, links and projects resolved. */
+    function resolve(block) {
+      const { link, viewAll, ...d } = structuredClone(block.data);
+      if ('image' in d) d.image = d.image ? find(IMAGES, d.image)?.src : null;
+      if (block.type === 'textImage') d.href = href(link);
+      if (block.type === 'projects') {
+        d.projects = d.projects.map(find.bind(null, PROJECTS)).map(p => ({ title: p.title, meta: p.meta, image: p.image, href: `/projects/${slug(p.title)}` }));
+        d.viewAllHref = href(viewAll);
+      }
+      return d;
+    }
+
+    /** The page as applied, or with the open block's unapplied changes too. */
+    function snapshot(withDraft) {
+      let page = blocks;
+      const frame = stack[0];
+      if (withDraft && frame?.kind === 'block') {
+        page = frame.isNew
+          ? [...blocks.slice(0, frame.at), { id: 'new', type: frame.type, hidden: false, data: frame.draft }, ...blocks.slice(frame.at)]
+          : blocks.map(b => (b.id === frame.blockId ? { ...b, data: frame.draft } : b));
+      }
+      const title = document.getElementById('pageTitle').value || 'About';
+      return JSON.stringify({ title, blocks: page.filter(b => !b.hidden).map(b => ({ id: b.id, type: b.type, data: resolve(b) })) });
+    }
+
+    function store(t, data) {
+      localStorage.setItem(`preview:${t}`, data);
+    }
+
+    function refresh() {
+      shown = snapshot(true);
+      store(draftToken, shown);
+      if (iframe.getAttribute('src')) iframe.contentWindow.location.reload();
+      else iframe.src = url(draftToken);
+      refreshButton.removeAttribute('data-stale');
+    }
+
+    function post(instant) {
+      iframe.contentWindow?.postMessage({ type: 'preview:focus', id: focused, instant }, window.location.origin);
+    }
+
+    function sync() {
+      if (!active) return;
+      const applied = snapshot(false);
+      const current = snapshot(true);
+      if (current === applied && current !== shown) refresh();
+      refreshButton.toggleAttribute('data-stale', current !== shown);
+      const frame = stack[0];
+      const id = frame?.kind === 'block' ? (frame.isNew ? 'new' : frame.blockId) : null;
+      if (id !== focused) {
+        focused = id;
+        post(false);
+      }
+    }
+
+    /** Show the chosen device width, scaled down to fit the space beside the blocks. */
+    function fit() {
+      const room = stage.getBoundingClientRect();
+      const scale = Math.min(1, (room.width - 32) / width);
+      device.style.width = `${width}px`;
+      device.style.height = `${(room.height - 32) / scale}px`;
+      device.style.transform = `translateX(-50%) scale(${scale})`;
+    }
+
+    function open() {
+      if (!wide.matches) {
+        store(draftToken, snapshot(false));
+        window.open(url(draftToken), '_blank', 'noopener');
+        return;
+      }
+      active = true;
+      document.body.setAttribute('data-previewing', '');
+      studio.hidden = false;
+      editor.append(canvas);
+      studio.querySelector('[data-preview-tab]').href = url(draftToken);
+      fit();
+      refresh();
+      studio.querySelector('[data-preview-close]').focus();
+    }
+
+    function close() {
+      if (sheet.open) back(0);
+      if (sheet.open) return;
+      active = false;
+      focused = null;
+      home.append(canvas);
+      studio.hidden = true;
+      document.body.removeAttribute('data-previewing');
+      document.querySelector('[data-preview-open]').focus();
+    }
+
+    document.querySelector('[data-preview-open]').addEventListener('click', open);
+    studio.querySelector('[data-preview-close]').addEventListener('click', close);
+    refreshButton.addEventListener('click', refresh);
+    iframe.addEventListener('load', () => post(true));
+    new ResizeObserver(() => { if (active) fit(); }).observe(stage);
+    wide.addEventListener('change', () => { if (active && !wide.matches) close(); });
+
+    studio.addEventListener('click', (e) => {
+      const option = e.target.closest('[data-device]');
+      if (option) {
+        width = Number(option.dataset.device);
+        option.parentElement.querySelectorAll('[data-device]').forEach((el) => { el.setAttribute('aria-checked', String(el === option)); });
+        fit();
+      }
+      if (e.target.closest('[data-preview-share]')) {
+        const share = `share-${token()}`;
+        store(share, snapshot(true));
+        const link = new URL(url(share), window.location.href).href;
+        navigator.clipboard?.writeText(link).then(() => window.toast?.success('Share link copied'), () => window.toast?.error('Couldn’t copy the link'));
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (active && e.key === 'Escape' && !sheet.open && !e.defaultPrevented && !e.target.closest('.dropdown')) close();
+    });
+
+    /** Drag the divider (or use the arrow keys on it) to give the blocks more or less room. */
+    const divider = studio.querySelector('[data-preview-divider]');
+    const setWidth = (px) => {
+      const clamped = Math.round(Math.max(352, Math.min(window.innerWidth * 0.6, px)));
+      document.body.style.setProperty('--blk-editor-width', `${clamped}px`);
+    };
+    divider.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      divider.setPointerCapture(e.pointerId);
+      divider.setAttribute('data-dragging', '');
+      studio.setAttribute('data-resizing', '');
+      const move = ev => setWidth(ev.clientX);
+      const up = () => {
+        divider.removeEventListener('pointermove', move);
+        divider.removeEventListener('pointerup', up);
+        divider.removeAttribute('data-dragging');
+        studio.removeAttribute('data-resizing');
+      };
+      divider.addEventListener('pointermove', move);
+      divider.addEventListener('pointerup', up);
+    });
+    divider.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      setWidth(editor.getBoundingClientRect().width + (e.key === 'ArrowLeft' ? -32 : 32));
+    });
+
+    return { sync, get active() { return active; } };
+  })();
 
   renderList();
 })();
