@@ -390,6 +390,9 @@ class SegmentedControl {
 // ============================================================================
 
 class Toggle {
+  /** Open capture-mode toggles across every instance, so opening one dropdown closes the others. */
+  static open = new Map();
+
   constructor() {
     this.elements = new WeakMap();
   }
@@ -455,6 +458,7 @@ class Toggle {
 
     element.setAttribute('data-toggle-enhanced', 'true');
     this.elements.set(element, state);
+    if (state.isOpen && capture && !manual) Toggle.open.set(element, this);
   }
 
   toggle(element) {
@@ -469,6 +473,14 @@ class Toggle {
   }
 
   show(element) {
+    const state = this.elements.get(element);
+    if (state?.capture && !state.manual) {
+      // The trigger's click doesn't reach the document, so other dropdowns never see it as outside
+      for (const [other, owner] of Toggle.open) {
+        const nested = owner.elements.get(other)?.target.contains(element) || state.target.contains(other);
+        if (other !== element && !nested) owner.hide(other);
+      }
+    }
     this._set(element, true);
   }
 
@@ -482,6 +494,10 @@ class Toggle {
 
     state.isOpen = open;
     element.setAttribute('aria-expanded', String(open));
+    if (state.capture && !state.manual) {
+      if (open) Toggle.open.set(element, this);
+      else Toggle.open.delete(element);
+    }
 
     if (state.targetClass) {
       state.target.classList.toggle(state.targetClass, open);
@@ -496,12 +512,19 @@ class Toggle {
     }
   }
 
+  /** Close every open dropdown, e.g. when a modal takes over the page. */
+  static closeAll() {
+    for (const [element, owner] of Toggle.open) owner.hide(element);
+  }
+
   static enhanceAll(selector = '[data-toggle]', root = document) {
     const instance = new Toggle();
     root.querySelectorAll(selector).forEach(el => instance.mount(el));
     return instance;
   }
 }
+
+document.addEventListener('p-modal:open', () => Toggle.closeAll());
 
 // ============================================================================
 // Chart Component
