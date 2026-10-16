@@ -179,6 +179,12 @@
       padding-top: $spacing-3xs;
       padding-bottom: $spacing-3xs;
     }
+
+    // Line header text up with the text inside .table__control (cell padding + border + control padding)
+    .table__head:not(.table__checkbox) {
+      padding-left: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+      padding-right: calc(#{$spacing-3xs} + 1px + #{$spacing-2xs});
+    }
   }
 
   // An input or select that sits flush in its cell until hovered or focused

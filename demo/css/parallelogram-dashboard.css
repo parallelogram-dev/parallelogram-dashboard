@@ -2117,6 +2117,10 @@ code.code--sm {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+.table--editable .table__head:not(.table__checkbox) {
+  padding-left: calc(0.25rem + 1px + 0.5rem);
+  padding-right: calc(0.25rem + 1px + 0.5rem);
+}
 .table__control {
   width: 100%;
   min-width: 5.5rem;
