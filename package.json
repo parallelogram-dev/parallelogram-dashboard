@@ -1,9 +1,27 @@
 {
-  "name": "parallelogram-dashboard",
-  "version": "1.0.0",
+  "name": "@parallelogram-js/dashboard",
+  "version": "0.1.0",
   "description": "A BEM-style CSS dashboard library inspired by shadcn/ui",
   "main": "dist/parallelogram-dashboard.css",
   "type": "module",
+  "files": [
+    "dist",
+    "scss",
+    "src"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "exports": {
+    ".": "./src/js/index.js",
+    "./behaviours/*": "./src/js/behaviours/*.js",
+    "./css": "./dist/parallelogram-dashboard.css",
+    "./css/min": "./dist/parallelogram-dashboard.min.css",
+    "./scss": "./scss/_index.scss",
+    "./scss/*": "./scss/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "sass scss/main.scss dist/parallelogram-dashboard.css && sass scss/demo-pages.scss demo/css/demo.css --no-source-map && cp dist/parallelogram-dashboard.css demo/css/parallelogram-dashboard.css && npm run build:min && npm run vendor && npm run llms",
     "build:min": "sass scss/main.scss dist/parallelogram-dashboard.min.css --style=compressed --no-source-map && lightningcss --minify dist/parallelogram-dashboard.min.css -o dist/parallelogram-dashboard.min.css",
@@ -25,11 +43,16 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@parallelogram-js/core": "^0.7.19",
     "lightningcss-cli": "^1.33.0",
     "sass": "^1.69.0"
   },
-  "dependencies": {
-    "@parallelogram-js/core": "^0.7.19",
-    "@tabler/icons-webfont": "^3.36.1"
+  "peerDependencies": {
+    "@parallelogram-js/core": "^0.7.19"
+  },
+  "peerDependenciesMeta": {
+    "@parallelogram-js/core": {
+      "optional": true
+    }
   }
 }

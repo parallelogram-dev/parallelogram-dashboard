@@ -8,65 +8,65 @@
 // Color Palette (Zinc-based, shadcn style)
 // --------------------------------------------------------------------------
 
-$zinc-50: #fafafa;
-$zinc-100: #f4f4f5;
-$zinc-200: #e4e4e7;
-$zinc-300: #d4d4d8;
-$zinc-400: #a1a1aa;
-$zinc-500: #71717a;
-$zinc-600: #52525b;
-$zinc-700: #3f3f46;
-$zinc-800: #27272a;
-$zinc-900: #18181b;
-$zinc-950: #09090b;
+$zinc-50: #fafafa !default;
+$zinc-100: #f4f4f5 !default;
+$zinc-200: #e4e4e7 !default;
+$zinc-300: #d4d4d8 !default;
+$zinc-400: #a1a1aa !default;
+$zinc-500: #71717a !default;
+$zinc-600: #52525b !default;
+$zinc-700: #3f3f46 !default;
+$zinc-800: #27272a !default;
+$zinc-900: #18181b !default;
+$zinc-950: #09090b !default;
 
 // Accent Colors
-$red-50: #fef2f2;
-$red-100: #fee2e2;
-$red-500: #ef4444;
-$red-600: #dc2626;
-$red-900: #7f1d1d;
+$red-50: #fef2f2 !default;
+$red-100: #fee2e2 !default;
+$red-500: #ef4444 !default;
+$red-600: #dc2626 !default;
+$red-900: #7f1d1d !default;
 
-$green-50: #f0fdf4;
-$green-100: #dcfce7;
-$green-500: #22c55e;
-$green-600: #16a34a;
-$green-900: #14532d;
+$green-50: #f0fdf4 !default;
+$green-100: #dcfce7 !default;
+$green-500: #22c55e !default;
+$green-600: #16a34a !default;
+$green-900: #14532d !default;
 
-$blue-50: #eff6ff;
-$blue-100: #dbeafe;
-$blue-500: #3b82f6;
-$blue-600: #2563eb;
-$blue-900: #1e3a8a;
+$blue-50: #eff6ff !default;
+$blue-100: #dbeafe !default;
+$blue-500: #3b82f6 !default;
+$blue-600: #2563eb !default;
+$blue-900: #1e3a8a !default;
 
-$amber-50: #fffbeb;
-$amber-100: #fef3c7;
-$amber-500: #f59e0b;
-$amber-600: #d97706;
-$amber-900: #78350f;
+$amber-50: #fffbeb !default;
+$amber-100: #fef3c7 !default;
+$amber-500: #f59e0b !default;
+$amber-600: #d97706 !default;
+$amber-900: #78350f !default;
 
 // --------------------------------------------------------------------------
 // Typography
 // --------------------------------------------------------------------------
 
 $font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-            "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-            "Liberation Mono", monospace;
+            "Liberation Mono", monospace !default;
 
-$font-size-xs: 0.75rem;      // 12px
-$font-size-sm: 0.875rem;     // 14px
-$font-size-base: 1rem;       // 16px
-$font-size-lg: 1.125rem;     // 18px
-$font-size-xl: 1.25rem;      // 20px
-$font-size-2xl: 1.5rem;      // 24px
-$font-size-3xl: 1.875rem;    // 30px
-$font-size-4xl: 2.25rem;     // 36px
+$font-size-xs: 0.75rem !default;      // 12px
+$font-size-sm: 0.875rem !default;     // 14px
+$font-size-base: 1rem !default;       // 16px
+$font-size-lg: 1.125rem !default;     // 18px
+$font-size-xl: 1.25rem !default;      // 20px
+$font-size-2xl: 1.5rem !default;      // 24px
+$font-size-3xl: 1.875rem !default;    // 30px
+$font-size-4xl: 2.25rem !default;     // 36px
 
 // Heading scale, compact for dashboards. Each step is (phone, desktop) in rem; fluid() eases
 // between them across $fluid-min-width to $fluid-max-width, and equal values stay fixed.
-$fluid-min-width: 23.4375rem;    // 375px
-$fluid-max-width: 80rem;         // 1280px
+$fluid-min-width: 23.4375rem !default;    // 375px
+$fluid-max-width: 80rem !default;         // 1280px
 
 $heading-sizes: (
   1: (1.5rem, 1.875rem),         // 24 → 30px
@@ -75,7 +75,7 @@ $heading-sizes: (
   4: (1.125rem, 1.125rem),       // 18px
   5: (1rem, 1rem),               // 16px
   6: (0.875rem, 0.875rem),       // 14px
-);
+) !default;
 
 @function fluid($min, $max) {
   @if $min == $max {
@@ -86,115 +86,115 @@ $heading-sizes: (
   @return clamp(#{$min}, #{math.div(math.round($intercept * 1000), 1000)} + #{math.div(math.round($slope * 100000), 1000)}vw, #{$max});
 }
 
-$font-weight-normal: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
 
-$line-height-none: 1;
-$line-height-tight: 1.25;
-$line-height-snug: 1.375;
-$line-height-normal: 1.5;
-$line-height-relaxed: 1.625;
+$line-height-none: 1 !default;
+$line-height-tight: 1.25 !default;
+$line-height-snug: 1.375 !default;
+$line-height-normal: 1.5 !default;
+$line-height-relaxed: 1.625 !default;
 
-$letter-spacing-tight: -0.025em;
-$letter-spacing-normal: 0;
-$letter-spacing-wide: 0.025em;
+$letter-spacing-tight: -0.025em !default;
+$letter-spacing-normal: 0 !default;
+$letter-spacing-wide: 0.025em !default;
 
 // --------------------------------------------------------------------------
 // Spacing
 // --------------------------------------------------------------------------
 
-$spacing-0: 0;
-$spacing-3xs: 0.25rem;   // 4px
-$spacing-2xs: 0.5rem;    // 8px
-$spacing-xs: 0.75rem;    // 12px
-$spacing-sm: 1rem;       // 16px
-$spacing-md: 1.25rem;    // 20px
-$spacing-lg: 1.5rem;     // 24px
-$spacing-xl: 2rem;       // 32px
-$spacing-2xl: 2.5rem;    // 40px
-$spacing-3xl: 3rem;      // 48px
-$spacing-4xl: 4rem;      // 64px
+$spacing-0: 0 !default;
+$spacing-3xs: 0.25rem !default;   // 4px
+$spacing-2xs: 0.5rem !default;    // 8px
+$spacing-xs: 0.75rem !default;    // 12px
+$spacing-sm: 1rem !default;       // 16px
+$spacing-md: 1.25rem !default;    // 20px
+$spacing-lg: 1.5rem !default;     // 24px
+$spacing-xl: 2rem !default;       // 32px
+$spacing-2xl: 2.5rem !default;    // 40px
+$spacing-3xl: 3rem !default;      // 48px
+$spacing-4xl: 4rem !default;      // 64px
 
 // --------------------------------------------------------------------------
 // Border Radius
 // --------------------------------------------------------------------------
 
-$radius-none: 0;
-$radius-sm: 0.25rem;    // 4px
-$radius-md: 0.375rem;   // 6px (shadcn default for smaller elements)
-$radius-lg: 0.5rem;     // 8px (shadcn default)
-$radius-xl: 0.75rem;    // 12px
-$radius-2xl: 1rem;      // 16px
-$radius-full: 9999px;
+$radius-none: 0 !default;
+$radius-sm: 0.25rem !default;    // 4px
+$radius-md: 0.375rem !default;   // 6px (shadcn default for smaller elements)
+$radius-lg: 0.5rem !default;     // 8px (shadcn default)
+$radius-xl: 0.75rem !default;    // 12px
+$radius-2xl: 1rem !default;      // 16px
+$radius-full: 9999px !default;
 
 // Default radius (matches shadcn)
-$radius: $radius-lg;
+$radius: $radius-lg !default;
 
 // --------------------------------------------------------------------------
 // Shadows
 // --------------------------------------------------------------------------
 
-$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05) !default;
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !default;
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !default;
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !default;
 
 // --------------------------------------------------------------------------
 // Transitions
 // --------------------------------------------------------------------------
 
-$transition-fast: 150ms;
-$transition-base: 200ms;
-$transition-slow: 300ms;
-$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: 150ms !default;
+$transition-base: 200ms !default;
+$transition-slow: 300ms !default;
+$transition-easing: cubic-bezier(0.4, 0, 0.2, 1) !default;
 
 // --------------------------------------------------------------------------
 // Z-Index Scale
 // --------------------------------------------------------------------------
 
-$z-dropdown: 50;
-$z-sticky: 100;
-$z-fixed: 200;
-$z-modal-backdrop: 300;
-$z-modal: 400;
-$z-popover: 500;
-$z-toast: 550;
-$z-tooltip: 600;
+$z-dropdown: 50 !default;
+$z-sticky: 100 !default;
+$z-fixed: 200 !default;
+$z-modal-backdrop: 300 !default;
+$z-modal: 400 !default;
+$z-popover: 500 !default;
+$z-toast: 550 !default;
+$z-tooltip: 600 !default;
 
 // --------------------------------------------------------------------------
 // Breakpoints
 // --------------------------------------------------------------------------
 
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px;
+$breakpoint-sm: 640px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 1024px !default;
+$breakpoint-xl: 1280px !default;
+$breakpoint-2xl: 1536px !default;
 
 // --------------------------------------------------------------------------
 // Component Sizes
 // --------------------------------------------------------------------------
 
 // Button heights
-$btn-height-sm: 2rem;      // 32px
-$btn-height-md: 2.5rem;    // 40px
-$btn-height-lg: 2.75rem;   // 44px
+$btn-height-sm: 2rem !default;      // 32px
+$btn-height-md: 2.5rem !default;    // 40px
+$btn-height-lg: 2.75rem !default;   // 44px
 
 // Input heights
-$input-height-sm: 2rem;    // 32px
-$input-height-md: 2.5rem;  // 40px
-$input-height-lg: 2.75rem; // 44px
+$input-height-sm: 2rem !default;    // 32px
+$input-height-md: 2.5rem !default;  // 40px
+$input-height-lg: 2.75rem !default; // 44px
 
 // Icon sizes
-$icon-size-sm: 1rem;       // 16px
-$icon-size-md: 1.25rem;    // 20px
-$icon-size-lg: 1.5rem;     // 24px
+$icon-size-sm: 1rem !default;       // 16px
+$icon-size-md: 1.25rem !default;    // 20px
+$icon-size-lg: 1.5rem !default;     // 24px
 
 // Sidebar width
-$sidebar-width: 16rem;     // 256px
-$sidebar-width-collapsed: 4rem; // 64px
+$sidebar-width: 16rem !default;     // 256px
+$sidebar-width-collapsed: 4rem !default; // 64px
 
 // Navbar height
-$navbar-height: 4rem;      // 64px
+$navbar-height: 4rem !default;      // 64px

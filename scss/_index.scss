@@ -1,0 +1,60 @@
+/// Parallelogram Dashboard
+///
+/// Forwards the foundation and every component. Configure it with
+/// @use "@parallelogram-js/dashboard/scss" with ($font-sans: ...);
+
+// Foundation
+@forward "variables";
+@forward "tokens";
+@forward "mixins";
+@forward "base";
+@forward "icon";
+@forward "datetime";
+@forward "utilities";
+
+// Core Components
+@forward "components/button";
+@forward "components/input";
+@forward "components/card";
+@forward "components/badge";
+@forward "components/alert";
+@forward "components/table";
+
+// Dashboard Components
+@forward "components/sidebar";
+@forward "components/navbar";
+@forward "components/dropdown";
+@forward "components/modal";
+@forward "components/tabs";
+@forward "components/breadcrumb";
+@forward "components/pageheader";
+@forward "components/dashboard";
+
+// Additional Components
+@forward "components/avatar";
+@forward "components/tooltip";
+@forward "components/progress";
+@forward "components/skeleton";
+@forward "components/stat";
+@forward "components/separator";
+@forward "components/command";
+
+// New Components
+@forward "components/pagination";
+@forward "components/toolbar";
+@forward "components/empty";
+@forward "components/form-layout";
+
+// Latest Components
+@forward "components/accordion";
+@forward "components/banner";
+@forward "components/data-list";
+@forward "components/sheet";
+@forward "components/timeline";
+@forward "components/toast";
+@forward "components/chart";
+@forward "components/actionbar";
+@forward "components/notification";
+@forward "components/list";
+@forward "components/media";
+@forward "components/filebrowser";
