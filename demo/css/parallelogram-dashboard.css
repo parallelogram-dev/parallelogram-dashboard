@@ -177,7 +177,7 @@
   --tracking-tight: -0.025em;
 }
 
-.chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -2151,6 +2151,15 @@ code.code--sm {
 .table__control--wide {
   min-width: 8rem;
 }
+select.table__control {
+  appearance: none;
+  padding-right: 1.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  background-size: 1rem;
+}
+
 .table:has(.table__body .table__checkbox :checked) .table__body .table__actions > * {
   visibility: hidden;
 }
@@ -4334,13 +4343,33 @@ p-modal {
   z-index: 600;
   transition: var(--transition-opacity);
 }
-[data-tooltip]:hover::after, [data-tooltip]:focus-visible::after {
+[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 0.5rem - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--primary);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 600;
+  transition: var(--transition-opacity);
+}
+[data-tooltip]:hover::after, [data-tooltip]:hover::before, [data-tooltip]:focus-visible::after, [data-tooltip]:focus-visible::before {
   opacity: 1;
   visibility: visible;
 }
 [data-tooltip][data-tooltip-position=bottom]::after {
   bottom: auto;
   top: calc(100% + 0.5rem);
+}
+[data-tooltip][data-tooltip-position=bottom]::before {
+  bottom: auto;
+  top: calc(100% + 0.5rem - 10px);
+  border-top-color: transparent;
+  border-bottom-color: var(--primary);
 }
 [data-tooltip][data-tooltip-position=left]::after {
   bottom: auto;
@@ -4349,11 +4378,28 @@ p-modal {
   top: 50%;
   transform: translateY(-50%);
 }
+[data-tooltip][data-tooltip-position=left]::before {
+  bottom: auto;
+  left: auto;
+  right: calc(100% + 0.5rem - 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: transparent;
+  border-left-color: var(--primary);
+}
 [data-tooltip][data-tooltip-position=right]::after {
   bottom: auto;
   left: calc(100% + 0.5rem);
   top: 50%;
   transform: translateY(-50%);
+}
+[data-tooltip][data-tooltip-position=right]::before {
+  bottom: auto;
+  left: calc(100% + 0.5rem - 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: transparent;
+  border-right-color: var(--primary);
 }
 
 .progress {
@@ -7881,6 +7927,783 @@ dl.descriptionlist dd {
   flex-shrink: 0;
   align-items: center;
   gap: 0.5rem;
+}
+
+/**
+ * Media field
+ *
+ * Contenir's gallery field: a grid of asset tiles that reorder by drag ([data-handle]), each with
+ * a remove button, and a dashed "+" tile ([data-filebrowser-add]) that opens the file browser.
+ * Class names match Contenir's markup so these styles drop onto it unchanged.
+ */
+.media {
+  position: relative;
+  aspect-ratio: 1;
+  list-style: none;
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  transition: var(--transition-colors);
+}
+.media.editable:hover {
+  border-color: var(--fg-subtle);
+}
+.media.editable[data-handle] {
+  cursor: grab;
+}
+.media.editable[data-handle]:active {
+  cursor: grabbing;
+}
+.media.selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.media[data-filebrowser-add] {
+  background-color: transparent;
+  border-style: dashed;
+}
+.media__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.media__list--small {
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+}
+.media__image {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.media__image picture,
+.media__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.media__image img {
+  padding: 0.25rem;
+  object-fit: contain;
+}
+.media__remove {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  color: var(--fg-muted);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: var(--transition-default);
+}
+.media__remove svg {
+  width: 1rem;
+  height: 1rem;
+}
+.media__remove:hover {
+  color: var(--destructive);
+  border-color: var(--destructive);
+}
+.media__remove:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .media__remove {
+    opacity: 1;
+  }
+}
+.media:hover .media__remove, .media:focus-within .media__remove {
+  opacity: 1;
+}
+.media__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  color: var(--fg-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+.media__btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.media__btn:hover {
+  color: var(--fg);
+  background-color: var(--accent);
+}
+/**
+ * File browser
+ *
+ * Contenir's asset browser for a media field, with its dialog shell (.overlay) and upload list
+ * (.asset). Class names match Contenir's markup and the states its scripts set, so these styles
+ * drop onto it unchanged:
+ *
+ * - dialog.overlay > .overlay__wrap > .overlay__inner (the browser) + .overlay__inner (uploads).
+ *   The browser panel stays put; the upload panel slides in over its right side with .show.
+ * - .overlay__body--dragover covers the body with a drop target while files are dragged over it.
+ * - .filebrowser__list--image is the grid view; without it the list shows rows under
+ *   .filebrowser__banner headings. --single makes the selection a single choice.
+ * - .filebrowser__item--busy is an upload in progress (with .filebrowser__upload-progress),
+ *   --leaving an item being removed.
+ * - .filebrowser__status sits in the footer, summarising uploads and opening the upload panel.
+ */
+.overlay {
+  width: min(72rem, 100vw - 2rem);
+  max-width: none;
+  height: min(48rem, 100vh - 2rem);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  color: var(--card-fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: clip;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.overlay.show {
+  opacity: 1;
+  transform: none;
+}
+.overlay::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.overlay__wrap {
+  position: relative;
+  height: 100%;
+  overflow: clip;
+}
+.overlay__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.overlay__inner + .overlay__inner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: min(26rem, 100%);
+  height: auto;
+  background-color: var(--card);
+  border-left: 1px solid var(--border);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 200ms;
+}
+.overlay__inner + .overlay__inner.show {
+  transform: none;
+  visibility: visible;
+}
+.overlay__form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.overlay__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.overlay__header [data-tooltip]::after {
+  top: calc(100% + 0.5rem);
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.overlay__header [data-tooltip]::before {
+  top: calc(100% + 0.5rem - 10px);
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: transparent;
+  border-bottom-color: var(--primary);
+}
+.overlay__header > [data-tooltip]:last-child::after {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.overlay__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.overlay__title svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.overlay__body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.overlay__body--dragover::after {
+  content: var(--filebrowser-drop-label, "Drop files to upload");
+  position: absolute;
+  inset: 0.5rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--primary);
+  background-color: color-mix(in srgb, var(--card) 88%, transparent);
+  border: 2px dashed var(--primary);
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+.overlay__footer {
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-muted);
+  border-top: 1px solid var(--border);
+}
+.overlay__action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.overlay__action > :last-child {
+  margin-left: auto;
+}
+.overlay__upload-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary);
+}
+
+.filebrowser__form {
+  margin: 0;
+}
+.filebrowser__header {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.filebrowser__search {
+  flex: 1 1 14rem;
+  max-width: 24rem;
+  margin: 0;
+}
+.filebrowser__search .form__control {
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.75rem;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--fg);
+  background-color: var(--bg);
+  border: 1px solid var(--input, var(--border));
+  border-radius: 0.375rem;
+}
+.filebrowser__search .form__control:focus {
+  border-color: var(--ring);
+}
+.filebrowser__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filebrowser__sort .btn, .filebrowser__view-toggle .btn {
+  color: var(--fg-muted);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+}
+.filebrowser__sort .btn:hover, .filebrowser__view-toggle .btn:hover {
+  color: var(--fg);
+  background-color: var(--accent);
+}
+.filebrowser__sort .btn.active, .filebrowser__view-toggle .btn.active {
+  color: var(--fg);
+  background-color: var(--accent);
+}
+.filebrowser__sort .btn svg, .filebrowser__view-toggle .btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+.filebrowser__banner {
+  display: grid;
+  grid-template-columns: var(--filebrowser-columns);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.75rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border);
+}
+.filebrowser__banner a {
+  color: inherit;
+  text-decoration: none;
+}
+.filebrowser__banner a:hover {
+  color: var(--fg);
+}
+.filebrowser__banner svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  vertical-align: middle;
+}
+.filebrowser__banner--hidden {
+  display: none;
+}
+.filebrowser__banner--time, .filebrowser__banner--name {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.filebrowser__list, .filebrowser__banner {
+  --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 4rem 5rem 8rem 1.75rem;
+}
+.filebrowser__list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.filebrowser__item {
+  position: relative;
+  transition: var(--transition-default);
+}
+.filebrowser__item--leaving {
+  opacity: 0;
+  transform: scale(0.96);
+}
+.filebrowser__item--busy {
+  pointer-events: none;
+}
+.filebrowser__item--busy .filebrowser__image {
+  opacity: 0.5;
+}
+.filebrowser__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.filebrowser__label {
+  display: grid;
+  grid-template-columns: var(--filebrowser-columns);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+.filebrowser__label:hover {
+  background-color: var(--accent);
+}
+.filebrowser__label--select {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--card);
+  border: 1.5px solid var(--fg-subtle);
+  border-radius: 9999px;
+  transition: var(--transition-colors);
+}
+.filebrowser__label--select::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background-color: var(--primary-fg);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity: 0;
+}
+.filebrowser__label--preview {
+  display: block;
+}
+.filebrowser__label--name {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filebrowser__label--mime {
+  display: none;
+}
+.filebrowser__label--type, .filebrowser__label--size, .filebrowser__label--time {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filebrowser__label--options {
+  display: flex;
+  justify-content: flex-end;
+}
+.filebrowser__checkbox:checked + .filebrowser__label {
+  background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+.filebrowser__checkbox:checked + .filebrowser__label .filebrowser__label--select {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+.filebrowser__checkbox:checked + .filebrowser__label .filebrowser__label--select::after {
+  opacity: 1;
+}
+.filebrowser__asset {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1;
+  background-color: var(--bg-muted);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.filebrowser__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.filebrowser__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.filebrowser__media > img[data-lazysrc]:not([src]) {
+  visibility: hidden;
+}
+.filebrowser__list--image {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.75rem;
+}
+.filebrowser__list--image .filebrowser__label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  height: 100%;
+  padding: 0.5rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+}
+.filebrowser__list--image .filebrowser__label:hover {
+  background-color: var(--card);
+  border-color: var(--fg-subtle);
+}
+.filebrowser__list--image .filebrowser__label--select {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1;
+  opacity: 0;
+}
+.filebrowser__list--image .filebrowser__label:hover .filebrowser__label--select {
+  opacity: 1;
+}
+.filebrowser__list--image .filebrowser__label--name {
+  margin-top: 0.5rem;
+}
+.filebrowser__list--image .filebrowser__label--mime {
+  display: block;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+.filebrowser__list--image .filebrowser__label--type,
+.filebrowser__list--image .filebrowser__label--size,
+.filebrowser__list--image .filebrowser__label--time {
+  display: none;
+}
+.filebrowser__list--image .filebrowser__label--options {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+}
+.filebrowser__list--image .filebrowser__checkbox:checked + .filebrowser__label {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.filebrowser__list--image .filebrowser__checkbox:checked + .filebrowser__label .filebrowser__label--select {
+  opacity: 1;
+}
+.filebrowser__list--single .filebrowser__label--select::after {
+  inset: 4px;
+  background-color: var(--primary-fg);
+  border-radius: 9999px;
+  mask: none;
+}
+.filebrowser__loading, .filebrowser__sentinel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.filebrowser__loading-label {
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+}
+.filebrowser__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(in srgb, var(--card) 60%, transparent);
+}
+.filebrowser__spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--fg-muted);
+  border-radius: 9999px;
+  animation: spin 0.7s linear infinite;
+}
+.filebrowser__upload-progress {
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 1;
+}
+.filebrowser__upload-progress-bar {
+  height: 4px;
+  background-color: var(--bg-muted);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.filebrowser__upload-progress-fill {
+  width: var(--progress, 0%);
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: inherit;
+  transition: width 200ms linear;
+}
+.filebrowser__item--error .filebrowser__upload-progress-fill {
+  background-color: var(--destructive);
+}
+.filebrowser__item--error .filebrowser__image {
+  opacity: 0.4;
+}
+.filebrowser__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+}
+.filebrowser__status[hidden] {
+  display: none;
+}
+.filebrowser__status[data-state=uploading]::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--fg-muted);
+  border-radius: 9999px;
+  animation: spin 0.7s linear infinite;
+}
+.filebrowser__status[data-state=error] {
+  color: var(--destructive);
+}
+
+.asset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.asset__fileinput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.asset__file {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+.asset__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  appearance: none;
+  border: 0;
+  background-color: transparent;
+  visibility: hidden;
+}
+.asset__progress.show {
+  visibility: visible;
+}
+.asset__progress::-webkit-progress-bar {
+  background-color: var(--bg-muted);
+}
+.asset__progress::-webkit-progress-value {
+  background-color: var(--primary);
+  transition: width 200ms linear;
+}
+.asset__progress::-moz-progress-bar {
+  background-color: var(--primary);
+}
+.asset__preview {
+  width: 3rem;
+  height: 3rem;
+  margin: 0;
+  background-color: var(--bg-muted);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.asset__preview--media {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.asset__preview--image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+.asset__preview.show .asset__preview--image {
+  opacity: 1;
+}
+.asset__panel {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.asset__panel.show {
+  display: flex;
+}
+.asset__panel[data-panel=error] .asset__title {
+  color: var(--destructive);
+}
+.asset__body {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+.asset__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset__filename, .asset__info {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset__input {
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 0.875rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+}
+.asset__input:focus {
+  border-color: var(--ring);
+}
+.asset__btn {
+  height: 1.75rem;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+.asset__btn:hover {
+  background-color: var(--accent);
+}
+.asset__btn--delete {
+  color: var(--destructive);
+}
+.asset__btn--confirm {
+  color: var(--primary-fg);
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+.asset__btn--confirm:hover {
+  background-color: var(--primary-hover);
 }
 
 /*# sourceMappingURL=parallelogram-dashboard.css.map */

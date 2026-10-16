@@ -1,0 +1,806 @@
+/**
+ * File browser
+ *
+ * Contenir's asset browser for a media field, with its dialog shell (.overlay) and upload list
+ * (.asset). Class names match Contenir's markup and the states its scripts set, so these styles
+ * drop onto it unchanged:
+ *
+ * - dialog.overlay > .overlay__wrap > .overlay__inner (the browser) + .overlay__inner (uploads).
+ *   The browser panel stays put; the upload panel slides in over its right side with .show.
+ * - .overlay__body--dragover covers the body with a drop target while files are dragged over it.
+ * - .filebrowser__list--image is the grid view; without it the list shows rows under
+ *   .filebrowser__banner headings. --single makes the selection a single choice.
+ * - .filebrowser__item--busy is an upload in progress (with .filebrowser__upload-progress),
+ *   --leaving an item being removed.
+ * - .filebrowser__status sits in the footer, summarising uploads and opening the upload panel.
+ */
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// --------------------------------------------------------------------------
+// Dialog shell
+// --------------------------------------------------------------------------
+
+.overlay {
+  width: min(72rem, calc(100vw - 2rem));
+  max-width: none;
+  height: min(48rem, calc(100vh - 2rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  color: var(--card-fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  // Clip rather than hide: the parked upload panel must never make the dialog scrollable
+  overflow: clip;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity $transition-base $transition-easing, transform $transition-base $transition-easing;
+
+  &.show {
+    opacity: 1;
+    transform: none;
+  }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 0.5);
+  }
+
+  &__wrap {
+    position: relative;
+    height: 100%;
+    overflow: clip;
+  }
+
+  // The browser fills the dialog; a second panel (uploads) slides over its right side
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    & + & {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      width: min(26rem, 100%);
+      height: auto;
+      background-color: var(--card);
+      border-left: 1px solid var(--border);
+      box-shadow: $shadow-xl;
+      transform: translateX(100%);
+      visibility: hidden;
+      transition: transform $transition-base $transition-easing, visibility $transition-base;
+
+      &.show {
+        transform: none;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xs $spacing-sm;
+    border-bottom: 1px solid var(--border);
+
+    // The dialog clips anything above its top edge, so header tooltips open downwards
+    [data-tooltip]::after {
+      top: calc(100% + #{$spacing-2xs});
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    [data-tooltip]::before {
+      top: calc(100% + #{$spacing-2xs} - 10px);
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      border-color: transparent;
+      border-bottom-color: var(--primary);
+    }
+
+    // At the right edge, keep the tooltip inside the dialog
+    > [data-tooltip]:last-child::after {
+      left: auto;
+      right: 0;
+      transform: none;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    margin: 0;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+
+    svg {
+      width: $icon-size-md;
+      height: $icon-size-md;
+    }
+  }
+
+  &__body {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    padding: $spacing-sm;
+    overflow-y: auto;
+
+    // Dropping files anywhere on the body uploads them into this set of assets
+    &--dragover::after {
+      content: var(--filebrowser-drop-label, "Drop files to upload");
+      position: absolute;
+      inset: $spacing-2xs;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      color: var(--primary);
+      background-color: color-mix(in srgb, var(--card) 88%, transparent);
+      border: 2px dashed var(--primary);
+      border-radius: $radius-lg;
+      pointer-events: none;
+    }
+  }
+
+  &__footer {
+    flex-shrink: 0;
+    padding: $spacing-xs $spacing-sm;
+    background-color: var(--bg-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    > :last-child {
+      margin-left: auto;
+    }
+  }
+
+  // Added by Contenir's script while an upload posts
+  &__upload-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Browser
+// --------------------------------------------------------------------------
+
+.filebrowser {
+  &__form {
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xs;
+  }
+
+  &__search {
+    flex: 1 1 14rem;
+    max-width: 24rem;
+    margin: 0;
+
+    .form__control {
+      width: 100%;
+      height: $btn-height-sm;
+      padding: 0 $spacing-xs;
+      font: inherit;
+      font-size: $font-size-sm;
+      color: var(--fg);
+      background-color: var(--bg);
+      border: 1px solid var(--input, var(--border));
+      border-radius: $radius-md;
+
+      &:focus {
+        @include focus-ring;
+        border-color: var(--ring);
+      }
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+  }
+
+  // Contenir marks the current sort or view with .active on a plain .btn
+  &__sort .btn,
+  &__view-toggle .btn {
+    color: var(--fg-muted);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+
+    &:hover {
+      color: var(--fg);
+      background-color: var(--accent);
+    }
+
+    &.active {
+      color: var(--fg);
+      background-color: var(--accent);
+    }
+
+    svg {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+    }
+  }
+
+  // Column headings for the list view
+  &__banner {
+    display: grid;
+    grid-template-columns: var(--filebrowser-columns);
+    align-items: center;
+    gap: $spacing-xs;
+    padding: 0 $spacing-xs $spacing-2xs;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    border-bottom: 1px solid var(--border);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--fg);
+      }
+    }
+
+    svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      vertical-align: middle;
+    }
+
+    &--hidden {
+      display: none;
+    }
+
+    &--time,
+    &--name {
+      display: flex;
+      align-items: center;
+      gap: $spacing-3xs;
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // List view (default): one row per asset
+  // ------------------------------------------------------------------------
+
+  &__list,
+  &__banner {
+    --filebrowser-columns: 1.25rem 2.5rem minmax(0, 1fr) 4rem 5rem 8rem 1.75rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    position: relative;
+    @include transition-default;
+
+    // Being removed
+    &--leaving {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    // Uploading: the card shows a progress bar and can't be selected yet
+    &--busy {
+      pointer-events: none;
+
+      .filebrowser__image {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__checkbox {
+    @include sr-only;
+  }
+
+  &__label {
+    display: grid;
+    grid-template-columns: var(--filebrowser-columns);
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-2xs $spacing-xs;
+    font-size: $font-size-sm;
+    border-bottom: 1px solid var(--border);
+    border-radius: $radius-md;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      background-color: var(--accent);
+    }
+
+    // The selection mark: a ring that fills with a tick when chosen
+    &--select {
+      position: relative;
+      width: 1.25rem;
+      height: 1.25rem;
+      background-color: var(--card);
+      border: 1.5px solid var(--fg-subtle);
+      border-radius: $radius-full;
+      @include transition-colors;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        background-color: var(--primary-fg);
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E") center / contain no-repeat;
+        opacity: 0;
+      }
+    }
+
+    &--preview {
+      display: block;
+    }
+
+    &--name {
+      margin: 0;
+      font-size: inherit;
+      font-weight: $font-weight-medium;
+      @include text-truncate;
+    }
+
+    &--mime {
+      display: none;
+    }
+
+    &--type,
+    &--size,
+    &--time {
+      font-size: $font-size-xs;
+      color: var(--fg-muted);
+      @include text-truncate;
+    }
+
+    &--options {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__checkbox:checked + &__label {
+    background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+
+    .filebrowser__label--select {
+      background-color: var(--primary);
+      border-color: var(--primary);
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__checkbox:focus-visible + &__label {
+    @include focus-ring;
+  }
+
+  &__asset {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 1;
+    background-color: var(--bg-muted);
+    border-radius: $radius-sm;
+    overflow: hidden;
+  }
+
+  &__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  // Lazy images wait as a soft placeholder rather than a broken-image icon
+  &__media > img[data-lazysrc]:not([src]) {
+    visibility: hidden;
+  }
+
+  // ------------------------------------------------------------------------
+  // Grid view
+  // ------------------------------------------------------------------------
+
+  &__list--image {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: $spacing-xs;
+
+    // Cards stack their contents left-aligned (rows centre them vertically instead)
+    .filebrowser__label {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      height: 100%;
+      padding: $spacing-2xs;
+      background-color: var(--card);
+      border: 1px solid var(--border);
+
+      &:hover {
+        background-color: var(--card);
+        border-color: var(--fg-subtle);
+      }
+    }
+
+    .filebrowser__label--select {
+      position: absolute;
+      top: $spacing-xs;
+      left: $spacing-xs;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    .filebrowser__label:hover .filebrowser__label--select {
+      opacity: 1;
+    }
+
+    .filebrowser__label--name {
+      margin-top: $spacing-2xs;
+    }
+
+    .filebrowser__label--mime {
+      display: block;
+      margin: 0;
+      font-size: $font-size-xs;
+      color: var(--fg-muted);
+    }
+
+    .filebrowser__label--type,
+    .filebrowser__label--size,
+    .filebrowser__label--time {
+      display: none;
+    }
+
+    .filebrowser__label--options {
+      position: absolute;
+      top: $spacing-xs;
+      right: $spacing-xs;
+      z-index: 1;
+    }
+
+    .filebrowser__checkbox:checked + .filebrowser__label {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+
+      .filebrowser__label--select {
+        opacity: 1;
+      }
+    }
+  }
+
+  // A single-choice field: the mark is a radio dot rather than a tick
+  &__list--single .filebrowser__label--select::after {
+    inset: 4px;
+    background-color: var(--primary-fg);
+    border-radius: $radius-full;
+    mask: none;
+  }
+
+  // ------------------------------------------------------------------------
+  // Loading and uploading
+  // ------------------------------------------------------------------------
+
+  &__loading,
+  &__sentinel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2xs;
+    padding: $spacing-sm;
+  }
+
+  &__loading-label {
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(in srgb, var(--card) 60%, transparent);
+  }
+
+  &__spinner {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--border);
+    border-top-color: var(--fg-muted);
+    border-radius: $radius-full;
+    animation: spin 0.7s linear infinite;
+  }
+
+  &__upload-progress {
+    position: absolute;
+    left: $spacing-2xs;
+    right: $spacing-2xs;
+    bottom: $spacing-2xs;
+    z-index: 1;
+  }
+
+  &__upload-progress-bar {
+    height: 4px;
+    background-color: var(--bg-muted);
+    border-radius: $radius-full;
+    overflow: hidden;
+  }
+
+  &__upload-progress-fill {
+    width: var(--progress, 0%);
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: inherit;
+    transition: width $transition-base linear;
+  }
+
+  // An upload that failed: the bar turns red and the card can be retried
+  &__item--error {
+    .filebrowser__upload-progress-fill {
+      background-color: var(--destructive);
+    }
+
+    .filebrowser__image {
+      opacity: 0.4;
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Upload status in the footer
+  // ------------------------------------------------------------------------
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    min-width: 0;
+    font-size: $font-size-sm;
+    color: var(--fg-muted);
+
+    &[hidden] {
+      display: none;
+    }
+
+    // While files are still uploading, a small spinner leads the summary
+    &[data-state="uploading"]::before {
+      content: "";
+      flex-shrink: 0;
+      width: 0.875rem;
+      height: 0.875rem;
+      border: 2px solid var(--border);
+      border-top-color: var(--fg-muted);
+      border-radius: $radius-full;
+      animation: spin 0.7s linear infinite;
+    }
+
+    &[data-state="error"] {
+      color: var(--destructive);
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Upload list (Contenir's AssetUploader), shown in the slide-out panel
+// --------------------------------------------------------------------------
+
+.asset {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xs;
+
+  &__fileinput {
+    @include sr-only;
+  }
+
+  &__file {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-2xs;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    overflow: hidden;
+  }
+
+  &__progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    appearance: none;
+    border: 0;
+    background-color: transparent;
+    visibility: hidden;
+
+    &.show {
+      visibility: visible;
+    }
+
+    &::-webkit-progress-bar {
+      background-color: var(--bg-muted);
+    }
+
+    &::-webkit-progress-value {
+      background-color: var(--primary);
+      transition: width $transition-base linear;
+    }
+
+    &::-moz-progress-bar {
+      background-color: var(--primary);
+    }
+  }
+
+  &__preview {
+    width: 3rem;
+    height: 3rem;
+    margin: 0;
+    background-color: var(--bg-muted);
+    border-radius: $radius-sm;
+    overflow: hidden;
+
+    &--media {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &--image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+    }
+
+    &.show &--image {
+      opacity: 1;
+    }
+  }
+
+  // One of info, error, rename or delete shows at a time
+  &__panel {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-2xs;
+    min-width: 0;
+
+    &.show {
+      display: flex;
+    }
+
+    &[data-panel="error"] .asset__title {
+      color: var(--destructive);
+    }
+  }
+
+  &__body {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    @include text-truncate;
+  }
+
+  &__filename,
+  &__info {
+    margin: 0;
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    @include text-truncate;
+  }
+
+  &__input {
+    width: 100%;
+    height: $btn-height-sm;
+    padding: 0 $spacing-2xs;
+    font: inherit;
+    font-size: $font-size-sm;
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+
+    &:focus {
+      @include focus-ring;
+      border-color: var(--ring);
+    }
+  }
+
+  &__btn {
+    height: 1.75rem;
+    padding: 0 $spacing-2xs;
+    font: inherit;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      background-color: var(--accent);
+    }
+
+    &--delete {
+      color: var(--destructive);
+    }
+
+    &--confirm {
+      color: var(--primary-fg);
+      background-color: var(--primary);
+      border-color: var(--primary);
+
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+    }
+  }
+}
