@@ -1,8 +1,8 @@
 /**
  * Mock-up of a block editor for a page's Content field.
  *
- * Each block shows as a compact card that summarises it: type, a preview, its heading and its
- * layout as chips, with a show/hide switch and a menu (duplicate, move, delete). Clicking a card
+ * Each block shows as a card led by a wireframe of its layout, sized to its rough proportions, with
+ * its type and heading, an eye to show or hide it and a menu (duplicate, move, delete). Clicking a card
  * opens the block in a stacked sheet with Content and Layout tabs; layout options are visual
  * controls rather than long selects. A + between cards opens a block-type picker in the same
  * sheet. Blocks belong to the page, so the sheet ends in Done and "Save page" keeps everything;
@@ -77,7 +77,6 @@
         { key: 'theme', label: 'Theme', type: 'swatch', options: THEMES },
       ],
       defaults: { image: null, heading: '', body: '', link: '', cta: '', align: 'left', width: '6', shape: 'original', position: 'top', headingTag: 'h2', headingStyle: 'medium', theme: 'default' },
-      chips: b => [`Image ${b.align}`, { 4: 'Narrow', 6: 'Half', 8: 'Wide', 12: 'Full width' }[b.width], b.theme !== 'default' && `${b.theme[0].toUpperCase()}${b.theme.slice(1)}`],
     },
     image: {
       name: 'Image',
@@ -94,7 +93,6 @@
         { key: 'theme', label: 'Theme', type: 'swatch', options: THEMES },
       ],
       defaults: { image: null, caption: '', align: 'center', size: 'large', shape: 'original', theme: 'default' },
-      chips: b => [{ regular: 'Regular', medium: 'Medium', large: 'Large', full: 'Full screen' }[b.size], b.align !== 'center' && `Aligned ${b.align}`],
       title: b => b.caption,
     },
     text: {
@@ -110,7 +108,6 @@
         { key: 'theme', label: 'Theme', type: 'swatch', options: THEMES },
       ],
       defaults: { heading: '', body: '', width: 'regular', theme: 'default' },
-      chips: b => [`${b.width[0].toUpperCase()}${b.width.slice(1)}`],
     },
     quote: {
       name: 'Quote',
@@ -122,7 +119,6 @@
       ],
       layout: [{ key: 'theme', label: 'Theme', type: 'swatch', options: THEMES }],
       defaults: { quote: '', cite: '', theme: 'default' },
-      chips: b => [b.cite && `— ${b.cite}`],
       title: b => b.quote,
     },
     projects: {
@@ -136,7 +132,6 @@
       ],
       layout: [{ key: 'theme', label: 'Theme', type: 'swatch', options: THEMES }],
       defaults: { heading: '', projects: [], viewAll: '', theme: 'default' },
-      chips: b => [`${b.projects.length} ${b.projects.length === 1 ? 'project' : 'projects'}`],
     },
   };
 
@@ -187,14 +182,21 @@
       mod = 'tiles';
       inner = d.projects.slice(0, 3).map(id => `<span class="blk-wire__img" style="background-image: url('${find(PROJECTS, id)?.image}');"></span>`).join('') || '<span class="blk-wire__img"></span><span class="blk-wire__img"></span><span class="blk-wire__img"></span>';
     }
-    return `<span class="blk-wire blk-wire--${mod}" data-theme-preview="${d.theme || 'default'}" aria-hidden="true">${inner}</span>`;
+    // The wireframe takes the block's rough proportions, so cards differ in depth like the page does
+    const depth = {
+      textImage: d.width === '12' ? '16 / 12' : '16 / 8',
+      image: d.size === 'full' ? '16 / 9' : '16 / 8',
+      text: '16 / 6',
+      quote: '16 / 4.5',
+      projects: '16 / 7',
+    }[block.type];
+    return `<span class="blk-wire blk-wire--${mod}" data-theme-preview="${d.theme || 'default'}" style="aspect-ratio: ${depth};" aria-hidden="true">${inner}</span>`;
   }
 
   function card(block, index) {
     const type = TYPES[block.type];
     const title = (type.title ? type.title(block.data) : block.data.heading) || '';
     const missing = required(block);
-    const chips = type.chips(block.data).filter(Boolean).map(chip => `<span class="badge badge--sm badge--outline">${escape(chip)}</span>`).join('');
     const menu = `block-menu-${block.id}`;
     return `
       <li class="blk-insert"><button type="button" data-insert="${index}" aria-label="Add a block here" data-tooltip="Add a block" data-tooltip-position="right">${ICONS.plus}</button></li>
@@ -202,12 +204,11 @@
         <button type="button" class="blk-card__handle" data-reorder aria-label="Reorder block" tabindex="-1">${ICONS.grip}</button>
         ${wireframe(block)}
         <span class="blk-card__body">
-          <span class="blk-card__type">${type.icon}${escape(type.name)}${block.hidden ? '<span class="badge badge--sm badge--secondary">Hidden</span>' : ''}</span>
-          <span class="blk-card__title">${escape(title)}</span>
-          <span class="blk-card__chips">${chips}${missing.length ? `<span class="badge badge--sm badge--warning-muted">${ICONS.alert.replace('class="icon"', 'class="icon badge__icon"')}${escape(missing.join(', '))} needed</span>` : ''}</span>
+          <span class="blk-card__type">${type.icon}${escape(type.name)}</span>
+          <span class="blk-card__heading"><span class="blk-card__title">${escape(title)}</span>${missing.length ? `<span class="blk-card__warn" role="img" aria-label="${escape(missing.join(', '))} needed" data-tooltip="${escape(missing.join(', '))} needed" data-tooltip-position="right">${ICONS.alert}</span>` : ''}</span>
         </span>
         <span class="blk-card__actions">
-          <button type="button" class="btn btn--ghost btn--icon btn--sm" data-stop data-visible="${block.id}" aria-pressed="${!block.hidden}" aria-label="${block.hidden ? 'Hidden from the page. Show it' : 'Visible on the page. Hide it'}" data-tooltip="${block.hidden ? 'Hidden · click to show' : 'Visible · click to hide'}" data-tooltip-position="left">${block.hidden ? ICONS.eyeOff : ICONS.eye}</button>
+          <button type="button" class="btn btn--ghost btn--icon btn--sm" data-stop data-visible="${block.id}" aria-pressed="${!block.hidden}" aria-label="${block.hidden ? 'Show block' : 'Hide block'}" data-tooltip="${block.hidden ? 'Show' : 'Hide'}" data-tooltip-position="left">${block.hidden ? ICONS.eyeOff : ICONS.eye}</button>
           <span class="dropdown dropdown--right" data-stop>
             <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-label="Block actions" aria-haspopup="menu" data-toggle data-toggle-target="#${menu}" data-toggle-capture="true">${ICONS.dots}</button>
             <span class="dropdown__menu" id="${menu}" role="menu" popover="manual">
