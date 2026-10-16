@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Styles - Parallelogram Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/></svg>">
+  <link rel="stylesheet" href="css/parallelogram-dashboard.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <style>
+    .compare { max-width: 72rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    .compare__pages { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.5rem 1rem; }
+    .compare__frames { position: fixed; top: 0; left: 0; opacity: 0; pointer-events: none; }
+    .compare__frames iframe { position: absolute; top: 0; left: 0; height: 900px; border: 0; }
+    .compare__value { font-family: var(--font-mono); font-size: 0.75rem; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main class="compare stack stack--lg">
+    <div class="pageheader pageheader--row">
+      <div class="pageheader__content">
+        <h1 class="pageheader__title">Compare styles</h1>
+        <p class="pageheader__description" id="baseline">Current CSS against a release.</p>
+      </div>
+      <div class="pageheader__actions">
+        <button type="button" class="btn btn--primary" id="run">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z"/></svg>Compare
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__content stack stack--md">
+        <div class="cluster cluster--between">
+          <span class="form__label">Pages</span>
+          <label class="checkbox"><input type="checkbox" class="checkbox__input" id="all" checked><span class="checkbox__label">All</span></label>
+        </div>
+        <div class="compare__pages" id="pages"></div>
+        <div class="stack stack--xs">
+          <span class="form__label" id="widthLabel">Width</span>
+          <div class="btn__group" role="radiogroup" aria-labelledby="widthLabel" id="widths">
+            <button type="button" class="btn btn--outline btn--sm" role="radio" aria-checked="false" data-width="375">Phone</button>
+            <button type="button" class="btn btn--outline btn--sm" role="radio" aria-checked="false" data-width="768">Tablet</button>
+            <button type="button" class="btn btn--outline btn--sm" role="radio" aria-checked="true" data-width="1280">Desktop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack stack--md" id="results" aria-live="polite"></div>
+  </main>
+
+  <div class="compare__frames" id="frames" aria-hidden="true"></div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "@parallelogram-js/dashboard": "./vendor/parallelogram-dashboard/index.js",
+      "@parallelogram-js/core/": "./vendor/parallelogram-js/"
+    }
+  }
+  </script>
+  <script type="module" src="js/main.js"></script>
+  <script type="module">
+    /**
+     * Loads each chosen page with the current CSS, notes every element's computed styles, swaps in
+     * the baseline CSS from demo/compare/ (npm run compare -- <tag>) and notes them again. Elements
+     * whose values differ are listed per page. Transitions and animations are switched off first
+     * so the values read are the settled ones.
+     */
+    const PAGES = [
+      'dashboard', 'cms-dashboard', 'cms-dashboard-admin', 'analytics', 'pages', 'records', 'record-form',
+      'record-edit-tabs', 'nested-edit', 'block-editor', 'record-delete', 'media', 'team', 'settings',
+      'settings-account', 'billing', 'login', 'forgot-password', 'onboarding', 'system-check', '404', 'index',
+    ];
+    const PROPS = [
+      'display', 'color', 'background-color', 'border-top-width', 'border-top-color', 'border-left-width',
+      'border-top-left-radius', 'border-bottom-right-radius', 'padding-top', 'padding-left', 'margin-top',
+      'margin-left', 'width', 'height', 'font-size', 'font-weight', 'line-height', 'gap', 'box-shadow', 'opacity',
+    ];
+    const pagesEl = document.getElementById('pages');
+    const results = document.getElementById('results');
+    const frames = document.getElementById('frames');
+    const escape = value => String(value).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+    pagesEl.innerHTML = PAGES.map(p => `<label class="checkbox"><input type="checkbox" class="checkbox__input" value="${p}" checked><span class="checkbox__label">${p}</span></label>`).join('');
+    document.getElementById('all').addEventListener('change', (e) => {
+      pagesEl.querySelectorAll('input').forEach((input) => { input.checked = e.target.checked; });
+    });
+    document.getElementById('widths').addEventListener('click', (e) => {
+      const option = e.target.closest('[data-width]');
+      if (!option) return;
+      option.parentElement.querySelectorAll('[data-width]').forEach((el) => { el.setAttribute('aria-checked', String(el === option)); });
+    });
+
+    const baseline = await fetch('compare/baseline.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
+    document.getElementById('baseline').textContent = baseline
+      ? `Current CSS against ${baseline.ref}.`
+      : 'No baseline yet. Run npm run compare -- <tag>, then reload.';
+    document.getElementById('run').disabled = !baseline;
+
+    const describe = (el) => {
+      const parts = [];
+      for (let node = el; node && node !== node.ownerDocument.body && parts.length < 3; node = node.parentElement) {
+        const cls = (node.getAttribute('class') || '').trim().split(/\s+/).filter(Boolean)[0];
+        parts.unshift(cls ? `${node.tagName.toLowerCase()}.${cls}` : node.tagName.toLowerCase());
+      }
+      return parts.join(' > ');
+    };
+
+    const snapshot = doc => [...doc.querySelectorAll('body *')].map((el) => {
+      const cs = doc.defaultView.getComputedStyle(el);
+      return PROPS.map(p => cs.getPropertyValue(p));
+    });
+
+    const swapToBaseline = doc => Promise.all([...doc.querySelectorAll('link[rel="stylesheet"]')].map((link) => {
+      const href = link.getAttribute('href');
+      const to = href.endsWith('parallelogram-dashboard.css') ? 'baseline.css' : href.endsWith('demo.css') ? 'baseline-demo.css' : null;
+      if (!to) return null;
+      return new Promise((resolve) => {
+        link.addEventListener('load', resolve, { once: true });
+        link.addEventListener('error', resolve, { once: true });
+        link.href = new URL(`compare/${to}`, document.baseURI).href;
+      });
+    }));
+
+    async function comparePage(page, width) {
+      const frame = document.createElement('iframe');
+      frame.style.width = `${width}px`;
+      frames.append(frame);
+      await new Promise((resolve) => { frame.onload = resolve; frame.src = `${page}.html`; });
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const doc = frame.contentDocument;
+      const calm = doc.createElement('style');
+      calm.textContent = '*, *::before, *::after { transition: none !important; animation: none !important; }';
+      doc.head.append(calm);
+      const elements = [...doc.querySelectorAll('body *')];
+      const after = snapshot(doc);
+      await swapToBaseline(doc);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const before = snapshot(doc);
+      frame.remove();
+      const diffs = [];
+      after.forEach((values, i) => {
+        values.forEach((value, j) => {
+          if (before[i]?.[j] !== value) diffs.push({ el: describe(elements[i]), prop: PROPS[j], before: before[i]?.[j], after: value });
+        });
+      });
+      return diffs;
+    }
+
+    document.getElementById('run').addEventListener('click', async (e) => {
+      const button = e.currentTarget;
+      const width = Number(document.querySelector('#widths [aria-checked="true"]').dataset.width);
+      const chosen = [...pagesEl.querySelectorAll('input:checked')].map(input => input.value);
+      button.setAttribute('aria-busy', 'true');
+      button.disabled = true;
+      results.innerHTML = '';
+      let unchanged = 0;
+      for (const page of chosen) {
+        const diffs = await comparePage(page, width);
+        if (!diffs.length) {
+          unchanged += 1;
+          continue;
+        }
+        const rows = diffs.slice(0, 200).map(d => `<tr><td class="compare__value">${escape(d.el)}</td><td>${d.prop}</td><td class="compare__value">${escape(d.before)}</td><td class="compare__value">${escape(d.after)}</td></tr>`).join('');
+        results.insertAdjacentHTML('beforeend', `
+          <div class="card">
+            <div class="card__header card__header--row"><h2 class="card__title">${page}</h2><span class="badge badge--warning-muted">${diffs.length} changed</span></div>
+            <div class="card__content card__content--flush"><div class="table__wrapper table__wrapper--borderless"><table class="table">
+              <thead><tr><th>Element</th><th>Property</th><th>Before</th><th>After</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table></div></div>
+          </div>`);
+      }
+      results.insertAdjacentHTML('beforeend', `<p class="text--sm text--muted">${unchanged} of ${chosen.length} pages unchanged at ${width}px.</p>`);
+      button.removeAttribute('aria-busy');
+      button.disabled = false;
+    });
+  </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ node_modules/
 *.log
 .sass-cache/
 demo/vendor/
+demo/compare/
 demo/llms/
 demo/llms.txt
 demo/llms-full.txt
