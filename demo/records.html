@@ -397,7 +397,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="1" aria-label="Select Premium Widget">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-001</code></td>
@@ -440,7 +440,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="2" aria-label="Select Acme Corporation">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-002</code></td>
@@ -483,7 +483,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="3" aria-label="Select Order #45231">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-003</code></td>
@@ -526,7 +526,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="4" aria-label="Select Invoice INV-2024-089">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-004</code></td>
@@ -569,7 +569,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="5" aria-label="Select Basic Component Set">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-005</code></td>
@@ -612,7 +612,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="6" aria-label="Select TechStart Inc.">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-006</code></td>
@@ -655,7 +655,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="7" aria-label="Select Order #45198">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-007</code></td>
@@ -698,7 +698,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="8" aria-label="Select Enterprise Package">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-008</code></td>
@@ -741,7 +741,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="9" aria-label="Select Invoice INV-2024-076">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-009</code></td>
@@ -784,7 +784,7 @@
                 <tr class="table__row">
                   <td class="table__cell table__checkbox">
                     <label class="checkbox">
-                      <input type="checkbox" class="checkbox__input">
+                      <input type="checkbox" class="checkbox__input" value="10" aria-label="Select Global Solutions Ltd">
                     </label>
                   </td>
                   <td class="table__cell"><code class="code--sm">REC-010</code></td>
@@ -830,18 +830,19 @@
           </div>
 
           <!-- Grid view -->
-          <div class="card__content card__content--flush records__grid-wrapper" id="recordsGridView" hidden>
-            <div class="records__grid">
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
-                      <div>
-                        <div class="text--medium">Premium Widget</div>
-                        <div class="text--xs text--muted">SKU: WDG-2024-001</div>
-                      </div>
-                    </div>
+          <div class="card__content card__content--pt" id="recordsGridView" hidden>
+            <ul class="recordgrid">
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="1" aria-label="Select Premium Widget">
+                </label>
+                <a href="record-form.html?id=1" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%2322c55e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=1" class="recordgrid__title">Premium Widget</a>
+                  <p class="recordgrid__meta">SKU: WDG-2024-001</p>
+                  <p class="recordgrid__meta">Jan 15, 2024 &middot; Modified 2 hours ago</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Products</span><span class="badge badge--info-muted"><svg class="icon badge__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>Scheduled &middot; 24 Oct, 9:00am</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 1" data-toggle data-toggle-target="#grid-actions-1" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -863,23 +864,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Products</span>
-                    <span class="badge badge--info-muted"><svg class="icon badge__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></svg>Scheduled &middot; 24 Oct, 9:00am</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 15, 2024 &middot; Modified 2 hours ago</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
-                      <div>
-                        <div class="text--medium">Acme Corporation</div>
-                        <div class="text--xs text--muted">contact@acme.com</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="2" aria-label="Select Acme Corporation">
+                </label>
+                <a href="record-form.html?id=2" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=2" class="recordgrid__title">Acme Corporation</a>
+                  <p class="recordgrid__meta">contact@acme.com</p>
+                  <p class="recordgrid__meta">Jan 14, 2024 &middot; Modified Yesterday</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Customers</span><span class="badge badge--success-muted">Active</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 2" data-toggle data-toggle-target="#grid-actions-2" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -901,23 +898,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Customers</span>
-                    <span class="badge badge--success-muted">Active</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 14, 2024 &middot; Modified Yesterday</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
-                      <div>
-                        <div class="text--medium">Order #45231</div>
-                        <div class="text--xs text--muted">5 items - $1,249.00</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="3" aria-label="Select Order #45231">
+                </label>
+                <a href="record-form.html?id=3" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=3" class="recordgrid__title">Order #45231</a>
+                  <p class="recordgrid__meta">5 items - $1,249.00</p>
+                  <p class="recordgrid__meta">Jan 13, 2024 &middot; Modified 3 days ago</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Orders</span><span class="badge badge--warning-muted">Pending</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 3" data-toggle data-toggle-target="#grid-actions-3" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -939,23 +932,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Orders</span>
-                    <span class="badge badge--warning-muted">Pending</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 13, 2024 &middot; Modified 3 days ago</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
-                      <div>
-                        <div class="text--medium">Invoice INV-2024-089</div>
-                        <div class="text--xs text--muted">$3,450.00 - Due Feb 1</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="4" aria-label="Select Invoice INV-2024-089">
+                </label>
+                <a href="record-form.html?id=4" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=4" class="recordgrid__title">Invoice INV-2024-089</a>
+                  <p class="recordgrid__meta">$3,450.00 - Due Feb 1</p>
+                  <p class="recordgrid__meta">Jan 12, 2024 &middot; Modified 4 days ago</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Invoices</span><span class="badge badge--info-muted">Sent</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 4" data-toggle data-toggle-target="#grid-actions-4" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -977,23 +966,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Invoices</span>
-                    <span class="badge badge--info-muted">Sent</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 12, 2024 &middot; Modified 4 days ago</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
-                      <div>
-                        <div class="text--medium">Basic Component Set</div>
-                        <div class="text--xs text--muted">SKU: CMP-2024-015</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="5" aria-label="Select Basic Component Set">
+                </label>
+                <a href="record-form.html?id=5" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23eab308'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=5" class="recordgrid__title">Basic Component Set</a>
+                  <p class="recordgrid__meta">SKU: CMP-2024-015</p>
+                  <p class="recordgrid__meta">Jan 10, 2024 &middot; Modified 6 days ago</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Products</span><span class="badge badge--secondary">Draft</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 5" data-toggle data-toggle-target="#grid-actions-5" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1015,23 +1000,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Products</span>
-                    <span class="badge badge--secondary">Draft</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 10, 2024 &middot; Modified 6 days ago</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
-                      <div>
-                        <div class="text--medium">TechStart Inc.</div>
-                        <div class="text--xs text--muted">hello@techstart.io</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item" aria-disabled="true">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="6" aria-label="Select TechStart Inc.">
+                </label>
+                <a href="record-form.html?id=6" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2314b8a6'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=6" class="recordgrid__title">TechStart Inc.</a>
+                  <p class="recordgrid__meta">hello@techstart.io</p>
+                  <p class="recordgrid__meta">Jan 8, 2024 &middot; Modified 1 week ago</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Customers</span><span class="badge badge--destructive-muted">Inactive</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 6" data-toggle data-toggle-target="#grid-actions-6" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1053,23 +1034,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Customers</span>
-                    <span class="badge badge--destructive-muted">Inactive</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 8, 2024 &middot; Modified 1 week ago</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--yellow">O</span></span>
-                      <div>
-                        <div class="text--medium">Order #45198</div>
-                        <div class="text--xs text--muted">2 items - $499.00</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="7" aria-label="Select Order #45198">
+                </label>
+                <a href="record-form.html?id=7" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=7" class="recordgrid__title">Order #45198</a>
+                  <p class="recordgrid__meta">2 items - $499.00</p>
+                  <p class="recordgrid__meta">Jan 5, 2024 &middot; Modified Jan 7, 2024</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Orders</span><span class="badge badge--success-muted">Completed</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 7" data-toggle data-toggle-target="#grid-actions-7" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1091,23 +1068,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Orders</span>
-                    <span class="badge badge--success-muted">Completed</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 5, 2024 &middot; Modified Jan 7, 2024</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--blue">P</span></span>
-                      <div>
-                        <div class="text--medium">Enterprise Package</div>
-                        <div class="text--xs text--muted">SKU: ENT-2024-003</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="8" aria-label="Select Enterprise Package">
+                </label>
+                <a href="record-form.html?id=8" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2364748b'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=8" class="recordgrid__title">Enterprise Package</a>
+                  <p class="recordgrid__meta">SKU: ENT-2024-003</p>
+                  <p class="recordgrid__meta">Jan 3, 2024 &middot; Modified Jan 10, 2024</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Products</span><span class="badge badge--outline">Expired &middot; 30 Sep</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 8" data-toggle data-toggle-target="#grid-actions-8" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1129,23 +1102,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Products</span>
-                    <span class="badge badge--outline">Expired &middot; 30 Sep</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 3, 2024 &middot; Modified Jan 10, 2024</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--red">I</span></span>
-                      <div>
-                        <div class="text--medium">Invoice INV-2024-076</div>
-                        <div class="text--xs text--muted">$890.00 - Paid</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="9" aria-label="Select Invoice INV-2024-076">
+                </label>
+                <a href="record-form.html?id=9" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%2314b8a6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=9" class="recordgrid__title">Invoice INV-2024-076</a>
+                  <p class="recordgrid__meta">$890.00 - Paid</p>
+                  <p class="recordgrid__meta">Jan 1, 2024 &middot; Modified Jan 5, 2024</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Invoices</span><span class="badge badge--success-muted">Paid</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 9" data-toggle data-toggle-target="#grid-actions-9" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1167,23 +1136,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Invoices</span>
-                    <span class="badge badge--success-muted">Paid</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Jan 1, 2024 &middot; Modified Jan 5, 2024</p>
                 </div>
-              </div>
-              <div class="card records__card">
-                <div class="card__content card__content--pt">
-                  <div class="cluster cluster--between">
-                    <div class="cluster cluster--sm">
-                      <span class="avatar avatar--sm"><span class="avatar__fallback avatar__fallback--green">C</span></span>
-                      <div>
-                        <div class="text--medium">Global Solutions Ltd</div>
-                        <div class="text--xs text--muted">info@globalsolutions.com</div>
-                      </div>
-                    </div>
+              </li>
+              <li class="recordgrid__item">
+                <label class="checkbox recordgrid__select">
+                  <input type="checkbox" class="checkbox__input" value="10" aria-label="Select Global Solutions Ltd">
+                </label>
+                <a href="record-form.html?id=10" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ec4899'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='70' fill='white' fill-opacity='.22'/%3E%3C/svg%3E" alt=""></a>
+                <div class="recordgrid__body">
+                  <a href="record-form.html?id=10" class="recordgrid__title">Global Solutions Ltd</a>
+                  <p class="recordgrid__meta">info@globalsolutions.com</p>
+                  <p class="recordgrid__meta">Dec 28, 2023 &middot; Modified Jan 12, 2024</p>
+                  <div class="recordgrid__footer">
+                    <div class="recordgrid__status"><span class="badge badge--outline">Customers</span><span class="badge badge--success-muted">Active</span></div>
                     <div class="dropdown dropdown--right">
                       <button type="button" class="btn btn--ghost btn--icon btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for record 10" data-toggle data-toggle-target="#grid-actions-10" data-toggle-capture="true">
                         <svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
@@ -1205,14 +1170,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cluster cluster--between mt--sm">
-                    <span class="badge badge--outline">Customers</span>
-                    <span class="badge badge--success-muted">Active</span>
-                  </div>
-                  <p class="text--xs text--muted mt--sm">Dec 28, 2023 &middot; Modified Jan 12, 2024</p>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
           <!-- Pagination -->
@@ -1264,28 +1224,38 @@
           </div>
         </div>
 
-        <!-- Bulk Actions Bar (shown when items selected) -->
-        <div class="card bulkactions" id="bulkActions" hidden>
-          <div class="card__content bulkactions__content">
-            <span class="text--sm"><strong id="selectedCount">0</strong> items selected</span>
-            <div class="separator separator--vertical separator--h-lg"></div>
-            <button class="btn btn--ghost btn--sm">
+        <!-- Bulk actions: hidden until a record is selected in either view -->
+        <div class="bulkactions" id="bulkActions" role="region" aria-label="Bulk actions" hidden>
+          <span class="bulkactions__count" aria-live="polite"><strong id="selectedCount">0</strong>&nbsp;selected</span>
+          <div class="bulkactions__actions">
+            <div class="dropdown dropdown--top">
+              <button type="button" class="btn btn--ghost btn--sm dropdown__trigger" aria-haspopup="menu" aria-expanded="false" data-toggle data-toggle-target="#bulk-status" data-toggle-capture="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></svg>
+                Set status
+                <svg class="icon" viewBox="0 0 24 24"><path d="M6 15l6 -6l6 6"/></svg>
+              </button>
+              <div class="dropdown__menu dropdown__menu--sm" id="bulk-status" role="menu" aria-label="Set status">
+                <button type="button" class="dropdown__item" role="menuitem"><span class="dropdown__item-text">Active</span></button>
+                <button type="button" class="dropdown__item" role="menuitem"><span class="dropdown__item-text">Draft</span></button>
+                <button type="button" class="dropdown__item" role="menuitem"><span class="dropdown__item-text">Inactive</span></button>
+              </div>
+            </div>
+            <button type="button" class="btn btn--ghost btn--sm">
               <svg class="icon" viewBox="0 0 24 24"><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/><path d="M10 12l4 0"/></svg>
               Archive
             </button>
-            <button class="btn btn--ghost btn--sm">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.116 -6.116a2.025 2.025 0 0 0 -1.432 -.593z"/><path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116"/><path d="M6 9h-.01"/></svg>
-              Tag
-            </button>
-            <button class="btn btn--ghost btn--sm">
+            <button type="button" class="btn btn--ghost btn--sm">
               <svg class="icon" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>
               Export
             </button>
-            <button class="btn btn--destructive btn--sm">
+            <button type="button" class="btn btn--destructive btn--sm">
               <svg class="icon" viewBox="0 0 24 24"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg>
               Delete
             </button>
           </div>
+          <button type="button" class="btn btn--ghost btn--icon btn--sm bulkactions__clear" id="clearSelection" aria-label="Clear selection">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg>
+          </button>
         </div>
 
       </div>
@@ -1337,29 +1307,32 @@
       });
     });
 
-    // Select all functionality
+    // Selection: the table and grid hold a checkbox per record (value = record number), kept in step
+    // so a selection survives switching views; the bulk bar shows while anything is selected
     const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.table__body .checkbox__input');
+    const selectors = document.querySelectorAll('.table__body .checkbox__input, .recordgrid__select .checkbox__input');
     const bulkActions = document.getElementById('bulkActions');
     const selectedCount = document.getElementById('selectedCount');
+    const recordCount = document.querySelectorAll('.table__body .checkbox__input').length;
 
-    selectAll.addEventListener('change', function() {
-      checkboxes.forEach(cb => cb.checked = this.checked);
+    function setSelected(value, checked) {
+      selectors.forEach(cb => {
+        if (value === null || cb.value === value) cb.checked = checked;
+      });
       updateBulkActions();
-    });
-
-    checkboxes.forEach(cb => {
-      cb.addEventListener('change', updateBulkActions);
-    });
+    }
 
     function updateBulkActions() {
-      const checked = document.querySelectorAll('.table__body .checkbox__input:checked');
-      const count = checked.length;
+      const count = new Set([...selectors].filter(cb => cb.checked).map(cb => cb.value)).size;
       selectedCount.textContent = count;
       bulkActions.hidden = count === 0;
-      selectAll.checked = count === checkboxes.length;
-      selectAll.indeterminate = count > 0 && count < checkboxes.length;
+      selectAll.checked = count === recordCount;
+      selectAll.indeterminate = count > 0 && count < recordCount;
     }
+
+    selectAll.addEventListener('change', () => setSelected(null, selectAll.checked));
+    selectors.forEach(cb => cb.addEventListener('change', () => setSelected(cb.value, cb.checked)));
+    document.getElementById('clearSelection').addEventListener('click', () => setSelected(null, false));
 
     function clearFilters() {
       document.getElementById('activeFilters').hidden = true;
@@ -1386,12 +1359,6 @@
       recordsGridBtn.setAttribute('aria-pressed', 'true');
     });
   </script>
-  <style>
-    /* Grid view layout for records; mirrors the media grid pattern */
-    .records__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; }
-    .records__grid-wrapper { padding: 1rem; }
-  </style>
-
   <script>
     (() => {
       const modal = document.getElementById('delete-modal');
@@ -1405,9 +1372,9 @@
       document.addEventListener('click', (event) => {
         const trigger = event.target.closest('[data-modal-target="#delete-modal"]');
         if (!trigger) return;
-        item = trigger.closest('tr, .card');
+        item = trigger.closest('tr, .recordgrid__item');
         opener = trigger.closest('.dropdown')?.querySelector('.dropdown__trigger');
-        name.textContent = item?.querySelector('.text--medium')?.textContent.trim() || 'this item';
+        name.textContent = item?.querySelector('.text--medium, .recordgrid__title')?.textContent.trim() || 'this item';
         field.value = '';
         confirm.disabled = true;
       }, true);

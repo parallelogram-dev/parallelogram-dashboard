@@ -249,7 +249,7 @@
   --tracking-tight: -0.025em;
 }
 
-.filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.recordgrid__title:is(a):focus-visible, .filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
 .radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
@@ -9497,6 +9497,273 @@ dl.descriptionlist dd {
 }
 .asset__btn--confirm:hover {
   background-color: var(--primary-hover);
+}
+
+/**
+ * Record grid
+ *
+ * The picture view of a record list: a responsive grid of tiles, each led by a thumbnail
+ * (.recordgrid__thumb, an image or a placeholder icon), with a title, a meta line and a footer
+ * holding the status badges and the record's action menu.
+ *
+ * A tile can carry a selection checkbox (.recordgrid__select) over its thumbnail, so the same
+ * bulk actions work as in the table view. It shows while the tile is hovered or focused, and on
+ * every tile once anything in the grid is selected. A checked tile is outlined; a tile with
+ * aria-disabled="true" (unpublished, locked) is dimmed but its controls stay usable.
+ *
+ * Tiles never clip their contents, so the action menu can open past the tile's edge.
+ */
+.recordgrid {
+  --recordgrid-min: 14rem;
+  --recordgrid-ratio: 4 / 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--recordgrid-min), 100%), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recordgrid--sm {
+  --recordgrid-min: 10rem;
+  gap: 0.75rem;
+}
+.recordgrid--square {
+  --recordgrid-ratio: 1;
+}
+.recordgrid__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--card-fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-colors);
+}
+.recordgrid__item:hover {
+  border-color: var(--fg-subtle);
+}
+.recordgrid__item:has(.recordgrid__select :checked) {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.recordgrid__item[aria-disabled=true] :is(.recordgrid__thumb, .recordgrid__title) {
+  opacity: 0.55;
+}
+.recordgrid__thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: var(--recordgrid-ratio);
+  margin: 0;
+  overflow: hidden;
+  color: var(--fg-subtle);
+  background-color: var(--bg-muted);
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+}
+.recordgrid__thumb img,
+.recordgrid__thumb picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.recordgrid__thumb img {
+  object-fit: cover;
+}
+.recordgrid__thumb > .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.recordgrid__thumb:is(a):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.recordgrid__thumb--contain img {
+  padding: 0.75rem;
+  object-fit: contain;
+}
+.recordgrid__select {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+  display: inline-flex;
+  padding: 0.25rem;
+  background-color: var(--card);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transition: var(--transition-opacity);
+}
+@media (hover: none) {
+  .recordgrid__select {
+    opacity: 1;
+  }
+}
+.recordgrid__item:is(:hover, :focus-within) .recordgrid__select, .recordgrid:has(.recordgrid__select :checked) .recordgrid__select {
+  opacity: 1;
+}
+.recordgrid__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.75rem;
+}
+.recordgrid__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.375;
+  color: inherit;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.recordgrid__title:is(a):hover {
+  text-decoration: underline;
+}
+.recordgrid__meta {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.recordgrid__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+.recordgrid__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+/**
+ * Bulk actions bar
+ *
+ * Acts on the records selected in a table or record grid: a count of the selection
+ * (.bulkactions__count), then buttons and dropdowns (.bulkactions__actions), and optionally a
+ * button to clear the selection (.bulkactions__clear).
+ *
+ * The bar is markup on the page from the start, kept out of sight with the hidden attribute. The
+ * page's script updates the count and removes hidden once something is selected, and puts it back
+ * when the selection empties; the bar slides in each time it appears.
+ *
+ * By default it floats over the bottom of the viewport, so dropdowns inside it should open
+ * upwards (dropdown--top). .bulkactions--inline sits in the flow instead, such as above the table in
+ * place of its toolbar.
+ */
+.bulkactions {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  z-index: 200;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  padding: 0.5rem 0.75rem;
+  color: var(--card-fg);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%);
+  animation: bulkactions-float-in 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (max-width: 639px) {
+  .bulkactions {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: none;
+    transform: none;
+    animation-name: bulkactions-in;
+  }
+  .bulkactions .bulkactions__count {
+    border-right: 0;
+  }
+  .bulkactions .bulkactions__actions {
+    order: 1;
+    flex-basis: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .dashboard .bulkactions {
+    bottom: calc(4rem + 0.5rem);
+  }
+}
+.bulkactions--inline {
+  position: static;
+  width: auto;
+  max-width: none;
+  background-color: color-mix(in srgb, var(--primary) 6%, var(--card));
+  box-shadow: none;
+  transform: none;
+  animation-name: bulkactions-in;
+}
+.bulkactions__count {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  border-right: 1px solid var(--border);
+}
+.bulkactions__count strong {
+  font-weight: 600;
+}
+.bulkactions__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+.bulkactions__clear {
+  margin-left: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bulkactions {
+    animation: none;
+  }
+}
+
+@keyframes bulkactions-float-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+@keyframes bulkactions-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 /*# sourceMappingURL=parallelogram-dashboard.css.map */

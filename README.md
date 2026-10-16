@@ -108,6 +108,7 @@ parallelogram-dashboard/
 │   │   ├── _badge.scss
 │   │   ├── _banner.scss
 │   │   ├── _breadcrumb.scss
+│   │   ├── _bulkactions.scss
 │   │   ├── _button.scss
 │   │   ├── _card.scss
 │   │   ├── _command.scss
@@ -122,6 +123,7 @@ parallelogram-dashboard/
 │   │   ├── _pageheader.scss
 │   │   ├── _pagination.scss
 │   │   ├── _progress.scss
+│   │   ├── _recordgrid.scss
 │   │   ├── _separator.scss
 │   │   ├── _sheet.scss
 │   │   ├── _sidebar.scss
@@ -707,6 +709,56 @@ Form parts are elements of the `.form` block. A `.form__field` bundles a label, 
 </th>
 ```
 
+### Record Grid `.recordgrid`
+
+The picture view of a record list. Tiles fill the row at a minimum of 14rem (`recordgrid--sm`:
+10rem); thumbnails are 4:3 (`recordgrid--square`: 1:1) and fill the frame, or sit whole with
+`recordgrid__thumb--contain`. A record with no image puts an `.icon` in the thumbnail instead.
+
+```html
+<ul class="recordgrid">
+  <li class="recordgrid__item">
+    <label class="checkbox recordgrid__select">
+      <input type="checkbox" class="checkbox__input" value="42" aria-label="Select Spring launch">
+    </label>
+    <a href="/records/42" class="recordgrid__thumb" tabindex="-1" aria-hidden="true"><img src="..." alt=""></a>
+    <div class="recordgrid__body">
+      <a href="/records/42" class="recordgrid__title">Spring launch</a>
+      <p class="recordgrid__meta">News &middot; Modified 2 hours ago</p>
+      <div class="recordgrid__footer">
+        <div class="recordgrid__status"><span class="badge badge--success-muted">Published</span></div>
+        <div class="dropdown dropdown--right">...</div>
+      </div>
+    </div>
+  </li>
+</ul>
+```
+
+The selection checkbox shows while a tile is hovered or focused, and on every tile once any is
+checked. A checked tile is outlined, and `aria-disabled="true"` on `recordgrid__item` dims an
+unpublished or locked record while its controls stay usable.
+
+### Bulk Actions `.bulkactions`
+
+Acts on the rows selected in a table or record grid. Keep it in the page with `hidden`; the
+page's script sets the count and toggles `hidden` as the selection changes, and the bar slides in
+each time it appears. It floats over the bottom of the viewport, so dropdowns in it open upwards
+(`dropdown--top`); `bulkactions--inline` sits in the flow instead, e.g. above the table.
+
+```html
+<div class="bulkactions" role="region" aria-label="Bulk actions" hidden>
+  <span class="bulkactions__count"><strong>3</strong>&nbsp;selected</span>
+  <div class="bulkactions__actions">
+    <div class="dropdown dropdown--top">...</div>
+    <button type="button" class="btn btn--ghost btn--sm">Archive</button>
+    <button type="button" class="btn btn--destructive btn--sm">Delete</button>
+  </div>
+  <button type="button" class="btn btn--ghost btn--icon btn--sm bulkactions__clear" aria-label="Clear selection">
+    <svg class="icon">...</svg>
+  </button>
+</div>
+```
+
 ### Tabs `.tabs`
 
 ```html
@@ -1233,7 +1285,7 @@ Use these as starting templates:
 |------|------|-------------|
 | Component Library | `index.html` | All components showcase |
 | Dashboard | `dashboard.html` | Stats, charts, activity feed |
-| Records List | `records.html` | Data table with search, filters, pagination |
+| Records List | `records.html` | Data table and picture grid with search, filters, bulk actions, pagination |
 | Record Form | `record-form.html` | Create/edit form with validation |
 | Record Delete | `record-delete.html` | Confirmation pattern |
 | Settings Index | `settings.html` | Settings category cards |
