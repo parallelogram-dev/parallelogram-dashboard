@@ -1217,6 +1217,17 @@ code.code--sm {
   display: none !important;
 }
 
+/**
+ * Unsaved changes
+ *
+ * main.js sets data-dirty on a [data-unsaved-guard] area while any of its fields differ from
+ * their saved values. Mark an "Unsaved changes" badge or similar with data-unsaved-indicator and
+ * it only shows while the area is dirty.
+ */
+[data-unsaved-guard]:not([data-dirty]) [data-unsaved-indicator] {
+  display: none !important;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -3213,6 +3224,14 @@ p-modal {
 .tabs__trigger:disabled, .segmented-control__item:disabled, .tabs__trigger[aria-disabled=true], [aria-disabled=true].segmented-control__item, .tabs__trigger--disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+.tabs__trigger[data-dirty]::after, [data-dirty].segmented-control__item::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.375rem;
+  height: 0.375rem;
+  background-color: var(--warning);
+  border-radius: 9999px;
 }
 .tabs__trigger-icon {
   width: 1.25rem;

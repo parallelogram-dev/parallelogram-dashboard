@@ -55,6 +55,16 @@
     &--disabled {
       @include disabled;
     }
+
+    // Set by the unsaved-changes guard while the tab's panel holds edits
+    &[data-dirty]::after {
+      content: "";
+      flex-shrink: 0;
+      width: 0.375rem;
+      height: 0.375rem;
+      background-color: var(--warning);
+      border-radius: $radius-full;
+    }
   }
 
   &__trigger-icon {
