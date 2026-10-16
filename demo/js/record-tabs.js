@@ -131,6 +131,26 @@
   // A new order saves like an edit, shown on the row that moved
   rows.closest('table').addEventListener('table:reorder', e => save(e.detail.row));
 
+  rows.closest('table').addEventListener('table:paste', (e) => {
+    const { updated, added, undo } = e.detail;
+    refresh();
+    const parts = [updated.length && `${updated.length} updated`, added.length && `${added.length} added`].filter(Boolean);
+    window.toast?.show({
+      type: 'success',
+      message: `Pasted: ${parts.join(', ')}`,
+      duration: 6000,
+      actions: [{
+        label: 'Undo',
+        icon: UNDO_ICON,
+        onClick: () => {
+          undo();
+          refresh();
+          status.textContent = 'Paste undone';
+        },
+      }],
+    });
+  });
+
   rows.addEventListener('input', (e) => {
     const row = e.target.closest('[data-variant]');
     if (row && e.target.matches('.table__control')) markChanged(row);
