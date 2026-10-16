@@ -192,7 +192,8 @@
 // --------------------------------------------------------------------------
 
 /// Points the general tokens at a chrome region's own ($chrome-tokens), so everything inside the
-/// region follows them; popovers that open inside it go back to the page's values.
+/// region follows them; popovers that open inside it (picked out by their roles) go back to the
+/// page's values.
 @mixin chrome-region($region) {
   @each $name in $chrome-remapped {
     --#{$name}: var(--#{$region}-#{$name});
@@ -200,7 +201,7 @@
   color: var(--fg);
   background-color: var(--bg);
 
-  :where(.dropdown__menu, .tooltip__content, .navmenu__tooltip) {
+  :where([popover], [role="menu"], [role="dialog"], [role="tooltip"], .navmenu__tooltip) {
     @each $name in $chrome-remapped {
       --#{$name}: var(--page-#{$name});
     }
