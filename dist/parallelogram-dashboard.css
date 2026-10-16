@@ -3951,7 +3951,7 @@ p-modal {
   color: var(--fg);
   background-color: var(--bg);
 }
-.navmenu :where(.dropdown__menu, .tooltip__content, .navmenu__tooltip) {
+.navmenu :where([popover], [role=menu], [role=dialog], [role=tooltip], .navmenu__tooltip) {
   --bg: var(--page-bg);
   --fg: var(--page-fg);
   --fg-muted: var(--page-fg-muted);
@@ -4138,7 +4138,7 @@ p-modal {
   color: var(--fg);
   background-color: var(--bg);
 }
-.subnav :where(.dropdown__menu, .tooltip__content, .navmenu__tooltip) {
+.subnav :where([popover], [role=menu], [role=dialog], [role=tooltip], .navmenu__tooltip) {
   --bg: var(--page-bg);
   --fg: var(--page-fg);
   --fg-muted: var(--page-fg-muted);
@@ -4439,7 +4439,7 @@ p-modal {
   color: var(--fg);
   background-color: var(--bg);
 }
-.dashboard__header :where(.dropdown__menu, .tooltip__content, .navmenu__tooltip) {
+.dashboard__header :where([popover], [role=menu], [role=dialog], [role=tooltip], .navmenu__tooltip) {
   --bg: var(--page-bg);
   --fg: var(--page-fg);
   --fg-muted: var(--page-fg-muted);

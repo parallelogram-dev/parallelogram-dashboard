@@ -22,7 +22,11 @@ export default {
       key: 'layout',
       label: 'Layout',
       type: 'select',
-      options: [{ value: '', label: 'Stacked' }, { value: 'row', label: 'Actions on the title row (--row)' }],
+      options: [
+        { value: '', label: 'Stacked' },
+        { value: 'row', label: 'Actions on the title row (--row)' },
+        { value: 'sticky', label: 'Pinned title row (--row --sticky)' },
+      ],
     },
     { key: 'title', label: 'Title', type: 'text', default: 'Profile' },
     { key: 'breadcrumb', label: 'Breadcrumb', type: 'toggle', default: true },
@@ -32,16 +36,21 @@ export default {
   presets: [
     { name: 'Settings page', state: {} },
     { name: 'Record header', state: { layout: 'row', title: 'Invoice INV-2024-089' } },
+    { name: 'Pinned work page', state: { layout: 'sticky', title: 'All Records' } },
     { name: 'Title only', state: { breadcrumb: false, description: false, actions: false, title: 'Dashboard' } },
   ],
   render(s) {
-    const text = `<h1 class="pageheader__title">${escape(s.title)}</h1>`
-      + (s.description ? '<p class="pageheader__description">Update your name, photo and contact details.</p>' : '');
+    const title = `<h1 class="pageheader__title">${escape(s.title)}</h1>`;
+    const description = s.description ? '<p class="pageheader__description">Update your name, photo and contact details.</p>' : '';
+    const text = title + description;
     const actions = s.actions
       ? '<div class="pageheader__actions"><button type="button" class="btn btn--outline">Cancel</button>'
         + '<button type="button" class="btn btn--primary">Save</button></div>'
       : '';
     const nav = s.breadcrumb ? breadcrumb(s.title) : '';
+    if (s.layout === 'sticky') {
+      return `<div class="pageheader pageheader--row pageheader--sticky"><div class="pageheader__content">${nav}${title}</div>${actions}</div>${description}`;
+    }
     if (s.layout === 'row') {
       return `<div class="${bem('pageheader', 'row')}"><div class="pageheader__content">${nav}${text}</div>${actions}</div>`;
     }
