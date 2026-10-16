@@ -261,23 +261,26 @@
 
   function renderHeader() {
     const frame = top();
-    const trail = ['Home', 'Project carousel', ...stack.map(f => f.label)];
+    // The trail is the levels above this one; the heading below names where you are
+    const trail = ['Home', 'Project carousel', ...stack.slice(0, -1).map(f => f.label)];
     const crumbs = trail.map((label, i) => {
       const depth = i - 1;
-      const current = i === trail.length - 1;
-      const link = depth >= 1 && !current
+      const link = depth >= 1
         ? `<button type="button" class="breadcrumb__link" data-crumb="${depth}">${escape(label)}</button>`
-        : current ? `<span class="breadcrumb__page">${escape(label)}</span>` : `<span class="breadcrumb__link">${escape(label)}</span>`;
+        : `<span class="breadcrumb__link">${escape(label)}</span>`;
       const separator = i ? `<li class="breadcrumb__item" aria-hidden="true"><span class="breadcrumb__separator">${ICONS.chevron}</span></li>` : '';
       return `${separator}<li class="breadcrumb__item">${link}</li>`;
     }).join('');
-    const title = frame.type === 'picker' ? frame.label : `Edit ${KINDS[frame.kind].noun}`;
+    const title = frame.label;
+    const noun = KINDS[frame.kind].noun;
+    const description = frame.type === 'record' ? `<p class="sheet__description">${noun[0].toUpperCase()}${noun.slice(1)}</p>` : '';
     header.innerHTML = `
       <div class="nest-head">
         ${stack.length > 1 ? `<button type="button" class="btn btn--ghost btn--icon btn--sm" data-back aria-label="Back to ${escape(stack[stack.length - 2].label)}" data-tooltip="Back" data-tooltip-position="bottom">${ICONS.back}</button>` : ''}
         <div>
           <nav class="breadcrumb" aria-label="Where you are"><ol class="breadcrumb__list">${crumbs}</ol></nav>
           <h3 class="sheet__title" id="nestTitle">${escape(title)}</h3>
+          ${description}
         </div>
       </div>
       <button type="button" class="sheet__close" data-nest-close aria-label="Close">${ICONS.remove}</button>`;
@@ -325,11 +328,15 @@
             const image = kind.image(r);
             return `
               <div class="nest-option" role="${frame.multiple ? 'checkbox' : 'radio'}" tabindex="0" aria-checked="${on}" data-pick="${r.id}"${frame.multiple ? '' : ' data-single'}>
-                <span class="nest-option__mark">${ICONS.check}</span>
                 ${image ? `<figure class="nest-item__image"><img src="${image}" alt=""></figure>` : ''}
-                <span class="nest-item__title">${escape(kind.name(r))}</span>
-                <span class="nest-item__meta">${escape(kind.meta(r))}</span>
-                ${frame.kind === 'project' && r.status === 'Draft' ? '<span class="badge badge--sm badge--secondary">Draft</span>' : ''}
+                <div class="nest-option__row">
+                  <div class="nest-item__body">
+                    <span class="nest-item__title">${escape(kind.name(r))}</span>
+                    <span class="nest-item__meta">${escape(kind.meta(r))}</span>
+                    ${frame.kind === 'project' && r.status === 'Draft' ? '<span class="badge badge--sm badge--secondary" style="align-self: flex-start;">Draft</span>' : ''}
+                  </div>
+                  <span class="nest-option__mark">${ICONS.check}</span>
+                </div>
                 ${canEdit && frame.kind !== 'product' ? `<button type="button" class="btn btn--ghost btn--sm" data-edit-record="${r.id}" style="align-self: flex-start;">${ICONS.edit}Edit</button>` : ''}
               </div>`;
           }).join('') || '<p class="nest-note">Nothing matches.</p>'}
