@@ -295,6 +295,57 @@
   }
 }
 
+/**
+ * Row save state
+ *
+ * Set data-row-state="saving", "saved" or "error" on a .table__row and its .table__checkbox
+ * cell shows a spinner, a tick or a warning in place of the checkbox, which keeps its space.
+ */
+.table__row[data-row-state] > .table__checkbox {
+  position: relative;
+
+  .checkbox {
+    visibility: hidden;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+  }
+}
+
+.table__row[data-row-state="saving"] > .table__checkbox::after {
+  border: 2px solid var(--border);
+  border-top-color: var(--fg-muted);
+  border-radius: $radius-full;
+  animation: spin 0.7s linear infinite;
+}
+
+.table__row[data-row-state="saved"] > .table__checkbox::after,
+.table__row[data-row-state="error"] > .table__checkbox::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E") center / contain no-repeat;
+  background-color: var(--success);
+}
+
+.table__row[data-row-state="error"] > .table__checkbox {
+  cursor: pointer;
+
+  &::after {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+    background-color: var(--destructive);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table__row[data-row-state="saving"] > .table__checkbox::after {
+    animation-duration: 2s;
+  }
+}
+
 // --------------------------------------------------------------------------
 // Actions Column
 // --------------------------------------------------------------------------
