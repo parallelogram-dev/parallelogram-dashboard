@@ -103,6 +103,7 @@ parallelogram-dashboard/
 │   ├── components/             # Component styles
 │   │   ├── _accordion.scss
 │   │   ├── _alert.scss
+│   │   ├── _auth.scss
 │   │   ├── _avatar.scss
 │   │   ├── _badge.scss
 │   │   ├── _banner.scss

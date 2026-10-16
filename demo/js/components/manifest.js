@@ -77,6 +77,7 @@ export default [
       { slug: 'navbar', name: 'Navbar', description: 'Top navigation bar with brand, search and actions.', scss: 'components/_navbar.scss', spec: 'navbar' },
       { slug: 'sidebar', name: 'Sidebar', description: 'Collapsible side navigation.', scss: 'components/_sidebar.scss', spec: 'sidebar' },
       { slug: 'dashboard', name: 'Dashboard Layout', description: 'Application shell combining sidebar, header and content.', scss: 'components/_dashboard.scss', spec: 'dashboard' },
+      { slug: 'auth', name: 'Auth', description: 'Centred page for signing in and the other screens shown before the dashboard shell.', scss: 'components/_auth.scss' },
     ],
   },
 ];
