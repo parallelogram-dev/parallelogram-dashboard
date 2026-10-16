@@ -40,6 +40,7 @@
     external: icon('<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/>'),
     search: icon('<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/>'),
     browse: icon('<path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/>'),
+    link: icon('<path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/>'),
     swap: icon('<path d="M7 10h14l-4 -4"/><path d="M17 14h-14l4 4"/>'),
     eye: icon('<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>'),
     eyeOff: icon('<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/><path d="M3 3l18 18"/>'),
@@ -53,6 +54,7 @@
   const PROJECTS = ['Harbour View House', 'Laneway Studio', 'Hillside Cabin', 'Corner Cafe', 'Riverside Library', 'Garden Pavilion']
     .map((title, i) => ({ id: `p${i + 1}`, title, meta: ['Residential', 'Workplace', 'Residential', 'Hospitality', 'Public', 'Public'][i], image: IMAGES[(i + 2) % IMAGES.length].src }));
   const find = (items, id) => items.find(item => item.id === id);
+  const imageUrl = image => `https://example.com/assets/images/${image.name.toLowerCase().replace(/\s+/g, '-')}.jpg`;
 
   // Everything a link can point at: pages, projects and products, each with its path
   const slug = text => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -537,17 +539,17 @@
     const required = f.required ? ' <span class="text--destructive" aria-hidden="true">*</span>' : '';
     const hint = f.hint ? `<p class="blk-field-hint">${escape(f.hint)}</p>` : '';
     if (f.type === 'image') {
+      // The same tile as a gallery field: copy URL and remove on hover, click the image to change it
       const image = value && find(IMAGES, value);
+      const tile = image
+        ? `<li class="media editable" data-url="${imageUrl(image)}"><figure class="media__image"><picture data-lookup="image" role="button" tabindex="0" aria-label="Change image" style="cursor: pointer;"><img src="${image.src}" alt=""></picture>`
+          + `<button type="button" class="media__copy" data-image-copy="${image.id}" data-tooltip="Copy URL" aria-label="Copy URL of ${escape(image.name)}">${ICONS.link}</button>`
+          + `<button type="button" class="media__remove" data-clear="image" data-tooltip="Remove" aria-label="Remove ${escape(image.name)}">${ICONS.remove}</button></figure></li>`
+        : `<li class="media editable" data-filebrowser-add><button type="button" class="media__btn" data-lookup="image" aria-label="Choose or upload an image">${ICONS.plus}</button></li>`;
       return `
         <div class="form__field">
           <span class="form__label">${f.label}</span>
-          <div class="blk-image">
-            <span class="blk-image__preview">${image ? `<img src="${image.src}" alt="">` : ICONS.photo}</span>
-            <div class="cluster cluster--xs">
-              <button type="button" class="btn btn--outline btn--sm" data-lookup="image">${ICONS.photo}${image ? 'Change' : 'Choose image'}</button>
-              ${image ? `<button type="button" class="btn btn--ghost btn--sm" data-clear="image">${ICONS.remove}Remove</button>` : ''}
-            </div>
-          </div>
+          <ul class="media__list" style="grid-template-columns: repeat(auto-fill, minmax(7.5rem, 9rem));">${tile}</ul>
         </div>`;
     }
     if (f.type === 'link') return linkField(f, value);
@@ -760,6 +762,12 @@
       stack.pop();
       return push(newBlockFrame(type.dataset.type, at));
     }
+    const copy = t.closest('[data-image-copy]');
+    if (copy) {
+      const image = find(IMAGES, copy.dataset.imageCopy);
+      navigator.clipboard?.writeText(imageUrl(image)).then(() => window.toast?.success('Image URL copied'), () => window.toast?.error('Couldn\u2019t copy the URL'));
+      return undefined;
+    }
     const suggest = t.closest('[data-suggest]');
     if (suggest) return chooseLink(suggest.closest('.blk-link').dataset.link, JSON.parse(suggest.dataset.suggest));
     const change = t.closest('[data-link-change]');
@@ -842,6 +850,12 @@
   });
 
   sheet.addEventListener('keydown', (e) => {
+    // The image tile acts as a button: Enter or Space changes the image
+    if (e.target.matches('[data-lookup][role="button"]') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      e.target.click();
+      return;
+    }
     const input = e.target.closest('[data-link-input]');
     if (!input) return;
     const list = input.closest('.blk-link').querySelector('.blk-suggest');
