@@ -68,8 +68,7 @@
 
     @include md {
       position: sticky;
-      // Pinned, the top padding tucks partly under the dashboard header so the bar stays compact
-      top: calc(#{$navbar-height} - #{$spacing-lg - $spacing-sm});
+      top: $navbar-height;
       z-index: $z-sticky - 1;
       margin-top: -$spacing-lg;
       margin-inline: -$spacing-lg;
@@ -79,12 +78,11 @@
       @supports (animation-timeline: scroll()) {
         animation: pageheader-pinned linear both;
         animation-timeline: scroll(root);
-        animation-range: #{$spacing-lg - $spacing-sm} #{$spacing-lg * 2};
+        animation-range: 0 $spacing-lg;
       }
     }
 
     + .pageheader__description {
-      margin-top: $spacing-2xs - $spacing-sm;
       margin-bottom: $spacing-lg;
     }
   }

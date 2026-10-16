@@ -3886,7 +3886,7 @@ p-modal {
 @media (min-width: 768px) {
   .pageheader--sticky {
     position: sticky;
-    top: calc(4rem - 0.5rem);
+    top: 4rem;
     z-index: 99;
     margin-top: -1.5rem;
     margin-inline: -1.5rem;
@@ -3897,12 +3897,11 @@ p-modal {
     .pageheader--sticky {
       animation: pageheader-pinned linear both;
       animation-timeline: scroll(root);
-      animation-range: 0.5rem 3rem;
+      animation-range: 0 1.5rem;
     }
   }
 }
 .pageheader--sticky + .pageheader__description {
-  margin-top: -0.5rem;
   margin-bottom: 1.5rem;
 }
 
