@@ -72,11 +72,16 @@
       z-index: $z-sticky - 1;
       margin-top: -$spacing-lg;
       margin-inline: -$spacing-lg;
-      padding: $spacing-lg $spacing-lg $spacing-sm;
+      padding: $spacing-sm $spacing-lg;
       background-color: var(--bg);
 
+      // Longhands, not the animation shorthand: a minifier can sort the shorthand after
+      // animation-timeline, which resets the timeline to auto and shows the shadow at the top
       @supports (animation-timeline: scroll()) {
-        animation: pageheader-pinned linear both;
+        animation-name: pageheader-pinned;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 $spacing-lg;
       }

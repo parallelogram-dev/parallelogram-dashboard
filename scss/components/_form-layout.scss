@@ -123,10 +123,15 @@
   // Field (label, control(s), description, error and any extra markup)
   // --------------------------------------------------------------------------
 
+  // Help text and errors sit 6px under the control; the label (or the row holding it) keeps 8px
   &__field {
     display: flex;
     flex-direction: column;
-    gap: $spacing-2xs;
+    gap: 0.375rem;
+
+    > :first-child {
+      margin-bottom: 0.125rem;
+    }
 
     // Deprecated: set aria-invalid="true" on the control instead
     &--error {
@@ -164,6 +169,7 @@
 
   &__description {
     font-size: $font-size-xs;
+    line-height: 1.25;
     color: var(--fg-muted);
   }
 
