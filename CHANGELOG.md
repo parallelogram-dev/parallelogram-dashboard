@@ -11,6 +11,11 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Changed
+
+- The "more" menu an action bar folds its lower-priority actions into opens from vertical dots, as
+  every other menu of actions does, and the demos draw their menus of actions the same way.
+
 ## [0.1.3] - 2026-10-16
 
 ### Added

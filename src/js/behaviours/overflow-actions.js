@@ -1,6 +1,6 @@
 import { Toggle } from './toggle.js';
 
-const ACTIONBAR_MORE_ICON = '<svg class="icon" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>';
+const ACTIONBAR_MORE_ICON = '<svg class="icon" viewBox="0 0 24 24"><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>';
 const OVERFLOW_RANK = { low: 1, medium: 2 };
 let overflowMenuCount = 0;
 
