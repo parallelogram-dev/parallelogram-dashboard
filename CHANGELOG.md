@@ -15,6 +15,15 @@ section can be taken with a version bump and a rebuild.
 
 - The "more" menu an action bar folds its lower-priority actions into opens from vertical dots, as
   every other menu of actions does, and the demos draw their menus of actions the same way.
+- A field's help text and error sit 6px under its control, and help text is set at a 1.25 line
+  height; the label keeps its 8px above the control.
+
+### Fixed
+
+- A sticky page header gains its shadow only once the page scrolls. Minified, the `animation`
+  shorthand could be sorted after `animation-timeline`, resetting it so the shadow showed at the
+  top of the page; the animation is now set in longhand.
+- A sticky page header's title row sits evenly in its bar, with as much room above it as below.
 
 ## [0.1.3] - 2026-10-16
 
