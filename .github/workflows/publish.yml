@@ -1,11 +1,16 @@
 name: Publish to npm
 
 # A version tag pushed by `npm run release` and `git push --follow-tags` publishes that version.
-# Run it by hand for a tag pushed before this workflow existed: gh workflow run publish.yml --ref vX.Y.Z
+# Run it by hand, from main, for a tag pushed before this workflow existed, or one whose run failed:
+# gh workflow run publish.yml -f tag=vX.Y.Z
 on:
   push:
     tags: ['v*.*.*']
   workflow_dispatch:
+    inputs:
+      tag:
+        description: The version tag to publish, such as v0.1.5
+        required: true
 
 permissions:
   contents: read
@@ -21,8 +26,12 @@ jobs:
       contents: read
       # Signs the package with where it was built, shown on npm as its provenance
       id-token: write
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       - uses: actions/setup-node@v4
         with:
@@ -34,8 +43,8 @@ jobs:
       - name: Check the tag names the package's version
         run: |
           version="v$(node -p "require('./package.json').version")"
-          if [ "${GITHUB_REF_NAME}" != "${version}" ]; then
-            echo "::error::${GITHUB_REF_NAME} is not the package's version (${version}); run this for a tag such as ${version}"
+          if [ "${TAG}" != "${version}" ] || ! git rev-parse --verify --quiet "refs/tags/${TAG}" >/dev/null; then
+            echo "::error::${TAG} is not a tag of the package's version (${version}); run this for a tag such as ${version}"
             exit 1
           fi
 
