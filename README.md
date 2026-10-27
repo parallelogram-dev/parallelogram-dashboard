@@ -1417,7 +1417,8 @@ Every change that needs a site to edit its templates goes under **Markup changes
 4. The tag publishes that version to npm (`.github/workflows/publish.yml`), with provenance,
    once the build and playground check pass and the tag matches `package.json`. It needs the
    repository secret `NPM_TOKEN`, an npm automation token for the `@parallelogram-js` scope. For a
-   tag pushed before the workflow ran, run it by hand: `gh workflow run publish.yml --ref vX.Y.Z`.
+   tag pushed before the workflow existed, or one whose run failed, run it by hand from `main`:
+   `gh workflow run publish.yml -f tag=vX.Y.Z`.
    Publishing by hand still works from a clean `main`: `npm publish` after `npm login`.
 
 ## Comparing Styles Between Releases
