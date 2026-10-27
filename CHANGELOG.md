@@ -11,6 +11,12 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Fixed
+
+- An action bar's title sets its label, detail and badges on one baseline, whatever their size,
+  with the line in the middle of the bar. A long label or detail still truncates, the detail first,
+  rather than wrapping the line.
+
 ## [0.1.4] - 2026-10-26
 
 ### Changed
