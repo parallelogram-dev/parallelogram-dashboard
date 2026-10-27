@@ -1414,8 +1414,11 @@ Every change that needs a site to edit its templates goes under **Markup changes
    playground check, sets the version in `package.json` and `package-lock.json`, moves the
    Unreleased entries under the new version and date, commits, and creates the tag `vX.Y.Z`.
 3. Check the commit, then push it with its tag: `git push --follow-tags`.
-4. Publish that version to npm from the same clean `main`: `npm publish` (after `npm login` as an
-   owner of the `@parallelogram-js` scope). `publishConfig` makes it public.
+4. The tag publishes that version to npm (`.github/workflows/publish.yml`), with provenance,
+   once the build and playground check pass and the tag matches `package.json`. It needs the
+   repository secret `NPM_TOKEN`, an npm automation token for the `@parallelogram-js` scope. For a
+   tag pushed before the workflow ran, run it by hand: `gh workflow run publish.yml --ref vX.Y.Z`.
+   Publishing by hand still works from a clean `main`: `npm publish` after `npm login`.
 
 ## Comparing Styles Between Releases
 
