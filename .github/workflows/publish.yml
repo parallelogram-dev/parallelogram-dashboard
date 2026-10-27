@@ -1,0 +1,74 @@
+name: Publish to npm
+
+# A version tag pushed by `npm run release` and `git push --follow-tags` publishes that version.
+# Run it by hand for a tag pushed before this workflow existed: gh workflow run publish.yml --ref vX.Y.Z
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Signs the package with where it was built, shown on npm as its provenance
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # Only a tag whose name is the version package.json gives is published
+      - name: Check the tag names the package's version
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "${version}" ]; then
+            echo "::error::${GITHUB_REF_NAME} is not the package's version (${version}); run this for a tag such as ${version}"
+            exit 1
+          fi
+
+      - name: Skip a version npm already has
+        id: published
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          if npm view "${name}@${version}" version >/dev/null 2>&1; then
+            echo "already=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::${name}@${version} is already on npm"
+          fi
+
+      - if: steps.published.outputs.already != 'true'
+        run: npm ci
+
+      - if: steps.published.outputs.already != 'true'
+        run: npm run build
+
+      - if: steps.published.outputs.already != 'true'
+        run: npm run playground:check
+
+      # The release is cut from what main holds, built: a build that differs means it wasn't
+      - if: steps.published.outputs.already != 'true'
+        name: Check the build matches what the tag holds
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            echo "::error::the build changed committed files; rebuild and commit them on main before tagging"
+            exit 1
+          fi
+
+      - if: steps.published.outputs.already != 'true'
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
