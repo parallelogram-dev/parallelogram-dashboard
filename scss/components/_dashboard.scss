@@ -27,6 +27,12 @@
   display: flex;
   min-height: 100vh;
   background-color: var(--bg);
+
+  // The section menu and the main column are offset by the rail's width, so a labelled rail
+  // sets it for the whole shell rather than only for itself
+  &:has(> .navmenu--labelled) {
+    --navmenu-width: var(--navmenu-labelled-width);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -38,7 +44,7 @@
   top: 0;
   display: flex;
   flex-direction: column;
-  width: 4rem;
+  width: var(--navmenu-width);
   height: 100vh;
   @include chrome-region(navmenu);
   border-right: 1px solid var(--border);
@@ -132,6 +138,12 @@
     }
   }
 
+  // Shown only in a labelled rail; the icon rail names its items with the tooltip
+  &__label,
+  &__section-title {
+    display: none;
+  }
+
   // Fixed so the rail's scrolling area can't clip it. With no offsets it keeps its static position,
   // centred on the item by the item's flex alignment, and is then moved clear of the rail's edge
   &__tooltip {
@@ -199,6 +211,84 @@
 }
 
 // --------------------------------------------------------------------------
+// Labelled Rail
+// --------------------------------------------------------------------------
+//
+// The rail at --navmenu-labelled-width, each item an icon beside its label, with section titles
+// and a logo that can be wider than it is tall. Below md it is the same bottom bar as the icon
+// rail, with each label under its icon.
+
+.navmenu--labelled {
+  .navmenu__header {
+    justify-content: flex-start;
+    padding: 0 $spacing-sm;
+  }
+
+  .navmenu__logo {
+    width: auto;
+    height: auto;
+
+    svg {
+      width: auto;
+      height: var(--navmenu-logo-height);
+    }
+  }
+
+  .navmenu__content {
+    padding: $spacing-2xs $spacing-xs;
+  }
+
+  .navmenu__section-title {
+    display: block;
+    padding: $spacing-3xs $spacing-2xs;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+  }
+
+  .navmenu__item {
+    justify-content: flex-start;
+    gap: $spacing-2xs;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: $spacing-2xs;
+    font-size: $font-size-sm;
+
+    &[aria-current="page"],
+    &--active {
+      font-weight: $font-weight-medium;
+    }
+
+    svg {
+      width: $icon-size-md;
+      height: $icon-size-md;
+      flex-shrink: 0;
+    }
+  }
+
+  .navmenu__label {
+    display: block;
+    flex: 1;
+    @include text-truncate;
+  }
+
+  .navmenu__tooltip {
+    display: none;
+  }
+
+  .navmenu__footer {
+    padding: $spacing-2xs $spacing-xs;
+  }
+
+  .navmenu__avatar {
+    margin: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
 // Sub Navigation (Expanded Sidebar)
 // --------------------------------------------------------------------------
 
@@ -207,7 +297,7 @@
   top: 0;
   display: flex;
   flex-direction: column;
-  width: 16rem;
+  width: var(--subnav-width);
   height: 100vh;
   @include chrome-region(subnav);
   border-right: 1px solid var(--border);
@@ -576,7 +666,7 @@
 
   .subnav {
     position: fixed;
-    left: 4rem;
+    left: var(--navmenu-width);
     top: 0;
     bottom: 0;
     z-index: $z-fixed + 1;
@@ -588,7 +678,7 @@
   }
 
   .dashboard__main {
-    margin-left: 4rem;
+    margin-left: var(--navmenu-width);
   }
 }
 
@@ -641,6 +731,26 @@
 
     &__tooltip {
       display: none;
+    }
+  }
+
+  .navmenu--labelled {
+    .navmenu__section-title {
+      display: none;
+    }
+
+    .navmenu__item {
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.125rem;
+      min-width: 3.5rem;
+      padding: $spacing-3xs $spacing-2xs;
+      font-size: $font-size-xs;
+      line-height: $line-height-tight;
+    }
+
+    .navmenu__label {
+      flex: none;
     }
   }
 
