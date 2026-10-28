@@ -20,14 +20,22 @@ const PATHS = {
 const SUBNAV_ID = 'pg-subnav';
 const SUBMENU_ID = 'pg-subnav-records';
 
-function navmenu() {
+// The icon rail names each item with aria-label and a tooltip; the labelled rail with its visible label
+function navmenu(s) {
+  const labelled = s.rail === 'labelled';
   const rail = [['home', 'Home'], ['pages', 'Pages'], ['records', 'Records'], ['media', 'Media'], ['analytics', 'Analytics'], ['team', 'Team']];
-  const items = list => list.map(([key, text]) => `<a href="#" class="navmenu__item" aria-label="${text}"${key === 'home' ? ' aria-current="page"' : ''}>`
-    + `${svg('icon', PATHS[key])}<span class="navmenu__tooltip" aria-hidden="true">${text}</span></a>`).join('');
-  return '<nav class="navmenu" aria-label="Main">'
+  const items = list => list.map(([key, text]) => {
+    const current = key === 'home' ? ' aria-current="page"' : '';
+    return labelled
+      ? `<a href="#" class="navmenu__item"${current}>${svg('icon', PATHS[key])}<span class="navmenu__label">${text}</span></a>`
+      : `<a href="#" class="navmenu__item" aria-label="${text}"${current}>`
+        + `${svg('icon', PATHS[key])}<span class="navmenu__tooltip" aria-hidden="true">${text}</span></a>`;
+  }).join('');
+  const title = text => (labelled ? `<span class="navmenu__section-title">${text}</span>` : '');
+  return `<nav class="${cx('navmenu', labelled && 'navmenu--labelled')}" aria-label="Main">`
     + `<div class="navmenu__header"><a href="#" class="navmenu__logo" aria-label="Dashboard home">${svg('icon icon--lg', PATHS.logo)}</a></div>`
-    + `<div class="navmenu__content"><div class="navmenu__section">${items(rail)}</div>`
-    + `<div class="navmenu__section">${items([['settings', 'Settings']])}</div></div>`
+    + `<div class="navmenu__content"><div class="navmenu__section">${title('Workspace')}${items(rail)}</div>`
+    + `<div class="navmenu__section">${title('Account')}${items([['settings', 'Settings']])}</div></div>`
     + '<div class="navmenu__footer"><a href="#" class="navmenu__avatar" aria-label="Your account"><span class="navmenu__avatar-fallback">JD</span></a></div>'
     + '</nav>';
 }
@@ -122,6 +130,15 @@ export default {
   layout: 'full',
   controls: [
     {
+      key: 'rail',
+      label: 'Main nav',
+      type: 'select',
+      options: [
+        { value: '', label: 'Icon rail' },
+        { value: 'labelled', label: 'Labelled (--labelled)' },
+      ],
+    },
+    {
       key: 'subnav',
       label: 'Section nav',
       type: 'select',
@@ -153,6 +170,7 @@ export default {
   presets: [
     { name: 'Home', state: {} },
     { name: 'Records expanded', state: { title: 'Content', submenu: 'open', search: true } },
+    { name: 'Labelled main nav', state: { rail: 'labelled' } },
     { name: 'Section nav collapsed', state: { subnav: 'collapsed' } },
     { name: 'Mobile section nav open', state: { subnav: 'open' } },
     { name: 'With footer action', state: { footer: true, actions: false, disabled: true } },
@@ -160,6 +178,6 @@ export default {
   ],
   render(s) {
     const overlay = `<div class="${cx('dashboard__overlay', s.subnav === 'open' && 'dashboard__overlay--visible')}" id="${SUBNAV_ID}-overlay" aria-hidden="true"></div>`;
-    return `<div class="dashboard">${navmenu()}${subnav(s)}${overlay}${main(s)}</div>`;
+    return `<div class="dashboard">${navmenu(s)}${subnav(s)}${overlay}${main(s)}</div>`;
   },
 };

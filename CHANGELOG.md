@@ -11,6 +11,15 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `navmenu--labelled`: a main menu wide enough to set each icon beside its label
+  (`navmenu__label`), with section titles (`navmenu__section-title`) and room for a wordmark
+  logo. Below `md` it is the bottom bar, with each label under its icon.
+- `--navmenu-width`, `--navmenu-labelled-width` and `--subnav-width` tokens, so a theme can set
+  the widths of the rail and the section menu, and `--navmenu-logo-height` for a labelled rail's
+  logo. The defaults are today's widths, so existing pages are unchanged.
+
 ## [0.1.5] - 2026-10-27
 
 ### Fixed

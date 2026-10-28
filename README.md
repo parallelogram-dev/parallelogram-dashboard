@@ -987,6 +987,32 @@ shown non-modally with the `open` attribute.
 </div>
 ```
 
+#### Labelled rail `.navmenu--labelled`
+
+For a short main menu that reads better with its words showing, `navmenu--labelled` widens the
+rail to `--navmenu-labelled-width` (14rem) and sets each icon beside a `navmenu__label`. Section
+titles (`navmenu__section-title`) show, and the logo keeps its proportions at
+`--navmenu-logo-height`, so a wordmark fits. The visible label names each item, so it needs no
+`aria-label` or tooltip. The section menu and main column move over to make room. Below `md` it
+is the same bottom bar as the icon rail, with each label under its icon.
+
+```html
+<nav class="navmenu navmenu--labelled" aria-label="Main">
+  <div class="navmenu__header">
+    <a href="/" class="navmenu__logo" aria-label="Home"><svg>...</svg></a>
+  </div>
+  <div class="navmenu__content">
+    <div class="navmenu__section">
+      <span class="navmenu__section-title">Workspace</span>
+      <a href="#" class="navmenu__item" aria-current="page">
+        <svg class="icon">...</svg>
+        <span class="navmenu__label">Events</span>
+      </a>
+    </div>
+  </div>
+</nav>
+```
+
 ---
 
 ## Utility Classes
@@ -1233,6 +1259,8 @@ colour tokens it can set:
 | `--subnav-*` | The section menu, with the same names |
 | `--header-*` | The page header, with the same names |
 | `--navmenu-head-*`, `--subnav-head-*` | The rail's logo cell and the section menu's title bar: `bg`, `fg`, `fg-muted`, `accent`, `accent-fg`, `border` |
+| `--navmenu-width`, `--navmenu-labelled-width`, `--subnav-width` | Widths of the icon rail (4rem), the labelled rail (14rem) and the section menu (16rem) |
+| `--navmenu-logo-height` | Height of the logo in a labelled rail's header (1.5rem) |
 | `--radius-sm` … `--radius-2xl` | Corner radius scale |
 | `--control-border-width` | Borders of inputs, selects, add-ons and outline buttons |
 | `--icon-stroke-width` | Line icon strokes |
