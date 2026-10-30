@@ -11,6 +11,8 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-10-30
+
 ### Changed
 
 - A checkbox or radio keeps its size and sits on the first line of its label, so a long option
@@ -188,7 +190,8 @@ The first tagged release, covering everything on `main` to date.
   `overflow-y: auto`; the page itself scrolls. Templates that relied on the content area
   scrolling inside a fixed-height shell need their own scrolling wrapper.
 
-[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.6...HEAD
+[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.3...v0.1.4
