@@ -11,6 +11,15 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Changed
+
+- A checkbox or radio keeps its size and sits on the first line of its label, so a long option
+  that wraps no longer squashes the box or circle or floats it between the lines, and the label
+  has the leading to wrap (`line-height: 1.25`, was `1`). A single-line option looks as it did.
+- `<p-datetime>` takes the same edge as every other control, `--input` at
+  `--control-border-width`, rather than the lighter `--border`, so a date picker beside a search
+  box or a select no longer looks washed out.
+
 ## [0.1.6] - 2026-10-28
 
 ### Added

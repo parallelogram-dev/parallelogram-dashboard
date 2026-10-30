@@ -39,7 +39,7 @@ p-datetime.input {
   position: relative;
   min-height: #{$btn-height-md};
   background-color: var(--bg);
-  border: 1px solid var(--border);
+  border: var(--control-border-width) solid var(--input);
   border-radius: #{$radius-md};
   font-size: #{$font-size-sm};
 
