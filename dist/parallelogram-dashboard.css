@@ -7616,6 +7616,9 @@ dl.descriptionlist dd {
   border-top: 1px solid var(--border);
   background-color: var(--bg-muted);
 }
+.sheet__footer--between {
+  justify-content: space-between;
+}
 
 .drawer__panel {
   border-left: 1px solid var(--border);

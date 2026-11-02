@@ -17,7 +17,8 @@
     "*.scss",
     "./src/js/behaviours/toggle.js",
     "./src/js/behaviours/unsaved-guard.js",
-    "./src/js/behaviours/search-clear.js"
+    "./src/js/behaviours/search-clear.js",
+    "./src/js/behaviours/confirm-action.js"
   ],
   "exports": {
     ".": "./src/js/index.js",
