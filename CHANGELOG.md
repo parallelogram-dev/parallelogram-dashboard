@@ -11,7 +11,29 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `LiveFilters` (`[data-live-filters]`): a filter form applies as it changes, with no Apply
+  button. It fetches the page again with the form's query and swaps in only the element the
+  attribute names, so typing in a search is not interrupted; selects apply at once, a date picker
+  once it closes having changed, a search after a pause. The address keeps in step, and a failed
+  fetch falls back to submitting the form. `init()` enhances it; the toolbar page shows it.
+- `ConfirmAction`: one `.alertdialog` serves every button on a page that opens it. A button with
+  `data-confirm-action` (and optionally `data-confirm-title`) points the dialog's form, and its
+  title, at what that button would remove before the dialog opens. It binds itself on import.
+- `.alertdialog__footer--between`: Cancel at one end, the action at the other, as a form's action
+  bar has them.
+
 ### Fixed
+
+- An alert dialog's buttons had no space above them: the footer's top padding was taken away
+  with its border. It has `$spacing-lg` again.
+- An icon drawn inside `.alertdialog__icon`, rather than the slot being the `<svg>` itself, fills
+  the slot instead of sitting at its own size in the corner.
+- A plain `.icon` in a `.dropdown__item`, as a project's icon helper draws it, takes the menu's
+  icon size like `.dropdown__item-icon`.
+- A grey status dot (`.badge--dot.badge--secondary`) shows: the secondary background is a faint
+  tint made to sit behind text, so on its own the dot all but vanished.
 
 - The unsaved-changes guard compares a field whose value is a list, such as a `<p-select multiple>`, by
   the values it holds. Each read gave a new array, which never matched the one recorded, so once

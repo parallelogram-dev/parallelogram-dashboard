@@ -54,6 +54,28 @@
             </div>
           </p-modal>
 
+          <div class="demo-label">One confirmation for many buttons</div>
+          <p class="text--sm text--muted spacer--md">A page with a Delete on every row needs one <code>.alertdialog</code>, not one per row. Each button opens it with <code>commandfor</code> and <code>command="show-modal"</code> and carries <code>data-confirm-action</code>, the address the dialog's form should post to, and optionally <code>data-confirm-title</code> for its <code>.alertdialog__title</code>; <code>ConfirmAction</code> sets both before the dialog opens. Give the footer <code>.alertdialog__footer--between</code> to put Cancel at one end and the action at the other. An icon drawn inside <code>.alertdialog__icon</code> (rather than the slot being the icon) fills it.</p>
+          <div class="demo-box">
+            <div class="cluster">
+              <button type="button" class="btn btn--outline btn--sm" commandfor="demo-confirm" command="show-modal" data-confirm-action="#delete/1" data-confirm-title="Delete Ann Smith?">Delete Ann Smith</button>
+              <button type="button" class="btn btn--outline btn--sm" commandfor="demo-confirm" command="show-modal" data-confirm-action="#delete/2" data-confirm-title="Delete Cara Lee?">Delete Cara Lee</button>
+            </div>
+          </div>
+          <dialog class="alertdialog" id="demo-confirm" role="alertdialog" aria-labelledby="demo-confirm-title">
+            <form class="alertdialog__dialog" method="dialog">
+              <div class="alertdialog__header">
+                <span class="alertdialog__icon alertdialog__icon--destructive"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></svg></span>
+                <h2 class="alertdialog__title" id="demo-confirm-title">Delete this person?</h2>
+                <p class="alertdialog__description">This cannot be undone.</p>
+              </div>
+              <div class="alertdialog__footer alertdialog__footer--between">
+                <button type="button" class="btn btn--outline" commandfor="demo-confirm" command="close">Cancel</button>
+                <button type="submit" class="btn btn--destructive">Delete</button>
+              </div>
+            </form>
+          </dialog>
+
           <div class="demo-label">Static Preview (CSS fallback)</div>
           <div class="demo-box constrain--md">
             <div class="modal__dialog demo-preview--modal">

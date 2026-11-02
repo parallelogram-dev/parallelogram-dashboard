@@ -267,6 +267,12 @@ p-modal {
     margin-bottom: $spacing-sm;
     color: var(--fg-muted);
 
+    // An icon drawn inside the slot (an <span class="alertdialog__icon"> holding a .icon) fills it
+    > .icon {
+      width: 100%;
+      height: 100%;
+    }
+
     &--destructive {
       color: var(--destructive);
     }
@@ -293,6 +299,11 @@ p-modal {
     @extend .modal__footer;
     justify-content: center;
     border-top: none;
-    padding-top: 0;
+    padding-top: $spacing-lg;
+
+    // Cancel at one end and the action at the other, as in a form's action bar
+    &--between {
+      justify-content: space-between;
+    }
   }
 }
