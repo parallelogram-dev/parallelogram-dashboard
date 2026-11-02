@@ -65,6 +65,7 @@ export default {
       ],
     },
     { key: 'footer', label: 'Footer', type: 'toggle', default: true },
+    { key: 'between', label: 'Cancel and action apart', type: 'toggle', when: s => s.footer },
     { key: 'close', label: 'Close button', type: 'toggle', default: true },
     { key: 'backdrop', label: 'Backdrop', type: 'toggle', default: true },
     { key: 'handle', label: 'Drag handle', type: 'toggle', default: true, when: s => ['top', 'bottom'].includes(s.side) },
@@ -77,6 +78,7 @@ export default {
     { name: 'Wide details panel', state: { side: 'right', size: 'xl', title: 'Invoice INV-2024-089', description: 'Issued 12 January 2024', body: 'text' } },
     { name: 'Bottom share sheet', state: { side: 'bottom', title: 'Share', description: 'Anyone with the link can view.', footer: false } },
     { name: 'Top announcements', state: { side: 'top', title: 'Announcements', description: 'What changed this week.', body: 'text', footer: false, drawer: true } },
+    { name: 'Log a call (Cancel and action apart)', state: { title: 'Log a call', description: 'It is signed with your name.', between: true } },
     { name: 'Full width', state: { size: 'full', title: 'Bulk edit', description: '24 records selected' } },
     { name: 'Closed (trigger only)', state: { open: false } },
   ],
@@ -92,7 +94,7 @@ export default {
       + (s.description ? `<p class="${b}__description">${escape(s.description)}</p>` : '');
     const close = s.close ? `<button type="button" class="${b}__close" ${command} aria-label="Close">${icon('x')}</button>` : '';
     const footer = s.footer
-      ? `<div class="${b}__footer"><button type="button" class="btn btn--outline" ${command}>Cancel</button>`
+      ? `<div class="${bem(`${b}__footer`, s.between && 'between')}"><button type="button" class="btn btn--outline" ${command}>Cancel</button>`
         + `<button type="button" class="btn btn--primary" ${command}>Save changes</button></div>`
       : '';
     const panel = `<div class="${b}__panel">`
