@@ -11,6 +11,18 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `.sheet__footer--between` (and `.drawer__footer--between`): Cancel at one end of a sheet's
+  footer and the action at the other, as `.card__footer--between` and `.form__actions--between`
+  already offer. A `layout--between` utility can't do it, since the footer's own rule comes later.
+
+### Fixed
+
+- `ConfirmAction` is listed in `sideEffects`, as the other behaviours that bind themselves on
+  import are. Without it a bundler drops `import '@parallelogram-js/dashboard/behaviours/confirm-action'`,
+  so the shared confirmation opened unchanged.
+
 ## [0.1.8] - 2026-11-02
 
 ### Added

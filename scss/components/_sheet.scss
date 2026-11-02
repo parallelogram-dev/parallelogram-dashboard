@@ -203,6 +203,11 @@
     padding: $spacing-sm $spacing-lg;
     border-top: 1px solid var(--border);
     background-color: var(--bg-muted);
+
+    // Cancel at one end and the action at the other, as card and form footers offer
+    &--between {
+      justify-content: space-between;
+    }
   }
 }
 
