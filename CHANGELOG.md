@@ -11,6 +11,8 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-11-02
+
 ### Added
 
 - `.sheet__footer--between` (and `.drawer__footer--between`): Cancel at one end of a sheet's
@@ -233,7 +235,8 @@ The first tagged release, covering everything on `main` to date.
   `overflow-y: auto`; the page itself scrolls. Templates that relied on the content area
   scrolling inside a fixed-height shell need their own scrolling wrapper.
 
-[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.9...HEAD
+[0.1.9]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.8...v0.1.9
 [0.1.8]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.5...v0.1.6
