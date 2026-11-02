@@ -124,6 +124,11 @@
     height: 0.5rem;
     padding: 0;
     border-radius: $radius-full;
+
+    // The secondary background is a faint tint meant to sit behind text; alone, a dot needs to show
+    &.badge--secondary {
+      background-color: var(--fg-subtle);
+    }
   }
 
   // --------------------------------------------------------------------------

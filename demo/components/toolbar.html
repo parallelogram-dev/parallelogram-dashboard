@@ -52,6 +52,9 @@
             </div>
           </div>
 
+          <div class="demo-label">Filters that apply as they change</div>
+          <p class="text--sm text--muted spacer--md">Put the toolbar in a <code>&lt;form method="get" data-live-filters="#results"&gt;</code> and drop the Search button: <code>LiveFilters</code> fetches the page again with the form's query when a select changes, a date picker closes having changed, or after a pause in typing, then swaps the element <code>#results</code> for its fresh copy and keeps the address in step, so a filtered list can be bookmarked. Only the results change, so typing is not interrupted. If the fetch fails, or the page has no such element, the form submits as usual. Keep a visually hidden submit button so Enter works without the script. The form fires <code>live-filters:update</code> after each swap.</p>
+
           <div class="demo-label">Filter Chips</div>
           <div class="activefilters">
             <span class="activefilters__label">Filters:</span>

@@ -26,6 +26,8 @@ import { ActionBar } from './behaviours/action-bar.js';
 import { ActionBarList } from './behaviours/action-bar-list.js';
 import { SearchClear } from './behaviours/search-clear.js';
 import { ToastManager } from './behaviours/toast-manager.js';
+import { LiveFilters } from './behaviours/live-filters.js';
+import { ConfirmAction } from './behaviours/confirm-action.js';
 import { loadParallelogramJs } from './core-loader.js';
 
 export {
@@ -49,6 +51,8 @@ export {
   ActionBarList,
   SearchClear,
   ToastManager,
+  LiveFilters,
+  ConfirmAction,
 };
 export { loadParallelogramJs } from './core-loader.js';
 export { polyfillDialogCommands } from './polyfills/dialog-commands.js';
@@ -81,5 +85,6 @@ export function init(root = document) {
     tableReorder: TableReorder.enhanceAll('[data-table-reorder]', root),
     tablePaste: TablePaste.enhanceAll('[data-table-paste]', root),
     chart: Chart.enhanceAll('[data-chart]', root),
+    liveFilters: LiveFilters.enhanceAll('[data-live-filters]', root),
   };
 }

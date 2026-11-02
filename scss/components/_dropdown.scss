@@ -153,7 +153,9 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     }
   }
 
-  &__item-icon {
+  &__item-icon,
+  // An icon from a project's icon helper, which draws a plain .icon
+  &__item > .icon {
     width: $icon-size-md;
     height: $icon-size-md;
     flex-shrink: 0;

@@ -45,7 +45,9 @@ function alertDialog(s) {
     + (s.description ? `<p class="alertdialog__description" id="${ID}-description">${escape(s.description)}</p>` : '')
     + '</div>';
   const style = s.tone === 'destructive' ? 'btn--destructive' : 'btn--primary';
-  const footer = s.footer === 'none' ? '' : `<div class="alertdialog__footer">${buttons(s.confirm, style)}</div>`;
+  const footer = s.footer === 'none'
+    ? ''
+    : `<div class="${bem('alertdialog__footer', s.footer === 'between' && 'between')}">${buttons(s.confirm, style)}</div>`;
   return `<div class="alertdialog__dialog">${header}${footer}</div>`;
 }
 
@@ -121,6 +123,7 @@ export default {
     { name: 'Terms (scrolling)', state: { size: 'lg', title: 'Terms of service', description: 'Last updated 1 March 2024.', body: 'long', footer: 'between', confirm: 'Accept' } },
     { name: 'Fullscreen', state: { size: 'fullscreen', title: 'Media library', description: '', body: 'long', footer: 'start', confirm: 'Insert' } },
     { name: 'Delete confirmation', state: { kind: 'alertdialog', tone: 'destructive', title: 'Delete project?', description: 'This permanently deletes the project and all of its records. This cannot be undone.', confirm: 'Delete' } },
+    { name: 'Delete, Cancel and action apart', state: { kind: 'alertdialog', tone: 'destructive', title: 'Delete this enquiry?', description: 'Its calls, notes and history go with it. This cannot be undone.', confirm: 'Delete', footer: 'between' } },
     { name: 'Unsaved changes', state: { kind: 'alertdialog', tone: 'warning', title: 'Discard changes?', description: 'You have unsaved changes that will be lost.', confirm: 'Discard' } },
     { name: 'Closed (trigger only)', state: { open: false } },
   ],
