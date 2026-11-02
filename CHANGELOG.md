@@ -11,6 +11,13 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Fixed
+
+- The unsaved-changes guard compares a field whose value is a list, such as a `<p-select multiple>`, by
+  the values it holds. Each read gave a new array, which never matched the one recorded, so once
+  such a field was checked its form stayed dirty: undoing an edit left it marked, and saving still
+  asked about leaving the page.
+
 ## [0.1.7] - 2026-10-30
 
 ### Changed

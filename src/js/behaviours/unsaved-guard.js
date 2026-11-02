@@ -43,11 +43,16 @@ export class UnsavedGuard {
       .filter(field => !field.closest('[data-unsaved-ignore]'));
   }
 
-  /** A disabled field isn't submitted, so it counts as empty; a custom field not yet loaded reads its attribute. */
+  /**
+   * A disabled field isn't submitted, so it counts as empty; a custom field not yet loaded reads its attribute. A
+   * field whose value is a list, such as a <p-select multiple>, gives a new array each time it is read, so the list
+   * is compared by what it holds.
+   */
   _value(field) {
     if (field.disabled || field.hasAttribute('disabled')) return '';
     if (field.type === 'checkbox' || field.type === 'radio') return field.checked;
-    return field.value ?? field.getAttribute('value') ?? '';
+    const value = field.value ?? field.getAttribute('value') ?? '';
+    return Array.isArray(value) ? JSON.stringify(value) : value;
   }
 
   _record(area) {
