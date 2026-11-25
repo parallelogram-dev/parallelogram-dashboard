@@ -743,6 +743,11 @@
   }
 }
 
+// The header's first control, pulled out by its own padding so its icon lines up with the content
+.dashboard__subnav-toggle.btn--icon {
+  margin-left: calc((#{$icon-size-md} - #{$btn-height-md}) / 2);
+}
+
 // --------------------------------------------------------------------------
 // Responsive Behavior
 // --------------------------------------------------------------------------
@@ -764,9 +769,16 @@
     z-index: $z-fixed + 1;
     transform: translateX(-100%);
 
-    &--open {
+    // Opened by any toggle, whether it adds the class or only marks its button expanded
+    &--open,
+    .dashboard:has(.dashboard__subnav-toggle[aria-expanded="true"]) & {
       transform: translateX(0);
     }
+  }
+
+  .dashboard:has(.dashboard__subnav-toggle[aria-expanded="true"]) .dashboard__overlay {
+    display: block;
+    opacity: 1;
   }
 
   .dashboard__main {
@@ -833,6 +845,11 @@
   // The overflow becomes a panel above the bar, each item an icon beside its label. Scoped to
   // .navmenu so it outranks the labelled bar's item layout below
   .navmenu .navmenu__overflow {
+    // A panel over the page, so it takes the page's colours rather than a tinted rail's
+    @each $name in $chrome-remapped {
+      --#{$name}: var(--page-#{$name});
+    }
+
     display: none;
     position: absolute;
     right: $spacing-xs;
@@ -848,7 +865,8 @@
     border-radius: $radius-lg;
     box-shadow: $shadow-lg;
 
-    &--open {
+    &--open,
+    &:has(~ .navmenu__more[aria-expanded="true"]) {
       display: flex;
     }
 

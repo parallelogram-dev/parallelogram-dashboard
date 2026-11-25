@@ -4870,6 +4870,10 @@ p-modal {
   }
 }
 
+.dashboard__subnav-toggle.btn--icon {
+  margin-left: calc((1.25rem - 2.5rem) / 2);
+}
+
 @media (max-width: 1023px) {
   .navmenu {
     position: fixed;
@@ -4886,8 +4890,12 @@ p-modal {
     z-index: 201;
     transform: translateX(-100%);
   }
-  .subnav--open {
+  .subnav--open, .dashboard:has(.dashboard__subnav-toggle[aria-expanded=true]) .subnav {
     transform: translateX(0);
+  }
+  .dashboard:has(.dashboard__subnav-toggle[aria-expanded=true]) .dashboard__overlay {
+    display: block;
+    opacity: 1;
   }
   .dashboard__main {
     margin-left: var(--navmenu-width);
@@ -4940,6 +4948,18 @@ p-modal {
     display: flex;
   }
   .navmenu .navmenu__overflow {
+    --bg: var(--page-bg);
+    --fg: var(--page-fg);
+    --fg-muted: var(--page-fg-muted);
+    --fg-subtle: var(--page-fg-subtle);
+    --bg-muted: var(--page-bg-muted);
+    --bg-subtle: var(--page-bg-subtle);
+    --accent: var(--page-accent);
+    --accent-fg: var(--page-accent-fg);
+    --border: var(--page-border);
+    --input: var(--page-input);
+    --input-placeholder: var(--page-input-placeholder);
+    --icon-stroke-width: var(--page-icon-stroke-width);
     display: none;
     position: absolute;
     right: 0.75rem;
@@ -4955,7 +4975,7 @@ p-modal {
     border-radius: var(--radius-lg);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   }
-  .navmenu .navmenu__overflow--open {
+  .navmenu .navmenu__overflow--open, .navmenu .navmenu__overflow:has(~ .navmenu__more[aria-expanded=true]) {
     display: flex;
   }
   .navmenu .navmenu__overflow .navmenu__section {

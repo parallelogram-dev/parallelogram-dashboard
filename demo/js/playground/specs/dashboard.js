@@ -44,7 +44,7 @@ function navmenu(s) {
       + `<div class="${cx('navmenu__overflow', s.more === 'open' && 'navmenu__overflow--open')}" id="${MORE_ID}">`
       + `<div class="navmenu__section">${title('Insights')}${items(extra, true)}</div>${account}</div>`
       + `<button type="button" class="navmenu__item navmenu__more" aria-label="More" aria-expanded="${s.more === 'open'}"`
-      + ` data-toggle data-toggle-target="#${MORE_ID}" data-toggle-class="navmenu__overflow--open" data-toggle-capture>`
+      + ` data-toggle data-toggle-target="#${MORE_ID}" data-toggle-class="navmenu__overflow--open" data-toggle-capture="true">`
       + `${svg('icon', PATHS.dots)}</button>`
     : `<div class="navmenu__section">${title('Workspace')}${items([...workspace, ...extra])}</div>${account}`;
   return `<nav class="${cx('navmenu', labelled && 'navmenu--labelled')}" aria-label="Main">`

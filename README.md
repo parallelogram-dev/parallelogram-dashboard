@@ -953,7 +953,7 @@ shown non-modally with the `open` attribute.
         </div>
       </div>
       <button type="button" class="navmenu__item navmenu__more" aria-label="More"
-              data-toggle data-toggle-target="#navmenu-more" data-toggle-class="navmenu__overflow--open" data-toggle-capture>
+              data-toggle data-toggle-target="#navmenu-more" data-toggle-class="navmenu__overflow--open" data-toggle-capture="true">
         <svg class="icon">...</svg>
       </button>
     </div>

@@ -19,6 +19,13 @@ section can be taken with a version bump and a rebuild.
   In the rail the wrapper drops out of the layout and the button is hidden. The dashboard demo
   uses it.
 
+### Changed
+
+- The off-canvas `.subnav` and the More panel also open when their button has
+  `aria-expanded="true"`, so they work with any toggle, not only one that adds the `--open` class.
+- `.dashboard__subnav-toggle` is pulled left by its own padding so its icon lines up with the page
+  content.
+
 ## [0.1.16] - 2026-11-25
 
 ### Fixed
