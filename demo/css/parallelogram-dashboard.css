@@ -4338,6 +4338,21 @@ p-modal {
   opacity: 1;
   visibility: visible;
 }
+.navmenu__overflow {
+  display: contents;
+}
+.navmenu__section + .navmenu__overflow > .navmenu__section:first-child {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.navmenu__more {
+  display: none;
+}
+.navmenu__more[aria-expanded=true], .navmenu__overflow:has([aria-current=page], .navmenu__item--active) ~ .navmenu__more {
+  color: var(--fg);
+  background-color: var(--accent);
+}
 .navmenu__footer {
   padding: 0.5rem;
   border-top: 1px solid var(--border);
@@ -4920,6 +4935,75 @@ p-modal {
   }
   .navmenu__tooltip {
     display: none;
+  }
+  .navmenu__more {
+    display: flex;
+  }
+  .navmenu .navmenu__overflow {
+    display: none;
+    position: absolute;
+    right: 0.75rem;
+    bottom: calc(100% + 0.5rem);
+    flex-direction: column;
+    min-width: 13rem;
+    max-height: 70vh;
+    padding: 0.25rem;
+    overflow-y: auto;
+    color: var(--popover-fg);
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+  .navmenu .navmenu__overflow--open {
+    display: flex;
+  }
+  .navmenu .navmenu__overflow .navmenu__section {
+    flex-direction: column;
+    gap: 0;
+  }
+  .navmenu .navmenu__overflow .navmenu__section:first-child {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .navmenu .navmenu__overflow .navmenu__section + .navmenu__section {
+    margin: 0.25rem 0 0;
+    padding: 0.25rem 0 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  .navmenu .navmenu__overflow .navmenu__section-title {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+  .navmenu .navmenu__overflow .navmenu__item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .navmenu .navmenu__overflow .navmenu__item svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+  .navmenu .navmenu__overflow .navmenu__item[aria-current=page]::before, .navmenu .navmenu__overflow .navmenu__item--active::before {
+    display: none;
+  }
+  .navmenu .navmenu__overflow .navmenu__label {
+    display: block;
+    flex: 1;
   }
   .navmenu--labelled .navmenu__section-title {
     display: none;

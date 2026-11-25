@@ -942,6 +942,20 @@ shown non-modally with the `open` attribute.
           <span class="navmenu__tooltip">Dashboard</span>
         </a>
       </div>
+      <!-- Below md these leave the bottom bar for a "More" panel -->
+      <div class="navmenu__overflow" id="navmenu-more">
+        <div class="navmenu__section">
+          <a href="#" class="navmenu__item">
+            <svg class="icon">...</svg>
+            <span class="navmenu__tooltip">Settings</span>
+            <span class="navmenu__label">Settings</span>
+          </a>
+        </div>
+      </div>
+      <button type="button" class="navmenu__item navmenu__more" aria-label="More"
+              data-toggle data-toggle-target="#navmenu-more" data-toggle-class="navmenu__overflow--open" data-toggle-capture>
+        <svg class="icon">...</svg>
+      </button>
     </div>
     <div class="navmenu__footer">
       <button class="navmenu__avatar">

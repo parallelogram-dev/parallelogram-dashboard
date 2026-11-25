@@ -11,6 +11,14 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `navmenu__overflow` and `navmenu__more`: on small screens the items inside a
+  `.navmenu__overflow` wrapper leave the bottom bar for a "More" panel, opened by a
+  `.navmenu__more` button with `data-toggle` and `data-toggle-class="navmenu__overflow--open"`.
+  In the rail the wrapper drops out of the layout and the button is hidden. The dashboard demo
+  uses it.
+
 ## [0.1.16] - 2026-11-25
 
 ### Fixed
