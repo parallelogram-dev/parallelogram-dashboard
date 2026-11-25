@@ -207,6 +207,28 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
     letter-spacing: $letter-spacing-wide;
   }
 
+  // Who or what the menu belongs to, such as the signed-in user above an account menu
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xs;
+    padding: $spacing-xs;
+  }
+
+  &__header-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--fg);
+  }
+
+  &__header-description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   // Submenu (nested): opens on hover, on keyboard focus inside it, or while its trigger
   // has aria-expanded="true"
   &__submenu {

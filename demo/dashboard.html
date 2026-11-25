@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try { var theme = localStorage.getItem('pd-theme'); if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme); } catch (e) {}</script>
   <title>Dashboard Demo - Parallelogram Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/parallelogram-dashboard.css">
@@ -153,7 +154,7 @@
           </nav>
         </div>
         <div class="dashboard__header-right">
-          <button class="btn btn--ghost btn--icon" onclick="toggleTheme()">
+          <button class="btn btn--ghost btn--icon" data-theme-toggle aria-label="Dark mode">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
           </button>
           <div class="dropdown dropdown--right">
@@ -208,10 +209,32 @@
               </a>
             </div>
           </div>
-          <a href="settings-account.html" class="avatar" aria-label="Your account">
-            <span class="avatar__fallback">JD</span>
-            <span class="avatar__status avatar__status--online"></span>
-          </a>
+          <div class="dropdown">
+            <button type="button" class="avatar dropdown__trigger" aria-label="Your account" aria-haspopup="menu" data-toggle data-toggle-target="#account-menu" data-toggle-capture>
+              <span class="avatar__fallback">JD</span>
+              <span class="avatar__status avatar__status--online"></span>
+            </button>
+            <div class="dropdown__menu dropdown__menu--right dropdown__menu--lg" id="account-menu">
+              <div class="dropdown__header">
+                <span class="dropdown__header-title">John Doe</span>
+                <span class="dropdown__header-description">john@example.com</span>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="settings-account.html" class="dropdown__item">Profile</a>
+              <a href="settings.html" class="dropdown__item">Settings</a>
+              <div class="dropdown__divider" role="separator"></div>
+              <div class="dropdown__label">Theme</div>
+              <div class="segmented-control">
+                <div class="segmented-control__list" role="radiogroup" aria-label="Theme">
+                  <button type="button" class="segmented-control__item" role="radio" data-theme-value="light">Light</button>
+                  <button type="button" class="segmented-control__item" role="radio" data-theme-value="dark">Dark</button>
+                  <button type="button" class="segmented-control__item" role="radio" data-theme-value="system">System</button>
+                </div>
+              </div>
+              <div class="dropdown__divider" role="separator"></div>
+              <a href="login.html" class="dropdown__item dropdown__item--destructive">Sign out</a>
+            </div>
+          </div>
         </div>
       </header>
 

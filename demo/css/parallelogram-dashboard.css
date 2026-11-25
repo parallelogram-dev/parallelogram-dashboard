@@ -446,6 +446,10 @@ table {
   outline: none;
 }
 
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 :where(h1, h2, h3, h4, h5, h6) {
   font-weight: 600;
   line-height: var(--leading-tight);
@@ -3408,6 +3412,24 @@ select.table__control {
   color: var(--fg-muted);
   text-transform: uppercase;
   letter-spacing: 0.025em;
+}
+.dropdown__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+.dropdown__header-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+.dropdown__header-description {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .dropdown__submenu {
   position: relative;

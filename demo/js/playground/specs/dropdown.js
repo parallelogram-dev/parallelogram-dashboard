@@ -86,6 +86,12 @@ function menuItems(s, block, id) {
   const divider = `<div class="${block}__divider" role="separator"></div>`;
   const parts = [];
 
+  if (s.header && block === 'dropdown') {
+    parts.push('<div class="dropdown__header" role="presentation">'
+      + '<span class="dropdown__header-title">John Doe</span>'
+      + '<span class="dropdown__header-description">john@example.com</span>'
+      + '</div>', divider);
+  }
   if (s.grouped) {
     parts.push(`<div class="${block}__label" role="presentation">${escape(menu.label)}</div>`);
   }
@@ -221,6 +227,7 @@ export default {
         { value: 'open', label: 'Open' },
       ],
     },
+    { key: 'header', label: 'Owner header (__header)', type: 'toggle', when: s => s.type === 'dropdown' },
     { key: 'grouped', label: 'Label and dividers', type: 'toggle', default: true },
     { key: 'warning', label: 'Warning item (--warning)', type: 'toggle', when: s => s.type === 'dropdown' },
     { key: 'destructive', label: 'Destructive item', type: 'toggle', default: true },
@@ -228,7 +235,7 @@ export default {
     { key: 'open', label: 'Open', type: 'toggle', default: true, when: s => s.type === 'dropdown' },
   ],
   presets: [
-    { name: 'Account menu', state: {} },
+    { name: 'Account menu', state: { header: true, grouped: false } },
     { name: 'View options', state: { selection: 'checkbox', decoration: 'icons', destructive: false } },
     { name: 'Sort, right aligned', state: { selection: 'radio', position: 'right', decoration: '', grouped: false, destructive: false, width: 'sm' } },
     { name: 'With submenu', state: { submenu: 'open', itemState: 'current' } },

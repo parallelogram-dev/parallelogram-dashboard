@@ -106,6 +106,13 @@ table {
   outline: none;
 }
 
+// An element focused only by script, such as the heading a router moves focus to after swapping
+// in a page, is not a control the user can operate, so it takes no focus ring (WCAG 2.4.7 asks
+// for one on controls); screen readers still announce it
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 // --------------------------------------------------------------------------
 // Typography
 // --------------------------------------------------------------------------
