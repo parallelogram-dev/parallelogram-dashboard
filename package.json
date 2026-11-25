@@ -1,6 +1,6 @@
 {
   "name": "@parallelogram-js/dashboard",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "A BEM-style CSS dashboard library inspired by shadcn/ui",
   "main": "dist/parallelogram-dashboard.css",
   "type": "module",

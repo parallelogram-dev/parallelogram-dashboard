@@ -11,6 +11,8 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+## [0.1.17] - 2026-11-25
+
 ### Added
 
 - `navmenu__overflow` and `navmenu__more`: on small screens the items inside a
@@ -347,7 +349,8 @@ The first tagged release, covering everything on `main` to date.
   `overflow-y: auto`; the page itself scrolls. Templates that relied on the content area
   scrolling inside a fixed-height shell need their own scrolling wrapper.
 
-[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.16...HEAD
+[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.17...HEAD
+[0.1.17]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.16...v0.1.17
 [0.1.16]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.15...v0.1.16
 [0.1.15]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.14...v0.1.15
 [0.1.14]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.13...v0.1.14
