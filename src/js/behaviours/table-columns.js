@@ -7,13 +7,17 @@
  * them. Cells (and picker items) marked data-column-expanded only show while the table is in a
  * [data-expanded] area. A cell marked data-column-span (such as the first cell of a footer row)
  * spans whatever columns are left over.
+ *
+ * The table is looked up again whenever it is needed, so a table swapped in by LiveFilters (or
+ * anything else that dispatches live-filters:update) keeps the choices.
  */
 export class TableColumns {
   static elements = new WeakSet();
 
   mount(menu) {
     if (TableColumns.elements.has(menu)) return;
-    const table = document.querySelector(menu.dataset.tableColumns);
+    const selector = menu.dataset.tableColumns;
+    let table = document.querySelector(selector);
     if (!table) return;
     TableColumns.elements.add(menu);
     const key = `pd-table-columns:${table.id}`;
@@ -24,7 +28,18 @@ export class TableColumns {
       // Storage can be unavailable (private mode, blocked); the picker still works for the visit
     }
 
+    const observer = new MutationObserver(() => apply());
+    const attach = () => {
+      const current = document.querySelector(selector);
+      if (!current) return false;
+      table = current;
+      observer.disconnect();
+      observer.observe(table.tBodies[0] || table, { childList: true });
+      return true;
+    };
+
     const apply = () => {
+      if (!document.contains(table) && !attach()) return;
       table.querySelectorAll('[data-column]').forEach((cell) => { cell.hidden = hidden.has(cell.dataset.column); });
       menu.querySelectorAll('[data-column-toggle]').forEach((item) => {
         item.setAttribute('role', 'menuitemcheckbox');
@@ -47,7 +62,12 @@ export class TableColumns {
       apply();
     });
 
-    new MutationObserver(apply).observe(table.tBodies[0] || table, { childList: true });
+    attach();
+    // The event does not bubble, so it is caught on its way down
+    document.addEventListener('live-filters:update', () => {
+      attach();
+      apply();
+    }, { capture: true });
     table.closest('[data-expandable]')?.addEventListener('expandable:change', () => TableColumns.span(table));
     apply();
   }
