@@ -11,6 +11,18 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- High contrast: `data-contrast="more"` on `<html>`, or the OS's "increase contrast" setting
+  unless `data-contrast="standard"`, strengthens muted text, borders, inputs and the focus ring
+  by mixing them from the theme's own `--fg` and `--bg`, and underlines breadcrumb, card and
+  table links. Themes can add their own high-contrast colours; see the README.
+- `ContrastSwitch`: `[data-contrast-toggle]` and `[data-contrast-value="standard" | "more" |
+  "system"]`, remembered under `pd-contrast`, as `ThemeSwitch` does the theme. The demo's
+  account menu offers the choice.
+- Under forced colours, badges, avatars and the selected segmented control item or tab are
+  outlined, since their fills are dropped.
+
 ## [0.1.11] - 2026-11-25
 
 ### Added

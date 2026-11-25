@@ -29,6 +29,7 @@ import { ToastManager } from './behaviours/toast-manager.js';
 import { LiveFilters } from './behaviours/live-filters.js';
 import { ConfirmAction } from './behaviours/confirm-action.js';
 import { ThemeSwitch } from './behaviours/theme-switch.js';
+import { ContrastSwitch } from './behaviours/contrast-switch.js';
 import { loadParallelogramJs } from './core-loader.js';
 
 export {
@@ -55,6 +56,7 @@ export {
   LiveFilters,
   ConfirmAction,
   ThemeSwitch,
+  ContrastSwitch,
 };
 export { loadParallelogramJs } from './core-loader.js';
 export { polyfillDialogCommands } from './polyfills/dialog-commands.js';

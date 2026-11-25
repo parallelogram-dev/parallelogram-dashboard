@@ -203,6 +203,35 @@ $chrome-tokens: (
   color-scheme: dark;
 }
 
+// --------------------------------------------------------------------------
+// High Contrast
+//
+// data-contrast="more" on <html> (or the OS's "increase contrast" setting, unless data-contrast
+// is "standard") strengthens the quiet colours: muted text, borders, inputs and the focus ring.
+// Each is mixed from the theme's own --fg and --bg, so a brand theme keeps its palette and only
+// needs to adjust colours of its own, such as a primary that is too dark on a dark background.
+// --------------------------------------------------------------------------
+
+@mixin high-contrast-tokens {
+  --fg-muted: color-mix(in srgb, var(--fg) 85%, var(--bg));
+  --fg-subtle: color-mix(in srgb, var(--fg) 70%, var(--bg));
+  --border: color-mix(in srgb, var(--fg) 45%, var(--bg));
+  --border-muted: color-mix(in srgb, var(--fg) 30%, var(--bg));
+  --input: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  --ring: var(--fg);
+  --secondary-muted-fg: var(--fg);
+}
+
+:root[data-contrast="more"] {
+  @include high-contrast-tokens;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast]) {
+    @include high-contrast-tokens;
+  }
+}
+
 
 @function _transition-list($properties, $timing) {
   $list: ();
