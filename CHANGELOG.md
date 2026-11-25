@@ -11,6 +11,8 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-11-25
+
 ### Added
 
 - `ConfirmAction` takes `data-confirm-form` as well as `data-confirm-action`: confirming then
@@ -307,7 +309,8 @@ The first tagged release, covering everything on `main` to date.
   `overflow-y: auto`; the page itself scrolls. Templates that relied on the content area
   scrolling inside a fixed-height shell need their own scrolling wrapper.
 
-[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.12...HEAD
+[Unreleased]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.13...HEAD
+[0.1.13]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.12...v0.1.13
 [0.1.12]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.11...v0.1.12
 [0.1.11]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.10...v0.1.11
 [0.1.10]: https://github.com/parallelogram-dev/parallelogram-dashboard/compare/v0.1.9...v0.1.10
