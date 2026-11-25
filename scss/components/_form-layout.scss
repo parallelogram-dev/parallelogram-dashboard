@@ -270,6 +270,23 @@
     color: var(--fg-muted);
   }
 
+  &__addon--btn {
+    padding: 0 $spacing-2xs;
+    background-color: transparent;
+    cursor: pointer;
+    @include transition-colors;
+
+    &:hover {
+      background-color: var(--bg-muted);
+      color: var(--fg);
+    }
+
+    &:focus-visible {
+      z-index: 1;
+      @include focus-ring;
+    }
+  }
+
   // --------------------------------------------------------------------------
   // Fieldset
   // --------------------------------------------------------------------------

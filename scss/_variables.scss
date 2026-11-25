@@ -224,8 +224,10 @@ $navmenu-width: 4rem !default;            // 64px
 $navmenu-labelled-width: 14rem !default;  // 224px
 $subnav-width: 16rem !default;            // 256px
 
-// Height of the logo in a labelled rail's header, emitted as --navmenu-logo-height
+// Height of the logo in a labelled rail's header and in the section menu's header, emitted as
+// --navmenu-logo-height and --subnav-logo-height
 $navmenu-logo-height: 1.5rem !default;    // 24px
+$subnav-logo-height: 1.5rem !default;     // 24px
 
 // Navbar height
 $navbar-height: 4rem !default;      // 64px

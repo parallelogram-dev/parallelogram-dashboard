@@ -165,6 +165,7 @@ Colors are defined as CSS custom properties for easy theming. Edit the `$theme-t
 | `--border` | zinc-200 | zinc-800 | Borders |
 | `--primary` | zinc-900 | zinc-50 | Primary actions |
 | `--secondary` | zinc-100 | zinc-800 | Secondary actions |
+| `--secondary-muted` | zinc-100 | zinc-800 | Grey status backgrounds, with `--secondary-muted-fg` (zinc-600 / zinc-300) |
 | `--destructive` | red-500 | red-600 | Destructive actions |
 | `--success` | green-500 | green-500 | Success states |
 | `--warning` | amber-500 | amber-500 | Warning states |
@@ -1261,6 +1262,7 @@ colour tokens it can set:
 | `--navmenu-head-*`, `--subnav-head-*` | The rail's logo cell and the section menu's title bar: `bg`, `fg`, `fg-muted`, `accent`, `accent-fg`, `border` |
 | `--navmenu-width`, `--navmenu-labelled-width`, `--subnav-width` | Widths of the icon rail (4rem), the labelled rail (14rem) and the section menu (16rem) |
 | `--navmenu-logo-height` | Height of the logo in a labelled rail's header (1.5rem) |
+| `--subnav-logo-height` | Height of the wordmark in the section menu's header, `.subnav__logo` (1.5rem) |
 | `--radius-sm` … `--radius-2xl` | Corner radius scale |
 | `--control-border-width` | Borders of inputs, selects, add-ons and outline buttons |
 | `--icon-stroke-width` | Line icon strokes |

@@ -51,7 +51,10 @@ function cell(s, column, row) {
   let value = escape(row[column.key]);
   if (s.editable) value = control(column, row);
   else if (column.key === 'status') value = `<span class="badge ${STATUS[row.status]}">${row.status}</span>`;
-  return `<td class="${cx('table__cell', column.right && 'text--right')}"${label}>${value}</td>`;
+  else if (column.key === 'name' && s.links) value = `<a href="#" class="table__link">${value}</a>`;
+  else if (column.key === 'email' && s.truncate) value = `<span>${value.replace('@', '.with.a.long.mailbox.name@')}</span>`;
+  const truncate = column.key === 'email' && s.truncate && !s.editable;
+  return `<td class="${cx('table__cell', column.right && 'text--right', truncate && 'table__cell--truncate')}"${label}>${value}</td>`;
 }
 
 // In the editable table, one row shows unsaved edits and one is newly added
@@ -98,6 +101,8 @@ export default {
       options: [{ value: '', label: 'Unsorted' }, { value: 'ascending', label: 'Ascending' }, { value: 'descending', label: 'Descending' }],
       when: s => s.sortable && !s.reorder,
     },
+    { key: 'links', label: 'Name links to record (__link)', type: 'toggle', default: true, when: s => !s.editable },
+    { key: 'truncate', label: 'Truncate long email (__cell--truncate)', type: 'toggle', when: s => !s.editable },
     { key: 'selectable', label: 'Checkbox column', type: 'toggle' },
     { key: 'actions', label: 'Actions column', type: 'toggle', default: true },
     { key: 'footer', label: 'Footer row', type: 'toggle' },

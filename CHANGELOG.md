@@ -11,6 +11,40 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `--secondary-muted` and `--secondary-muted-fg` tokens, completing the muted family, and
+  `.badge--secondary-muted` for a grey status such as Draft or Archived.
+- `.badge--round`: a count badge that stays circular for one or two digits and grows into a pill
+  for more.
+- `.table__link`: a record name in a table that opens the record.
+- `.table__cell--truncate`: cuts the cell's link or span to one line with an ellipsis, at
+  `--table-truncate-width` (18.75rem).
+- `.card__link`: a card title that links to its record.
+- `.stat--interactive`: a stat tile on an `<a>` that links to a filtered list, with hover and
+  focus states; the tile whose filter is applied takes `aria-current="true"`.
+- `.dropdown__item--warning`: an action that needs care but can be undone, such as Archive, beside
+  `--destructive` for what cannot.
+- `.dropdown__menu--scrollable`: caps a long menu, such as a filter of every company, at
+  `--dropdown-max-height` (20rem) and scrolls it.
+- `.form__addon--btn`: a button that sits in an input group like an addon, for an action on the
+  field.
+- `.switch__text` and `.switch__description`: a switch with a title and a line of description,
+  the switch level with the title.
+- `.radiocard`: a radio option drawn as a card with a title (`.radiocard__title`) and description
+  (`.radiocard__description`), for a choice between a few options that each need a sentence.
+- `.dashboard__alerts`: stacks flash messages above the page content.
+- `.subnav__logo`: a wordmark in the section menu's header in place of its title, at the new
+  `--subnav-logo-height` token (1.5rem).
+- `.subnav__item--static` and `.subnav__item--muted`: section menu rows that report rather than
+  link, such as "Nothing due", and `.subnav__item-text--stacked` with `.subnav__item-primary` and
+  `.subnav__item-secondary` for a two-line row.
+- Buttons in a `<p-modal>`'s `slot="actions"` line up at the end of its footer with the kit's
+  button gap, with no class on the slotted element.
+- `data-chart-currency` and `data-chart-locale` on a chart: the currency code for
+  `data-chart-format="currency"` and the locale its figures are written in. The defaults, USD and
+  en-US, are what every chart used before.
+
 ## [0.1.9] - 2026-11-02
 
 ### Added

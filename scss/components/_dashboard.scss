@@ -328,6 +328,25 @@
     @include text-truncate;
   }
 
+  &__logo {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 100%;
+    color: var(--fg);
+
+    svg,
+    img {
+      width: auto;
+      height: var(--subnav-logo-height);
+      max-width: 100%;
+    }
+
+    svg:not(.icon) {
+      fill: currentColor;
+    }
+  }
+
   &__actions {
     display: flex;
     align-items: center;
@@ -475,6 +494,20 @@
     &--disabled {
       @include disabled;
     }
+
+    &--static {
+      cursor: default;
+
+      &:hover {
+        color: var(--fg-muted);
+        background-color: transparent;
+      }
+    }
+
+    &--muted,
+    &--muted:hover {
+      color: var(--fg-subtle);
+    }
   }
 
   &__item-icon {
@@ -488,11 +521,40 @@
     .subnav__item--active & {
       color: var(--fg);
     }
+
+    .subnav__item--static:hover & {
+      color: var(--fg-subtle);
+    }
   }
 
   &__item-text {
     flex: 1;
     @include text-truncate;
+
+    &--stacked {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+  }
+
+  &__item-primary,
+  &__item-secondary {
+    @include text-truncate;
+  }
+
+  &__item-primary {
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+
+    .subnav__item--muted & {
+      color: var(--fg-muted);
+    }
+  }
+
+  &__item-secondary {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
   }
 
   &__item-badge {
@@ -641,6 +703,13 @@
   flex: 1;
   min-width: 0;
   padding: $spacing-lg;
+}
+
+.dashboard__alerts {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
 }
 
 // Open and close the off-canvas .subnav; only needed below lg, where the subnav leaves the layout

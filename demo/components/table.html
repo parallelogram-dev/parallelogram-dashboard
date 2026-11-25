@@ -248,6 +248,18 @@
               </table>
             </div>
           </div>
+
+          <div class="demo-label">Record links and truncated cells</div>
+          <p class="text--sm text--muted spacer--md"><code>.table__link</code> is a record name that opens the record. <code>.table__cell--truncate</code> cuts its link or span to one line with an ellipsis; set <code>--table-truncate-width</code> to change the limit (18.75rem). For a denser table use <code>.table--compact</code>.</p>
+          <div class="table__wrapper">
+            <table class="table table--hoverable">
+              <thead class="table__header"><tr class="table__row"><th class="table__head" scope="col">Website</th><th class="table__head" scope="col">Admin URL</th></tr></thead>
+              <tbody class="table__body">
+                <tr class="table__row"><td class="table__cell"><a href="#" class="table__link">acme.example</a></td><td class="table__cell table__cell--truncate"><a href="#">https://acme.example/wp-admin/options-general.php?page=a-very-long-settings-page</a></td></tr>
+                <tr class="table__row"><td class="table__cell"><a href="#" class="table__link">northwind.example</a></td><td class="table__cell table__cell--truncate"><span>https://northwind.example/admin</span></td></tr>
+              </tbody>
+            </table>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

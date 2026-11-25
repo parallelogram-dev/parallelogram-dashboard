@@ -1,4 +1,4 @@
-import { bem, escape } from '../lib.js';
+import { bem, escape, icon } from '../lib.js';
 
 const ROW_FIELDS = [
   ['first', 'First name', 'Jane'],
@@ -53,9 +53,11 @@ function groupField(s) {
       + '</div></div>';
   }
   const input = '<input type="text" id="pg-form-website" class="input form__control" placeholder="example.com">';
-  const parts = s.group === 'button'
-    ? `${input}<button type="button" class="btn btn--outline">Verify</button>`
-    : `<span class="form__addon">https://</span>${input}`;
+  const parts = {
+    button: `${input}<button type="button" class="btn btn--outline">Verify</button>`,
+    addonButton: `<span class="form__addon">https://</span>${input}`
+      + `<button type="button" class="form__addon form__addon--btn" aria-label="Paste from clipboard">${icon('download', 'icon')}</button>`,
+  }[s.group] || `<span class="form__addon">https://</span>${input}`;
   return `<div class="form__field">${label('pg-form-website', 'Website')}<div class="form__group">${parts}</div></div>`;
 }
 
@@ -148,6 +150,7 @@ export default {
       options: [
         { value: 'addon', label: 'Addon' },
         { value: 'button', label: 'Button' },
+        { value: 'addonButton', label: 'Button in an addon (__addon--btn)' },
         { value: 'block', label: 'Stacked (--block)' },
       ],
     },

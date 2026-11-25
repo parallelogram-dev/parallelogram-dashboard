@@ -82,6 +82,16 @@
               </div>
             </fieldset>
           </div>
+
+          <div class="demo-label">A button in an addon</div>
+          <p class="text--sm text--muted spacer--md">A <code>&lt;button class="form__addon form__addon--btn"&gt;</code> sits in an input group like an addon, for an action on the field such as filling it in from another.</p>
+          <div class="form__field" style="max-width: 24rem">
+            <label class="form__label" for="ex-admin-url">Admin URL</label>
+            <div class="form__group">
+              <input type="url" id="ex-admin-url" class="input form__control" placeholder="https://example.com/admin">
+              <button type="button" class="form__addon form__addon--btn" aria-label="Fill in from the website address"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"/><path d="M15 6l3 3"/></svg></button>
+            </div>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

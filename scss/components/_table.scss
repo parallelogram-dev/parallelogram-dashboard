@@ -105,6 +105,38 @@
     vertical-align: middle;
   }
 
+  &__link {
+    color: var(--fg);
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+    @include transition-colors;
+
+    &:hover {
+      color: var(--primary);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  &__cell--truncate {
+    > a,
+    > span {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-3xs;
+      max-width: var(--table-truncate-width, 18.75rem);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      > .icon {
+        flex-shrink: 0;
+      }
+    }
+  }
+
   &__caption {
     margin-top: $spacing-sm;
     font-size: $font-size-sm;

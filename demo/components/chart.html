@@ -206,6 +206,30 @@
               </figure>
             </div>
           </div>
+
+          <div class="demo-label">Other currencies and locales</div>
+          <p class="text--sm text--muted spacer--md"><code>data-chart-currency</code> sets the ISO 4217 code for <code>data-chart-format="currency"</code> (USD by default) and <code>data-chart-locale</code> the locale its figures are written in (en-US by default). Cells whose text is written in another locale need <code>data-value</code>.</p>
+          <div class="card">
+            <div class="card__content card__content--pt">
+              <figure class="chart" data-chart="bar" data-chart-format="currency" data-chart-currency="AUD" data-chart-locale="en-AU" aria-labelledby="ex-aud-title">
+                <div class="chart__header">
+                  <div>
+                    <h3 class="chart__title" id="ex-aud-title">Hosting revenue</h3>
+                    <p class="chart__description">AUD, by month</p>
+                  </div>
+                </div>
+                <table>
+                  <thead><tr><th scope="col">Month</th><th scope="col">Revenue</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Aug</th><td data-value="12400">$12,400</td></tr>
+                    <tr><th scope="row">Sep</th><td data-value="13150">$13,150</td></tr>
+                    <tr><th scope="row">Oct</th><td data-value="12980">$12,980</td></tr>
+                    <tr><th scope="row">Nov</th><td data-value="14320">$14,320</td></tr>
+                  </tbody>
+                </table>
+              </figure>
+            </div>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

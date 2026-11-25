@@ -290,6 +290,29 @@
     user-select: none;
   }
 
+  &:has(> .switch__text) {
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xs;
+    min-width: 0;
+    user-select: none;
+
+    > .switch__label {
+      font-weight: $font-weight-medium;
+      line-height: var(--switch-height);
+    }
+  }
+
+  &__description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
+  }
+
   &--sm {
     --switch-width: 1.75rem;
     --switch-height: 1rem;
@@ -310,5 +333,78 @@
 
   &:has(:disabled) {
     cursor: not-allowed;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Radio Card
+// --------------------------------------------------------------------------
+
+.radiocard {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xs;
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    border: var(--control-border-width) solid var(--input);
+    border-radius: $radius-md;
+    background-color: var(--bg);
+    @include transition-colors;
+  }
+
+  &:hover &__content {
+    border-color: var(--fg-subtle);
+  }
+
+  &__input:checked + &__content {
+    border-color: var(--primary);
+    background-color: color-mix(in srgb, var(--primary) 5%, var(--bg));
+  }
+
+  &__input:focus-visible + &__content {
+    @include focus-ring;
+  }
+
+  &__input:disabled + &__content {
+    @include disabled;
+  }
+
+  &:has(:disabled) {
+    cursor: not-allowed;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xs;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--fg);
+
+    > .icon {
+      width: $icon-size-md;
+      height: $icon-size-md;
+      flex-shrink: 0;
+    }
+  }
+
+  &__description {
+    font-size: $font-size-xs;
+    color: var(--fg-muted);
   }
 }

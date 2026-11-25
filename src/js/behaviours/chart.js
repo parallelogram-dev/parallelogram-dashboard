@@ -24,7 +24,9 @@ function niceMax(value) {
  * Types: line, area, bar (grouped when there are several series) and stacked-bar.
  * The first column holds the x labels and every other column is a series. Cells may carry
  * data-value when their text is formatted. data-chart-format is "number", "currency" or
- * "percent". The table stays in the page as the accessible table view.
+ * "percent"; data-chart-currency is the ISO 4217 code for "currency" (USD by default) and
+ * data-chart-locale the BCP 47 locale the figures are written in (en-US by default). The table
+ * stays in the page as the accessible table view.
  */
 export class Chart {
   constructor() {
@@ -44,7 +46,7 @@ export class Chart {
       table,
       data,
       type: figure.dataset.chart || 'line',
-      format: this._formatter(figure.dataset.chartFormat),
+      format: this._formatter(figure.dataset.chartFormat, figure.dataset.chartCurrency, figure.dataset.chartLocale),
       plot: document.createElement('div'),
       tooltip: document.createElement('div'),
       index: null,
@@ -94,13 +96,22 @@ export class Chart {
     return { series: headers.slice(1), rows };
   }
 
-  _formatter(kind) {
+  /**
+   * Formats values for the axis (compact) and the tooltip (full). An unknown currency code or
+   * locale falls back to the defaults rather than leaving the chart undrawn.
+   */
+  _formatter(kind, currency = 'USD', locale = 'en-US') {
     const options = {
-      currency: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
+      currency: { style: 'currency', currency, maximumFractionDigits: 0 },
       percent: { style: 'percent', maximumFractionDigits: 1 },
     }[kind] || { maximumFractionDigits: 1 };
-    const full = new Intl.NumberFormat('en-US', options);
-    const compact = new Intl.NumberFormat('en-US', { ...options, notation: 'compact', maximumFractionDigits: 1 });
+    let full;
+    try {
+      full = new Intl.NumberFormat(locale, options);
+    } catch {
+      return this._formatter(kind);
+    }
+    const compact = new Intl.NumberFormat(locale, { ...options, notation: 'compact', maximumFractionDigits: 1 });
     const scale = kind === 'percent' ? 0.01 : 1;
     return {
       full: value => full.format(value * scale),
