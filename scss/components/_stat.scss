@@ -103,6 +103,26 @@
     }
   }
 
+  &--interactive {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    @include transition-default;
+
+    &:hover {
+      border-color: var(--fg-subtle);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &[aria-current]:not([aria-current="false"]) {
+      border-color: var(--primary);
+      background-color: color-mix(in srgb, var(--primary) 6%, var(--card));
+    }
+  }
+
   &--compact {
     padding: $spacing-sm;
 

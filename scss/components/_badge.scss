@@ -41,6 +41,11 @@
     color: var(--secondary-fg);
   }
 
+  &--secondary-muted {
+    background-color: var(--secondary-muted);
+    color: var(--secondary-muted-fg);
+  }
+
   // Outline
   &--outline {
     background-color: transparent;
@@ -116,6 +121,16 @@
 
   &--pill {
     border-radius: $radius-full;
+  }
+
+  &--round {
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 $spacing-3xs;
+    border-radius: $radius-full;
+    font-size: 0.625rem;
+    font-variant-numeric: tabular-nums;
   }
 
   // Dot indicator (no text, just a colored dot)

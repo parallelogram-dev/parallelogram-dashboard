@@ -34,6 +34,13 @@
       <section class="docs__section" aria-labelledby="examples-heading">
         <h2 id="examples-heading" class="docs__h2">Examples</h2>
           <p class="text--muted">This component is shown in context in the <a href="../dashboard.html" class="link">dashboard demo</a>. A live playground is coming soon.</p>
+
+          <div class="demo-label">Flash messages, a wordmark and information rows</div>
+          <p class="text--sm text--muted spacer--md"><code>.dashboard__alerts</code> stacks flash messages above the page content. <code>.subnav__logo</code> puts a wordmark in the section menu&rsquo;s header in place of its title, at <code>--subnav-logo-height</code> (1.5rem). <code>.subnav__item--static</code> is a row that reports rather than links, <code>.subnav__item--muted</code> greys it out, and <code>.subnav__item-text--stacked</code> holds a <code>.subnav__item-primary</code> line over a <code>.subnav__item-secondary</code> one. The playground&rsquo;s <strong>Overview with notices</strong> preset shows them in the shell.</p>
+          <div class="dashboard__alerts">
+            <div class="alert alert--success">Your changes have been saved.</div>
+            <div class="alert alert--warning">Two domains expire this week.</div>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

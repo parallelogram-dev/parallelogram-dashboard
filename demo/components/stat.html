@@ -109,6 +109,14 @@
               <span class="ministat__value">9.8%</span>
             </span>
           </div>
+
+          <div class="demo-label">Tiles that filter a list</div>
+          <p class="text--sm text--muted spacer--md">A tile that links to a filtered list takes <code>.stat--interactive</code> on an <code>&lt;a&gt;</code>; the one whose filter is applied takes <code>aria-current="true"</code>.</p>
+          <div class="stat__grid stat__grid--3">
+            <a href="#" class="stat stat--interactive stat--compact" aria-current="true"><div class="stat__header"><span class="stat__label">All</span></div><div class="stat__value">48</div></a>
+            <a href="#" class="stat stat--interactive stat--compact"><div class="stat__header"><span class="stat__label">Active</span></div><div class="stat__value">41</div></a>
+            <a href="#" class="stat stat--interactive stat--compact"><div class="stat__header"><span class="stat__label">Archived</span></div><div class="stat__value">7</div></a>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

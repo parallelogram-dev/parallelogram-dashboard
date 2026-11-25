@@ -67,6 +67,20 @@ function section(title, items, action = '') {
     + `<div class="subnav__list">${items}</div></div>`;
 }
 
+// Rows that report rather than link: a two-line row, and a static, muted row for "nothing to show"
+function infoSection(s) {
+  if (!s.info) {
+    return '';
+  }
+  const renewal = '<a href="#" class="subnav__item">'
+    + `${svg('icon subnav__item-icon', PATHS.records)}<span class="subnav__item-text subnav__item-text--stacked">`
+    + '<span class="subnav__item-primary">acme.example</span><span class="subnav__item-secondary">Renews in 12 days</span></span>'
+    + `${s.badges ? '<span class="badge badge--round badge--warning">1</span>' : ''}</a>`;
+  const none = '<span class="subnav__item subnav__item--static subnav__item--muted">'
+    + `${svg('icon subnav__item-icon', PATHS.analytics)}<span class="subnav__item-text">Nothing needs attention</span></span>`;
+  return section('Upcoming', renewal) + section('Needs attention', none);
+}
+
 function subnav(s) {
   const className = cx('subnav', s.subnav === 'collapsed' && 'subnav--collapsed', s.subnav === 'open' && 'subnav--open');
   // Below lg the subnav slides in over the page, so it carries its own close button
@@ -87,12 +101,15 @@ function subnav(s) {
       + `${icon('plus', 'btn__icon')}New record</a></div>`
     : '';
   return `<aside class="${className}" id="${SUBNAV_ID}" aria-label="${escape(s.title)}">`
-    + `<div class="subnav__header"><h2 class="subnav__title">${escape(s.title)}</h2>${actions}</div>`
+    + `<div class="subnav__header">${s.logo
+      ? `<a href="#" class="subnav__logo" aria-label="${escape(s.title)}">${svg('icon', PATHS.logo)}</a>`
+      : `<h2 class="subnav__title">${escape(s.title)}</h2>`}${actions}</div>`
     + search
     + '<div class="subnav__content">'
     + section('Overview', subitem(s, 'dashboard', 'Dashboard') + subitem(s, 'analytics', 'Analytics'))
     + section('Content', subitem(s, 'pages', 'Pages', '15') + records(s) + subitem(s, 'media', 'Media', '312') + disabled, sectionAction)
     + section('People', subitem(s, 'team', 'Team', '8') + subitem(s, 'settings', 'Your account'))
+    + infoSection(s)
     + `</div>${footer}</aside>`;
 }
 
@@ -114,6 +131,8 @@ function main(s) {
     + `<div class="dashboard__header-right"><button type="button" class="btn btn--ghost btn--icon" aria-label="Search">${icon('search')}</button>`
     + '<a href="#" class="avatar avatar--sm" aria-label="Your account"><span class="avatar__fallback">JD</span></a></div></header>'
     + '<div class="dashboard__content">'
+    + (s.alerts ? '<div class="dashboard__alerts" role="status"><div class="alert alert--success">Your changes have been saved.</div>'
+      + '<div class="alert alert--warning">Two domains expire this week.</div></div>' : '')
     + `<div class="pageheader"><div class="pageheader__content"><h1 class="pageheader__title">${crumb}</h1>`
     + '<p class="pageheader__description">Welcome back! Here’s an overview of your workspace.</p></div></div>'
     + `<div class="stat__grid">${stats}</div>`
@@ -166,6 +185,9 @@ export default {
     { key: 'badges', label: 'Badges', type: 'toggle', default: true },
     { key: 'disabled', label: 'Disabled item', type: 'toggle' },
     { key: 'footer', label: 'Footer', type: 'toggle' },
+    { key: 'logo', label: 'Wordmark in section header (__logo)', type: 'toggle' },
+    { key: 'info', label: 'Information rows', type: 'toggle' },
+    { key: 'alerts', label: 'Flash messages (__alerts)', type: 'toggle' },
   ],
   presets: [
     { name: 'Home', state: {} },
@@ -174,6 +196,7 @@ export default {
     { name: 'Section nav collapsed', state: { subnav: 'collapsed' } },
     { name: 'Mobile section nav open', state: { subnav: 'open' } },
     { name: 'With footer action', state: { footer: true, actions: false, disabled: true } },
+    { name: 'Overview with notices', state: { logo: true, info: true, alerts: true, submenu: '' } },
     { name: 'Minimal', state: { submenu: '', actions: false, sectionAction: false, badges: false } },
   ],
   render(s) {

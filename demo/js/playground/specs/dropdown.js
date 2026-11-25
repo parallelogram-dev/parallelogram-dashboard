@@ -112,8 +112,21 @@ function menuItems(s, block, id) {
       + '</div>');
   }
 
-  if (s.destructive) {
+  if (s.scrollable && block === 'dropdown') {
+    for (let i = 1; i <= 12; i++) {
+      parts.push(item(s, block, itemClass, [`Company ${i}`], { role: ROLES[s.selection] }));
+    }
+  }
+
+  if (s.warning && block === 'dropdown') {
     if (s.grouped) {
+      parts.push(divider);
+    }
+    parts.push(item(s, block, cx(itemClass, 'dropdown__item--warning'), ['Archive', 'reset', ''], { role: 'menuitem' }));
+  }
+
+  if (s.destructive) {
+    if (s.grouped && !(s.warning && block === 'dropdown')) {
       parts.push(divider);
     }
     parts.push(item(s, block, cx(itemClass, `${block}__item--destructive`), menu.destructive, { role: 'menuitem' }));
@@ -209,7 +222,9 @@ export default {
       ],
     },
     { key: 'grouped', label: 'Label and dividers', type: 'toggle', default: true },
+    { key: 'warning', label: 'Warning item (--warning)', type: 'toggle', when: s => s.type === 'dropdown' },
     { key: 'destructive', label: 'Destructive item', type: 'toggle', default: true },
+    { key: 'scrollable', label: 'Long list (--scrollable)', type: 'toggle', when: s => s.type === 'dropdown' },
     { key: 'open', label: 'Open', type: 'toggle', default: true, when: s => s.type === 'dropdown' },
   ],
   presets: [
@@ -219,6 +234,8 @@ export default {
     { name: 'With submenu', state: { submenu: 'open', itemState: 'current' } },
     { name: 'Opens upwards', state: { position: 'top', positionOn: 'menu', width: 'lg', itemState: 'disabled' } },
     { name: 'Centred, full width', state: { position: 'center', width: 'full', decoration: 'icons', positionOn: 'menu' } },
+    { name: 'Long filter list', state: { scrollable: true, selection: 'radio', decoration: '', destructive: false } },
+    { name: 'Archive and delete', state: { warning: true, decoration: 'icons' } },
     { name: 'Context menu', state: { type: 'contextmenu', decoration: 'icons', submenu: 'closed' } },
   ],
   render(s) {
@@ -231,7 +248,7 @@ export default {
 
     const onMenu = s.positionOn === 'menu';
     const wrapper = bem('dropdown', !onMenu && s.position);
-    const menu = bem('dropdown__menu', onMenu && s.position, s.width);
+    const menu = bem('dropdown__menu', onMenu && s.position, s.width, s.scrollable && 'scrollable');
     return `<div class="${wrapper}">`
       + `<button type="button" class="btn btn--outline dropdown__trigger" aria-haspopup="menu" aria-expanded="${Boolean(s.open)}" data-toggle data-toggle-target="#${id}" data-toggle-capture="true">${escape(label)}${svg('down', 'btn__icon')}</button>`
       + `<div class="${menu}" id="${id}" role="menu" aria-label="${escape(label)}">${menuItems(s, 'dropdown', id)}</div>`

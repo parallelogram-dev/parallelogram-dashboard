@@ -103,6 +103,20 @@ $card-inner-radius: calc(#{$radius} - 1px);
     color: var(--fg-muted);
   }
 
+  &__link {
+    color: inherit;
+    text-decoration: none;
+    @include transition-colors;
+
+    &:hover {
+      color: var(--primary);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
   &__content {
     padding: $spacing-sm;
     padding-top: 0;

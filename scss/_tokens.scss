@@ -40,6 +40,8 @@ $theme-tokens: (
   secondary: ($zinc-100, $zinc-800),
   secondary-fg: ($zinc-900, $zinc-50),
   secondary-hover: ($zinc-200, $zinc-700),
+  secondary-muted: ($zinc-100, $zinc-800),
+  secondary-muted-fg: ($zinc-600, $zinc-300),
 
   // Destructive
   destructive: ($red-500, $red-600),
@@ -178,6 +180,7 @@ $chrome-tokens: (
   --navmenu-labelled-width: #{$navmenu-labelled-width};
   --subnav-width: #{$subnav-width};
   --navmenu-logo-height: #{$navmenu-logo-height};
+  --subnav-logo-height: #{$subnav-logo-height};
 
   // Chrome regions
   @each $region, $tokens in $chrome-tokens {

@@ -25,12 +25,27 @@ function control(s) {
       const inputType = s.type === 'radio' ? 'radio' : 'checkbox';
       const role = s.type === 'switch' ? ' role="switch"' : '';
       const checked = s.checked ? ' checked' : '';
+      const text = `<span class="${s.type}__label">${escape(s.label)}</span>`;
+      const body = s.type === 'switch' && s.description
+        ? `<span class="switch__text">${text}<span class="switch__description">${escape(s.description)}</span></span>`
+        : text;
       return {
         id,
         inline: true,
-        html: `<label class="${wrapper}"><input type="${inputType}" class="${s.type}__input"${role}${checked}${disabled}>`
-          + `<span class="${s.type}__label">${escape(s.label)}</span></label>`,
+        html: `<label class="${wrapper}"><input type="${inputType}" class="${s.type}__input"${role}${checked}${disabled}>${body}</label>`,
       };
+    }
+
+    case 'radiocard': {
+      const options = [
+        ['existing', 'search', 'Select existing user', 'Add someone who already has an account.'],
+        ['new', 'plus', 'Create new user', 'Create an account and add it here.'],
+      ];
+      const cards = options.map(([value, iconName, title, text], i) => `<label class="radiocard">`
+        + `<input type="radio" name="${id}" value="${value}" class="radiocard__input"${s.checked && i === 0 ? ' checked' : ''}${disabled}>`
+        + `<span class="radiocard__content"><span class="radiocard__title">${icon(iconName)}${escape(i === 0 ? s.label : title)}</span>`
+        + `<span class="radiocard__description">${escape(text)}</span></span></label>`).join('');
+      return { id, inline: true, html: `<div class="grid grid--2" role="radiogroup" aria-label="User">${cards}</div>` };
     }
 
     default: {
@@ -66,6 +81,7 @@ export default {
         { value: 'checkbox', label: 'Checkbox' },
         { value: 'radio', label: 'Radio' },
         { value: 'switch', label: 'Switch' },
+        { value: 'radiocard', label: 'Radio cards' },
       ],
     },
     {
@@ -88,11 +104,12 @@ export default {
       when: s => ['text', 'email'].includes(s.type),
     },
     { key: 'autoWidth', label: 'Auto width', type: 'toggle', when: s => s.type === 'select' },
-    { key: 'checked', label: 'Checked', type: 'toggle', default: true, when: s => ['checkbox', 'radio', 'switch'].includes(s.type) },
+    { key: 'checked', label: 'Checked', type: 'toggle', default: true, when: s => ['checkbox', 'radio', 'switch', 'radiocard'].includes(s.type) },
     { key: 'label', label: 'Label', type: 'text', default: 'Email address' },
     { key: 'placeholder', label: 'Placeholder', type: 'text', default: 'you@example.com', when: s => ['text', 'email', 'textarea'].includes(s.type) },
-    { key: 'grouped', label: 'Form field', type: 'toggle', default: true, when: s => !['checkbox', 'radio', 'switch'].includes(s.type) },
-    { key: 'hint', label: 'Hint text', type: 'text', default: "We'll never share your email.", when: s => s.grouped && !['checkbox', 'radio', 'switch'].includes(s.type) },
+    { key: 'description', label: 'Description (__text)', type: 'text', default: '', when: s => s.type === 'switch' },
+    { key: 'grouped', label: 'Form field', type: 'toggle', default: true, when: s => !['checkbox', 'radio', 'switch', 'radiocard'].includes(s.type) },
+    { key: 'hint', label: 'Hint text', type: 'text', default: "We'll never share your email.", when: s => s.grouped && !['checkbox', 'radio', 'switch', 'radiocard'].includes(s.type) },
   ],
   presets: [
     { name: 'Email with icon', state: { type: 'email', icon: 'left' } },
@@ -101,6 +118,8 @@ export default {
     { name: 'Textarea', state: { type: 'textarea', label: 'Message', placeholder: 'Type your message…', hint: '' } },
     { name: 'Select', state: { type: 'select', label: 'Framework', hint: '' } },
     { name: 'Switch', state: { type: 'switch', label: 'Enable notifications' } },
+    { name: 'Switch with description', state: { type: 'switch', size: 'lg', label: 'Send invitation email', description: 'They get a link to set their password.' } },
+    { name: 'Radio cards', state: { type: 'radiocard', label: 'Select existing user' } },
     { name: 'Disabled checkbox', state: { type: 'checkbox', state: 'disabled', label: 'Remember me' } },
   ],
   render(s) {

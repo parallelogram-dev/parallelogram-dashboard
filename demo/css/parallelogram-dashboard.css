@@ -15,6 +15,8 @@
   --secondary: light-dark(#f4f4f5, #27272a);
   --secondary-fg: light-dark(#18181b, #fafafa);
   --secondary-hover: light-dark(#e4e4e7, #3f3f46);
+  --secondary-muted: light-dark(#f4f4f5, #27272a);
+  --secondary-muted-fg: light-dark(#52525b, #d4d4d8);
   --destructive: light-dark(#ef4444, #dc2626);
   --destructive-fg: #fafafa;
   --destructive-hover: light-dark(#dc2626, #ef4444);
@@ -76,6 +78,7 @@
   --navmenu-labelled-width: 14rem;
   --subnav-width: 16rem;
   --navmenu-logo-height: 1.5rem;
+  --subnav-logo-height: 1.5rem;
   --navmenu-bg: var(--bg-muted);
   --navmenu-fg: var(--fg);
   --navmenu-fg-muted: var(--fg-muted);
@@ -253,30 +256,30 @@
   --tracking-tight: -0.025em;
 }
 
-.recordgrid__title:is(a):focus-visible, .filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
-.radio__input:focus-visible, .switch__input:focus-visible, .btn:focus-visible {
+.recordgrid__title:is(a):focus-visible, .filebrowser__search .form__control:focus, .filebrowser__checkbox:focus-visible + .filebrowser__label, .asset__input:focus, .media__remove:focus-visible, .media__copy:focus-visible, .media__btn:focus-visible, .chart__plot:focus-visible, .accordion__trigger:focus-visible, .form__addon--btn:focus-visible, .toolbar__input:focus, .filter__label:focus-visible, .pagination__item:focus-visible, .pagination__prev:focus-visible, .pagination__next:focus-visible, .stat--interactive:focus-visible, .navmenu__item:focus-visible, .navmenu__avatar:focus-visible, .subnav__action:focus-visible, .subnav__search-input:focus, .subnav__section-action:focus-visible, .subnav__item:focus-visible, .subnav__subitem:focus-visible, .breadcrumb__link:focus-visible, .breadcrumb__ellipsis:focus-visible, .breadcrumb__dropdown-trigger:focus-visible, .breadcrumb__dropdown-item:focus-visible, .tabs__trigger:focus-visible, .segmented-control__item:focus-visible, .modal__close:focus-visible, .dropdown__item:focus-visible, .contextmenu__item:focus-visible, .navbar__item:focus-visible, .navbar__toggle:focus-visible, .navbar__search-input:focus, .navbarmobile__close:focus-visible, .navbarmobile__item:focus-visible, .sidebar__item:focus-visible, .table__head--sortable:focus-visible, .table__link:focus-visible, .table__control:focus, .alert__close:focus-visible, .card--interactive:focus-visible, .card__link:focus-visible, .input:focus, .textarea:focus, .select:focus, .checkbox__input:focus-visible,
+.radio__input:focus-visible, .switch__input:focus-visible, .radiocard__input:focus-visible + .radiocard__content, .btn:focus-visible {
   outline: var(--framework-focus-width) solid var(--framework-focus-color);
   outline-offset: var(--framework-focus-offset);
 }
 
-.sheet__content, .drawer__content, .command__list, .subnav__content, .modal__content, .sidebar, .table__wrapper, :where(pre) {
+.sheet__content, .drawer__content, .command__list, .subnav__content, .modal__content, .dropdown__menu--scrollable, .dropdown__menu--scrollable[popover], .sidebar, .table__wrapper, :where(pre) {
   scrollbar-width: thin;
   scrollbar-color: var(--fg-subtle) transparent;
 }
-.sheet__content::-webkit-scrollbar, .drawer__content::-webkit-scrollbar, .command__list::-webkit-scrollbar, .subnav__content::-webkit-scrollbar, .modal__content::-webkit-scrollbar, .sidebar::-webkit-scrollbar, .table__wrapper::-webkit-scrollbar, :where(pre)::-webkit-scrollbar {
+.sheet__content::-webkit-scrollbar, .drawer__content::-webkit-scrollbar, .command__list::-webkit-scrollbar, .subnav__content::-webkit-scrollbar, .modal__content::-webkit-scrollbar, .dropdown__menu--scrollable::-webkit-scrollbar, .dropdown__menu--scrollable[popover]::-webkit-scrollbar, .sidebar::-webkit-scrollbar, .table__wrapper::-webkit-scrollbar, :where(pre)::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-.sheet__content::-webkit-scrollbar-track, .drawer__content::-webkit-scrollbar-track, .command__list::-webkit-scrollbar-track, .subnav__content::-webkit-scrollbar-track, .modal__content::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track, .table__wrapper::-webkit-scrollbar-track, :where(pre)::-webkit-scrollbar-track {
+.sheet__content::-webkit-scrollbar-track, .drawer__content::-webkit-scrollbar-track, .command__list::-webkit-scrollbar-track, .subnav__content::-webkit-scrollbar-track, .modal__content::-webkit-scrollbar-track, .dropdown__menu--scrollable::-webkit-scrollbar-track, .dropdown__menu--scrollable[popover]::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track, .table__wrapper::-webkit-scrollbar-track, :where(pre)::-webkit-scrollbar-track {
   background: transparent;
 }
-.sheet__content::-webkit-scrollbar-thumb, .drawer__content::-webkit-scrollbar-thumb, .command__list::-webkit-scrollbar-thumb, .subnav__content::-webkit-scrollbar-thumb, .modal__content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb, .table__wrapper::-webkit-scrollbar-thumb, :where(pre)::-webkit-scrollbar-thumb {
+.sheet__content::-webkit-scrollbar-thumb, .drawer__content::-webkit-scrollbar-thumb, .command__list::-webkit-scrollbar-thumb, .subnav__content::-webkit-scrollbar-thumb, .modal__content::-webkit-scrollbar-thumb, .dropdown__menu--scrollable::-webkit-scrollbar-thumb, .dropdown__menu--scrollable[popover]::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb, .table__wrapper::-webkit-scrollbar-thumb, :where(pre)::-webkit-scrollbar-thumb {
   background-color: var(--fg-subtle);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
-.sheet__content::-webkit-scrollbar-thumb:hover, .drawer__content::-webkit-scrollbar-thumb:hover, .command__list::-webkit-scrollbar-thumb:hover, .subnav__content::-webkit-scrollbar-thumb:hover, .modal__content::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover, .table__wrapper::-webkit-scrollbar-thumb:hover, :where(pre)::-webkit-scrollbar-thumb:hover {
+.sheet__content::-webkit-scrollbar-thumb:hover, .drawer__content::-webkit-scrollbar-thumb:hover, .command__list::-webkit-scrollbar-thumb:hover, .subnav__content::-webkit-scrollbar-thumb:hover, .modal__content::-webkit-scrollbar-thumb:hover, .dropdown__menu--scrollable::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover, .table__wrapper::-webkit-scrollbar-thumb:hover, :where(pre)::-webkit-scrollbar-thumb:hover {
   background-color: var(--fg-muted);
 }
 
@@ -1798,6 +1801,25 @@ code.code--sm {
   font-size: 0.875rem;
   user-select: none;
 }
+.switch:has(> .switch__text) {
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.switch__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  user-select: none;
+}
+.switch__text > .switch__label {
+  font-weight: 500;
+  line-height: var(--switch-height);
+}
+.switch__description {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
 .switch--sm {
   --switch-width: 1.75rem;
   --switch-height: 1rem;
@@ -1814,6 +1836,63 @@ code.code--sm {
 }
 .switch:has(:disabled) {
   cursor: not-allowed;
+}
+
+.radiocard {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+.radiocard__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.radiocard__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: var(--control-border-width) solid var(--input);
+  border-radius: var(--radius-md);
+  background-color: var(--bg);
+  transition: var(--transition-colors);
+}
+.radiocard:hover .radiocard__content {
+  border-color: var(--fg-subtle);
+}
+.radiocard__input:checked + .radiocard__content {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 5%, var(--bg));
+}
+.radiocard__input:disabled + .radiocard__content {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.radiocard:has(:disabled) {
+  cursor: not-allowed;
+}
+.radiocard__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+.radiocard__title > .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.radiocard__description {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
 }
 
 .card {
@@ -1879,6 +1958,14 @@ code.code--sm {
 .card__description {
   font-size: 0.875rem;
   color: var(--fg-muted);
+}
+.card__link {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+.card__link:hover {
+  color: var(--primary);
 }
 .card__content {
   padding: 1rem;
@@ -2016,6 +2103,10 @@ code.code--sm {
   background-color: var(--secondary);
   color: var(--secondary-fg);
 }
+.badge--secondary-muted {
+  background-color: var(--secondary-muted);
+  color: var(--secondary-muted-fg);
+}
 .badge--outline {
   background-color: transparent;
   border: 1px solid var(--border);
@@ -2063,6 +2154,15 @@ code.code--sm {
 }
 .badge--pill {
   border-radius: 9999px;
+}
+.badge--round {
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
 }
 .badge--dot {
   width: 0.5rem;
@@ -2291,6 +2391,29 @@ code.code--sm {
 .table__cell {
   padding: 1rem;
   vertical-align: middle;
+}
+.table__link {
+  color: var(--fg);
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+.table__link:hover {
+  color: var(--primary);
+}
+.table__cell--truncate > a,
+.table__cell--truncate > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: var(--table-truncate-width, 18.75rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table__cell--truncate > a > .icon,
+.table__cell--truncate > span > .icon {
+  flex-shrink: 0;
 }
 .table__caption {
   margin-top: 1rem;
@@ -3244,6 +3367,13 @@ select.table__control {
   background-color: var(--destructive);
   color: var(--destructive-fg);
 }
+.dropdown__item--warning {
+  color: var(--warning-muted-fg);
+}
+.dropdown__item--warning:hover {
+  background-color: var(--warning);
+  color: var(--warning-fg);
+}
 .dropdown__item-icon, .contextmenu__item-icon, .dropdown__item > .icon, .contextmenu__item > .icon {
   width: 1.25rem;
   height: 1.25rem;
@@ -3340,6 +3470,10 @@ select.table__control {
 .dropdown__menu--full {
   min-width: 100%;
 }
+.dropdown__menu--scrollable, .dropdown__menu--scrollable[popover] {
+  max-height: var(--dropdown-max-height, 20rem);
+  overflow-y: auto;
+}
 
 p-modal:not(:defined) {
   display: none;
@@ -3350,6 +3484,14 @@ p-modal > [slot=title] {
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.025em;
+}
+
+p-modal > [slot=actions] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 p-modal {
@@ -4293,6 +4435,22 @@ p-modal {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.subnav__logo {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  color: var(--fg);
+}
+.subnav__logo svg,
+.subnav__logo img {
+  width: auto;
+  height: var(--subnav-logo-height);
+  max-width: 100%;
+}
+.subnav__logo svg:not(.icon) {
+  fill: currentColor;
+}
 .subnav__actions {
   display: flex;
   align-items: center;
@@ -4415,6 +4573,16 @@ p-modal {
   pointer-events: none;
   opacity: 0.5;
 }
+.subnav__item--static {
+  cursor: default;
+}
+.subnav__item--static:hover {
+  color: var(--fg-muted);
+  background-color: transparent;
+}
+.subnav__item--muted, .subnav__item--muted:hover {
+  color: var(--fg-subtle);
+}
 .subnav__item-icon {
   width: 1.25rem;
   height: 1.25rem;
@@ -4424,11 +4592,35 @@ p-modal {
 .subnav__item:hover .subnav__item-icon, .subnav__item[aria-current=page] .subnav__item-icon, .subnav__item--active .subnav__item-icon {
   color: var(--fg);
 }
+.subnav__item--static:hover .subnav__item-icon {
+  color: var(--fg-subtle);
+}
 .subnav__item-text {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.subnav__item-text--stacked {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.subnav__item-primary, .subnav__item-secondary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subnav__item-primary {
+  font-weight: 500;
+  color: var(--fg);
+}
+.subnav__item--muted .subnav__item-primary {
+  color: var(--fg-muted);
+}
+.subnav__item-secondary {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
 }
 .subnav__item-badge {
   font-size: 0.75rem;
@@ -4579,6 +4771,13 @@ p-modal {
   flex: 1;
   min-width: 0;
   padding: 1.5rem;
+}
+
+.dashboard__alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
 @media (min-width: 1024px) {
@@ -5599,6 +5798,19 @@ p-modal {
 .stat--primary .stat__trend--neutral {
   color: var(--primary-fg);
   opacity: 0.8;
+}
+.stat--interactive {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+.stat--interactive:hover {
+  border-color: var(--fg-subtle);
+}
+.stat--interactive[aria-current]:not([aria-current=false]) {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 6%, var(--card));
 }
 .stat--compact {
   padding: 1rem;
@@ -6658,6 +6870,19 @@ p-modal {
   background-color: var(--bg-muted);
   border: var(--control-border-width) solid var(--input);
   color: var(--fg-muted);
+}
+.form__addon--btn {
+  padding: 0 0.5rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+.form__addon--btn:hover {
+  background-color: var(--bg-muted);
+  color: var(--fg);
+}
+.form__addon--btn:focus-visible {
+  z-index: 1;
 }
 .form__fieldset {
   display: flex;

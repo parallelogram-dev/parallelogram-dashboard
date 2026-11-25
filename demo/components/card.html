@@ -70,6 +70,13 @@
           </div>
           <div class="demo-label spacer--xl">Full screen</div>
           <p class="text--sm text--muted">Any card can open full screen: give it <code>data-expandable</code> and a button inside it <code>data-expand</code>. The card moves into a <code>&lt;dialog class="expandable"&gt;</code>, keeps its place on the page and comes back on the same button or Escape. Flush content such as a table fills the screen and scrolls inside the card. See the <a href="table.html">Table</a> page for a full-screen editor with a column picker.</p>
+
+          <div class="demo-label">Title that links to its record</div>
+          <p class="text--sm text--muted spacer--md">Wrap the title text in <code>.card__link</code>. For an empty state or a table that fills the card, use <code>.card__content--flush</code>.</p>
+          <div class="card" style="max-width: 24rem">
+            <div class="card__header"><h3 class="card__title"><a href="#" class="card__link">acme.example</a></h3><p class="card__description">Hosted on Pro, renews 1 March</p></div>
+            <div class="card__content"><p>Three domains, two admin logins.</p></div>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

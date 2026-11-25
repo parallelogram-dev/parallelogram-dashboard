@@ -24,6 +24,14 @@ p-modal > [slot="title"] {
   letter-spacing: $letter-spacing-tight;
 }
 
+p-modal > [slot="actions"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: $spacing-2xs;
+  width: 100%;
+}
+
 p-modal {
   --modal-backdrop-bg: var(--color-overlay);
 

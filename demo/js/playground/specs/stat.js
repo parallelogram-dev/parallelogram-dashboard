@@ -25,8 +25,8 @@ function description(s) {
   return `<p class="stat__description">${trend}${escape(s.description)}</p>`;
 }
 
-function stat(s, label = s.label, value = s.value) {
-  const modifiers = [s.variant, s.compact && 'compact'].filter(Boolean).map(m => `stat--${m}`);
+function stat(s, label = s.label, value = s.value, first = true) {
+  const modifiers = [s.variant, s.compact && 'compact', s.interactive && 'interactive'].filter(Boolean).map(m => `stat--${m}`);
   const valueHtml = `<div class="stat__value">${escape(value)}</div>`;
   const labelHtml = `<span class="stat__label">${escape(label)}</span>`;
 
@@ -40,6 +40,10 @@ function stat(s, label = s.label, value = s.value) {
   const body = `${header}${valueHtml}${description(s)}`;
   if (s.layout === 'sparkline') {
     return `<div class="${cx('stat__sparkline', ...modifiers)}">${body}<div class="stat__sparkline-chart">${SPARKLINE}</div></div>`;
+  }
+  if (s.interactive) {
+    const current = s.current && first ? ' aria-current="true"' : '';
+    return `<a href="#" class="${cx('stat', ...modifiers)}"${current}>${body}</a>`;
   }
   return `<div class="${cx('stat', ...modifiers)}">${body}</div>`;
 }
@@ -74,6 +78,8 @@ export default {
     },
     { key: 'variant', label: 'Variant', type: 'select', options: ['', 'elevated', 'primary'], when: s => s.layout !== 'mini' },
     { key: 'compact', label: 'Compact', type: 'toggle', when: s => s.layout !== 'mini' },
+    { key: 'interactive', label: 'Links to a filtered list (--interactive)', type: 'toggle', when: s => !s.layout || s.layout === 'default' },
+    { key: 'current', label: 'Filter applied (aria-current)', type: 'toggle', when: s => s.interactive && (!s.layout || s.layout === 'default') },
     { key: 'label', label: 'Label', type: 'text', default: 'Total Revenue' },
     { key: 'value', label: 'Value', type: 'text', default: '$45,231' },
     {
@@ -107,6 +113,7 @@ export default {
     { name: 'Horizontal', state: { layout: 'horizontal', variant: 'elevated', label: 'Active Users', value: '2,350', trend: 'neutral', change: '0%' } },
     { name: 'Sparkline', state: { layout: 'sparkline', label: 'Page views', value: '128,430', change: '18%' } },
     { name: 'Dashboard row', state: { grid: '4', compact: true } },
+    { name: 'Filter tiles', state: { grid: '4', compact: true, interactive: true, current: true, trend: '', description: '', icon: false } },
     { name: 'Mini stats', state: { layout: 'mini', label: 'Views', value: '12,543' } },
   ],
   render(s) {
@@ -117,7 +124,7 @@ export default {
       return stat(s);
     }
     const count = Number(s.grid);
-    const cards = GRID.slice(0, count).map(([label, value], i) => stat(s, i === 0 ? s.label : label, i === 0 ? s.value : value));
+    const cards = GRID.slice(0, count).map(([label, value], i) => stat(s, i === 0 ? s.label : label, i === 0 ? s.value : value, i === 0));
     return `<div class="${bem('stat__grid', s.grid === '3' && '3')}">${cards.join('')}</div>`;
   },
 };

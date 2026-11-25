@@ -93,6 +93,20 @@
               </label>
             </div>
           </div>
+
+          <div class="demo-label">Switch with a description</div>
+          <p class="text--sm text--muted spacer--md">Wrap the label in <code>.switch__text</code> and add a <code>.switch__description</code>; the switch sits beside the first line.</p>
+          <label class="switch switch--lg spacer--lg">
+            <input type="checkbox" class="switch__input" role="switch" checked>
+            <span class="switch__text"><span class="switch__label">Send invitation email</span><span class="switch__description">They get a link to set their password and sign in.</span></span>
+          </label>
+
+          <div class="demo-label">Radio cards</div>
+          <p class="text--sm text--muted spacer--md">A choice between a few options that each need a sentence. The native radio covers the card, so the group keeps its keyboard behaviour.</p>
+          <div class="grid grid--2" role="radiogroup" aria-label="User">
+            <label class="radiocard"><input type="radio" name="ex-user" value="existing" class="radiocard__input" checked><span class="radiocard__content"><span class="radiocard__title">Select existing user</span><span class="radiocard__description">Add someone who already has an account.</span></span></label>
+            <label class="radiocard"><input type="radio" name="ex-user" value="new" class="radiocard__input"><span class="radiocard__content"><span class="radiocard__title">Create new user</span><span class="radiocard__description">Create an account and add it here.</span></span></label>
+          </div>
       </section>
 
       <nav class="docs__pager" aria-label="Previous and next component" data-pager></nav>

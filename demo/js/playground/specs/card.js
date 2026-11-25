@@ -17,7 +17,8 @@ function card(s, title = s.title) {
   if (s.header) {
     const row = s.header === 'row' || s.header === 'actions';
     const headerClass = bem('card__header', row && 'row', s.header === 'center' && 'center');
-    const text = `<h3 class="card__title">${escape(title)}</h3>`
+    const heading = s.titleLink ? `<a href="#" class="card__link">${escape(title)}</a>` : escape(title);
+    const text = `<h3 class="card__title">${heading}</h3>`
       + (s.description ? `<p class="card__description">${escape(s.description)}</p>` : '');
     const actions = s.header === 'actions'
       ? '<div class="cluster cluster--sm">'
@@ -75,6 +76,7 @@ export default {
       ],
     },
     { key: 'title', label: 'Title', type: 'text', default: 'Card title', when: s => s.header },
+    { key: 'titleLink', label: 'Title links to record (__link)', type: 'toggle', when: s => s.header },
     { key: 'description', label: 'Description', type: 'text', default: 'Card description goes here.', when: s => s.header },
     {
       key: 'content',

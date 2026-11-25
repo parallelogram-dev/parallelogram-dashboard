@@ -1,7 +1,7 @@
 import { bem, escape, icon } from '../lib.js';
 
 function badge(s, label = s.label) {
-  const className = bem('badge', s.variant, s.size, s.pill && 'pill', s.dot && 'dot');
+  const className = bem('badge', s.variant, s.size, s.pill && 'pill', s.round && 'round', s.dot && 'dot');
   if (s.dot) {
     return `<span class="${className}" aria-label="${escape(label)}"></span>`;
   }
@@ -34,7 +34,7 @@ export default {
       default: 'primary',
       options: [
         { value: '', label: 'None (implicit primary)' },
-        'primary', 'secondary', 'outline',
+        'primary', 'secondary', 'secondary-muted', 'outline',
         'destructive', 'destructive-muted',
         'success', 'success-muted',
         'warning', 'warning-muted',
@@ -54,6 +54,7 @@ export default {
       ],
     },
     { key: 'pill', label: 'Pill', type: 'toggle' },
+    { key: 'round', label: 'Round count (--round)', type: 'toggle', when: s => !s.dot },
     { key: 'removable', label: 'Removable', type: 'toggle', when: s => s.icon !== 'only' && !s.dot },
     { key: 'dot', label: 'Dot', type: 'toggle' },
     { key: 'group', label: 'Group', type: 'toggle' },
@@ -61,7 +62,8 @@ export default {
   presets: [
     { name: 'Status', state: { variant: 'success-muted', label: 'Active', pill: true } },
     { name: 'Removable tag', state: { variant: 'secondary', label: 'design', removable: true } },
-    { name: 'Count', state: { variant: 'destructive', label: '12', pill: true, size: 'sm' } },
+    { name: 'Count', state: { variant: 'destructive', label: '12', round: true } },
+    { name: 'Muted status', state: { variant: 'secondary-muted', label: 'Draft', pill: true } },
     { name: 'Status dot', state: { variant: 'success', dot: true, label: 'Online' } },
     { name: 'Tag group', state: { variant: 'outline', group: true, removable: true } },
   ],

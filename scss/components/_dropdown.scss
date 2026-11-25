@@ -151,6 +151,15 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
         color: var(--destructive-fg);
       }
     }
+
+    &--warning {
+      color: var(--warning-muted-fg);
+
+      &:hover {
+        background-color: var(--warning);
+        color: var(--warning-fg);
+      }
+    }
   }
 
   &__item-icon,
@@ -316,5 +325,12 @@ $dropdown-open: '.dropdown:has(> .dropdown__trigger[aria-expanded="true"]), .dro
 
   &--full {
     min-width: 100%;
+  }
+
+  &--scrollable,
+  &--scrollable[popover] {
+    max-height: var(--dropdown-max-height, 20rem);
+    overflow-y: auto;
+    @include scrollbar-thin;
   }
 }
