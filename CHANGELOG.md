@@ -11,6 +11,11 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Fixed
+
+- `TableColumns` keeps its choices when the table is replaced, as `LiveFilters` does: it looks
+  the table up again and re-applies on `live-filters:update`.
+
 ## [0.1.13] - 2026-11-25
 
 ### Added
