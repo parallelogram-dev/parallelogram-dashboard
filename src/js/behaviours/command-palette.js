@@ -29,6 +29,7 @@ export class CommandPalette {
     let returnFocus = null;
     let timer = null;
     let pending = null;
+    let searching = false;
 
     const items = () => [...list.querySelectorAll('.command__item')].filter(item => !item.closest('[hidden]') && !item.hidden);
     const selected = () => list.querySelector('.command__item[aria-selected="true"]');
@@ -54,7 +55,7 @@ export class CommandPalette {
       list.querySelectorAll('.command__group').forEach((group) => {
         group.hidden = !group.querySelector('.command__item:not([hidden])');
       });
-      if (empty) empty.hidden = items().length > 0;
+      if (empty) empty.hidden = items().length > 0 || searching;
       select(items()[0]);
     };
 
@@ -101,9 +102,12 @@ export class CommandPalette {
       clearTimeout(timer);
       const query = input.value.trim();
       if (!source || query.length < 2) {
+        searching = false;
         render([]);
         return;
       }
+      searching = true;
+      filter();
       timer = setTimeout(async () => {
         pending?.abort();
         pending = new AbortController();
@@ -111,11 +115,16 @@ export class CommandPalette {
           const url = new URL(source, window.location.href);
           url.searchParams.set('q', query);
           const response = await fetch(url, { signal: pending.signal, headers: { Accept: 'application/json' } });
-          if (!response.ok) return;
-          const data = await response.json();
-          if (input.value.trim() === query) render(data.groups ?? []);
+          const data = response.ok ? await response.json() : { groups: [] };
+          if (input.value.trim() === query) {
+            searching = false;
+            render(data.groups ?? []);
+          }
         } catch (error) {
-          if (error.name !== 'AbortError') render([]);
+          if (error.name !== 'AbortError') {
+            searching = false;
+            render([]);
+          }
         }
       }, 200);
     };

@@ -11,6 +11,11 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Fixed
+
+- `CommandPalette` no longer shows its empty message while a `data-command-source` search is
+  still on its way.
+
 ## [0.1.15] - 2026-11-25
 
 ### Added
