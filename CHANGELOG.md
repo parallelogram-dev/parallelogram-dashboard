@@ -11,6 +11,12 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `ConfirmAction` takes `data-confirm-form` as well as `data-confirm-action`: confirming then
+  submits the button's own form, with its fields, for row actions that post more than an
+  address (`data-confirm-form="id"` names a form elsewhere).
+
 ## [0.1.12] - 2026-11-25
 
 ### Added
