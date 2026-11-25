@@ -30,6 +30,7 @@ import { LiveFilters } from './behaviours/live-filters.js';
 import { ConfirmAction } from './behaviours/confirm-action.js';
 import { ThemeSwitch } from './behaviours/theme-switch.js';
 import { ContrastSwitch } from './behaviours/contrast-switch.js';
+import { CommandPalette } from './behaviours/command-palette.js';
 import { loadParallelogramJs } from './core-loader.js';
 
 export {
@@ -57,6 +58,7 @@ export {
   ConfirmAction,
   ThemeSwitch,
   ContrastSwitch,
+  CommandPalette,
 };
 export { loadParallelogramJs } from './core-loader.js';
 export { polyfillDialogCommands } from './polyfills/dialog-commands.js';
@@ -90,5 +92,6 @@ export function init(root = document) {
     tablePaste: TablePaste.enhanceAll('[data-table-paste]', root),
     chart: Chart.enhanceAll('[data-chart]', root),
     liveFilters: LiveFilters.enhanceAll('[data-live-filters]', root),
+    commandPalette: CommandPalette.enhanceAll('[data-command-palette]', root),
   };
 }

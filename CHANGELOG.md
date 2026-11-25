@@ -11,6 +11,13 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `CommandPalette` for the `command` component: ⌘K / Ctrl+K or `[data-command-open]` opens a
+  `[data-command-palette]` overlay, typing filters its items, the arrow keys and Enter choose,
+  and `data-command-source` adds results fetched as JSON. Included in `init()`; the command page
+  has a live example.
+
 ## [0.1.14] - 2026-11-25
 
 ### Fixed
