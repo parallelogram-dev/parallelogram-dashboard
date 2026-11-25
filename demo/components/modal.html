@@ -55,11 +55,15 @@
           </p-modal>
 
           <div class="demo-label">One confirmation for many buttons</div>
-          <p class="text--sm text--muted spacer--md">A page with a Delete on every row needs one <code>.alertdialog</code>, not one per row. Each button opens it with <code>commandfor</code> and <code>command="show-modal"</code> and carries <code>data-confirm-action</code>, the address the dialog's form should post to, and optionally <code>data-confirm-title</code> for its <code>.alertdialog__title</code>; <code>ConfirmAction</code> sets both before the dialog opens. Give the footer <code>.alertdialog__footer--between</code> to put Cancel at one end and the action at the other. An icon drawn inside <code>.alertdialog__icon</code> (rather than the slot being the icon) fills it.</p>
+          <p class="text--sm text--muted spacer--md">A page with a Delete on every row needs one <code>.alertdialog</code>, not one per row. Each button opens it with <code>commandfor</code> and <code>command="show-modal"</code> and carries <code>data-confirm-action</code>, the address the dialog's form should post to, and optionally <code>data-confirm-title</code> for its <code>.alertdialog__title</code>; <code>ConfirmAction</code> sets both before the dialog opens. When a row's action posts fields of its own, put the button in that row's form with <code>data-confirm-form</code> instead: confirming then submits the button's form, fields and all (<code>data-confirm-form="id"</code> names a form elsewhere). Give the footer <code>.alertdialog__footer--between</code> to put Cancel at one end and the action at the other. An icon drawn inside <code>.alertdialog__icon</code> (rather than the slot being the icon) fills it.</p>
           <div class="demo-box">
             <div class="cluster">
               <button type="button" class="btn btn--outline btn--sm" commandfor="demo-confirm" command="show-modal" data-confirm-action="#delete/1" data-confirm-title="Delete Ann Smith?">Delete Ann Smith</button>
               <button type="button" class="btn btn--outline btn--sm" commandfor="demo-confirm" command="show-modal" data-confirm-action="#delete/2" data-confirm-title="Delete Cara Lee?">Delete Cara Lee</button>
+              <form method="get" action="#removed">
+                <input type="hidden" name="member" value="3">
+                <button type="button" class="btn btn--outline btn--sm" commandfor="demo-confirm" command="show-modal" data-confirm-form data-confirm-title="Remove Dan Miller from the team?">Remove Dan Miller (posts its form)</button>
+              </form>
             </div>
           </div>
           <dialog class="alertdialog" id="demo-confirm" role="alertdialog" aria-labelledby="demo-confirm-title">
