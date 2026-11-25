@@ -89,6 +89,27 @@
             </div>
           </div>
 
+          <div class="demo-label demo-label--spaced">Live palette</div>
+          <p class="text--sm text--muted spacer--md">Press <kbd class="kbd kbd--sm">⌘</kbd> <kbd class="kbd kbd--sm">K</kbd> (or Ctrl+K), or the button. Give a <code>.command</code> overlay <code>data-command-palette</code> and <code>CommandPalette</code> opens it, filters its items as you type (by their text and any <code>data-command-keywords</code>), moves through them with the arrow keys and follows the chosen one with Enter. With <code>data-command-source="url"</code> it also fetches <code>url?q=…</code> as JSON, <code>{"groups": [{"label", "items": [{"title", "description", "url"}]}]}</code>, and shows those results first. <code>[data-command-open]</code> opens it and <code>[data-command-close]</code> or Escape closes it.</p>
+          <div class="demo-row">
+            <button type="button" class="btn btn--outline btn--sm" data-command-open><svg class="icon command__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg> Search <kbd class="kbd kbd--sm">⌘K</kbd></button>
+          </div>
+          <div class="command" id="demo-palette" data-command-palette>
+            <div class="command__backdrop" data-command-close></div>
+            <div class="command__dialog" role="dialog" aria-modal="true" aria-label="Command palette">
+              <div class="command__inputwrapper">
+                <svg class="icon command__icon" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/><path d="M21 21l-6 -6"/></svg>
+                <input type="text" class="command__input" role="combobox" aria-expanded="true" aria-controls="demo-palette-list" aria-autocomplete="list" aria-label="Search commands" placeholder="Type a command or search...">
+                <span class="command__shortcut"><kbd class="command__kbd">Esc</kbd></span>
+              </div>
+              <div class="command__list" id="demo-palette-list" role="listbox" aria-label="Results">
+                <div class="command__group" role="group"><div class="command__group-heading">Pages</div><a href="#home overview" class="command__item" role="option" aria-selected="false" data-command-keywords="home overview"><span class="command__item-content"><span class="command__item-title">Dashboard</span></span></a><a href="#entries content" class="command__item" role="option" aria-selected="false" data-command-keywords="entries content"><span class="command__item-content"><span class="command__item-title">Records</span></span></a><a href="#preferences account" class="command__item" role="option" aria-selected="false" data-command-keywords="preferences account"><span class="command__item-content"><span class="command__item-title">Settings</span></span></a></div>
+                <div class="command__group" role="group"><div class="command__group-heading">Actions</div><a href="#new add" class="command__item" role="option" aria-selected="false" data-command-keywords="new add"><span class="command__item-content"><span class="command__item-title">Create record</span></span></a><a href="#team user" class="command__item" role="option" aria-selected="false" data-command-keywords="team user"><span class="command__item-content"><span class="command__item-title">Invite member</span></span></a></div>
+              </div>
+              <div class="command__empty" hidden>No results</div>
+              <div class="command__footer"><div class="command__hint"><span class="command__hint-item"><kbd class="kbd kbd--sm">↑↓</kbd> Navigate</span><span class="command__hint-item"><kbd class="kbd kbd--sm">↵</kbd> Select</span><span class="command__hint-item"><kbd class="kbd kbd--sm">Esc</kbd> Close</span></div></div>
+            </div>
+          </div>
           <div class="demo-label demo-label--spaced">Keyboard Shortcuts</div>
           <div class="demo-row">
             <kbd class="kbd kbd--sm">⌘</kbd>

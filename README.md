@@ -1248,6 +1248,22 @@ choices, stored under `pd-contrast`. Extend the `<head>` snippet to apply it bef
 Under forced colours (Windows High Contrast), badges, avatars and the selected segmented
 control item or tab are outlined, since their fills are dropped.
 
+### Command Palette
+
+Give a `.command` overlay `data-command-palette` (it is included in `init()`). ⌘K, or Ctrl+K,
+opens it, as does anything marked `[data-command-open]`; Escape or `[data-command-close]` (the
+backdrop) closes it and returns focus. Typing hides `.command__item`s whose text and
+`data-command-keywords` don't match, and the arrow keys and Enter choose among the rest. With
+`data-command-source="/search"` it also fetches `/search?q=…` (two or more characters) as JSON
+and shows the results first:
+
+```json
+{ "groups": [{ "label": "Websites", "items": [{ "title": "Acme", "description": "acme.com", "url": "/websites/1" }] }] }
+```
+
+Results are drawn with `textContent`, never as HTML. Choosing an item dispatches `command:select`
+with `{ item }`.
+
 ### Demo Navigation
 
 A floating navigation button is automatically added to all demo pages, allowing quick switching between templates.
