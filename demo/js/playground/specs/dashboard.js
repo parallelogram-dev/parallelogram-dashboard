@@ -15,27 +15,41 @@ const PATHS = {
   chevronRight: '<path d="M9 6l6 6l-6 6"/>',
   menu: '<path d="M4 6l16 0"/><path d="M4 12l16 0"/><path d="M4 18l16 0"/>',
   close: '<path d="M18 6l-12 12"/><path d="M6 6l12 12"/>',
+  dots: '<path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>',
 };
 
 const SUBNAV_ID = 'pg-subnav';
 const SUBMENU_ID = 'pg-subnav-records';
+const MORE_ID = 'pg-navmenu-more';
 
-// The icon rail names each item with aria-label and a tooltip; the labelled rail with its visible label
+// The icon rail names each item with aria-label and a tooltip; the labelled rail with its visible label.
+// Items in the overflow also carry a label, which the bottom bar's More panel shows beside the icon
 function navmenu(s) {
   const labelled = s.rail === 'labelled';
-  const rail = [['home', 'Home'], ['pages', 'Pages'], ['records', 'Records'], ['media', 'Media'], ['analytics', 'Analytics'], ['team', 'Team']];
-  const items = list => list.map(([key, text]) => {
+  const more = Boolean(s.more);
+  const workspace = [['home', 'Home'], ['pages', 'Pages'], ['records', 'Records'], ['media', 'Media']];
+  const extra = [['analytics', 'Analytics'], ['team', 'Team']];
+  const items = (list, overflow = false) => list.map(([key, text]) => {
     const current = key === 'home' ? ' aria-current="page"' : '';
     return labelled
       ? `<a href="#" class="navmenu__item"${current}>${svg('icon', PATHS[key])}<span class="navmenu__label">${text}</span></a>`
       : `<a href="#" class="navmenu__item" aria-label="${text}"${current}>`
-        + `${svg('icon', PATHS[key])}<span class="navmenu__tooltip" aria-hidden="true">${text}</span></a>`;
+        + `${svg('icon', PATHS[key])}<span class="navmenu__tooltip" aria-hidden="true">${text}</span>`
+        + `${overflow ? `<span class="navmenu__label" aria-hidden="true">${text}</span>` : ''}</a>`;
   }).join('');
   const title = text => (labelled ? `<span class="navmenu__section-title">${text}</span>` : '');
+  const account = `<div class="navmenu__section">${title('Account')}${items([['settings', 'Settings']], more)}</div>`;
+  const content = more
+    ? `<div class="navmenu__section">${title('Workspace')}${items(workspace)}</div>`
+      + `<div class="${cx('navmenu__overflow', s.more === 'open' && 'navmenu__overflow--open')}" id="${MORE_ID}">`
+      + `<div class="navmenu__section">${title('Insights')}${items(extra, true)}</div>${account}</div>`
+      + `<button type="button" class="navmenu__item navmenu__more" aria-label="More" aria-expanded="${s.more === 'open'}"`
+      + ` data-toggle data-toggle-target="#${MORE_ID}" data-toggle-class="navmenu__overflow--open" data-toggle-capture="true">`
+      + `${svg('icon', PATHS.dots)}</button>`
+    : `<div class="navmenu__section">${title('Workspace')}${items([...workspace, ...extra])}</div>${account}`;
   return `<nav class="${cx('navmenu', labelled && 'navmenu--labelled')}" aria-label="Main">`
     + `<div class="navmenu__header"><a href="#" class="navmenu__logo" aria-label="Dashboard home">${svg('icon icon--lg', PATHS.logo)}</a></div>`
-    + `<div class="navmenu__content"><div class="navmenu__section">${title('Workspace')}${items(rail)}</div>`
-    + `<div class="navmenu__section">${title('Account')}${items([['settings', 'Settings']])}</div></div>`
+    + `<div class="navmenu__content">${content}</div>`
     + '<div class="navmenu__footer"><a href="#" class="navmenu__avatar" aria-label="Your account"><span class="navmenu__avatar-fallback">JD</span></a></div>'
     + '</nav>';
 }
@@ -158,6 +172,16 @@ export default {
       ],
     },
     {
+      key: 'more',
+      label: 'Bottom bar overflow (below md)',
+      type: 'select',
+      options: [
+        { value: '', label: 'None' },
+        { value: 'closed', label: 'More panel (__overflow, __more)' },
+        { value: 'open', label: 'More panel open (__overflow--open)' },
+      ],
+    },
+    {
       key: 'subnav',
       label: 'Section nav',
       type: 'select',
@@ -195,6 +219,7 @@ export default {
     { name: 'Labelled main nav', state: { rail: 'labelled' } },
     { name: 'Section nav collapsed', state: { subnav: 'collapsed' } },
     { name: 'Mobile section nav open', state: { subnav: 'open' } },
+    { name: 'Mobile More panel open', state: { more: 'open' } },
     { name: 'With footer action', state: { footer: true, actions: false, disabled: true } },
     { name: 'Overview with notices', state: { logo: true, info: true, alerts: true, submenu: '' } },
     { name: 'Minimal', state: { submenu: '', actions: false, sectionAction: false, badges: false } },
