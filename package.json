@@ -19,7 +19,8 @@
     "./src/js/behaviours/unsaved-guard.js",
     "./src/js/behaviours/search-clear.js",
     "./src/js/behaviours/confirm-action.js",
-    "./src/js/behaviours/theme-switch.js"
+    "./src/js/behaviours/theme-switch.js",
+    "./src/js/behaviours/contrast-switch.js"
   ],
   "exports": {
     ".": "./src/js/index.js",

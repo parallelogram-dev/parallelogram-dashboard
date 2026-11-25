@@ -1224,6 +1224,30 @@ removes it. Apply it before the stylesheet paints, so a dark page never flashes 
 work from script; `ThemeSwitch.sync()` brings controls added later (such as in a page a router
 swapped in) in step. Each change dispatches `theme:change` on `<html>` with `{ theme, dark }`.
 
+### Contrast Switch
+
+`data-contrast="more"` on `<html>` strengthens the quiet colours: muted and subtle text, borders,
+inputs and the focus ring, each mixed from the theme's own `--fg` and `--bg`, so a brand theme
+keeps its palette. Breadcrumb, card and table links are underlined. Without the attribute the
+page follows the OS's "increase contrast" setting; `data-contrast="standard"` opts out of it.
+A theme adjusts its own colours for high contrast the same way:
+
+```css
+:root[data-contrast="more"] { --primary: light-dark(#1d4ed8, #93c5fd); }
+@media (prefers-contrast: more) { :root:not([data-contrast]) { --primary: light-dark(#1d4ed8, #93c5fd); } }
+```
+
+`ContrastSwitch` sets and remembers it, exactly as `ThemeSwitch` does the theme, from
+`[data-contrast-toggle]` buttons and `[data-contrast-value="standard" | "more" | "system"]`
+choices, stored under `pd-contrast`. Extend the `<head>` snippet to apply it before paint:
+
+```html
+<script>try { var t = localStorage.getItem('pd-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var c = localStorage.getItem('pd-contrast'); if (c === 'standard' || c === 'more') document.documentElement.setAttribute('data-contrast', c); } catch (e) {}</script>
+```
+
+Under forced colours (Windows High Contrast), badges, avatars and the selected segmented
+control item or tab are outlined, since their fills are dropped.
+
 ### Demo Navigation
 
 A floating navigation button is automatically added to all demo pages, allowing quick switching between templates.

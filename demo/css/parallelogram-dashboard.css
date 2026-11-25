@@ -150,6 +150,27 @@
   color-scheme: dark;
 }
 
+:root[data-contrast=more] {
+  --fg-muted: color-mix(in srgb, var(--fg) 85%, var(--bg));
+  --fg-subtle: color-mix(in srgb, var(--fg) 70%, var(--bg));
+  --border: color-mix(in srgb, var(--fg) 45%, var(--bg));
+  --border-muted: color-mix(in srgb, var(--fg) 30%, var(--bg));
+  --input: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  --ring: var(--fg);
+  --secondary-muted-fg: var(--fg);
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast]) {
+    --fg-muted: color-mix(in srgb, var(--fg) 85%, var(--bg));
+    --fg-subtle: color-mix(in srgb, var(--fg) 70%, var(--bg));
+    --border: color-mix(in srgb, var(--fg) 45%, var(--bg));
+    --border-muted: color-mix(in srgb, var(--fg) 30%, var(--bg));
+    --input: color-mix(in srgb, var(--fg) 55%, var(--bg));
+    --ring: var(--fg);
+    --secondary-muted-fg: var(--fg);
+  }
+}
 :root {
   --brand-primary: var(--primary);
   --brand-primary-hover: var(--primary-hover);
@@ -450,6 +471,31 @@ table {
   outline: none;
 }
 
+:root[data-contrast=more] .breadcrumb__link,
+:root[data-contrast=more] .card__link,
+:root[data-contrast=more] .table__link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast]) .breadcrumb__link,
+  :root:not([data-contrast]) .card__link,
+  :root:not([data-contrast]) .table__link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+@media (forced-colors: active) {
+  .badge,
+  .avatar,
+  .segmented-control__item[aria-pressed=true],
+  .segmented-control__item[aria-checked=true],
+  .tabs__trigger[aria-selected=true] {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+}
 :where(h1, h2, h3, h4, h5, h6) {
   font-weight: 600;
   line-height: var(--leading-tight);

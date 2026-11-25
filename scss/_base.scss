@@ -113,6 +113,39 @@ table {
   outline: none;
 }
 
+// With high contrast, links that colour alone sets apart from text are underlined as well
+@mixin high-contrast-links {
+  .breadcrumb__link,
+  .card__link,
+  .table__link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+:root[data-contrast="more"] {
+  @include high-contrast-links;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast]) {
+    @include high-contrast-links;
+  }
+}
+
+// Forced colours (Windows High Contrast) drop backgrounds, so shapes that only a fill drew
+// get an outline in the system's text colour
+@media (forced-colors: active) {
+  .badge,
+  .avatar,
+  .segmented-control__item[aria-pressed="true"],
+  .segmented-control__item[aria-checked="true"],
+  .tabs__trigger[aria-selected="true"] {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+}
+
 // --------------------------------------------------------------------------
 // Typography
 // --------------------------------------------------------------------------

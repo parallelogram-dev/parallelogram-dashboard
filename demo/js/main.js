@@ -9,7 +9,7 @@
 import {
   init, SearchClear, ActionBar, OverflowActions, EditableTable, UnsavedGuard, Expandable, TableColumns,
   TableSort, TableReorder, TablePaste, PublishSchedule, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager,
-  polyfillDialogCommands, ThemeSwitch,
+  polyfillDialogCommands, ThemeSwitch, ContrastSwitch,
 } from '@parallelogram-js/dashboard';
 
 // ============================================================================
