@@ -1194,18 +1194,35 @@ link each tab and panel with `aria-controls`/`aria-labelledby`, and slide the
 Apart from `data-toggle-class`, none of the scripts add state classes: Accordion and Collapsible flip `aria-expanded`, Tabs flips
 `aria-selected` and the panels' `hidden` attribute.
 
-### Dark Mode Toggle
+### Theme Switch
 
-The page follows the OS until a toggle pins it, so the toggle writes an explicit theme:
+`ThemeSwitch` sets and remembers the theme. It needs no setup: importing the package (or
+`@parallelogram-js/dashboard/behaviours/theme-switch`) registers it for the whole page.
 
-```javascript
-function toggleTheme() {
-  const html = document.documentElement;
-  const theme = html.getAttribute('data-theme');
-  const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
-  html.setAttribute('data-theme', dark ? 'light' : 'dark');
-}
+```html
+<!-- Flips light and dark; aria-pressed is true while dark shows -->
+<button type="button" class="btn btn--ghost btn--icon" data-theme-toggle aria-label="Dark mode">…</button>
+
+<!-- Chooses one; "system" follows the OS -->
+<div class="segmented-control">
+  <div class="segmented-control__list" role="radiogroup" aria-label="Theme">
+    <button type="button" class="segmented-control__item" role="radio" data-theme-value="light">Light</button>
+    <button type="button" class="segmented-control__item" role="radio" data-theme-value="dark">Dark</button>
+    <button type="button" class="segmented-control__item" role="radio" data-theme-value="system">System</button>
+  </div>
+</div>
 ```
+
+The choice is stored in `localStorage` under `ThemeSwitch.storageKey` (`pd-theme`), and "system"
+removes it. Apply it before the stylesheet paints, so a dark page never flashes light:
+
+```html
+<script>try { var t = localStorage.getItem('pd-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+```
+
+`ThemeSwitch.set('light' | 'dark' | 'system')`, `ThemeSwitch.get()` and `ThemeSwitch.isDark()`
+work from script; `ThemeSwitch.sync()` brings controls added later (such as in a page a router
+swapped in) in step. Each change dispatches `theme:change` on `<html>` with `{ theme, dark }`.
 
 ### Demo Navigation
 

@@ -28,6 +28,7 @@ import { SearchClear } from './behaviours/search-clear.js';
 import { ToastManager } from './behaviours/toast-manager.js';
 import { LiveFilters } from './behaviours/live-filters.js';
 import { ConfirmAction } from './behaviours/confirm-action.js';
+import { ThemeSwitch } from './behaviours/theme-switch.js';
 import { loadParallelogramJs } from './core-loader.js';
 
 export {
@@ -53,6 +54,7 @@ export {
   ToastManager,
   LiveFilters,
   ConfirmAction,
+  ThemeSwitch,
 };
 export { loadParallelogramJs } from './core-loader.js';
 export { polyfillDialogCommands } from './polyfills/dialog-commands.js';

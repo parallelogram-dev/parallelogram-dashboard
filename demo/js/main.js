@@ -3,13 +3,13 @@
  *
  * Enhances each demo page with @parallelogram-js/dashboard, which an import map in the page
  * resolves to demo/vendor. Everything below is demo-only: the floating page navigation, the
- * theme toggle, the global toast manager and window.Parallelogram for the classic demo scripts.
+ * theme toast, the global toast manager and window.Parallelogram for the classic demo scripts.
  */
 
 import {
   init, SearchClear, ActionBar, OverflowActions, EditableTable, UnsavedGuard, Expandable, TableColumns,
   TableSort, TableReorder, TablePaste, PublishSchedule, ActionBarList, Accordion, Collapsible, Submenu, Tabs, SegmentedControl, Toggle, Chart, ToastManager,
-  polyfillDialogCommands,
+  polyfillDialogCommands, ThemeSwitch,
 } from '@parallelogram-js/dashboard';
 
 // ============================================================================
@@ -221,17 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.demoNav = new DemoNav();
   }
 
-  // Theme toggle
-  window.toggleTheme = () => {
-    const html = document.documentElement;
-    const theme = html.getAttribute('data-theme');
-    const dark = !(theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches));
-    html.setAttribute('data-theme', dark ? 'dark' : 'light');
-
-    window.toast.info(dark ? 'Dark mode enabled' : 'Light mode enabled', {
-      duration: 2000,
-    });
-  };
+  // ThemeSwitch handles every [data-theme-toggle] and [data-theme-value]; the demo announces each change
+  document.documentElement.addEventListener('theme:change', (event) => {
+    window.toast?.info(event.detail.dark ? 'Dark mode enabled' : 'Light mode enabled', { duration: 2000 });
+  });
 
   console.log('Parallelogram Dashboard initialized');
 });

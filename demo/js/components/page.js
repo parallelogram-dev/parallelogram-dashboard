@@ -1,7 +1,6 @@
 import manifest from './manifest.js';
 import specs from '../playground/specs/index.js';
 import { mountPlayground } from '../playground/widget.js';
-import { bindThemeToggle } from './theme.js';
 import { codeButton } from './code-sheet.js';
 import { escape } from '../playground/lib.js';
 import { formatHtml } from '../playground/format.js';
@@ -58,7 +57,6 @@ function renderPager(pager) {
 
 renderNav(document.querySelector('[data-component-nav]'));
 renderPager(document.querySelector('[data-pager]'));
-bindThemeToggle(document.querySelector('[data-theme-toggle]'));
 
 /**
  * "Copy for LLM" puts this component's generated Markdown reference (classes, modifiers,

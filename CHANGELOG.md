@@ -11,6 +11,20 @@ section can be taken with a version bump and a rebuild.
 
 ## [Unreleased]
 
+### Added
+
+- `ThemeSwitch`: `[data-theme-toggle]` flips light and dark, and `[data-theme-value="light" |
+  "dark" | "system"]` chooses one, remembered in `localStorage` under `pd-theme`. The README gives
+  a `<head>` snippet that applies it before the stylesheet paints. The demo pages now use it in
+  place of their own toggle, and the dashboard's avatar opens an account menu with the choice.
+- `.dropdown__header` with `__header-title` and `__header-description`: who or what a menu
+  belongs to, such as the signed-in user at the top of an account menu.
+
+### Fixed
+
+- An element focused only by script (`tabindex="-1"`), such as the heading a router moves focus
+  to after swapping in a page, no longer shows a focus ring.
+
 ## [0.1.10] - 2026-11-25
 
 ### Added
